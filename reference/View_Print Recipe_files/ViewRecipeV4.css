@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* CSS Document */
+body{font:100% Verdana, Arial, Helvetica, sans-serif;background:#f3f3f3;text-align:center;color:#000;margin:0;padding:0}
+.SoapCalc_ViewRecipe #container{width:700px;height:100%;background:#FFFFCA;margin:3px auto 0;padding:0}
+.SoapCalc_ViewRecipe #Content{font:inherit;font-size:13px;width:700px;height:100%;position:relative;vertical-align:top;text-align:center;background-color:#FFFFCA;overflow:visible;border-right:1px solid #60BD51;border-left:1px solid #60BD51;border-bottom:1px solid #60BD51;padding:0}
+#tdRecipe{width:580px;font:inherit;border-left-style:solid;border-left-width:1px;border-left-color:#60BD51;padding-left:5px;padding-right:5px}
+.soapWeight{background-color:#EEFFFF;vertical-align:middle}
+.bR{border-right:1px solid #000}
+.rightAlignText{text-align:right;padding-right:15px}
+.rightAlignFAs{text-align:right;padding-right:40px}
+.bRpadL{border-right:1px solid #000;padding-left:5px}
+.padL{padding-left:5px}
+.new{font-size:12px;color:red}
+.B{font-weight:bold}
+#tblRecipeName{width:650px}
+#inputRecipeName{width:400px;height:20px}
+.tblSettings{width:650px;font:inherit;vertical-align:top}
+#tblSettingsLeft{width:320px;background:#EEFFFF;border-right:1px solid #000;border-left:1px solid #000;border-top:1px solid #000}
+#tblSettingsLeft td{border-bottom:1px solid #000}
+#tblSettingsRight{width:320px;font:inherit;background:#EEFFFF;vertical-align:top;height:100%;border-right:1px solid #000;border-left:1px solid #000;border-top:1px solid #000}
+#tblSettingsRight td{border-bottom:1px solid #000}
+#tblLyeWater{font:inherit;background-color:#F4E1FB;width:650px;table-layout:fixed;border-right:1px solid #000;border-left:1px solid #000;border-top:1px solid #000}
+#tblLyeWater td{padding-left:5px;height:20px;font-size:12px;border-bottom:1px solid #000}
+#tblLyeWater td.col1{width:46%;font-size:11px;font-weight:600;background:#FFF}
+#tdLyeLabel2 td{vertical-align:middle}
+#tblOilDetail{font:inherit;width:650px;background-color:#FDFFFD;border-right:1px solid #000;border-left:1px solid #000;border-top:1px solid #000}
+#tblOilDetail td{padding-left:5px;font-size:14px;border-bottom:1px solid #000}
+#tblOilDetail td.ch{font-size:11px;font-weight:600}
+#trODTitles td{font-size:12px}
+#tblSettingsBottom{width:650px;margin-bottom:2px}
+#tblSettingsBottom tr td{vertical-align:text-top}
+#tblQualitiesLeft{width:100%;background-color:#CEE8D2;border-right:1px solid #000;border-left:1px solid #000;border-top:1px solid #000}
+#tblQualitiesLeft td{border-bottom:1px solid #000}
+#tblQualitiesRight{margin-left:1px;width:100%;background-color:#C4FAFD;border-right:1px solid #000;border-left:1px solid #000;border-top:1px solid #000}
+#tblQualitiesRight td{border-bottom:1px solid #000}
+#tblLyeWater td.col2,#tblLyeWater td.col3,#tblLyeWater td.col4{width:18%;font-size:11px;font-weight:600;background:#FFF}
+#tblAdditives{border-right:1px solid #000;border-left:1px solid #000;border-top:1px solid #000}
+#tblAdditives td{border-bottom:1px solid #000; height:auto}
+#txtAreaAdditive1{width:237px;border:0px 0px;padding:5px;overflow:auto;margin-top:0px}
+#txtAreaAdditive2{width:383px;border:0px 0px;padding:5px;overflow:auto;margin-top:0px}
