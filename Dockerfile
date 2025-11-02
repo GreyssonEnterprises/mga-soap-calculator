@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy dependency file
-COPY pyproject.toml ./
+# Copy dependency files
+COPY pyproject.toml README.md ./
 
 # Install dependencies in a virtual environment
 RUN python -m pip install --upgrade pip && \
@@ -43,6 +43,7 @@ RUN pip install --no-cache /wheels/*
 COPY --chown=appuser:appuser app ./app
 COPY --chown=appuser:appuser migrations ./migrations
 COPY --chown=appuser:appuser scripts ./scripts
+COPY --chown=appuser:appuser alembic.ini ./
 COPY --chown=appuser:appuser .env.example ./
 
 # Switch to non-root user
