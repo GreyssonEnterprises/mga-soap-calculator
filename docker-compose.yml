@@ -1,0 +1,70 @@
+version: '3.8'
+
+# Complete development and staging stack for MGA Soap Calculator API
+# Includes FastAPI application and PostgreSQL database
+
+services:
+  # PostgreSQL Database Service
+  postgres:
+    image: postgres:15-alpine
+    container_name: mga_soap_postgres
+    environment:
+      POSTGRES_DB: mga_soap_calculator
+      POSTGRES_USER: soap_user
+      POSTGRES_PASSWORD: soap_password
+      POSTGRES_INITDB_ARGS: "-E UTF8"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U soap_user -d mga_soap_calculator"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - soap_network
+    restart: unless-stopped
+
+  # FastAPI Application Service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mga_soap_api
+    environment:
+      # Database Configuration
+      DATABASE_URL: postgresql://soap_user:soap_password@postgres:5432/mga_soap_calculator
+      # JWT Configuration
+      SECRET_KEY: ${SECRET_KEY:-dev-secret-key-change-in-production}
+      # Application Configuration
+      ENVIRONMENT: development
+      APP_NAME: MGA Soap Calculator API
+      APP_VERSION: 1.0.0
+      # CORS Configuration
+      ALLOWED_ORIGINS: http://localhost:3000,http://localhost:8000,http://localhost:8080
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./app:/app/app
+      - ./migrations:/app/migrations
+      - ./scripts:/app/scripts
+    networks:
+      - soap_network
+    restart: unless-stopped
+    # Enable interactive mode for development
+    stdin_open: true
+    tty: true
+
+# Network Configuration
+networks:
+  soap_network:
+    driver: bridge
+
+# Volume Configuration
+volumes:
+  postgres_data:
+    driver: local

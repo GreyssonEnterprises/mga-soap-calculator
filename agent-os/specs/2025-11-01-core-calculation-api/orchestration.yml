@@ -1,0 +1,13 @@
+task_groups:
+  - name: Phase 1 - Foundation
+    claude_code_subagent: backend-architect
+  - name: Phase 2 - Calculation Engine
+    claude_code_subagent: python-pro
+  - name: Phase 3 - API Layer
+    claude_code_subagent: backend-architect
+  - name: Phase 4 - Authentication
+    claude_code_subagent: security-auditor
+  - name: Phase 5 - Integration & Testing
+    claude_code_subagent: test-automator
+  - name: Phase 6 - Documentation & Deployment
+    claude_code_subagent: api-documenter
