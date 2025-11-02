@@ -1,0 +1,1 @@
+../../.claude/commands/agent-os/shape-spec.md

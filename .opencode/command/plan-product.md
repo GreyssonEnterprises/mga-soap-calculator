@@ -1,0 +1,1 @@
+../../.claude/commands/agent-os/plan-product.md
