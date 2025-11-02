@@ -8,9 +8,10 @@ Provides:
 - Advanced additive effect modeling (competitive advantage)
 - Complete OpenAPI/Swagger documentation
 """
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
+from fastapi.responses import JSONResponse
 
 from app.core.config import settings
 from app.api.v1 import auth, calculate
@@ -238,3 +239,57 @@ async def health_check():
         "version": settings.APP_VERSION,
         "environment": settings.ENVIRONMENT
     }
+
+
+@app.api_route(
+    "/api/{path:path}",
+    methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    tags=["errors"],
+    summary="Catch-all for missing /v1/ prefix",
+    description="Returns helpful error when API version prefix is missing",
+    responses={
+        404: {
+            "description": "API version required",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "error": "API version required",
+                        "detail": "Did you mean /api/v1/auth/register?",
+                        "correct_path": "/api/v1/auth/register",
+                        "hint": "All API endpoints require /v1/ prefix"
+                    }
+                }
+            }
+        }
+    }
+)
+async def redirect_missing_v1(path: str):
+    """
+    Catch-all route for missing /v1/ prefix.
+
+    This route catches requests to /api/* that don't include the required /v1/ version prefix.
+    Returns a helpful 404 error with the corrected path.
+
+    IMPORTANT: This route is registered LAST to avoid intercepting valid /api/v1/* routes.
+
+    Args:
+        path: The requested path after /api/
+
+    Returns:
+        404 error with suggested correct path
+    """
+    # Only handle paths that DON'T start with v1/
+    if not path.startswith("v1/"):
+        correct_path = f"/api/v1/{path}"
+        return JSONResponse(
+            status_code=404,
+            content={
+                "error": "API version required",
+                "detail": f"Did you mean {correct_path}?",
+                "correct_path": correct_path,
+                "hint": "All API endpoints require /v1/ prefix"
+            }
+        )
+
+    # If we somehow got here with a v1/ path, return generic 404
+    raise HTTPException(status_code=404, detail="Not Found")
