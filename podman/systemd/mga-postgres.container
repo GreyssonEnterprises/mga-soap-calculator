@@ -1,0 +1,23 @@
+[Unit]
+Description=MGA Soap Calculator PostgreSQL Database
+After=network-online.target
+
+[Container]
+Image=docker.io/library/postgres:15-alpine
+ContainerName=mga-postgres
+Network=mga-network.network
+EnvironmentFile=/etc/mga-calculator/postgres.env
+Volume=mga-pgdata:/var/lib/postgresql/data:Z
+SecurityLabelType=container_runtime_t
+HealthCmd=/usr/local/bin/pg_isready -U soap_user
+HealthInterval=10s
+HealthTimeout=5s
+HealthRetries=3
+
+[Service]
+Restart=always
+TimeoutStartSec=90
+RestartSec=10
+
+[Install]
+WantedBy=default.target

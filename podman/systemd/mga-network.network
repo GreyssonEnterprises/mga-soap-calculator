@@ -1,0 +1,10 @@
+[Unit]
+Description=MGA Soap Calculator Pod Network
+
+[Network]
+Driver=bridge
+Subnet=10.88.0.0/24
+Gateway=10.88.0.1
+
+[Install]
+WantedBy=default.target
