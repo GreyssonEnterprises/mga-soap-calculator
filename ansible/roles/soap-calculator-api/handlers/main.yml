@@ -1,0 +1,24 @@
+---
+# soap-calculator-api role handlers
+# Fedora 42 Rootless Podman Configuration
+
+- name: reload systemd and restart api
+  systemd:
+    name: soap-calculator-api.service
+    state: restarted
+    daemon_reload: yes
+    scope: user
+  become: yes
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+
+- name: restart api
+  systemd:
+    name: soap-calculator-api.service
+    state: restarted
+    scope: user
+  become: yes
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"

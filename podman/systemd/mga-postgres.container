@@ -1,23 +1,39 @@
 [Unit]
-Description=MGA Soap Calculator PostgreSQL Database
-After=network-online.target
+Description=MGA PostgreSQL 15 Database
+Wants=network-online.target
+After=network-online.target mga-network.network
 
 [Container]
-Image=docker.io/library/postgres:15-alpine
+# PostgreSQL 15 official image (RHEL registry requires authentication)
+Image=docker.io/library/postgres:15
 ContainerName=mga-postgres
-Network=mga-network.network
-EnvironmentFile=/etc/mga-calculator/postgres.env
+Network=mga-web
+PublishPort=127.0.0.1:5432:5432
+EnvironmentFile=%h/.config/mga-soap-calculator/postgres.env
+
+# Persistent data with SELinux relabel (private mount)
+# Official PostgreSQL image uses /var/lib/postgresql/data
 Volume=mga-pgdata:/var/lib/postgresql/data:Z
-SecurityLabelType=container_runtime_t
-HealthCmd=/usr/local/bin/pg_isready -U soap_user
-HealthInterval=10s
-HealthTimeout=5s
-HealthRetries=3
+
+# Health check - proper health verification
+# Simplified command (RHEL image has native healthcheck support)
+HealthCmd=pg_isready -U postgres -d mga_soap_calculator
+HealthInterval=30s
+HealthTimeout=10s
+HealthRetries=5
+HealthStartPeriod=30s
+
+# Resource limits
+Memory=1G
+
+# Logging
+PodmanArgs=--log-driver=journald
 
 [Service]
 Restart=always
-TimeoutStartSec=90
-RestartSec=10
+RestartSec=5
+TimeoutStartSec=300
+TimeoutStopSec=30
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

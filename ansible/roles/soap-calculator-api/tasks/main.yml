@@ -1,0 +1,65 @@
+---
+# soap-calculator-api role tasks
+# Fedora 42 Rootless Podman Configuration
+
+- name: Deploy API environment file
+  template:
+    src: "{{ playbook_dir }}/../templates/api.env.j2"
+    dest: "{{ config_dir }}/api.env"
+    owner: "{{ grimm_user }}"
+    group: "{{ grimm_user }}"
+    mode: '0600'
+  become: yes
+  notify: restart api
+
+- name: Deploy Quadlet API container unit
+  copy:
+    src: "{{ playbook_dir }}/../../podman/systemd/soap-calculator-api.container"
+    dest: "{{ quadlet_dir }}/soap-calculator-api.container"
+    owner: "{{ grimm_user }}"
+    group: "{{ grimm_user }}"
+    mode: '0644'
+  become: yes
+  notify: reload systemd and restart api
+
+- name: Pull latest container image (if registry configured)
+  command: podman pull {{ api_image }}
+  register: pull_result
+  changed_when: "'Downloaded newer image' in pull_result.stdout"
+  failed_when: false  # Allow to fail if image is local-only
+  become: yes
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+  notify: restart api
+
+- name: Reload systemd user daemon
+  systemd:
+    daemon_reload: yes
+    scope: user
+  become: yes
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+
+- name: Enable and start API service
+  systemd:
+    name: soap-calculator-api.service
+    enabled: yes
+    state: started
+    scope: user
+    daemon_reload: yes
+  become: yes
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+
+- name: Wait for API health endpoint
+  uri:
+    url: http://127.0.0.1:8000/health
+    status_code: 200
+    timeout: 10
+  register: api_health
+  retries: 30
+  delay: 2
+  until: api_health.status == 200

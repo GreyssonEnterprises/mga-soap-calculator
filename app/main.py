@@ -48,7 +48,7 @@ Calculate saponification values, quality metrics, and additive effects for soap 
 
 **Security:**
 - JWT authentication with 24-hour token expiry
-- User registration with bcrypt password hashing
+- User registration with Argon2id password hashing (OWASP recommended)
 - Calculation ownership enforcement (users can only access their own calculations)
 - CORS-protected endpoints
 

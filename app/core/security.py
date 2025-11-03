@@ -6,7 +6,7 @@ import uuid
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import JWTError, jwt
-from passlib.hash import bcrypt
+from passlib.context import CryptContext
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -17,31 +17,44 @@ from app.models.user import User
 # Security scheme for JWT Bearer tokens
 security = HTTPBearer()
 
+# Password hashing context using Argon2id
+# Argon2id parameters:
+# - memory_cost=65536: 64 MB memory usage (OWASP recommended minimum)
+# - time_cost=3: 3 iterations (balance between security and performance)
+# - parallelism=4: Use 4 parallel threads (optimal for multi-core systems)
+pwd_context = CryptContext(
+    schemes=["argon2"],
+    deprecated="auto",
+    argon2__memory_cost=65536,
+    argon2__time_cost=3,
+    argon2__parallelism=4,
+)
+
 
 def get_password_hash(password: str) -> str:
-    """Hash a password using bcrypt
+    """Hash a password using Argon2id
 
     Args:
         password: Plain text password
 
     Returns:
-        Bcrypt hash of the password
+        Argon2id hash of the password ($argon2id$ prefix)
     """
-    return bcrypt.hash(password)
+    return pwd_context.hash(password)
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """Verify a plain password against a bcrypt hash
+    """Verify a plain password against an Argon2id hash
 
     Args:
         plain_password: Plain text password to verify
-        hashed_password: Bcrypt hash to verify against
+        hashed_password: Argon2id hash to verify against
 
     Returns:
         True if password matches, False otherwise
     """
     try:
-        return bcrypt.verify(plain_password, hashed_password)
+        return pwd_context.verify(plain_password, hashed_password)
     except Exception:
         return False
 

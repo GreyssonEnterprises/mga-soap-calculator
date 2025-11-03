@@ -1,0 +1,7 @@
+---
+# soap-calculator-database role defaults
+
+db_name: "mga_soap_calculator"
+db_user: "soap_user"
+config_dir: "/etc/mga-soap-calculator"
+quadlet_dir: "/etc/containers/systemd"

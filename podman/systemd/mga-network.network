@@ -2,9 +2,14 @@
 Description=MGA Soap Calculator Pod Network
 
 [Network]
+NetworkName=mga-web
 Driver=bridge
-Subnet=10.88.0.0/24
-Gateway=10.88.0.1
+Subnet=10.90.0.0/24
+Gateway=10.90.0.1
+IPv6=false
+
+[Network.Options]
+com.docker.network.bridge.name=br-mga
 
 [Install]
 WantedBy=default.target

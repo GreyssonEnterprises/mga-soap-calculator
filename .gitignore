@@ -68,3 +68,33 @@ dmypy.json
 *.tmp
 *.temp
 *.bak
+
+# ================================================
+# Ansible Security - Production Secrets
+# ================================================
+# Ansible Vault - Production Secrets (NEVER COMMIT UNENCRYPTED)
+ansible/group_vars/production/vault.yml
+ansible/group_vars/staging/vault.yml
+ansible/group_vars/*/vault.yml
+
+# Ansible Inventory - Server Configuration (CONTAINS SERVER IPS/HOSTNAMES)
+ansible/inventory/production.yml
+ansible/inventory/staging.yml
+ansible/inventory/*.yml
+!ansible/inventory/group_vars/
+
+# Ansible Temporary Files
+ansible/*.retry
+ansible/.vault_pass
+*.vault
+
+# Container Secrets
+secrets/
+*.secret
+
+# Backup Files
+*.backup
+
+# MacOS Files (additional)
+.DS_Store
+._*

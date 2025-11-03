@@ -6,7 +6,6 @@ import sqlalchemy as sa
 from sqlalchemy import String, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship, validates
-from passlib.hash import bcrypt
 
 from app.db.base import Base
 
@@ -14,9 +13,9 @@ from app.db.base import Base
 class User(Base):
     """User model with UUID primary key
 
-    SECURITY: Password must be bcrypt-hashed before assignment.
-    Use passlib.hash.bcrypt.hash() to hash passwords.
-    The hashed_password field validates bcrypt format on assignment.
+    SECURITY: Password must be Argon2id-hashed before assignment.
+    Use app.core.security.get_password_hash() to hash passwords.
+    The hashed_password field validates Argon2id format on assignment.
     """
 
     __tablename__ = "users"
@@ -35,15 +34,15 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
-        comment="MUST be bcrypt hash format ($2b$ prefix). Use passlib.hash.bcrypt.hash() to hash passwords.",
+        comment="MUST be Argon2id hash format ($argon2id$ prefix). Use app.core.security.get_password_hash() to hash passwords.",
     )
 
     @validates('hashed_password')
     def validate_hashed_password(self, key, value):
-        """Validate that password is properly bcrypt-hashed
+        """Validate that password is properly Argon2id-hashed
 
         Prevents accidental plaintext password storage by verifying
-        bcrypt hash format ($2a$, $2b$, or $2y$ prefix with proper structure).
+        Argon2id hash format ($argon2id$ prefix with proper structure).
 
         Args:
             key: Column name (hashed_password)
@@ -53,26 +52,26 @@ class User(Base):
             Validated password hash
 
         Raises:
-            ValueError: If password is not a valid bcrypt hash
+            ValueError: If password is not a valid Argon2id hash
         """
         # Allow None during model construction (will fail nullable constraint)
         if value is None:
             return value
 
-        # Verify bcrypt hash format
-        # bcrypt hashes start with $2a$, $2b$, or $2y$ followed by cost and salt
-        if not value.startswith(('$2a$', '$2b$', '$2y$')):
+        # Verify Argon2id hash format
+        # Argon2id hashes start with $argon2id$ followed by version and parameters
+        if not value.startswith('$argon2id$'):
             raise ValueError(
-                "Password must be bcrypt-hashed before assignment. "
-                "Use passlib.hash.bcrypt.hash('your_password') to hash passwords. "
-                f"Got value starting with: {value[:10] if len(value) >= 10 else value}"
+                "Password must be Argon2id-hashed before assignment. "
+                "Use app.core.security.get_password_hash('your_password') to hash passwords. "
+                f"Got value starting with: {value[:20] if len(value) >= 20 else value}"
             )
 
-        # Verify it's at least the minimum length for a bcrypt hash (~60 chars)
-        if len(value) < 59:
+        # Verify it's at least the minimum length for an Argon2id hash (~90 chars)
+        if len(value) < 80:
             raise ValueError(
-                f"Invalid bcrypt hash format - too short (got {len(value)} chars, expected ≥59). "
-                "Use passlib.hash.bcrypt.hash() to generate proper bcrypt hashes."
+                f"Invalid Argon2id hash format - too short (got {len(value)} chars, expected ≥80). "
+                "Use app.core.security.get_password_hash() to generate proper Argon2id hashes."
             )
 
         return value

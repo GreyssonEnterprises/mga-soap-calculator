@@ -1,0 +1,322 @@
+---
+# MGA SOAP Calculator - Common Variables Across All Environments
+#
+# This file contains variables shared across production, staging, and any
+# other environments. Environment-specific overrides go in their respective
+# inventory files or group_vars directories.
+
+# ===========================================
+# Ansible Connection Settings
+# ===========================================
+# Common SSH arguments for all connections
+ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+
+# Connection timeout settings
+ansible_timeout: 30
+ansible_connect_timeout: 30
+
+# Fact gathering
+gather_facts: true
+gather_subset: "all"
+
+# ===========================================
+# Application Identity
+# ===========================================
+app_name: "mga-soap-calculator"
+app_full_name: "MGA SOAP Calculator"
+app_version: "1.0.0"  # Update with each release
+app_description: "Sovereign Organic Asset Pricing Calculator"
+
+# Application User/Group
+app_user: "mgauser"
+app_group: "mgagroup"
+app_uid: 1500
+app_gid: 1500
+
+# ===========================================
+# Container Base Images
+# ===========================================
+# Red Hat Universal Base Image (UBI) for Python
+ubi_python_image: "registry.access.redhat.com/ubi9/python-311:1-123"
+ubi_python_version: "3.11"
+
+# Red Hat PostgreSQL Image
+rhel_postgres_image: "registry.redhat.io/rhel9/postgresql-15:latest"
+postgres_major_version: "15"
+
+# Image Pull Policy
+container_image_pull_policy: "always"  # Always pull latest tag
+# container_image_pull_policy: "missing"  # Only if not present locally
+
+# ===========================================
+# Directory Structure Standards
+# ===========================================
+# Rootless Podman Configuration (Fedora 42, user: grimm)
+grimm_user: "grimm"
+grimm_uid: 1000  # VERIFIED actual UID on mga-hq-1
+grimm_home: "/home/grimm"
+
+# Base deployment paths (user-level for rootless Podman)
+deployment_base_path: "/home/grimm/.local/share/mga-soap-calculator"
+systemd_unit_path: "/home/grimm/.config/containers/systemd"
+quadlet_dir: "/home/grimm/.config/containers/systemd"
+config_dir: "/home/grimm/.config/mga-soap-calculator"
+env_files_path: "/home/grimm/.config/mga-soap-calculator/env"
+
+# Application directories (created during deployment)
+app_directories:
+  - "{{ deployment_base_path }}"
+  - "{{ deployment_base_path }}/backups"
+  - "{{ deployment_base_path }}/logs"
+  - "{{ deployment_base_path }}/scripts"
+  - "{{ env_files_path }}"
+
+# Directory ownership
+directory_owner: "root"
+directory_group: "root"
+directory_mode: "0755"
+
+# Sensitive file permissions
+sensitive_file_mode: "0600"
+executable_file_mode: "0755"
+
+# ===========================================
+# Podman / Container Configuration
+# ===========================================
+# Podman container runtime settings
+podman_version_min: "4.0"
+podman_compose_version_min: "1.0"
+
+# Quadlet systemd integration
+quadlet_enabled: true
+quadlet_generator_path: "/usr/lib/systemd/system-generators/podman-system-generator"
+
+# Container restart policies
+container_restart_policy: "always"
+container_stop_timeout: 30
+
+# Container log driver
+container_log_driver: "journald"
+container_log_max_size: "10m"
+
+# ===========================================
+# PostgreSQL Defaults
+# ===========================================
+# Database configuration
+postgres_port: 5432
+postgres_container_name: "mga-postgres"
+postgres_healthcheck_enabled: true
+postgres_healthcheck_interval: "30s"
+postgres_healthcheck_timeout: "5s"
+postgres_healthcheck_retries: 3
+
+# PostgreSQL data persistence
+postgres_volume_name: "mga-pgdata"
+postgres_data_dir: "/var/lib/postgresql/data"
+
+# PostgreSQL configuration defaults
+postgres_default_config:
+  max_connections: 100
+  shared_buffers: "256MB"
+  effective_cache_size: "768MB"
+  maintenance_work_mem: "64MB"
+  checkpoint_completion_target: 0.9
+  wal_buffers: "16MB"
+  default_statistics_target: 100
+  random_page_cost: 1.1
+  work_mem: "4MB"
+
+# ===========================================
+# API Application Defaults
+# ===========================================
+# API server configuration
+api_container_name: "soap-calculator-api"
+api_default_port: 8000
+api_default_workers: 2
+api_default_log_level: "INFO"
+
+# FastAPI/Uvicorn settings
+api_framework: "fastapi"
+api_server: "uvicorn"
+api_worker_class: "uvicorn.workers.UvicornWorker"
+
+# API health endpoint
+api_health_endpoint: "/health"
+api_metrics_endpoint: "/metrics"
+
+# API timeout settings
+api_timeout: 60
+api_keepalive: 5
+
+# ===========================================
+# Network Configuration
+# ===========================================
+# Podman network configuration (rootless)
+podman_network_name: "mga-web"
+podman_network_subnet: "10.90.0.0/24"
+podman_network_gateway: "10.90.0.1"
+
+# Default network configuration
+default_network_driver: "bridge"
+network_internal: false
+network_ipv6_enabled: false
+
+# DNS configuration
+dns_servers:
+  - "8.8.8.8"
+  - "8.8.4.4"
+
+# ===========================================
+# Security Configuration
+# ===========================================
+# SELinux settings
+selinux_enabled: true
+selinux_policy: "targeted"
+selinux_default_mode: "enforcing"
+
+# Firewall settings
+firewall_enabled: true
+firewall_backend: "firewalld"  # or 'iptables'
+firewall_default_zone: "public"
+
+# SSL/TLS Configuration (for future HTTPS)
+ssl_enabled: false  # Enable when adding reverse proxy
+ssl_certificate_path: "/etc/ssl/certs"
+ssl_key_path: "/etc/ssl/private"
+
+# Security headers (for reverse proxy configuration)
+security_headers:
+  X-Frame-Options: "DENY"
+  X-Content-Type-Options: "nosniff"
+  X-XSS-Protection: "1; mode=block"
+  Strict-Transport-Security: "max-age=31536000; includeSubDomains"
+
+# ===========================================
+# Backup Configuration
+# ===========================================
+# Backup defaults
+backup_tool: "pg_dump"
+backup_format: "custom"  # custom, plain, directory, tar
+backup_compression: true
+backup_compression_level: 6
+
+# Backup retention
+default_backup_retention_days: 30
+backup_cleanup_enabled: true
+
+# Backup verification
+backup_verify_enabled: true
+backup_verify_on_completion: true
+
+# ===========================================
+# Monitoring and Logging
+# ===========================================
+# Log levels
+valid_log_levels:
+  - "DEBUG"
+  - "INFO"
+  - "WARNING"
+  - "ERROR"
+  - "CRITICAL"
+
+# Log rotation
+logrotate_enabled: true
+logrotate_frequency: "daily"
+logrotate_count: 14
+
+# Systemd journal settings
+journal_max_size: "500M"
+journal_max_files: 5
+
+# ===========================================
+# Deployment Configuration
+# ===========================================
+# Deployment strategy
+deployment_strategy: "rolling"  # rolling, blue-green, recreate
+deployment_max_unavailable: 0
+deployment_max_surge: 1
+
+# Health check configuration for deployments
+deployment_health_check_enabled: true
+deployment_readiness_timeout: 300
+
+# Rollback configuration
+auto_rollback_enabled: true
+rollback_on_health_check_failure: true
+
+# ===========================================
+# Maintenance Settings
+# ===========================================
+# Automatic updates
+auto_updates_packages:
+  - "podman"
+  - "systemd"
+  - "python3"
+
+auto_updates_reboot_required: false
+auto_updates_reboot_time: "03:00"
+
+# Cleanup tasks
+cleanup_enabled: true
+cleanup_old_images: true
+cleanup_image_age_days: 30
+cleanup_unused_volumes: false  # Safety: require manual cleanup
+
+# ===========================================
+# Development and Testing
+# ===========================================
+# Testing defaults
+test_database_name: "mga_soap_calculator_test"
+test_api_port: 8001
+
+# Debug settings
+debug_enabled: false
+debug_profiling_enabled: false
+
+# ===========================================
+# External Integrations (Future)
+# ===========================================
+# Placeholder for future integrations
+external_api_timeout: 30
+external_api_retry_count: 3
+external_api_retry_delay: 1
+
+# ===========================================
+# Performance Tuning
+# ===========================================
+# System resource limits
+system_max_open_files: 65536
+system_max_user_processes: 4096
+
+# Kernel parameters (sysctl)
+sysctl_defaults:
+  net.core.somaxconn: 1024
+  net.ipv4.tcp_max_syn_backlog: 2048
+  net.ipv4.ip_local_port_range: "1024 65535"
+  net.ipv4.tcp_tw_reuse: 1
+  net.ipv4.tcp_fin_timeout: 30
+  vm.swappiness: 10
+  vm.dirty_ratio: 15
+  vm.dirty_background_ratio: 5
+
+# Container resource defaults
+default_memory_limit: "1g"
+default_cpu_quota: "100%"
+
+# ===========================================
+# Compliance and Auditing
+# ===========================================
+# Audit logging
+audit_enabled: true
+audit_log_path: "/var/log/audit"
+
+# Configuration change tracking
+config_change_tracking: true
+config_backup_before_change: true
+
+# Compliance tags
+compliance_tags:
+  project: "mga-soap-calculator"
+  environment: "{{ deployment_environment }}"
+  managed_by: "ansible"
+  backup_required: "true"

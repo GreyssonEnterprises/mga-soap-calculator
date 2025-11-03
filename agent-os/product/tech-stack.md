@@ -86,10 +86,12 @@ Complete technical architecture for MGA Soap Calculator across all phases.
 ## Infrastructure
 
 ### Hosting & Deployment
-- **Platform:** TBD (AWS, DigitalOcean, Render, or Railway)
-- **Containerization:** Docker with multi-stage builds
-- **Orchestration:** Docker Compose for local dev, Kubernetes if scaling demands (unlikely initially)
+- **Platform:** Fedora 42 Linux server (on-premises or VPS)
+- **Containerization:** Podman with Fedora/UBI base images (NOT Docker)
+- **Orchestration:** Quadlet (systemd container integration) for production services
 - **CDN:** Cloudflare or AWS CloudFront for static asset delivery (Phase 3)
+
+**See:** `agent-os/standards/global/deployment-platform.md` for complete deployment platform specifications including Podman, Quadlet, SELinux, base image requirements, and operational procedures.
 
 ### CI/CD Pipeline
 - **Platform:** GitHub Actions
@@ -99,12 +101,13 @@ Complete technical architecture for MGA Soap Calculator across all phases.
   3. Unit tests (pytest, Vitest)
   4. Integration tests (pytest + httpx)
   5. E2E tests (Playwright)
-  6. Docker build
-  7. Deploy to staging/production
+  6. Podman container build (Fedora/UBI base images)
+  7. Deploy to staging/production via Ansible → Quadlet
 
 ### Configuration Management
-- **Tool:** Ansible (per project standards)
-- **Secrets Management:** Environment variables (.env files locally, secret management service in production)
+- **Tool:** Ansible (per project standards) - deploys Quadlet container units to systemd
+- **Secrets Management:** Ansible Vault for production secrets, .env files for local development only
+- **Container Orchestration:** Quadlet (.container units) managed via Ansible playbooks
 - **Feature Flags:** Environment-based or LaunchDarkly/Flagsmith if complex rollouts needed
 
 ### Monitoring & Observability
@@ -270,6 +273,9 @@ Complete technical architecture for MGA Soap Calculator across all phases.
 | React over Vue/Svelte | Larger ecosystem, team familiarity | Vue (smaller ecosystem), Svelte (newer, less mature) |
 | Tailwind over Bootstrap | Utility-first flexibility, smaller bundle | Bootstrap (opinionated design), CSS Modules (more verbose) |
 | Vite over Create React App | Faster dev server, better build optimization | CRA (deprecated), Next.js (SSR overkill for this use case) |
+| Podman over Docker | Daemonless security, systemd integration, rootless capability, Fedora/RHEL native | Docker (licensing concerns, requires daemon), LXC (lower-level) |
+| Quadlet over docker-compose | systemd native, production-grade orchestration, systemd dependency graph | docker-compose (external tool), Kubernetes (overkill for single-server) |
+| Fedora/UBI base images | Platform compatibility with Fedora 42 host, SELinux integration, Red Hat security pipeline | Debian/Ubuntu (package mismatch), Alpine (musl libc incompatibilities) |
 | Ansible over Terraform | Project standard, simpler for application deployment | Terraform (infrastructure-focused), manual deployment (not reproducible) |
 | GitHub Actions over Jenkins | Integrated with repo, simpler configuration | Jenkins (more setup overhead), GitLab CI (not using GitLab) |
 
