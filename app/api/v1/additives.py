@@ -155,30 +155,31 @@ async def recommend_additive(
     recommendations = {}
 
     # Light usage (minimum)
-    if additive.usage_rate_min_pct:
-        light_amount_g = round((batch_size_g * float(additive.usage_rate_min_pct)) / 100, 1)
+    if additive.typical_usage_min_percent:
+        light_amount_g = round((batch_size_g * float(additive.typical_usage_min_percent)) / 100, 1)
         recommendations["light"] = UsageRecommendation(
             amount_g=light_amount_g,
             amount_oz=round(light_amount_g / 28.35, 2),
-            usage_percentage=float(additive.usage_rate_min_pct)
+            usage_percentage=float(additive.typical_usage_min_percent)
         )
 
-    # Standard usage
-    if additive.usage_rate_standard_pct:
-        standard_amount_g = round((batch_size_g * float(additive.usage_rate_standard_pct)) / 100, 1)
+    # Standard usage (use average of min/max since no standard column exists)
+    if additive.typical_usage_min_percent and additive.typical_usage_max_percent:
+        standard_pct = (float(additive.typical_usage_min_percent) + float(additive.typical_usage_max_percent)) / 2
+        standard_amount_g = round((batch_size_g * standard_pct) / 100, 1)
         recommendations["standard"] = UsageRecommendation(
             amount_g=standard_amount_g,
             amount_oz=round(standard_amount_g / 28.35, 2),
-            usage_percentage=float(additive.usage_rate_standard_pct)
+            usage_percentage=round(standard_pct, 2)
         )
 
     # Heavy usage (maximum)
-    if additive.usage_rate_max_pct:
-        heavy_amount_g = round((batch_size_g * float(additive.usage_rate_max_pct)) / 100, 1)
+    if additive.typical_usage_max_percent:
+        heavy_amount_g = round((batch_size_g * float(additive.typical_usage_max_percent)) / 100, 1)
         recommendations["heavy"] = UsageRecommendation(
             amount_g=heavy_amount_g,
             amount_oz=round(heavy_amount_g / 28.35, 2),
-            usage_percentage=float(additive.usage_rate_max_pct)
+            usage_percentage=float(additive.typical_usage_max_percent)
         )
 
     # Build warnings list from JSONB warnings field
