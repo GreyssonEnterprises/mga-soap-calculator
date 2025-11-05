@@ -6,6 +6,7 @@ Provides:
 - JWT-based authentication and authorization
 - Professional-grade saponification and quality metric calculations
 - Advanced additive effect modeling (competitive advantage)
+- Smart additive calculator with usage recommendations
 - Complete OpenAPI/Swagger documentation
 """
 from fastapi import FastAPI, HTTPException
@@ -14,7 +15,7 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 
 from app.core.config import settings
-from app.api.v1 import auth, calculate, resources
+from app.api.v1 import auth, calculate, resources, additives, essential_oils, colorants
 
 
 def custom_openapi():
@@ -39,6 +40,13 @@ Calculate saponification values, quality metrics, and additive effects for soap 
 - Fatty acid profile analysis
 - INS (Iodine Number of Saponification) values
 - Iodine values for unsaturation analysis
+
+**Smart Additive Calculator:**
+- Usage rate recommendations (light/standard/heavy)
+- Category-based browsing (exfoliant, hardener, lather_booster, etc.)
+- Safety warnings and preparation instructions
+- Essential oil max usage rates with blending guidance
+- Natural colorant recommendations (9 color families)
 
 **Additive Effects (Competitive Advantage):**
 - Research-backed quality effect modifiers
@@ -206,6 +214,9 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(calculate.router)
 app.include_router(resources.router)
+app.include_router(additives.router)
+app.include_router(essential_oils.router)
+app.include_router(colorants.router)
 
 
 @app.get(
