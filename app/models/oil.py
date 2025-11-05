@@ -1,5 +1,6 @@
 """Oil model with SAP values and fatty acid profiles"""
 from datetime import datetime
+from typing import Optional
 
 import sqlalchemy as sa
 from sqlalchemy import String, Float, DateTime
@@ -15,6 +16,7 @@ class Oil(Base):
 
     SAP values define grams of lye needed per gram of oil.
     Fatty acid profile determines soap quality characteristics.
+    Saponified INCI name represents post-saponification nomenclature.
     """
 
     __tablename__ = "oils"
@@ -30,6 +32,11 @@ class Oil(Base):
     inci_name: Mapped[str] = mapped_column(
         String(200),
         nullable=False,
+    )
+    saponified_inci_name: Mapped[Optional[str]] = mapped_column(
+        String(200),
+        nullable=True,
+        comment="Post-saponification INCI name (e.g., 'Sodium Cocoate' or 'Potassium Cocoate')"
     )
     sap_value_naoh: Mapped[float] = mapped_column(
         Float,
