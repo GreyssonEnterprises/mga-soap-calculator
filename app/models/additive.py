@@ -1,9 +1,10 @@
 """Additive model with quality effect modifiers"""
 from datetime import datetime
+from decimal import Decimal
 from typing import Optional
 
 import sqlalchemy as sa
-from sqlalchemy import String, Float, Boolean, DateTime
+from sqlalchemy import String, Float, Boolean, DateTime, Numeric
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -21,7 +22,7 @@ class Additive(Base):
     __tablename__ = "additives"
 
     id: Mapped[str] = mapped_column(
-        String(50),
+        String(100),  # Increased from 50 to handle long names
         primary_key=True,
     )
     common_name: Mapped[str] = mapped_column(
@@ -62,6 +63,42 @@ class Additive(Base):
         JSONB,
         nullable=True,
         comment="Optional safety information and usage notes",
+    )
+    # Smart calculator fields
+    usage_rate_min_pct: Mapped[Optional[Decimal]] = mapped_column(
+        Numeric(5, 2),
+        nullable=True,
+        comment="Minimum usage percentage for calculator (light usage)",
+    )
+    usage_rate_max_pct: Mapped[Optional[Decimal]] = mapped_column(
+        Numeric(5, 2),
+        nullable=True,
+        comment="Maximum usage percentage for calculator (heavy usage)",
+    )
+    usage_rate_standard_pct: Mapped[Optional[Decimal]] = mapped_column(
+        Numeric(5, 2),
+        nullable=True,
+        comment="Standard recommended usage percentage for calculator",
+    )
+    when_to_add: Mapped[Optional[str]] = mapped_column(
+        String(200),
+        nullable=True,
+        comment="Timing guidance: to oils, to lye water, at trace, etc.",
+    )
+    preparation_instructions: Mapped[Optional[str]] = mapped_column(
+        String(500),
+        nullable=True,
+        comment="How to prepare additive before incorporation",
+    )
+    category: Mapped[Optional[str]] = mapped_column(
+        String(50),
+        nullable=True,
+        comment="Additive category: exfoliant, colorant, lather_booster, hardener, clay, botanical",
+    )
+    warnings: Mapped[Optional[dict]] = mapped_column(
+        JSONB,
+        nullable=True,
+        comment="Specific warnings: accelerates_trace, causes_overheating, can_be_scratchy, turns_brown",
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

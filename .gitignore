@@ -98,3 +98,6 @@ secrets/
 # MacOS Files (additional)
 .DS_Store
 ._*
+
+# Claude Code Instructions (project-specific, may contain sensitive paths)
+CLAUDE.md
