@@ -15,7 +15,7 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 
 from app.core.config import settings
-from app.api.v1 import auth, calculate, resources, additives, essential_oils, colorants
+from app.api.v1 import auth, calculate, resources, additives, essential_oils, colorants, inci
 
 
 def custom_openapi():
@@ -217,6 +217,7 @@ app.include_router(resources.router)
 app.include_router(additives.router)
 app.include_router(essential_oils.router)
 app.include_router(colorants.router)
+app.include_router(inci.router)
 
 
 @app.get(
