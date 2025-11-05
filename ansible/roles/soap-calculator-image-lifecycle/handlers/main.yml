@@ -1,0 +1,25 @@
+---
+# Handlers for image lifecycle events
+
+- name: deployment_restarted
+  debug:
+    msg: "API service restarted with new image"
+
+- name: reload systemd user daemon
+  systemd:
+    daemon_reload: true
+    scope: user
+  become: true
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+
+- name: restart api service
+  systemd:
+    name: soap-calculator-api.service
+    state: restarted
+    scope: user
+  become: true
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"

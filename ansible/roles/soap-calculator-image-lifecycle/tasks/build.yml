@@ -1,0 +1,70 @@
+---
+# Build and export container image locally
+
+- name: Ensure build artifacts directory exists
+  file:
+    path: "{{ build_artifacts_path }}"
+    state: directory
+    mode: '0755'
+  delegate_to: localhost
+
+- name: Build container image with version tag
+  containers.podman.podman_image:
+    name: "{{ image_base_name }}"
+    tag: "{{ image_version }}"
+    path: "{{ playbook_dir }}/../.."
+    build:
+      file: "{{ playbook_dir }}/../../Dockerfile"
+      cache: true
+      force_rm: true
+    state: build
+  delegate_to: localhost
+  register: image_build
+  timeout: 600
+
+- name: Display build result
+  debug:
+    msg: "Image built: {{ image_build.image[0].Id[:12] if image_build.image is iterable and image_build.image|length > 0 else 'success' }}"
+
+- name: Tag image as latest for local testing
+  command: podman tag {{ image_base_name }}:{{ image_version }} {{ image_base_name }}:latest
+  delegate_to: localhost
+  changed_when: true
+
+- name: Export image as OCI archive
+  command: >
+    podman save
+    --format oci-archive
+    --output {{ build_artifacts_path }}/mga-soap-calculator-{{ image_version }}.tar
+    {{ image_base_name }}:{{ image_version }}
+  delegate_to: localhost
+  changed_when: true
+
+- name: Compress archive with gzip
+  archive:
+    path: "{{ build_artifacts_path }}/mga-soap-calculator-{{ image_version }}.tar"
+    dest: "{{ build_artifacts_path }}/mga-soap-calculator-{{ image_version }}.tar.gz"
+    format: gz
+    remove: true
+  delegate_to: localhost
+
+- name: Generate SHA256 checksum
+  stat:
+    path: "{{ build_artifacts_path }}/mga-soap-calculator-{{ image_version }}.tar.gz"
+    checksum_algorithm: sha256
+    get_checksum: true
+  register: archive_stat
+  delegate_to: localhost
+
+- name: Record checksum file
+  copy:
+    content: "{{ archive_stat.stat.checksum }}  mga-soap-calculator-{{ image_version }}.tar.gz\n"
+    dest: "{{ build_artifacts_path }}/CHECKSUMS.sha256"
+  delegate_to: localhost
+
+- name: Display archive information
+  debug:
+    msg: |
+      Archive created: {{ build_artifacts_path }}/mga-soap-calculator-{{ image_version }}.tar.gz
+      Size: {{ (archive_stat.stat.size / 1024 / 1024) | round(2) }} MB
+      SHA256: {{ archive_stat.stat.checksum }}

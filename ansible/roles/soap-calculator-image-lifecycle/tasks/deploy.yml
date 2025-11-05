@@ -1,0 +1,83 @@
+---
+# Load image into Podman and restart services
+
+- name: Preserve previous latest image as rollback
+  command: >
+    podman tag
+    {{ image_base_name }}:latest
+    {{ image_base_name }}:rollback
+  become: true
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+  ignore_errors: true  # May not exist on first deployment
+  register: preserve_rollback
+
+- name: Display rollback preservation status
+  debug:
+    msg: "{{ 'Previous image preserved as rollback' if preserve_rollback.rc == 0 else 'No previous image to preserve (first deployment)' }}"
+
+- name: Load new image from archive
+  command: >
+    podman load
+    --input {{ image_storage_path }}/current
+  become: true
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+  register: image_load
+  timeout: "{{ image_load_timeout }}"
+
+- name: Display loaded image information
+  debug:
+    msg: "{{ image_load.stdout_lines }}"
+
+- name: Tag loaded image as latest
+  command: >
+    podman tag
+    {{ image_base_name }}:{{ image_version }}
+    {{ image_base_name }}:latest
+  become: true
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+  changed_when: true
+
+- name: Verify image is in local storage
+  command: podman images {{ image_base_name }}:latest --format "{{ '{{' }}.ID{{ '}}' }}"
+  become: true
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+  register: verify_image
+  failed_when: verify_image.stdout == ""
+  changed_when: false
+
+- name: Display verified image ID
+  debug:
+    msg: "Image verified in storage: {{ verify_image.stdout }}"
+
+- name: Reload systemd user daemon
+  systemd:
+    daemon_reload: true
+    scope: user
+  become: true
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+
+- name: Restart API service with new image
+  systemd:
+    name: soap-calculator-api.service
+    state: restarted
+    scope: user
+  become: true
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+  notify: deployment_restarted
+
+- name: Wait for service to start
+  pause:
+    seconds: "{{ service_restart_wait }}"
+    prompt: "Waiting {{ service_restart_wait }}s for service startup"

@@ -1,0 +1,82 @@
+---
+# Emergency rollback procedure - restore previous working image
+
+- name: ROLLBACK INITIATED
+  debug:
+    msg: |
+      ========================================
+      EMERGENCY ROLLBACK IN PROGRESS
+      Reason: Deployment validation failed
+      Action: Restoring previous version
+      ========================================
+
+- name: Verify rollback image exists
+  command: podman images {{ image_base_name }}:rollback --format "{{ '{{' }}.ID{{ '}}' }}"
+  become: true
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+  register: rollback_image_check
+  changed_when: false
+
+- name: Fail if no rollback image available
+  fail:
+    msg: "CRITICAL: No rollback image available. Manual intervention required."
+  when: rollback_image_check.stdout == ""
+
+- name: Restore rollback image as latest
+  command: >
+    podman tag
+    {{ image_base_name }}:rollback
+    {{ image_base_name }}:latest
+  become: true
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+  changed_when: true
+
+- name: Restart service with rollback image
+  systemd:
+    name: soap-calculator-api.service
+    state: restarted
+    scope: user
+  become: true
+  become_user: "{{ grimm_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ grimm_uid }}"
+
+- name: Wait for rollback service to start
+  pause:
+    seconds: "{{ service_restart_wait }}"
+    prompt: "Waiting for rollback service startup"
+
+- name: Verify rollback health
+  uri:
+    url: "{{ health_check_url }}"
+    status_code: 200
+    timeout: "{{ health_check_timeout }}"
+  register: rollback_health
+  retries: "{{ health_check_retries }}"
+  delay: "{{ health_check_delay }}"
+  until: rollback_health.status == 200
+  ignore_errors: true
+
+- name: Display rollback result
+  debug:
+    msg: "{{ 'Rollback SUCCESSFUL - service restored' if rollback_health.status == 200 else 'Rollback FAILED - manual intervention required' }}"
+
+- name: Fail deployment after rollback
+  fail:
+    msg: |
+      Deployment failed validation and rollback was executed.
+      Previous version has been restored.
+      Review logs before attempting redeployment.
+  when: rollback_health.status == 200
+
+- name: Critical failure - both deployment and rollback failed
+  fail:
+    msg: |
+      CRITICAL FAILURE: Both new deployment and rollback have failed.
+      Service may be unavailable.
+      IMMEDIATE MANUAL INTERVENTION REQUIRED.
+  when: rollback_health.status != 200

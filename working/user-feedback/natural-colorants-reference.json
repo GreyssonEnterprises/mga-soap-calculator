@@ -1,0 +1,604 @@
+{
+  "yellow": [
+    {
+      "name": "Annatto Seeds",
+      "botanical": "Bixa orellana",
+      "usage": "1 tsp PPO infused oil",
+      "method": "Infuse seeds in liquid oil, strain, use infused oil",
+      "range": "Buttery yellow to pumpkin orange"
+    },
+    {
+      "name": "Carrots",
+      "botanical": "Daucus carota",
+      "usage": "Juice or puree",
+      "method": "Use as lye solution or add at trace",
+      "range": "Yellow to yellow-orange"
+    },
+    {
+      "name": "Curry Powder",
+      "botanical": "Mixed spices",
+      "usage": "1/4-1 tsp PPO",
+      "method": "Mix in oil at trace or infuse in liquid oil",
+      "range": "Light to deep yellow",
+      "warnings": "Can be scratchy"
+    },
+    {
+      "name": "Daffodil Flowers",
+      "botanical": "Narcissus tazetta",
+      "usage": "Puree",
+      "method": "Add to lye solution or at trace",
+      "range": "Pale to buttery yellow",
+      "warnings": "Avoid green parts (skin irritant)"
+    },
+    {
+      "name": "Goldenrod",
+      "botanical": "Solidago virgaurea",
+      "usage": "Pureed infusion",
+      "method": "Use as lye water or add at trace",
+      "range": "Pale to buttery yellow"
+    },
+    {
+      "name": "Lemon Zest",
+      "botanical": "Citrus limonum",
+      "usage": "1/2-1 tsp PPO",
+      "method": "Add finely grated peel at trace",
+      "range": "Pale to dark yellow"
+    },
+    {
+      "name": "Pumpkin",
+      "botanical": "Cucurbita pepo",
+      "usage": "Up to 50% of water",
+      "method": "Puree and replace water or add at trace",
+      "range": "Yellow to light orange"
+    },
+    {
+      "name": "Red Palm Oil",
+      "botanical": "Elaeis guineensis kernel oil",
+      "usage": "1-10% of oils",
+      "method": "Add as soaping oil",
+      "range": "Yellow to deep orange"
+    },
+    {
+      "name": "Rudbeckia Petals",
+      "botanical": "Rudbeckia Hirta",
+      "usage": "Infusion",
+      "method": "Add to lye solution or pureed infusion",
+      "range": "Pale to sunny yellow"
+    },
+    {
+      "name": "Safflower",
+      "botanical": "Carthamus tinctorius",
+      "usage": "1-2 tsp PPO",
+      "method": "Mix in oil at trace",
+      "range": "Yellow to orange-yellow"
+    },
+    {
+      "name": "Saffron",
+      "botanical": "Crocus sativus",
+      "usage": "Pinch PPO",
+      "method": "Infuse in oil or add to lye solution",
+      "range": "Soft to vibrant yellow",
+      "warnings": "Expensive"
+    },
+    {
+      "name": "Turmeric",
+      "botanical": "Curcuma longa",
+      "usage": "1/32 tsp (yellow) to 1 tsp (orange) PPO",
+      "method": "Add to lye or at trace, premix in oil",
+      "range": "Pale yellow to burnt orange",
+      "warnings": "Does not disperse in water"
+    },
+    {
+      "name": "Weld",
+      "botanical": "Reseda luteola",
+      "usage": "Up to 3 tsp PPO",
+      "method": "Add dried weld at trace",
+      "range": "Soft to muted yellow"
+    },
+    {
+      "name": "Yarrow",
+      "botanical": "Achillea millefolium",
+      "usage": "Infused oil or powder at trace",
+      "method": "Infuse in oil or add powder at trace",
+      "range": "Muted yellow"
+    }
+  ],
+  "orange": [
+    {
+      "name": "Annatto Seeds",
+      "botanical": "Bixa orellana",
+      "usage": "Up to 1 tsp PPO",
+      "method": "Infuse in oil, use infused oil",
+      "range": "Pale yellow to burnt orange"
+    },
+    {
+      "name": "Buriti Oil",
+      "botanical": "Mauritia flexuosa fruit oil",
+      "usage": "Add after trace",
+      "method": "Add oil after trace",
+      "range": "Light yellow to deep orange"
+    },
+    {
+      "name": "Calendula",
+      "botanical": "Calendula officinalis",
+      "usage": "Infused oil or direct",
+      "method": "Infuse in oil, add petals, or infuse in lye",
+      "range": "Yellow-orange to pink-orange"
+    },
+    {
+      "name": "Carrot",
+      "botanical": "Daucus carota",
+      "usage": "Juice or puree",
+      "method": "Use as lye solution or add at trace",
+      "range": "Yellow to yellow-orange"
+    },
+    {
+      "name": "Orange Zest",
+      "botanical": "Citrus aurantium dulcis",
+      "usage": "1/2-1 tsp PPO",
+      "method": "Add finely grated zest at trace",
+      "range": "Sunny yellow to orange"
+    },
+    {
+      "name": "Paprika",
+      "botanical": "Capsicum annuum",
+      "usage": "Infused oil",
+      "method": "Infuse in oil, strain spice (or soap is scratchy)",
+      "range": "Peach to orange-brown"
+    },
+    {
+      "name": "Pumpkin",
+      "botanical": "Cucurbita pepo",
+      "usage": "Puree at trace or in oils",
+      "method": "Add as puree",
+      "range": "Yellow to light orange"
+    },
+    {
+      "name": "Red Palm Oil",
+      "botanical": "Elaeis guineensis kernel oil",
+      "usage": "Up to 10% of oils",
+      "method": "Add as soaping oil",
+      "range": "Yellow to deep orange"
+    },
+    {
+      "name": "Tomato",
+      "botanical": "Solanum lycopersicum",
+      "usage": "1-3 tsp PPO",
+      "method": "Add tomato paste at trace",
+      "range": "Light to medium orange"
+    },
+    {
+      "name": "Turmeric",
+      "botanical": "Curcuma longa",
+      "usage": "1/32-1 tsp PPO",
+      "method": "Add to lye or at trace",
+      "range": "Pale yellow to burnt orange"
+    }
+  ],
+  "pink": [
+    {
+      "name": "Rhubarb",
+      "botanical": "Rheum rhabarbarum",
+      "usage": "Infused oil",
+      "method": "Infuse dried roots in oil",
+      "range": "Soft pastel to coral pink"
+    },
+    {
+      "name": "Hibiscus Flower",
+      "botanical": "Hibiscus sabdariffa",
+      "usage": "Powder",
+      "method": "Add to melt-and-pour",
+      "range": "Soft pink",
+      "warnings": "Does not survive CP/HP soapmaking"
+    },
+    {
+      "name": "Lady's Bedstraw",
+      "botanical": "Galium verum",
+      "usage": "Infused oil",
+      "method": "Infuse dried roots in oil",
+      "range": "Coral pink"
+    },
+    {
+      "name": "Cochineal",
+      "botanical": "Cochineal/Carmine",
+      "usage": "Infusion or pinch",
+      "method": "Simmer in water, use as lye solution",
+      "range": "Dusky pink",
+      "warnings": "Not vegetarian/vegan"
+    },
+    {
+      "name": "Madder Root",
+      "botanical": "Rubia tinctorum",
+      "usage": "1/2-2 tsp PPO or infused oil",
+      "method": "Add to lye, at trace, or use infused oil",
+      "range": "Pink to purple to red"
+    },
+    {
+      "name": "Pink Clay (Rose Clay)",
+      "botanical": "Kaolinite",
+      "usage": "1/2-2 tsp PPO",
+      "method": "Add to lye or premix with water at trace",
+      "range": "Pink to brick red"
+    },
+    {
+      "name": "Sorrel",
+      "botanical": "Rumex acetosa",
+      "usage": "Infused oil",
+      "method": "Infuse dried roots in oil",
+      "range": "Warm to salmon pink"
+    }
+  ],
+  "red": [
+    {
+      "name": "Himalayan Rhubarb",
+      "botanical": "Rheum australe/emodi",
+      "usage": "Infused oil (20%+ of recipe)",
+      "method": "Infuse powder in oil for 1 month, use in recipe",
+      "range": "Pink to intense magenta",
+      "warnings": "Adding powder directly = murky red-brown"
+    },
+    {
+      "name": "Cochineal",
+      "botanical": "Cochineal/Carmine",
+      "usage": "Powder or infusion",
+      "method": "Add to oils/trace or infuse in water",
+      "range": "Orange to pink to red",
+      "warnings": "Not vegetarian/vegan"
+    },
+    {
+      "name": "Moroccan Red Clay",
+      "botanical": "Red Kaolin Clay",
+      "usage": "1 tsp PPO (pink) to 2-3 tsp (deeper)",
+      "method": "Add to lye or premix with water at trace",
+      "range": "Pink to brick red to milk chocolate brown"
+    },
+    {
+      "name": "Pink Clay",
+      "botanical": "Kaolinite",
+      "usage": "1 tsp (pink) to 2-3 tsp (deeper) PPO",
+      "method": "Add to lye or premix with water at trace",
+      "range": "Pink to brick red"
+    },
+    {
+      "name": "St Johns Wort Flowers",
+      "botanical": "Hypericum perforatum",
+      "usage": "Infused oil",
+      "method": "Infuse fresh flowers in oil",
+      "range": "Red",
+      "warnings": "Usually turns brown instead of staying red"
+    }
+  ],
+  "blue": [
+    {
+      "name": "Activated Charcoal",
+      "botanical": "Carbon",
+      "usage": "1 tsp PPO (for blue)",
+      "method": "Add at trace",
+      "range": "Denim blue (in yellow oils) to black",
+      "notes": "Small amounts in yellow oils = blue"
+    },
+    {
+      "name": "Blue Chamomile Essential Oil",
+      "botanical": "Azulene",
+      "usage": "1-2 drops at trace",
+      "method": "Add at trace",
+      "range": "Blue",
+      "warnings": "Expensive"
+    },
+    {
+      "name": "Cambrian Blue Clay",
+      "botanical": "Lilite",
+      "usage": "1-2 tsp PPO",
+      "method": "Premix in water or add to lye",
+      "range": "Soft gray-green to gray-blue"
+    },
+    {
+      "name": "Indigo",
+      "botanical": "Indigofera tinctoria/Persicaria tinctoria",
+      "usage": "Varies",
+      "method": "At trace, in lye, or infused oil",
+      "range": "Dark to light blue or green",
+      "warnings": "Beware synthetic versions"
+    },
+    {
+      "name": "Woad",
+      "botanical": "Isatis tinctoria",
+      "usage": "1-2 tsp PPO",
+      "method": "Add to lye or infuse in oil",
+      "range": "Green-blue to grey-blue"
+    }
+  ],
+  "purple": [
+    {
+      "name": "Alkanet Root",
+      "botanical": "Alkanna tinctoria",
+      "usage": "3 TBSP roots per pint oil or 1/2-2 tsp powder PPO",
+      "method": "Infuse in oil (best) or add powder",
+      "range": "Pale lavender to deep purple",
+      "warnings": "Poor quality = gray instead of purple, direct powder = gritty"
+    },
+    {
+      "name": "Gromwell Root",
+      "botanical": "Lithospermum erythrorhizon",
+      "usage": "30g per 454g oil (20%+ of recipe)",
+      "method": "Cold-infuse for 1 month, strain, use in recipe",
+      "range": "Natural purple"
+    },
+    {
+      "name": "Red Sandalwood",
+      "botanical": "Pterocarpus santalinus",
+      "usage": "1/4-1/2 tsp PPO",
+      "method": "Premix in oil, add at trace",
+      "range": "Muted purple to burgundy to mauve to brown",
+      "warnings": "Can be very scratchy if using more"
+    },
+    {
+      "name": "Brazilian Purple Clay",
+      "botanical": "Kaolin",
+      "usage": "1 tsp PPO",
+      "method": "Add to lye or premix with water at trace",
+      "range": "Soft gray-purple"
+    }
+  ],
+  "brown": [
+    {
+      "name": "Beet Root",
+      "botanical": "Beta vulgaris",
+      "usage": "Powder, juice, or infused oil",
+      "method": "Various methods",
+      "range": "Warm to dull brown",
+      "warnings": "Does NOT color soap red"
+    },
+    {
+      "name": "Black Walnut Hull Powder",
+      "botanical": "Juglans nigra",
+      "usage": "At trace",
+      "method": "Add powder at trace",
+      "range": "Deep brown",
+      "warnings": "Scratchy/exfoliating"
+    },
+    {
+      "name": "Chamomile Flowers",
+      "botanical": "Anthemis noblis/Matricaria chamomilla",
+      "usage": "Infusion",
+      "method": "Infuse in water, use for lye solution",
+      "range": "Yellow-beige to light brown"
+    },
+    {
+      "name": "Cinnamon Powder",
+      "botanical": "Cinnamomum zeylanicum",
+      "usage": "Up to 1 tsp PPO",
+      "method": "Add at trace",
+      "range": "Light to medium warm-brown",
+      "warnings": "Slightly gritty, exfoliating"
+    },
+    {
+      "name": "Coffee",
+      "botanical": "Coffea arabica seed extract",
+      "usage": "Brewed coffee for lye + 1 tsp grounds PPO",
+      "method": "Use coffee as water, add grounds at trace",
+      "range": "Medium to dark brown",
+      "warnings": "Grounds very exfoliating"
+    },
+    {
+      "name": "Comfrey",
+      "botanical": "Symphytum officinale",
+      "usage": "Infused oil",
+      "method": "Infuse dried leaves in oil",
+      "range": "Light brown",
+      "notes": "Not widely tested"
+    },
+    {
+      "name": "Cranberry",
+      "botanical": "Vaccinium macrocarpon",
+      "usage": "1 TBSP puree or 1 tsp seeds PPO",
+      "method": "Add puree at trace or seeds",
+      "range": "Red-brown with specks"
+    },
+    {
+      "name": "Green Tea",
+      "botanical": "Camellia sinensis",
+      "usage": "Infusion",
+      "method": "Infuse in water for lye solution",
+      "range": "Brown-green",
+      "notes": "Speckles if unstrained"
+    },
+    {
+      "name": "Henna",
+      "botanical": "Lawsonia inermis",
+      "usage": "1-2 tsp PPO",
+      "method": "Premix in oil, add at trace",
+      "range": "Green-brown"
+    },
+    {
+      "name": "Honey",
+      "botanical": "Honey",
+      "usage": "1/2-1 tsp to lye solution",
+      "method": "Add to hot lye solution (caramelizes)",
+      "range": "Light to dark brown"
+    },
+    {
+      "name": "Milk",
+      "botanical": "Mammal milk",
+      "usage": "1-3 tsp PPO in lye",
+      "method": "Add to lye solution",
+      "range": "Light to dark brown",
+      "warnings": "Can scorch and smell bad if too much"
+    },
+    {
+      "name": "Molasses",
+      "botanical": "Saccharum officinarum",
+      "usage": "1/2-1 tsp PPO",
+      "method": "Add at trace or to lye",
+      "range": "Chocolate brown"
+    },
+    {
+      "name": "Olive Leaf Powder",
+      "botanical": "Olea europaea",
+      "usage": "At trace",
+      "method": "Add powder at trace",
+      "range": "Warm brown"
+    },
+    {
+      "name": "Peppermint Leaves",
+      "botanical": "Mentha piperita",
+      "usage": "Tea or 1 tsp ground PPO",
+      "method": "Use tea as lye water OR add ground at trace",
+      "range": "Beige (tea) or green-to-brown speckles (ground)",
+      "notes": "Green fades to brown over months"
+    },
+    {
+      "name": "Moroccan Red Clay",
+      "botanical": "Red Kaolin Clay",
+      "usage": "1 tsp PPO",
+      "method": "Add to lye or premix with water at trace",
+      "range": "Milk chocolate brown"
+    },
+    {
+      "name": "Rhassoul Clay",
+      "botanical": "Moroccan lava clay",
+      "usage": "1 tsp PPO",
+      "method": "Premix with water, add to oils",
+      "range": "Brown"
+    },
+    {
+      "name": "Rose Hips (ground)",
+      "botanical": "Rosa canina/Rosa rugosa",
+      "usage": "Up to 1 tsp PPO",
+      "method": "Add at trace",
+      "range": "Tan to brown speckles",
+      "warnings": "Exfoliating, can be scratchy"
+    }
+  ],
+  "green": [
+    {
+      "name": "Alfalfa (Liquid Chlorophyll)",
+      "botanical": "Medicago Sativa",
+      "usage": "1 TBSP PPO",
+      "method": "Add liquid chlorophyll",
+      "range": "Bright to muted pastel green",
+      "warnings": "Fades to greeny-yellow, store in dark"
+    },
+    {
+      "name": "Avocado Puree",
+      "botanical": "Persea Gratissma",
+      "usage": "Up to 3 tsp PPO",
+      "method": "Add at trace",
+      "range": "Yellow-green",
+      "warnings": "Fades to muted yellow in light"
+    },
+    {
+      "name": "Burdock Leaf",
+      "botanical": "Arctium lappa",
+      "usage": "Infused oil",
+      "method": "Infuse dried leaves in oil",
+      "range": "Natural green"
+    },
+    {
+      "name": "Cucumber",
+      "botanical": "Cucumis sativus",
+      "usage": "Peel puree at trace",
+      "method": "Add peels as puree",
+      "range": "Bright green",
+      "warnings": "Fades to muted yellow"
+    },
+    {
+      "name": "Dandelion Leaf",
+      "botanical": "Taraxacum officinale weber",
+      "usage": "Powder at trace",
+      "method": "Add powder at trace",
+      "range": "Muted brown-green"
+    },
+    {
+      "name": "French Green Clay",
+      "botanical": "Montmorillonite",
+      "usage": "Up to 1 tsp PPO",
+      "method": "Add to lye or premix with water at trace",
+      "range": "Pale pastel to earthy green"
+    },
+    {
+      "name": "Grass (Barley) Clippings",
+      "botanical": "Hordeum vulgare",
+      "usage": "Juice for lye water",
+      "method": "Replace water with juice or infusion",
+      "range": "Green"
+    },
+    {
+      "name": "Kelp",
+      "botanical": "Fucus versiculosus",
+      "usage": "Up to 3 tsp PPO",
+      "method": "Add powder premixed with water, or use fresh",
+      "range": "Dark green"
+    },
+    {
+      "name": "Nettle Leaf",
+      "botanical": "Urtica dioica",
+      "usage": "1-3 tsp PPO",
+      "method": "Premix dried powder with water or puree fresh",
+      "range": "Muted green"
+    },
+    {
+      "name": "Parsley",
+      "botanical": "Carum petroselinum",
+      "usage": "Fresh/powder/dried",
+      "method": "Best in rebatch soap",
+      "range": "Green",
+      "warnings": "Fades quickly in CP soap"
+    },
+    {
+      "name": "Sage",
+      "botanical": "Salvia officinalis",
+      "usage": "Puree or 1 tsp PPO dried",
+      "method": "Puree at trace or dried for speckles",
+      "range": "Muted green",
+      "warnings": "Fades with time"
+    },
+    {
+      "name": "Spinach",
+      "botanical": "Spinacia oleracea",
+      "usage": "Up to 1 TBSP PPO",
+      "method": "Puree or powder at trace",
+      "range": "Light to vivid green",
+      "warnings": "Fades with time"
+    },
+    {
+      "name": "Spirulina",
+      "botanical": "Spirulina maxima",
+      "usage": "Up to 3 tsp PPO",
+      "method": "Premix with water, add at trace or to oils",
+      "range": "Dark green"
+    },
+    {
+      "name": "Wheatgrass",
+      "botanical": "Triticum aestivum",
+      "usage": "Full replacement for water",
+      "method": "Use juice as lye water",
+      "range": "Deep vivid green",
+      "warnings": "Can fade but sometimes doesn't"
+    }
+  ],
+  "black_gray": [
+    {
+      "name": "Activated Charcoal",
+      "botanical": "Carbon",
+      "usage": "1 tsp (gray) to 1 TBSP (black) PPO",
+      "method": "Add at trace",
+      "range": "Light gray to dark black"
+    },
+    {
+      "name": "Black Brazilian Clay",
+      "botanical": "Kaolin",
+      "usage": "1-2 tsp PPO",
+      "method": "Add to lye or premix with water (3x clay amount)",
+      "range": "Smoky black"
+    },
+    {
+      "name": "Coffee Grounds",
+      "botanical": "Coffea Arabica seed",
+      "usage": "1 tsp PPO",
+      "method": "Add at trace",
+      "range": "Black specks",
+      "warnings": "Can be rough on skin"
+    }
+  ]
+}

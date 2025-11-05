@@ -1,0 +1,340 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-11-05",
+  "source": "Industry standard INCI nomenclature database and soapmaking references",
+  "oils": [
+    {
+      "oil_id": "coconut-oil",
+      "common_name": "Coconut Oil",
+      "raw_inci_name": "Cocos Nucifera Oil",
+      "saponified_inci_naoh": "Sodium Cocoate",
+      "saponified_inci_koh": "Potassium Cocoate",
+      "alternates": [],
+      "notes": "Standard nomenclature, no exceptions"
+    },
+    {
+      "oil_id": "olive-oil",
+      "common_name": "Olive Oil",
+      "raw_inci_name": "Olea Europaea Fruit Oil",
+      "saponified_inci_naoh": "Sodium Olivate",
+      "saponified_inci_koh": "Potassium Olivate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "palm-oil",
+      "common_name": "Palm Oil",
+      "raw_inci_name": "Elaeis Guineensis Oil",
+      "saponified_inci_naoh": "Sodium Palmate",
+      "saponified_inci_koh": "Potassium Palmate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "castor-oil",
+      "common_name": "Castor Oil",
+      "raw_inci_name": "Ricinus Communis Seed Oil",
+      "saponified_inci_naoh": "Sodium Castorate or Sodium Ricinoleate",
+      "saponified_inci_koh": "Potassium Castorate or Potassium Ricinoleate",
+      "alternates": ["Sodium Ricinoleate", "Sodium Castorate"],
+      "notes": "Dual nomenclature acceptable; both forms INCI-compliant"
+    },
+    {
+      "oil_id": "shea-butter",
+      "common_name": "Shea Butter",
+      "raw_inci_name": "Butyrospermum Parkii Butter",
+      "saponified_inci_naoh": "Sodium Shea Butterate",
+      "saponified_inci_koh": "Potassium Shea Butterate",
+      "alternates": [],
+      "notes": "Complex name maintained in full"
+    },
+    {
+      "oil_id": "sweet-almond-oil",
+      "common_name": "Sweet Almond Oil",
+      "raw_inci_name": "Prunus Amygdalus Dulcis Oil",
+      "saponified_inci_naoh": "Sodium Sweet Almondate",
+      "saponified_inci_koh": "Potassium Sweet Almondate",
+      "alternates": [],
+      "notes": "Multi-word name preserved"
+    },
+    {
+      "oil_id": "avocado-oil",
+      "common_name": "Avocado Oil",
+      "raw_inci_name": "Persea Gratissima Oil",
+      "saponified_inci_naoh": "Sodium Avocadate",
+      "saponified_inci_koh": "Potassium Avocadate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "cocoa-butter",
+      "common_name": "Cocoa Butter",
+      "raw_inci_name": "Theobroma Cacao Seed Butter",
+      "saponified_inci_naoh": "Sodium Cocoa Butterate",
+      "saponified_inci_koh": "Potassium Cocoa Butterate",
+      "alternates": [],
+      "notes": "Butter designation maintained"
+    },
+    {
+      "oil_id": "sunflower-oil",
+      "common_name": "Sunflower Oil",
+      "raw_inci_name": "Helianthus Annuus Seed Oil",
+      "saponified_inci_naoh": "Sodium Sunflowerate",
+      "saponified_inci_koh": "Potassium Sunflowerate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "safflower-oil",
+      "common_name": "Safflower Oil",
+      "raw_inci_name": "Carthamus Tinctorius Seed Oil",
+      "saponified_inci_naoh": "Sodium Safflowerate",
+      "saponified_inci_koh": "Potassium Safflowerate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "canola-oil",
+      "common_name": "Canola Oil",
+      "raw_inci_name": "Brassica Napus Seed Oil",
+      "saponified_inci_naoh": "Sodium Canolate",
+      "saponified_inci_koh": "Potassium Canolate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "rice-bran-oil",
+      "common_name": "Rice Bran Oil",
+      "raw_inci_name": "Oryza Sativa Bran Oil",
+      "saponified_inci_naoh": "Sodium Rice Branate",
+      "saponified_inci_koh": "Potassium Rice Branate",
+      "alternates": [],
+      "notes": "Multi-word name preserved"
+    },
+    {
+      "oil_id": "hemp-seed-oil",
+      "common_name": "Hemp Seed Oil",
+      "raw_inci_name": "Cannabis Sativa Seed Oil",
+      "saponified_inci_naoh": "Sodium Hemp Seedate",
+      "saponified_inci_koh": "Potassium Hemp Seedate",
+      "alternates": [],
+      "notes": "Multi-word name preserved"
+    },
+    {
+      "oil_id": "jojoba-oil",
+      "common_name": "Jojoba Oil",
+      "raw_inci_name": "Simmondsia Chinensis Seed Oil",
+      "saponified_inci_naoh": "Sodium Jojobate",
+      "saponified_inci_koh": "Potassium Jojobate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "grapeseed-oil",
+      "common_name": "Grapeseed Oil",
+      "raw_inci_name": "Vitis Vinifera Seed Oil",
+      "saponified_inci_naoh": "Sodium Grapeseedate",
+      "saponified_inci_koh": "Potassium Grapeseedate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "apricot-kernel-oil",
+      "common_name": "Apricot Kernel Oil",
+      "raw_inci_name": "Prunus Armeniaca Kernel Oil",
+      "saponified_inci_naoh": "Sodium Apricot Kernelate",
+      "saponified_inci_koh": "Potassium Apricot Kernelate",
+      "alternates": [],
+      "notes": "Multi-word name preserved"
+    },
+    {
+      "oil_id": "sesame-oil",
+      "common_name": "Sesame Oil",
+      "raw_inci_name": "Sesamum Indicum Seed Oil",
+      "saponified_inci_naoh": "Sodium Sesamate",
+      "saponified_inci_koh": "Potassium Sesamate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "hazelnut-oil",
+      "common_name": "Hazelnut Oil",
+      "raw_inci_name": "Corylus Avellana Seed Oil",
+      "saponified_inci_naoh": "Sodium Hazelnutate",
+      "saponified_inci_koh": "Potassium Hazelnutate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "macadamia-nut-oil",
+      "common_name": "Macadamia Nut Oil",
+      "raw_inci_name": "Macadamia Ternifolia Seed Oil",
+      "saponified_inci_naoh": "Sodium Macadamiate",
+      "saponified_inci_koh": "Potassium Macadamiate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "babassu-oil",
+      "common_name": "Babassu Oil",
+      "raw_inci_name": "Orbignya Oleifera Seed Oil",
+      "saponified_inci_naoh": "Sodium Babassate",
+      "saponified_inci_koh": "Potassium Babassate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "cupuacu-butter",
+      "common_name": "Cupuacu Butter",
+      "raw_inci_name": "Theobroma Grandiflorum Seed Butter",
+      "saponified_inci_naoh": "Sodium Cupuacuate",
+      "saponified_inci_koh": "Potassium Cupuacuate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "mango-butter",
+      "common_name": "Mango Butter",
+      "raw_inci_name": "Mangifera Indica Seed Butter",
+      "saponified_inci_naoh": "Sodium Mangoate",
+      "saponified_inci_koh": "Potassium Mangoate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "kokum-butter",
+      "common_name": "Kokum Butter",
+      "raw_inci_name": "Garcinia Indica Seed Butter",
+      "saponified_inci_naoh": "Sodium Kokumate",
+      "saponified_inci_koh": "Potassium Kokumate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "lard",
+      "common_name": "Lard",
+      "raw_inci_name": "Adeps Suillus",
+      "saponified_inci_naoh": "Sodium Lardate",
+      "saponified_inci_koh": "Potassium Lardate",
+      "alternates": [],
+      "notes": "Animal fat nomenclature"
+    },
+    {
+      "oil_id": "tallow",
+      "common_name": "Tallow",
+      "raw_inci_name": "Sodium Tallowate",
+      "saponified_inci_naoh": "Sodium Tallowate",
+      "saponified_inci_koh": "Potassium Tallowate",
+      "alternates": [],
+      "notes": "Animal fat nomenclature"
+    },
+    {
+      "oil_id": "neem-oil",
+      "common_name": "Neem Oil",
+      "raw_inci_name": "Melia Azadirachta Seed Oil",
+      "saponified_inci_naoh": "Sodium Neemate",
+      "saponified_inci_koh": "Potassium Neemate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "argan-oil",
+      "common_name": "Argan Oil",
+      "raw_inci_name": "Argania Spinosa Kernel Oil",
+      "saponified_inci_naoh": "Sodium Arganate",
+      "saponified_inci_koh": "Potassium Arganate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "tamanu-oil",
+      "common_name": "Tamanu Oil",
+      "raw_inci_name": "Calophyllum Inophyllum Seed Oil",
+      "saponified_inci_naoh": "Sodium Tamanuate",
+      "saponified_inci_koh": "Potassium Tamanuate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "rosehip-seed-oil",
+      "common_name": "Rosehip Seed Oil",
+      "raw_inci_name": "Rosa Canina Fruit Oil",
+      "saponified_inci_naoh": "Sodium Rosehipate",
+      "saponified_inci_koh": "Potassium Rosehipate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "wheat-germ-oil",
+      "common_name": "Wheat Germ Oil",
+      "raw_inci_name": "Triticum Vulgare Germ Oil",
+      "saponified_inci_naoh": "Sodium Wheat Germate",
+      "saponified_inci_koh": "Potassium Wheat Germate",
+      "alternates": [],
+      "notes": "Multi-word name preserved"
+    },
+    {
+      "oil_id": "evening-primrose-oil",
+      "common_name": "Evening Primrose Oil",
+      "raw_inci_name": "Oenothera Biennis Oil",
+      "saponified_inci_naoh": "Sodium Evening Primrosate",
+      "saponified_inci_koh": "Potassium Evening Primrosate",
+      "alternates": [],
+      "notes": "Multi-word name preserved"
+    },
+    {
+      "oil_id": "borage-oil",
+      "common_name": "Borage Oil",
+      "raw_inci_name": "Borago Officinalis Seed Oil",
+      "saponified_inci_naoh": "Sodium Boragate",
+      "saponified_inci_koh": "Potassium Boragate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "black-cumin-seed-oil",
+      "common_name": "Black Cumin Seed Oil",
+      "raw_inci_name": "Nigella Sativa Seed Oil",
+      "saponified_inci_naoh": "Sodium Black Cuminat",
+      "saponified_inci_koh": "Potassium Black Cuminat",
+      "alternates": [],
+      "notes": "Multi-word name preserved"
+    },
+    {
+      "oil_id": "pumpkin-seed-oil",
+      "common_name": "Pumpkin Seed Oil",
+      "raw_inci_name": "Cucurbita Pepo Seed Oil",
+      "saponified_inci_naoh": "Sodium Pumpkin Seedate",
+      "saponified_inci_koh": "Potassium Pumpkin Seedate",
+      "alternates": [],
+      "notes": "Multi-word name preserved"
+    },
+    {
+      "oil_id": "flaxseed-oil",
+      "common_name": "Flaxseed Oil",
+      "raw_inci_name": "Linum Usitatissimum Seed Oil",
+      "saponified_inci_naoh": "Sodium Flaxseedate",
+      "saponified_inci_koh": "Potassium Flaxseedate",
+      "alternates": [],
+      "notes": "Standard nomenclature"
+    },
+    {
+      "oil_id": "emu-oil",
+      "common_name": "Emu Oil",
+      "raw_inci_name": "Dromiceius Oil",
+      "saponified_inci_naoh": "Sodium Emuate",
+      "saponified_inci_koh": "Potassium Emuate",
+      "alternates": [],
+      "notes": "Animal fat nomenclature"
+    },
+    {
+      "oil_id": "meadowfoam-seed-oil",
+      "common_name": "Meadowfoam Seed Oil",
+      "raw_inci_name": "Limnanthes Alba Seed Oil",
+      "saponified_inci_naoh": "Sodium Meadowfoamate",
+      "saponified_inci_koh": "Potassium Meadowfoamate",
+      "alternates": [],
+      "notes": "Complex name preserved"
+    }
+  ]
+}

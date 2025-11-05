@@ -1,0 +1,43 @@
+---
+# soap-calculator-image-lifecycle role default variables
+
+# Application versioning
+app_version: "1.0.0"  # Semantic version - override via playbook vars
+image_version: "{{ app_version }}"  # Image tag version (derived from app_version)
+
+# Image configuration
+image_base_name: "localhost/mga-soap-calculator"
+image_registry: "localhost"  # Local-only for now
+
+# Storage paths
+image_storage_path: "/data/podman-apps/mga-soap-calculator"
+image_archive_dir: "{{ image_storage_path }}/images"
+build_artifacts_path: "/tmp/mga-builds"
+
+# User and permissions
+grimm_user: "grimm"
+grimm_uid: 1000
+
+# Directories
+config_dir: "/home/grimm/.config/mga-soap-calculator"
+quadlet_dir: "/home/grimm/.config/containers/systemd"
+
+# Health check configuration
+health_check_url: "http://127.0.0.1:8000/api/v1/health"
+health_check_timeout: 10
+health_check_retries: 6
+health_check_delay: 10
+health_check_start_period: 60
+
+# Validation endpoints
+validation_endpoints:
+  - "api/v1/oils"
+  - "api/v1/additives"
+
+# Archive retention
+keep_archives_count: 5  # Keep last 5 versions
+
+# Timeouts
+service_restart_wait: 10
+image_load_timeout: 300
+transfer_timeout: 600

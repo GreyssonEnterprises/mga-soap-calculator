@@ -1,0 +1,178 @@
+{
+  "additives_reference": [
+    {
+      "name": "Coffee Grounds",
+      "usage_rate": "1 tablespoon per pound of oils",
+      "usage_rate_percentage": "~2%",
+      "purpose": "Exfoliation & color",
+      "how_to_add": "Toss in lye water to pull out color or add to oils before mixing in lye solution",
+      "category": "exfoliant",
+      "notes": "Adjustable based on desired exfoliation level"
+    },
+    {
+      "name": "Orange Peel Powder",
+      "usage_rate": "1 teaspoon per pound of oils",
+      "usage_rate_percentage": "~1%",
+      "purpose": "Exfoliation & color",
+      "how_to_add": "Add to oils before mixing in lye solution",
+      "category": "exfoliant"
+    },
+    {
+      "name": "Beeswax",
+      "usage_rate": "1-3% of total oils",
+      "usage_rate_percentage": "1-3%",
+      "purpose": "Adds hardness to soap",
+      "how_to_add": "Melt with hard oils and butters",
+      "category": "hardener",
+      "warnings": "Too much can make soap draggy"
+    },
+    {
+      "name": "Oatmeal",
+      "usage_rate": "1 tablespoon per pound of oils",
+      "usage_rate_percentage": "~2%",
+      "purpose": "Soothing for irritated/sensitive skin, exfoliation",
+      "how_to_add": "Add to oils before mixing in lye solution",
+      "category": "botanical",
+      "notes": "Powder in food processor for less exfoliation"
+    },
+    {
+      "name": "Honey",
+      "usage_rate": "1 tablespoon per pound of oils",
+      "usage_rate_percentage": "~2%",
+      "purpose": "Increases lather",
+      "how_to_add": "Add to warm oils before mixing in lye solution",
+      "category": "lather_booster",
+      "warnings": "Can cause soap to accelerate or overheat"
+    },
+    {
+      "name": "Cocoa Powder",
+      "usage_rate": "1 tablespoon per pound of oils",
+      "usage_rate_percentage": "~2%",
+      "purpose": "Natural colorant",
+      "how_to_add": "Add to warm oils before mixing in lye solution",
+      "category": "colorant"
+    },
+    {
+      "name": "Clay",
+      "usage_rate": "1 teaspoon per pound of oils",
+      "usage_rate_percentage": "~1%",
+      "purpose": "Natural colorant and light exfoliation",
+      "how_to_add": "Add to lye water to draw out more color, or add to traced soap if swirling",
+      "category": "clay"
+    },
+    {
+      "name": "Poppy Seeds",
+      "usage_rate": "1 teaspoon per pound of oils",
+      "usage_rate_percentage": "~1%",
+      "purpose": "Exfoliation and speckled appearance",
+      "how_to_add": "Add to oils before mixing in lye solution",
+      "category": "exfoliant"
+    },
+    {
+      "name": "Sugar",
+      "usage_rate": "1/2 teaspoon per pound of oils",
+      "usage_rate_percentage": "~0.5%",
+      "purpose": "Lather booster",
+      "how_to_add": "Add to warm lye solution",
+      "category": "lather_booster"
+    },
+    {
+      "name": "Salt",
+      "usage_rate": "1/2-1 teaspoon per pound of oils",
+      "usage_rate_percentage": "0.5-1%",
+      "purpose": "Adds hardness to soap",
+      "how_to_add": "Add to HOT lye solution to dissolve",
+      "category": "hardener"
+    },
+    {
+      "name": "Corn Meal",
+      "usage_rate": "1 teaspoon per pound of oils",
+      "usage_rate_percentage": "~1%",
+      "purpose": "Exfoliation",
+      "how_to_add": "Add to oils before mixing in lye solution",
+      "category": "exfoliant"
+    },
+    {
+      "name": "Ground Dried Herbs (Spearmint, Peppermint, Rosemary)",
+      "usage_rate": "1 teaspoon per pound of oils",
+      "usage_rate_percentage": "~1%",
+      "purpose": "Exfoliation",
+      "how_to_add": "Add to oils before mixing in lye solution",
+      "category": "botanical",
+      "warnings": "Most turn black/brown in soap"
+    },
+    {
+      "name": "Dried Flowers (Lavender, Rose Buds, Calendula)",
+      "usage_rate": "1 teaspoon per pound of oils",
+      "usage_rate_percentage": "~1%",
+      "purpose": "Exfoliation, decoration",
+      "how_to_add": "Add to oils before mixing in lye solution",
+      "category": "botanical",
+      "notes": "Calendula stays yellow, lavender ends up looking like mouse poop, most others turn black/brown"
+    },
+    {
+      "name": "Silk Fibers",
+      "usage_rate": "1 pea size pinch per pound of oils",
+      "usage_rate_percentage": "~0.1%",
+      "purpose": "Slip and silkiness",
+      "how_to_add": "Dissolve in hot lye solution",
+      "category": "luxury_additive"
+    },
+    {
+      "name": "Activated Charcoal",
+      "usage_rate": "1 teaspoon - 1 tablespoon per pound of oils",
+      "usage_rate_percentage": "1-2%",
+      "purpose": "Natural colorant - gray to black",
+      "how_to_add": "Add to oils before mixing in lye solution",
+      "category": "colorant",
+      "notes": "Amount depends on how dark you want the soap"
+    },
+    {
+      "name": "Aloe Powder",
+      "usage_rate": "1/2 teaspoon per pound of oils",
+      "usage_rate_percentage": "~0.5%",
+      "purpose": "Slip and silkiness",
+      "how_to_add": "Add to oils before mixing in lye solution",
+      "category": "skin_benefit"
+    },
+    {
+      "name": "Milk Powder (Goat Milk, Buttermilk, Coconut Milk)",
+      "usage_rate": "1 tablespoon per pound of oils",
+      "usage_rate_percentage": "~2%",
+      "purpose": "Creaminess and lather booster",
+      "how_to_add": "Add to oils before mixing in lye solution",
+      "category": "lather_booster"
+    },
+    {
+      "name": "Seeds (Apricot Kernel, Blueberry, Cranberry, Raspberry)",
+      "usage_rate": "1 teaspoon per pound of oils",
+      "usage_rate_percentage": "~1%",
+      "purpose": "Exfoliation and speckled appearance",
+      "how_to_add": "Add to oils before mixing in lye solution",
+      "category": "exfoliant"
+    },
+    {
+      "name": "Sodium Lactate",
+      "usage_rate": "1 teaspoon per pound of oils",
+      "usage_rate_percentage": "~1%",
+      "purpose": "Adds hardness to soap",
+      "how_to_add": "Add to oils before mixing in lye solution",
+      "category": "hardener",
+      "warnings": "Can make soap crumbly if you use too much"
+    }
+  ],
+  "usage_notes": {
+    "measurements": "1 pound of oils = ~453g",
+    "percentage_conversion": "1 tablespoon ≈ 2%, 1 teaspoon ≈ 1%",
+    "categories": {
+      "exfoliant": "Physical scrubbing agents",
+      "colorant": "Natural color additions",
+      "lather_booster": "Increases bubble production",
+      "hardener": "Makes bar last longer",
+      "botanical": "Plant-based additives",
+      "clay": "Mineral-based additives",
+      "luxury_additive": "Premium silk/specialty ingredients",
+      "skin_benefit": "Moisturizing/soothing properties"
+    }
+  }
+}

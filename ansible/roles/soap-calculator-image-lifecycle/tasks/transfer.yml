@@ -1,0 +1,66 @@
+---
+# Transfer image archive to grimm-lin at /data/podman-apps/
+
+- name: Ensure remote image storage directory exists
+  file:
+    path: "{{ image_archive_dir }}"
+    state: directory
+    owner: "{{ grimm_user }}"
+    group: "{{ grimm_user }}"
+    mode: '0755'
+  become: true
+
+- name: Transfer image archive to grimm-lin
+  synchronize:
+    src: "{{ build_artifacts_path }}/mga-soap-calculator-{{ image_version }}.tar.gz"
+    dest: "{{ image_archive_dir }}/"
+    compress: false  # Already compressed
+    checksum: true
+    mode: push
+  delegate_to: localhost
+
+- name: Transfer checksum file
+  synchronize:
+    src: "{{ build_artifacts_path }}/CHECKSUMS.sha256"
+    dest: "{{ image_archive_dir }}/"
+    mode: push
+  delegate_to: localhost
+
+- name: Set archive permissions
+  file:
+    path: "{{ image_archive_dir }}/mga-soap-calculator-{{ image_version }}.tar.gz"
+    owner: "{{ grimm_user }}"
+    group: "{{ grimm_user }}"
+    mode: '0644'
+  become: true
+
+- name: Verify transferred archive integrity
+  shell: |
+    cd {{ image_archive_dir }}
+    grep mga-soap-calculator-{{ image_version }}.tar.gz CHECKSUMS.sha256 | sha256sum --check
+  register: checksum_verify
+  changed_when: false
+  failed_when: checksum_verify.rc != 0
+
+- name: Display verification result
+  debug:
+    msg: "Archive integrity verified: {{ checksum_verify.stdout }}"
+
+- name: Update current symlink to new image
+  file:
+    src: "{{ image_archive_dir }}/mga-soap-calculator-{{ image_version }}.tar.gz"
+    dest: "{{ image_storage_path }}/current"
+    state: link
+    force: true
+  become: true
+
+- name: Update rollback symlink to previous current (if exists)
+  shell: |
+    if [ -L {{ image_storage_path }}/current.previous ]; then
+      ln -sf {{ image_storage_path }}/current.previous {{ image_storage_path }}/rollback
+    fi
+  args:
+    executable: /bin/bash
+  become: true
+  changed_when: false
+  failed_when: false

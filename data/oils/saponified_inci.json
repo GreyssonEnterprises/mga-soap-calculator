@@ -1,0 +1,42 @@
+{
+  "coconut-oil": {
+    "saponified_inci_naoh": "Sodium Cocoate",
+    "saponified_inci_koh": "Potassium Cocoate"
+  },
+  "olive-oil": {
+    "saponified_inci_naoh": "Sodium Olivate",
+    "saponified_inci_koh": "Potassium Olivate"
+  },
+  "palm-oil": {
+    "saponified_inci_naoh": "Sodium Palmate",
+    "saponified_inci_koh": "Potassium Palmate"
+  },
+  "castor-oil": {
+    "saponified_inci_naoh": "Sodium Castorate or Sodium Ricinoleate",
+    "saponified_inci_koh": "Potassium Castorate or Potassium Ricinoleate"
+  },
+  "shea-butter": {
+    "saponified_inci_naoh": "Sodium Shea Butterate",
+    "saponified_inci_koh": "Potassium Shea Butterate"
+  },
+  "sweet-almond-oil": {
+    "saponified_inci_naoh": "Sodium Sweet Almondate",
+    "saponified_inci_koh": "Potassium Sweet Almondate"
+  },
+  "sunflower-oil": {
+    "saponified_inci_naoh": "Sodium Sunflowerate",
+    "saponified_inci_koh": "Potassium Sunflowerate"
+  },
+  "avocado-oil": {
+    "saponified_inci_naoh": "Sodium Avocadoate",
+    "saponified_inci_koh": "Potassium Avocadoate"
+  },
+  "cocoa-butter": {
+    "saponified_inci_naoh": "Sodium Cacao Butterate",
+    "saponified_inci_koh": "Potassium Cacao Butterate"
+  },
+  "jojoba-oil": {
+    "saponified_inci_naoh": "Sodium Jojobate",
+    "saponified_inci_koh": "Potassium Jojobate"
+  }
+}

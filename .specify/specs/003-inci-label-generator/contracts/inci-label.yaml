@@ -1,0 +1,388 @@
+openapi: 3.0.3
+info:
+  title: INCI Label Generator API
+  description: |
+    Generate professional INCI ingredient labels in multiple formats with regulatory-compliant percentage-based sorting.
+
+    Provides three label formats:
+    - **Raw INCI**: Pre-saponification format (oils + lye as separate ingredients)
+    - **Saponified INCI**: Post-saponification format (sodium/potassium salts, lye excluded)
+    - **Common Names**: Consumer-friendly ingredient names
+
+    All formats sorted by ingredient percentage in descending order per regulatory requirements.
+  version: 1.0.0
+  contact:
+    name: MGA Soap Calculator API
+    url: https://api.mga-soap-calculator.com
+
+servers:
+  - url: https://api.mga-soap-calculator.com
+    description: Production server
+  - url: http://localhost:8000
+    description: Development server
+
+paths:
+  /api/v1/recipes/{recipe_id}/inci-label:
+    get:
+      summary: Generate INCI label for recipe
+      description: |
+        Generate INCI ingredient labels in multiple formats for a specific recipe.
+
+        Returns three label formats simultaneously:
+        - Raw INCI (pre-saponification)
+        - Saponified INCI (post-saponification)
+        - Common names (consumer-friendly)
+
+        All ingredients sorted by percentage in descending order per regulatory requirements.
+        Includes detailed ingredient breakdown with percentages for verification.
+
+        **Performance**: <100ms response time under normal load.
+      operationId: getInciLabel
+      tags:
+        - INCI Labels
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: recipe_id
+          in: path
+          required: true
+          description: Unique identifier for the recipe
+          schema:
+            type: string
+            example: "recipe-123-abc"
+        - name: format
+          in: query
+          required: false
+          description: |
+            Label format to return. Options:
+            - `all` (default): Return all three formats
+            - `raw_inci`: Only pre-saponification format
+            - `saponified_inci`: Only post-saponification format
+            - `common_names`: Only consumer-friendly format
+          schema:
+            type: string
+            enum:
+              - all
+              - raw_inci
+              - saponified_inci
+              - common_names
+            default: all
+        - name: include_percentages
+          in: query
+          required: false
+          description: Include percentage values in label strings (for debugging/verification)
+          schema:
+            type: boolean
+            default: false
+        - name: line_by_line
+          in: query
+          required: false
+          description: Return ingredients in line-by-line format instead of comma-separated
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: INCI label successfully generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InciLabelResponse'
+              examples:
+                all_formats:
+                  summary: All label formats
+                  value:
+                    recipe_id: "recipe-123-abc"
+                    recipe_name: "MGA Signature Bar"
+                    generated_at: "2025-11-05T14:30:00Z"
+                    labels:
+                      raw_inci: "Aqua, Cocos Nucifera Oil, Olea Europaea Fruit Oil, Butyrospermum Parkii Butter, Sodium Hydroxide, Glycerin, Lavandula Angustifolia Oil, Mica"
+                      saponified_inci: "Aqua, Sodium Cocoate, Sodium Olivate, Sodium Shea Butterate, Glycerin, Lavandula Angustifolia Oil, Mica"
+                      common_names: "Water, Coconut Oil, Olive Oil, Shea Butter, Sodium Hydroxide, Glycerin, Lavender Essential Oil, Mica"
+                    ingredients_breakdown:
+                      - name: "Aqua"
+                        percentage: 30.5
+                        category: "water"
+                        notes: null
+                      - name: "Cocos Nucifera Oil"
+                        percentage: 25.0
+                        category: "oil"
+                        notes: "Saponifies to Sodium Cocoate"
+                      - name: "Olea Europaea Fruit Oil"
+                        percentage: 20.0
+                        category: "oil"
+                        notes: "Saponifies to Sodium Olivate"
+                      - name: "Butyrospermum Parkii Butter"
+                        percentage: 15.0
+                        category: "oil"
+                        notes: "Saponifies to Sodium Shea Butterate"
+                      - name: "Sodium Hydroxide"
+                        percentage: 5.5
+                        category: "lye"
+                        notes: "Excluded in saponified format"
+                      - name: "Glycerin"
+                        percentage: 2.0
+                        category: "additive"
+                        notes: null
+                      - name: "Lavandula Angustifolia Oil"
+                        percentage: 1.5
+                        category: "essential_oil"
+                        notes: null
+                      - name: "Mica"
+                        percentage: 0.5
+                        category: "colorant"
+                        notes: null
+                    metadata:
+                      total_ingredients: 8
+                      calculation_method: "percentage_by_weight"
+                      lye_type: "naoh"
+                      superfat_percentage: 5.0
+                single_format:
+                  summary: Single format (saponified only)
+                  value:
+                    recipe_id: "recipe-123-abc"
+                    recipe_name: "MGA Signature Bar"
+                    generated_at: "2025-11-05T14:30:00Z"
+                    labels:
+                      saponified_inci: "Aqua, Sodium Cocoate, Sodium Olivate, Sodium Shea Butterate, Glycerin, Lavandula Angustifolia Oil, Mica"
+                    ingredients_breakdown:
+                      - name: "Aqua"
+                        percentage: 30.5
+                        category: "water"
+                        notes: null
+                      - name: "Sodium Cocoate"
+                        percentage: 28.1
+                        category: "saponified_oil"
+                        notes: "From Coconut Oil"
+                    metadata:
+                      total_ingredients: 7
+                      calculation_method: "percentage_by_weight"
+                      lye_type: "naoh"
+                      superfat_percentage: 5.0
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token from authentication endpoint
+
+  schemas:
+    InciLabelResponse:
+      type: object
+      required:
+        - recipe_id
+        - recipe_name
+        - generated_at
+        - labels
+        - ingredients_breakdown
+        - metadata
+      properties:
+        recipe_id:
+          type: string
+          description: Unique identifier for the recipe
+          example: "recipe-123-abc"
+        recipe_name:
+          type: string
+          description: Human-readable recipe name
+          example: "MGA Signature Bar"
+        generated_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of label generation
+          example: "2025-11-05T14:30:00Z"
+        labels:
+          type: object
+          description: |
+            Generated INCI label strings in requested formats.
+            All formats present when format=all (default).
+            Only requested format present when specific format specified.
+          properties:
+            raw_inci:
+              type: string
+              description: |
+                Pre-saponification INCI format.
+                Includes oils by botanical INCI name and lye as separate ingredient.
+                Comma-separated (or line-by-line if requested).
+              example: "Aqua, Cocos Nucifera Oil, Olea Europaea Fruit Oil, Sodium Hydroxide, Glycerin"
+            saponified_inci:
+              type: string
+              description: |
+                Post-saponification INCI format.
+                Oils converted to sodium/potassium salts, lye excluded.
+                Comma-separated (or line-by-line if requested).
+              example: "Aqua, Sodium Cocoate, Sodium Olivate, Glycerin"
+            common_names:
+              type: string
+              description: |
+                Consumer-friendly common names format.
+                Uses everyday ingredient names for readability.
+                Comma-separated (or line-by-line if requested).
+              example: "Water, Coconut Oil, Olive Oil, Sodium Hydroxide, Glycerin"
+        ingredients_breakdown:
+          type: array
+          description: |
+            Detailed breakdown of all ingredients with percentages.
+            Sorted in descending order by percentage (matching label order).
+            Useful for verification and debugging.
+          items:
+            $ref: '#/components/schemas/IngredientBreakdown'
+        metadata:
+          type: object
+          required:
+            - total_ingredients
+            - calculation_method
+            - lye_type
+          properties:
+            total_ingredients:
+              type: integer
+              description: Count of ingredients in breakdown
+              example: 8
+            calculation_method:
+              type: string
+              description: Method used for percentage calculation
+              enum:
+                - percentage_by_weight
+              example: "percentage_by_weight"
+            lye_type:
+              type: string
+              description: Type of lye used in recipe
+              enum:
+                - naoh
+                - koh
+                - mixed
+              example: "naoh"
+            superfat_percentage:
+              type: number
+              format: float
+              description: Superfat percentage used in recipe
+              example: 5.0
+            warnings:
+              type: array
+              description: Optional warnings about label generation (e.g., missing INCI names)
+              items:
+                type: string
+              example:
+                - "Exotic Oil lacks standardized INCI name - using common name"
+
+    IngredientBreakdown:
+      type: object
+      required:
+        - name
+        - percentage
+        - category
+      properties:
+        name:
+          type: string
+          description: |
+            Ingredient name (format depends on context).
+            In raw_inci context: botanical INCI name.
+            In saponified_inci context: saponified salt name.
+            In common_names context: consumer-friendly name.
+          example: "Cocos Nucifera Oil"
+        percentage:
+          type: number
+          format: float
+          description: |
+            Percentage of total batch weight (to 1 decimal place).
+            Sum of all percentages equals ~100% (may vary by rounding).
+          example: 25.0
+          minimum: 0.0
+          maximum: 100.0
+        category:
+          type: string
+          description: Ingredient category for classification
+          enum:
+            - water
+            - oil
+            - lye
+            - additive
+            - essential_oil
+            - fragrance
+            - colorant
+            - saponified_oil
+          example: "oil"
+        notes:
+          type: string
+          nullable: true
+          description: Optional notes about ingredient (e.g., saponification details, warnings)
+          example: "Saponifies to Sodium Cocoate"
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Error type identifier
+          example: "not_found"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "Recipe with ID 'recipe-123-abc' not found"
+        details:
+          type: object
+          description: Optional additional error context
+          additionalProperties: true
+
+  responses:
+    UnauthorizedError:
+      description: Authentication required or token invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "unauthorized"
+            message: "Authentication required. Provide valid JWT token in Authorization header."
+
+    NotFoundError:
+      description: Recipe not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "not_found"
+            message: "Recipe with ID 'recipe-123-abc' not found or you do not have access to it."
+
+    ValidationError:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "validation_error"
+            message: "Invalid format parameter value"
+            details:
+              field: "format"
+              provided: "invalid_format"
+              allowed: ["all", "raw_inci", "saponified_inci", "common_names"]
+
+    InternalServerError:
+      description: Internal server error during label generation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "internal_error"
+            message: "An unexpected error occurred while generating INCI label"
+            details:
+              trace_id: "abc-123-def-456"
+
+tags:
+  - name: INCI Labels
+    description: INCI ingredient label generation endpoints

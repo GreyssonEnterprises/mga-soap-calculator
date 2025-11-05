@@ -1,0 +1,39 @@
+---
+# Main orchestration for image lifecycle management
+# This file coordinates all lifecycle stages
+
+- name: Generate timestamped version tag
+  set_fact:
+    timestamp: "{{ ansible_date_time.date | regex_replace('-', '') }}-{{ ansible_date_time.time | regex_replace(':', '') }}"
+    image_version: "v{{ app_version }}-{{ ansible_date_time.date | regex_replace('-', '') }}-{{ ansible_date_time.time | regex_replace(':', '') }}"
+    image_full_tag: "{{ image_base_name }}:v{{ app_version }}-{{ ansible_date_time.date | regex_replace('-', '') }}-{{ ansible_date_time.time | regex_replace(':', '') }}"
+
+- name: Display deployment information
+  debug:
+    msg: |
+      Deploying MGA Soap Calculator
+      Version: {{ image_version }}
+      Image: {{ image_full_tag }}
+      Storage: {{ image_storage_path }}
+
+- name: Execute lifecycle stages
+  block:
+    - name: Build container image
+      include_tasks: build.yml
+      when: lifecycle_stage is not defined or lifecycle_stage == 'build'
+
+    - name: Transfer image to grimm-lin
+      include_tasks: transfer.yml
+      when: lifecycle_stage is not defined or lifecycle_stage == 'transfer'
+
+    - name: Load image into Podman
+      include_tasks: deploy.yml
+      when: lifecycle_stage is not defined or lifecycle_stage == 'deploy'
+
+    - name: Validate deployment
+      include_tasks: validate.yml
+      when: lifecycle_stage is not defined or lifecycle_stage == 'validate'
+
+  rescue:
+    - name: Deployment failed - initiate rollback
+      include_tasks: rollback.yml

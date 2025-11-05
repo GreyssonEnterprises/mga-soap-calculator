@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: Bob PAI (DevOps Architect)
+  description: Complete container image lifecycle management for MGA Soap Calculator
+  company: MGA Automotive
+  license: Proprietary
+  min_ansible_version: "2.15"
+
+  platforms:
+    - name: Fedora
+      versions:
+        - 42
+
+  galaxy_tags:
+    - podman
+    - containers
+    - deployment
+    - lifecycle
+    - automation
+
+dependencies: []
