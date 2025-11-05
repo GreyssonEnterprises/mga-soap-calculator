@@ -98,12 +98,14 @@ class CalculationRequest(BaseModel):
 
     Optional fields:
     - additives: List of additive inputs (default: empty list)
+    - total_oil_weight_g: Total batch size when using percentages (default: 1000g)
     """
     oils: List[OilInput]
     lye: LyeConfig
     water: WaterConfig
     superfat_percent: float
     additives: List[AdditiveInput] = []
+    total_oil_weight_g: Optional[float] = Field(default=1000.0, gt=0)
 
     @field_validator('oils')
     @classmethod

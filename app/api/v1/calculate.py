@@ -103,9 +103,8 @@ async def create_calculation(
             percentages = [oil.percentage for oil in request.oils if oil.percentage is not None]
             validate_oil_percentages(percentages)
 
-            # For now, require explicit total weight for percentage-based input
-            # In real implementation, this could come from user or default to 1000g
-            total_oil_weight_g = 1000.0  # Default batch size
+            # Use requested batch size (defaults to 1000g if not specified)
+            total_oil_weight_g = request.total_oil_weight_g
             normalized_oils = normalize_oil_inputs(request.oils, total_weight_g=total_oil_weight_g)
 
     except ValueError as e:
