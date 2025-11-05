@@ -32,12 +32,21 @@ def test_lye_output_model():
     """Test LyeOutput response model"""
     from app.schemas.responses import LyeOutput
 
+    naoh_weight = 142.6
+    koh_weight = 0.0
+    koh_purity = 90.0
+    naoh_purity = 100.0
+
     lye = LyeOutput(
-        naoh_weight_g=142.6,  # Fixed: spec requires 'naoh_weight_g' not 'naoh_g'
-        koh_weight_g=0.0,     # Fixed: spec requires 'koh_weight_g' not 'koh_g'
+        naoh_weight_g=naoh_weight,  # Fixed: spec requires 'naoh_weight_g' not 'naoh_g'
+        koh_weight_g=koh_weight,     # Fixed: spec requires 'koh_weight_g' not 'koh_g'
         total_lye_g=142.6,
         naoh_percent=100.0,
-        koh_percent=0.0
+        koh_percent=0.0,
+        koh_purity=koh_purity,
+        naoh_purity=naoh_purity,
+        pure_koh_equivalent_g=koh_weight / (koh_purity / 100.0) if koh_purity else koh_weight,
+        pure_naoh_equivalent_g=naoh_weight / (naoh_purity / 100.0) if naoh_purity else naoh_weight,
     )
 
     assert lye.naoh_weight_g == 142.6  # Fixed
@@ -45,6 +54,10 @@ def test_lye_output_model():
     assert lye.total_lye_g == 142.6
     assert lye.naoh_percent == 100.0
     assert lye.koh_percent == 0.0
+    assert lye.koh_purity == 90.0
+    assert lye.naoh_purity == 100.0
+    assert lye.pure_koh_equivalent_g == 0.0
+    assert lye.pure_naoh_equivalent_g == 142.6
 
 
 def test_additive_output_model():
@@ -68,17 +81,26 @@ def test_recipe_output_model():
     """Test RecipeOutput response model"""
     from app.schemas.responses import RecipeOutput, OilOutput, LyeOutput, AdditiveOutput
 
+    lye_naoh_weight = 142.6
+    lye_koh_weight = 0.0
+    koh_purity = 90.0
+    naoh_purity = 100.0
+
     recipe = RecipeOutput(
         total_oil_weight_g=1000.0,
         oils=[
             OilOutput(id="olive_oil", common_name="Olive Oil", weight_g=500.0, percentage=50.0)  # Fixed
         ],
         lye=LyeOutput(
-            naoh_weight_g=142.6,  # Fixed
-            koh_weight_g=0.0,     # Fixed
+            naoh_weight_g=lye_naoh_weight,  # Fixed
+            koh_weight_g=lye_koh_weight,     # Fixed
             total_lye_g=142.6,
             naoh_percent=100.0,
-            koh_percent=0.0
+            koh_percent=0.0,
+            koh_purity=koh_purity,
+            naoh_purity=naoh_purity,
+            pure_koh_equivalent_g=lye_koh_weight / (koh_purity / 100.0) if koh_purity else lye_koh_weight,
+            pure_naoh_equivalent_g=lye_naoh_weight / (naoh_purity / 100.0) if naoh_purity else lye_naoh_weight,
         ),
         water_weight_g=289.5,
         water_method="lye_concentration",  # Fixed: Added missing field
@@ -218,6 +240,11 @@ def test_calculation_response_model_complete():
     calculation_id = uuid4()
     user_id = uuid4()
 
+    naoh_weight = 142.6
+    koh_weight = 0.0
+    koh_purity = 90.0
+    naoh_purity = 100.0
+
     response = CalculationResponse(
         calculation_id=calculation_id,
         timestamp=datetime.utcnow(),
@@ -228,11 +255,15 @@ def test_calculation_response_model_complete():
                 OilOutput(id="olive_oil", common_name="Olive Oil", weight_g=500.0, percentage=50.0)  # Fixed
             ],
             lye=LyeOutput(
-                naoh_weight_g=142.6,  # Fixed
-                koh_weight_g=0.0,     # Fixed
+                naoh_weight_g=naoh_weight,  # Fixed
+                koh_weight_g=koh_weight,     # Fixed
                 total_lye_g=142.6,
                 naoh_percent=100.0,
-                koh_percent=0.0
+                koh_percent=0.0,
+                koh_purity=koh_purity,
+                naoh_purity=naoh_purity,
+                pure_koh_equivalent_g=koh_weight / (koh_purity / 100.0) if koh_purity else koh_weight,
+                pure_naoh_equivalent_g=naoh_weight / (naoh_purity / 100.0) if naoh_purity else naoh_weight,
             ),
             water_weight_g=289.5,
             water_method="lye_concentration",  # Fixed: Added missing field

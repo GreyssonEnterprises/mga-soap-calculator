@@ -19,12 +19,24 @@ class OilOutput(BaseModel):
 
 
 class LyeOutput(BaseModel):
-    """Lye calculation output"""
+    """
+    Lye calculation output.
+
+    Feature: KOH/NaOH Purity Support (Spec 002-lye-purity)
+    - koh_purity: Echo back purity percentage used in calculation
+    - naoh_purity: Echo back purity percentage used in calculation
+    - pure_koh_equivalent_g: Theoretical pure KOH amount
+    - pure_naoh_equivalent_g: Theoretical pure NaOH amount
+    """
     naoh_weight_g: float  # Fixed: was 'naoh_g', spec requires 'naoh_weight_g'
     koh_weight_g: float   # Fixed: was 'koh_g', spec requires 'koh_weight_g'
     total_lye_g: float
     naoh_percent: float
     koh_percent: float
+    koh_purity: float
+    naoh_purity: float
+    pure_koh_equivalent_g: float
+    pure_naoh_equivalent_g: float
 
 
 class AdditiveOutput(BaseModel):

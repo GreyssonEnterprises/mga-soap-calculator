@@ -44,9 +44,9 @@ FROM registry.access.redhat.com/ubi9/python-311:latest
 # Metadata labels (OpenContainer Initiative format)
 LABEL name="mga-soap-calculator-api" \
       vendor="MGA Automotive" \
-      version="1.0.0" \
+      version="1.2.0" \
       summary="Core Soap Calculation API with additive effect modeling" \
-      description="FastAPI application for soap formulation calculations with PostgreSQL backend" \
+      description="FastAPI application for soap formulation calculations with PostgreSQL backend. Auto-seeds reference data on startup." \
       maintainer="info@mga-automotive.com"
 
 # Runtime environment configuration
@@ -60,8 +60,11 @@ ENV PYTHONUNBUFFERED=1 \
 # Switch to root for runtime dependencies
 USER 0
 
-# Install runtime dependencies only (no build tools)
+# Install runtime dependencies
+# postgresql: Client tools including pg_isready for health checks
+# postgresql-libs: Runtime libraries for psycopg2
 RUN dnf install -y \
+    postgresql \
     postgresql-libs \
     && dnf clean all \
     && rm -rf /var/cache/dnf
@@ -90,8 +93,10 @@ COPY --chown=1001:0 alembic.ini ./
 COPY --chown=1001:0 .env.example ./
 
 # Ensure execute permissions on scripts
+# Entrypoint needs to be executable by user 1001
 RUN chmod -R g+rx scripts/ && \
-    chmod g+r alembic.ini .env.example
+    chmod g+r alembic.ini .env.example && \
+    chmod +x scripts/docker-entrypoint.sh
 
 # Switch to non-root user (UBI standard UID 1001)
 # This user exists by default in UBI Python images
@@ -105,13 +110,9 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
 # Expose API port
 EXPOSE 8000
 
-# Production server command
-# Using uvicorn with production-grade workers
-CMD ["uvicorn", "app.main:app", \
-     "--host", "0.0.0.0", \
-     "--port", "8000", \
-     "--workers", "4", \
-     "--log-level", "info", \
-     "--access-log", \
-     "--proxy-headers", \
-     "--forwarded-allow-ips", "*"]
+# Entrypoint script handles:
+# 1. Database readiness check (pg_isready)
+# 2. Alembic migrations (idempotent)
+# 3. Automatic seed data loading (idempotent)
+# 4. Application startup (uvicorn)
+ENTRYPOINT ["/opt/app-root/src/scripts/docker-entrypoint.sh"]
