@@ -512,4 +512,36 @@ ADDITIVE_SEED_DATA = [
         "verified_by_mga": False,
         "safety_warnings": {"heat": "Prevent gel phase to avoid browning - refrigerate after molding"},
     },
+    # Low Confidence Additives - Not validated by MGA domain expert
+    {
+        "id": "spirulina_powder",
+        "common_name": "Spirulina Powder",
+        "inci_name": "Spirulina Platensis Powder",
+        "typical_usage_min_percent": 0.5,
+        "typical_usage_max_percent": 2.0,
+        "quality_effects": {
+            "conditioning": 0.5,
+        },
+        "confidence_level": "low",
+        "verified_by_mga": False,
+        "safety_warnings": {
+            "note": "Aesthetic colorant (blue-green). Not validated by MGA domain expert. Effect modeling based on limited sources.",
+        },
+    },
+    {
+        "id": "turmeric_powder",
+        "common_name": "Turmeric Powder",
+        "inci_name": "Curcuma Longa Root Powder",
+        "typical_usage_min_percent": 0.5,
+        "typical_usage_max_percent": 2.0,
+        "quality_effects": {
+            "conditioning": 0.5,
+        },
+        "confidence_level": "low",
+        "verified_by_mga": False,
+        "safety_warnings": {
+            "note": "Aesthetic colorant (yellow/orange). Not validated by MGA domain expert. Effect modeling based on limited sources.",
+            "staining": "May cause temporary skin staining - test on small area first",
+        },
+    },
 ]

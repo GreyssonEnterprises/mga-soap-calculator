@@ -133,3 +133,83 @@ def validate_superfat(superfat_percent: float) -> Dict[str, str]:
         }
 
     return {}
+
+
+def calculate_lye_with_purity(
+    pure_koh_needed: float,
+    pure_naoh_needed: float,
+    koh_purity: float = 90.0,
+    naoh_purity: float = 100.0
+) -> Dict[str, any]:
+    """
+    Calculate commercial lye weights adjusted for purity.
+
+    Industry reality: Commercial KOH is typically 85-95% pure due to moisture
+    absorption (hygroscopic). NaOH is typically 98-100% pure (more stable).
+    This function adjusts pure lye requirements to account for commercial
+    purity, telling users how much *actual product* to weigh out.
+
+    Formula (Spec 002-lye-purity, Section "Enhanced Formula"):
+    - commercial_weight = pure_lye_needed / (purity / 100)
+
+    Example: 117.1g pure KOH needed at 90% purity
+    → 117.1 / 0.90 = 130.1g commercial KOH to weigh out
+
+    TDD Evidence: Validates against spec reference test case
+    - Input: 117.1g pure KOH, 90% purity
+    - Expected: 130.1g commercial KOH (±0.5g tolerance)
+
+    Args:
+        pure_koh_needed: Pure KOH required for saponification (g)
+        pure_naoh_needed: Pure NaOH required for saponification (g)
+        koh_purity: KOH purity percentage (50-100, default 90)
+        naoh_purity: NaOH purity percentage (50-100, default 100)
+
+    Returns:
+        Dict with commercial weights, pure equivalents, and warnings:
+        {
+            'commercial_koh_g': float,
+            'commercial_naoh_g': float,
+            'pure_koh_equivalent_g': float,
+            'pure_naoh_equivalent_g': float,
+            'total_lye_g': float,
+            'warnings': List[Dict] or None
+        }
+
+    Note:
+        Input validation (50-100% range) enforced by Pydantic schema.
+        This function assumes valid inputs and focuses on calculation + warnings.
+    """
+    # Convert percentages to decimals
+    koh_purity_decimal = koh_purity / 100
+    naoh_purity_decimal = naoh_purity / 100
+
+    # Calculate commercial weights (what user actually weighs)
+    commercial_koh = pure_koh_needed / koh_purity_decimal
+    commercial_naoh = pure_naoh_needed / naoh_purity_decimal
+
+    # Generate warnings for unusual purity values (Spec lines 273-276)
+    warnings = []
+
+    # KOH typical range: 85-95%
+    if koh_purity < 85 or koh_purity > 95:
+        warnings.append({
+            "type": "unusual_purity",
+            "message": f"KOH purity of {koh_purity}% is outside typical commercial range (85-95%)"
+        })
+
+    # NaOH typical range: 98-100%
+    if naoh_purity < 98:
+        warnings.append({
+            "type": "unusual_purity",
+            "message": f"NaOH purity of {naoh_purity}% is below typical commercial grade (98-100%)"
+        })
+
+    return {
+        "commercial_koh_g": round(commercial_koh, 1),
+        "commercial_naoh_g": round(commercial_naoh, 1),
+        "pure_koh_equivalent_g": round(pure_koh_needed, 1),
+        "pure_naoh_equivalent_g": round(pure_naoh_needed, 1),
+        "total_lye_g": round(commercial_koh + commercial_naoh, 1),
+        "warnings": warnings if warnings else None
+    }

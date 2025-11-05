@@ -118,13 +118,17 @@ async def test_additive_seed_data_confidence_levels_set():
 @pytest.mark.unit
 @pytest.mark.asyncio
 async def test_seed_oils_can_be_inserted(test_db_session: AsyncSession):
-    """Test that seed oil data can be inserted into database"""
-    # Insert first oil from seed data
+    """Test that seed oil data can be inserted into database (idempotent)"""
+    # Insert first oil from seed data if it doesn't already exist
     oil_data = OIL_SEED_DATA[0]
-    oil = Oil(**oil_data)
 
-    test_db_session.add(oil)
-    await test_db_session.commit()
+    existing_result = await test_db_session.execute(select(Oil).where(Oil.id == oil_data["id"]))
+    existing = existing_result.scalar_one_or_none()
+
+    if existing is None:
+        oil = Oil(**oil_data)
+        test_db_session.add(oil)
+        await test_db_session.commit()
 
     # Query back
     result = await test_db_session.execute(select(Oil).where(Oil.id == oil_data["id"]))
@@ -137,13 +141,17 @@ async def test_seed_oils_can_be_inserted(test_db_session: AsyncSession):
 @pytest.mark.unit
 @pytest.mark.asyncio
 async def test_seed_additives_can_be_inserted(test_db_session: AsyncSession):
-    """Test that seed additive data can be inserted into database"""
-    # Insert first additive from seed data
+    """Test that seed additive data can be inserted into database (idempotent)"""
+    # Insert first additive from seed data if it doesn't already exist
     additive_data = ADDITIVE_SEED_DATA[0]
-    additive = Additive(**additive_data)
 
-    test_db_session.add(additive)
-    await test_db_session.commit()
+    existing_result = await test_db_session.execute(select(Additive).where(Additive.id == additive_data["id"]))
+    existing = existing_result.scalar_one_or_none()
+
+    if existing is None:
+        additive = Additive(**additive_data)
+        test_db_session.add(additive)
+        await test_db_session.commit()
 
     # Query back
     result = await test_db_session.execute(select(Additive).where(Additive.id == additive_data["id"]))

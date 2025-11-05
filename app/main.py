@@ -14,7 +14,7 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 
 from app.core.config import settings
-from app.api.v1 import auth, calculate
+from app.api.v1 import auth, calculate, resources
 
 
 def custom_openapi():
@@ -205,6 +205,7 @@ app.add_middleware(
 # Include routers
 app.include_router(auth.router)
 app.include_router(calculate.router)
+app.include_router(resources.router)
 
 
 @app.get(

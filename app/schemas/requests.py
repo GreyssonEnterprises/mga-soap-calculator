@@ -5,7 +5,7 @@ TDD Evidence: Tests written first in test_request_models.py
 Implements spec Section 3.1 request schema with validation rules.
 """
 from typing import Optional, List, Literal
-from pydantic import BaseModel, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class OilInput(BaseModel):
@@ -34,9 +34,15 @@ class LyeConfig(BaseModel):
 
     Validation per spec Section 6.1:
     - naoh_percent + koh_percent must equal 100.0 (with 0.01 tolerance for floating point)
+    - koh_purity: Optional purity percentage (50-100%), default 90%
+    - naoh_purity: Optional purity percentage (50-100%), default 100%
+
+    Feature: KOH/NaOH Purity Support (Spec 002-lye-purity)
     """
     naoh_percent: float
     koh_percent: float
+    koh_purity: Optional[float] = Field(default=90.0, ge=50.0, le=100.0)
+    naoh_purity: Optional[float] = Field(default=100.0, ge=50.0, le=100.0)
 
     @model_validator(mode='after')
     def validate_percentage_sum(self):
