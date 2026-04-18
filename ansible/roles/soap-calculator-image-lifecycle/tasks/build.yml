@@ -8,7 +8,7 @@
     mode: '0755'
   delegate_to: localhost
 
-- name: Build container image with version tag
+- name: Build container image with version tag (x86_64 for grimm-lin)
   containers.podman.podman_image:
     name: "{{ image_base_name }}"
     tag: "{{ image_version }}"
@@ -17,6 +17,7 @@
       file: "{{ playbook_dir }}/../../Dockerfile"
       cache: true
       force_rm: true
+      extra_args: "--platform linux/amd64"
     state: build
   delegate_to: localhost
   register: image_build

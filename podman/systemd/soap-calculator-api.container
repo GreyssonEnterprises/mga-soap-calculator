@@ -15,7 +15,7 @@ EnvironmentFile=/home/grimm/.config/mga-soap-calculator/api.env
 Memory=1G
 
 # Health check (readiness verification)
-HealthCmd=/usr/bin/curl -fsS http://127.0.0.1:8000/health || exit 1
+HealthCmd=/usr/bin/curl -fsS http://127.0.0.1:8000/api/v1/health || exit 1
 HealthInterval=30s
 HealthTimeout=10s
 HealthRetries=5
