@@ -129,15 +129,17 @@ def generate_three_format_labels(
         )
 
     # Add oils
+    # NOTE: persisted recipe_data from _calculation_pipeline uses "id" and "weight_g"
+    # (not "oil_id" / "weight_grams"). Keep in sync with _recipe_data_payload.
     oils = recipe_data.get("oils", [])
     for oil_item in oils:
-        oil_id = oil_item["oil_id"]
+        oil_id = oil_item["id"]
 
         if oil_id not in oils_dict:
             raise ValueError(f"Oil not found in database: {oil_id}")
 
         oil = oils_dict[oil_id]
-        weight = Decimal(str(oil_item["weight_grams"]))
+        weight = Decimal(str(oil_item["weight_g"]))
         percentage = float((weight / total_weight) * 100)
 
         # Get saponified name based on lye type
