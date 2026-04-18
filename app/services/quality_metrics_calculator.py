@@ -9,40 +9,75 @@ Metrics per spec Section 5.3:
 - Longevity, Stability (from oil quality_contributions)
 
 Additive effects from research file - scaled by usage rate.
+
+CI-02 refactor: Replaced hand-rolled classes (``OilContribution``,
+``AdditiveEffect``, ``QualityMetrics``) with frozen dataclasses for
+immutability and clearer typing.
 """
 
+from dataclasses import dataclass
 
+
+@dataclass(frozen=True)
 class OilContribution:
-    """Oil with weight and quality contributions"""
+    """Oil with weight and per-metric quality contributions."""
 
-    def __init__(self, weight_g: float, percentage: float, quality_contributions: dict[str, float]):
-        self.weight_g = weight_g
-        self.percentage = percentage
-        self.quality_contributions = quality_contributions
+    weight_g: float
+    percentage: float
+    quality_contributions: dict[str, float]
 
 
+@dataclass(frozen=True)
 class AdditiveEffect:
-    """Additive with usage rate and quality effects"""
+    """Additive with mass and per-metric quality effect modifiers (at 2% baseline)."""
 
-    def __init__(
-        self, weight_g: float, quality_effects: dict[str, float], confidence_level: str = "high"
-    ):
-        self.weight_g = weight_g
-        self.quality_effects = quality_effects
-        self.confidence_level = confidence_level
+    weight_g: float
+    quality_effects: dict[str, float]
+    confidence_level: str = "high"
 
 
+@dataclass(frozen=True)
 class QualityMetrics:
-    """Quality metrics result"""
+    """
+    Quality metrics result (values rounded to 1 decimal place).
 
-    def __init__(self, **metrics):
-        self.hardness = round(metrics.get("hardness", 0), 1)
-        self.cleansing = round(metrics.get("cleansing", 0), 1)
-        self.conditioning = round(metrics.get("conditioning", 0), 1)
-        self.bubbly_lather = round(metrics.get("bubbly_lather", 0), 1)
-        self.creamy_lather = round(metrics.get("creamy_lather", 0), 1)
-        self.longevity = round(metrics.get("longevity", 0), 1)
-        self.stability = round(metrics.get("stability", 0), 1)
+    All seven metrics default to 0.0 so callers can pass only the fields they
+    care about (tests frequently do).
+    """
+
+    hardness: float = 0.0
+    cleansing: float = 0.0
+    conditioning: float = 0.0
+    bubbly_lather: float = 0.0
+    creamy_lather: float = 0.0
+    longevity: float = 0.0
+    stability: float = 0.0
+
+    @classmethod
+    def from_metrics(cls, metrics: dict[str, float]) -> "QualityMetrics":
+        """Build a rounded ``QualityMetrics`` from a mapping of metric → value."""
+        return cls(
+            hardness=round(metrics.get("hardness", 0.0), 1),
+            cleansing=round(metrics.get("cleansing", 0.0), 1),
+            conditioning=round(metrics.get("conditioning", 0.0), 1),
+            bubbly_lather=round(metrics.get("bubbly_lather", 0.0), 1),
+            creamy_lather=round(metrics.get("creamy_lather", 0.0), 1),
+            longevity=round(metrics.get("longevity", 0.0), 1),
+            stability=round(metrics.get("stability", 0.0), 1),
+        )
+
+
+# Internal: list of metric field names kept in a single place so the
+# functions below stay in sync with the dataclass definition.
+_METRIC_FIELDS: tuple[str, ...] = (
+    "hardness",
+    "cleansing",
+    "conditioning",
+    "bubbly_lather",
+    "creamy_lather",
+    "longevity",
+    "stability",
+)
 
 
 def calculate_base_metrics_from_oils(oils: list[OilContribution]) -> QualityMetrics:
@@ -52,24 +87,15 @@ def calculate_base_metrics_from_oils(oils: list[OilContribution]) -> QualityMetr
     Uses weighted average of oil quality_contributions from database.
     TDD Evidence: Validates against SoapCalc reference recipe
     """
-    metrics = {
-        "hardness": 0.0,
-        "cleansing": 0.0,
-        "conditioning": 0.0,
-        "bubbly_lather": 0.0,
-        "creamy_lather": 0.0,
-        "longevity": 0.0,
-        "stability": 0.0,
-    }
+    totals: dict[str, float] = {name: 0.0 for name in _METRIC_FIELDS}
 
     for oil in oils:
-        # Weight each oil's contribution by its percentage in blend
-        for metric_name in metrics.keys():
+        for metric_name in _METRIC_FIELDS:
             contribution = oil.quality_contributions.get(metric_name, 0)
             weighted_contribution = contribution * (oil.percentage / 100)
-            metrics[metric_name] += weighted_contribution
+            totals[metric_name] += weighted_contribution
 
-    return QualityMetrics(**metrics)
+    return QualityMetrics.from_metrics(totals)
 
 
 def apply_additive_effects(
@@ -89,15 +115,7 @@ def apply_additive_effects(
                   At 3% usage: adds +6.0 hardness, +10.5 creamy
     """
     # Start with base metrics
-    adjusted = {
-        "hardness": base_metrics.hardness,
-        "cleansing": base_metrics.cleansing,
-        "conditioning": base_metrics.conditioning,
-        "bubbly_lather": base_metrics.bubbly_lather,
-        "creamy_lather": base_metrics.creamy_lather,
-        "longevity": base_metrics.longevity,
-        "stability": base_metrics.stability,
-    }
+    adjusted: dict[str, float] = {name: getattr(base_metrics, name) for name in _METRIC_FIELDS}
 
     for additive in additives:
         # Calculate actual usage rate as % of oil weight
@@ -112,7 +130,7 @@ def apply_additive_effects(
                 scaled_effect = base_effect * scaling_factor
                 adjusted[metric_name] += scaled_effect
 
-    return QualityMetrics(**adjusted)
+    return QualityMetrics.from_metrics(adjusted)
 
 
 def calculate_ins_value(oils: list[OilContribution]) -> float:
@@ -141,3 +159,14 @@ def calculate_iodine_value(oils: list[OilContribution]) -> float:
     # Would calculate from oil.iodine values in database
     # Placeholder for structure
     return 0.0
+
+
+__all__ = [
+    "AdditiveEffect",
+    "OilContribution",
+    "QualityMetrics",
+    "apply_additive_effects",
+    "calculate_base_metrics_from_oils",
+    "calculate_ins_value",
+    "calculate_iodine_value",
+]

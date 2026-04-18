@@ -8,25 +8,51 @@ Formulas per spec Section 5.1:
 - Total SAP = Σ(oil_weight × oil_sap_value)
 - Lye needed = Total SAP × (1 - superfat/100)
 - For mixed lye: NaOH_weight = total_lye × naoh_percent/100
+
+CI-02 refactor: Replaced hand-rolled classes and the ambiguous
+``dict[str, any]`` return from ``calculate_lye_with_purity`` with frozen
+dataclasses (``OilInput``, ``LyeResult``, ``PurityWarning``, ``PurityResult``).
 """
 
+from dataclasses import dataclass, field
 
+
+@dataclass(frozen=True)
 class OilInput:
-    """Oil input with weight and SAP values"""
+    """Oil input with weight and SAP values."""
 
-    def __init__(self, weight_g: float, sap_naoh: float, sap_koh: float):
-        self.weight_g = weight_g
-        self.sap_naoh = sap_naoh
-        self.sap_koh = sap_koh
+    weight_g: float
+    sap_naoh: float
+    sap_koh: float
 
 
+@dataclass(frozen=True)
 class LyeResult:
-    """Lye calculation result"""
+    """Lye calculation result (grams, rounded to 1 decimal place)."""
 
-    def __init__(self, naoh_g: float, koh_g: float, total_g: float):
-        self.naoh_g = round(naoh_g, 1)
-        self.koh_g = round(koh_g, 1)
-        self.total_g = round(total_g, 1)
+    naoh_g: float
+    koh_g: float
+    total_g: float
+
+
+@dataclass(frozen=True)
+class PurityWarning:
+    """Warning emitted when a purity value falls outside the typical commercial range."""
+
+    type: str
+    message: str
+
+
+@dataclass(frozen=True)
+class PurityResult:
+    """Commercial-weight lye result (purity-adjusted) with optional warnings."""
+
+    commercial_koh_g: float
+    commercial_naoh_g: float
+    pure_koh_equivalent_g: float
+    pure_naoh_equivalent_g: float
+    total_lye_g: float
+    warnings: tuple[PurityWarning, ...] = field(default_factory=tuple)
 
 
 def calculate_lye(
@@ -55,7 +81,7 @@ def calculate_lye(
         koh_percent: Percentage of total lye as KOH BY WEIGHT (0-100)
 
     Returns:
-        LyeResult with naoh_g, koh_g, and total_g
+        LyeResult with naoh_g, koh_g, and total_g (each rounded to 1 decimal)
 
     Raises:
         ValueError: If lye percentages don't sum to 100
@@ -92,7 +118,11 @@ def calculate_lye(
     naoh_needed = total_lye_needed * (naoh_percent / 100)
     koh_needed = total_lye_needed * (koh_percent / 100)
 
-    return LyeResult(naoh_g=naoh_needed, koh_g=koh_needed, total_g=total_lye_needed)
+    return LyeResult(
+        naoh_g=round(naoh_needed, 1),
+        koh_g=round(koh_needed, 1),
+        total_g=round(total_lye_needed, 1),
+    )
 
 
 def validate_superfat(superfat_percent: float) -> dict[str, str]:
@@ -130,7 +160,7 @@ def calculate_lye_with_purity(
     pure_naoh_needed: float,
     koh_purity: float = 90.0,
     naoh_purity: float = 100.0,
-) -> dict[str, any]:
+) -> PurityResult:
     """
     Calculate commercial lye weights adjusted for purity.
 
@@ -156,15 +186,8 @@ def calculate_lye_with_purity(
         naoh_purity: NaOH purity percentage (50-100, default 100)
 
     Returns:
-        Dict with commercial weights, pure equivalents, and warnings:
-        {
-            'commercial_koh_g': float,
-            'commercial_naoh_g': float,
-            'pure_koh_equivalent_g': float,
-            'pure_naoh_equivalent_g': float,
-            'total_lye_g': float,
-            'warnings': List[Dict] or None
-        }
+        PurityResult with commercial weights, pure equivalents, and the tuple
+        of ``PurityWarning`` values (empty when no warnings apply).
 
     Note:
         Input validation (50-100% range) enforced by Pydantic schema.
@@ -179,31 +202,35 @@ def calculate_lye_with_purity(
     commercial_naoh = pure_naoh_needed / naoh_purity_decimal
 
     # Generate warnings for unusual purity values (Spec lines 273-276)
-    warnings = []
+    warnings: list[PurityWarning] = []
 
     # KOH typical range: 85-95%
     if koh_purity < 85 or koh_purity > 95:
         warnings.append(
-            {
-                "type": "unusual_purity",
-                "message": f"KOH purity of {koh_purity}% is outside typical commercial range (85-95%)",  # noqa: E501
-            }
+            PurityWarning(
+                type="unusual_purity",
+                message=(
+                    f"KOH purity of {koh_purity}% is outside typical commercial range (85-95%)"
+                ),
+            )
         )
 
     # NaOH typical range: 98-100%
     if naoh_purity < 98:
         warnings.append(
-            {
-                "type": "unusual_purity",
-                "message": f"NaOH purity of {naoh_purity}% is below typical commercial grade (98-100%)",  # noqa: E501
-            }
+            PurityWarning(
+                type="unusual_purity",
+                message=(
+                    f"NaOH purity of {naoh_purity}% is below typical commercial grade (98-100%)"
+                ),
+            )
         )
 
-    return {
-        "commercial_koh_g": round(commercial_koh, 1),
-        "commercial_naoh_g": round(commercial_naoh, 1),
-        "pure_koh_equivalent_g": round(pure_koh_needed, 1),
-        "pure_naoh_equivalent_g": round(pure_naoh_needed, 1),
-        "total_lye_g": round(commercial_koh + commercial_naoh, 1),
-        "warnings": warnings if warnings else None,
-    }
+    return PurityResult(
+        commercial_koh_g=round(commercial_koh, 1),
+        commercial_naoh_g=round(commercial_naoh, 1),
+        pure_koh_equivalent_g=round(pure_koh_needed, 1),
+        pure_naoh_equivalent_g=round(pure_naoh_needed, 1),
+        total_lye_g=round(commercial_koh + commercial_naoh, 1),
+        warnings=tuple(warnings),
+    )
