@@ -1,0 +1,134 @@
+{
+  "category": "code_quality",
+  "generated": "2026-04-17",
+  "project": "mga-soap-calculator",
+  "method": "RepoPrompt static analysis + grep/wc inspection (no LLM call)",
+  "findings": [
+    {
+      "id": "CQ-01",
+      "severity": "critical",
+      "title": "Duplicate router registration — two handlers for GET /api/v1/additives",
+      "evidence": "app/api/v1/resources.py:99 defines list_additives AND app/api/v1/additives.py:29 defines list_additives. Both are included in app/main.py:217-220. First registered wins (resources.py), meaning the richer version in additives.py (with category filter) is shadowed or ordering-dependent.",
+      "impact": "Filter by category silently drops; API contract non-deterministic; readers cannot tell which handler owns the route.",
+      "fix": "Delete list_additives from resources.py. Keep only additives.py. Update main.py to stop pretending resources.py owns additives (tag/router split is already confused).",
+      "effort": "S"
+    },
+    {
+      "id": "CQ-02",
+      "severity": "high",
+      "title": "Stray directory in migrations/versions",
+      "evidence": "migrations/versions/'$(ls -t migrations'/ exists — a literal shell-expansion artifact committed to the repo.",
+      "impact": "Confuses Alembic revision discovery on some filesystems; signals a botched command was committed.",
+      "fix": "rm -rf \"migrations/versions/\\$(ls -t migrations\" and verify alembic history is clean.",
+      "effort": "XS"
+    },
+    {
+      "id": "CQ-03",
+      "severity": "high",
+      "title": "Two dead placeholder functions in app/services/validation.py",
+      "evidence": "validate_oil_ids_exist() at L221 and validate_additive_ids() at L237 both end with `pass` and have 'Placeholder - will be implemented in endpoint' comments. The real logic was inlined into calculate.py instead.",
+      "impact": "Dead code with a misleading name/signature; any future caller will get None back and silently pass. Violates truth-first standard.",
+      "fix": "Delete both functions. If reuse is desired, extract the real implementation from calculate.py into the service.",
+      "effort": "XS"
+    },
+    {
+      "id": "CQ-04",
+      "severity": "high",
+      "title": "Two ways to import get_db — inconsistent",
+      "evidence": "Six routers use `from app.db.base import get_db`; inci.py uses `from app.db import get_db`. app/db/__init__.py re-exports it, so both work but the project disagrees with itself.",
+      "impact": "Low functional impact, but shows a style inconsistency that will grow. Pick one and enforce via ruff.",
+      "fix": "Standardize on `from app.db import get_db` (the package-level API) and update six files. Add an isort/ruff rule.",
+      "effort": "S"
+    },
+    {
+      "id": "CQ-05",
+      "severity": "high",
+      "title": "List-endpoint boilerplate duplicated across 4 routers (~100 lines of copy-paste)",
+      "evidence": "resources.py (oils+additives), additives.py, colorants.py, essential_oils.py each repeat the same pattern: build select → apply search ilike → count via subquery → apply sort via getattr → paginate → return {items, total_count, limit, offset, has_more}.",
+      "impact": "Any bug (e.g., search behavior, count semantics) must be fixed in 5 places. Recent evidence: CQ-01 duplication stems from this.",
+      "fix": "Extract a generic `async def paginated_list(db, model, *, search_fields, filters, sort_by, sort_order, limit, offset, item_schema)` helper in app/api/_pagination.py. Each router becomes ~20 lines.",
+      "effort": "M"
+    },
+    {
+      "id": "CQ-06",
+      "severity": "medium",
+      "title": "Pydantic v1 from_orm used with Pydantic 2.5+",
+      "evidence": "resources.py, additives.py, colorants.py, essential_oils.py call `Item.from_orm(obj)`. Pydantic v2 deprecated from_orm in favor of model_validate with from_attributes=True.",
+      "impact": "Deprecation warnings in tests/logs; may break on a future Pydantic minor bump.",
+      "fix": "Replace with `ItemSchema.model_validate(obj)` after setting `model_config = ConfigDict(from_attributes=True)` on each list-item schema. Do this while extracting the pagination helper (CQ-05).",
+      "effort": "S"
+    },
+    {
+      "id": "CQ-07",
+      "severity": "medium",
+      "title": "Broad `except Exception` swallows real errors",
+      "evidence": "app/api/v1/calculate.py:548 catches bare Exception around the entire POST /calculate body. app/core/security.py:58 verify_password catches Exception and returns False (masks argon2 errors). app/api/v1/calculate.py:530-547 health check catches Exception and returns raw str(e) to clients.",
+      "impact": "Hides bugs, complicates debugging, leaks internal error text in health response. The pattern `except Exception: return False` in auth is a silent-failure anti-pattern.",
+      "fix": "Narrow exceptions — HashingError for passlib, SQLAlchemyError for DB. Log the exception with context before re-raising or returning a structured 500. Never str(e) into client JSON for a health check.",
+      "effort": "S"
+    },
+    {
+      "id": "CQ-08",
+      "severity": "medium",
+      "title": "calculate.py is 556 lines — single 480-line request handler",
+      "evidence": "app/api/v1/calculate.py:66 create_calculation spans ~380 lines, doing oil validation, DB fetches, lye/water/metrics/fatty-acid calculations, additive effect assembly, persistence, and response shaping in one function.",
+      "impact": "Hard to unit-test (requires full DB + HTTP context); hard to reason about failure modes; blocks CQ-07 fix.",
+      "fix": "Split into: (1) `_resolve_inputs(request, db)` → (oils_dict, additives_dict, normalized), (2) `_compute_recipe(normalized, oils_dict, additives_dict)` → pure dataclass, (3) `_persist_calculation(computed, user, db)`. Handler becomes orchestration only.",
+      "effort": "M"
+    },
+    {
+      "id": "CQ-09",
+      "severity": "medium",
+      "title": "two_format_inci_generator leaks Decimal(str(float)) pattern 8 times",
+      "evidence": "app/services/three_format_inci_generator.py lines 53,57,62,63,116,137,158,169 all do `Decimal(str(value))` on dict lookups. Indicates the caller is passing floats but the function wants Decimal.",
+      "impact": "Every converter is a potential source of rounding drift; the contract is fuzzy — is the input Decimal, float, or str?",
+      "fix": "Type the `recipe_data` dict as a TypedDict with Decimal fields and have callers pass Decimals. Remove the defensive Decimal(str(...)) wrappers at the boundary, do it once at the seam.",
+      "effort": "M"
+    },
+    {
+      "id": "CQ-10",
+      "severity": "medium",
+      "title": "Dockerfile.debian-backup committed",
+      "evidence": "Dockerfile.debian-backup at repo root, 0 references in code/playbooks/docs.",
+      "impact": "Cargo-cult leftover from the UBI migration; confuses readers about which Dockerfile is authoritative.",
+      "fix": "Delete. Git preserves it in history if needed.",
+      "effort": "XS"
+    },
+    {
+      "id": "CQ-11",
+      "severity": "medium",
+      "title": "Coverage-on-every-test is wasteful in dev loop",
+      "evidence": "pytest.ini addopts = -v --cov=app --cov-report=term-missing --cov-report=html. pyproject.toml repeats the same. Every `pytest tests/unit/test_one_thing.py` regenerates an HTML coverage report.",
+      "impact": "Slow feedback loop; TDD cycle time suffers.",
+      "fix": "Move coverage to a `[tool.coverage]` section and a `pytest --cov` invocation in CI only. Default `pytest` should be just `-v`. Or add a `make cov` / nox target.",
+      "effort": "XS"
+    },
+    {
+      "id": "CQ-12",
+      "severity": "low",
+      "title": "Schema module split doesn't match router split",
+      "evidence": "app/schemas/requests.py + responses.py hold calculation contracts. But additive.py, colorant.py, essential_oil.py, resource.py, inci_label.py are per-domain. Two organizing principles coexist.",
+      "impact": "Pydantic models drift; e.g., AdditiveListItem exists in both schemas/additive.py and schemas/resource.py and they're probably different.",
+      "fix": "Commit to one principle: per-domain modules. Fold requests.py/responses.py into calculation.py. Dedupe the two AdditiveListItem variants.",
+      "effort": "M"
+    },
+    {
+      "id": "CQ-13",
+      "severity": "low",
+      "title": "Package name drift — pyproject says mga-automotive, product is Midnight Garden Apothecary",
+      "evidence": "pyproject.toml: authors = 'MGA Automotive', email = info@mga-automotive.com. main.py contact block says MGA Automotive. License: 'Proprietary - MGA Automotive'. Actual business (per CLAUDE.md) is Midnight Garden Apothecary under REC.",
+      "impact": "Misleads contributors; legal identity in the license line is wrong.",
+      "fix": "Update pyproject.toml, main.py contact/license, README.md authors block, Dockerfile LABEL to Midnight Garden Apothecary / correct email.",
+      "effort": "XS"
+    },
+    {
+      "id": "CQ-14",
+      "severity": "low",
+      "title": "No ruff/mypy gate in CI visible at repo root",
+      "evidence": ".github/workflows/soap-calculator-ci.yml exists but pyproject.toml declares strict mypy (disallow_untyped_defs) and ruff config. Needs verification they run pre-merge.",
+      "impact": "Strict config doesn't help if CI doesn't enforce.",
+      "fix": "Read the workflow; if ruff/mypy not present, add jobs. If they are, ignore this finding.",
+      "effort": "S"
+    }
+  ]
+}

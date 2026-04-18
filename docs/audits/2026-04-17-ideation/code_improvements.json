@@ -1,0 +1,125 @@
+{
+  "category": "code_improvements",
+  "generated": "2026-04-17",
+  "project": "mga-soap-calculator",
+  "method": "RepoPrompt architecture + infrastructure analysis (no LLM call)",
+  "findings": [
+    {
+      "id": "CI-01",
+      "severity": "high",
+      "title": "Router-to-resource mapping is ambiguous",
+      "evidence": "main.py includes resources, additives, essential_oils, colorants, inci, calculate, auth. But resources.py ALSO owns /additives, creating a second owner. The domain split is halfway between 'resource discovery bundle' and 'per-domain modules'.",
+      "recommendation": "Pick a single axis. Recommended: per-domain routers (one file per top-level noun). Delete resources.py, keep additives.py/essential_oils.py/colorants.py, add oils.py. This also fixes CQ-01.",
+      "effort": "M",
+      "payoff": "Clear mental model for contributors; kills a class of bugs."
+    },
+    {
+      "id": "CI-02",
+      "severity": "high",
+      "title": "Services return ad-hoc dicts and ORM-style objects inconsistently",
+      "evidence": "quality_metrics_calculator returns a QualityMetrics class (custom __init__ of **metrics). fatty_acid_calculator returns a FattyAcidProfile class. lye_calculator returns LyeResult. But three_format_inci_generator returns a 4-tuple of Optional[str,str,str,List[Dict]]. label_generator returns (str, List[InciIngredientDetail]).",
+      "recommendation": "Standardize on Pydantic models (not hand-rolled classes) as service outputs. Or use @dataclass(frozen=True) consistently. The tuple returns in INCI services are the worst offenders — caller has to remember positional meaning.",
+      "effort": "M",
+      "payoff": "Type checker catches misuse; swagger/responses line up with service layer; reduces coupling between routers and service internals."
+    },
+    {
+      "id": "CI-03",
+      "severity": "high",
+      "title": "No request/service boundary for the business rules",
+      "evidence": "calculate.py reaches directly into DB (select(Oil).where...) then hands IDs into services. Services accept dicts, classes, and floats. Business rules (e.g., 'lye % must sum to 100', 'superfat warnings') are half in Pydantic validators, half in validation.py, half in service code.",
+      "recommendation": "Introduce a `CalculationInput` domain object built from the HTTP request + DB-loaded oils/additives. Services accept this object only. Router stays thin: parse → load refs → build input → call service → persist → serialize.",
+      "effort": "L",
+      "payoff": "Enables a headless calculation library (future CLI or desktop client). Makes calculation unit-testable without FastAPI."
+    },
+    {
+      "id": "CI-04",
+      "severity": "medium",
+      "title": "Two DB URLs (async + sync) both required at startup",
+      "evidence": "config.py forces DATABASE_URL and DATABASE_URL_SYNC. Only Alembic env.py and some scripts use the sync URL.",
+      "recommendation": "Derive sync URL from async URL (`settings.DATABASE_URL.replace('+asyncpg', '')`) in a @property. Removes one required env var and one source of drift (they can desync).",
+      "effort": "S",
+      "payoff": "One less env var to document, copy, and vault."
+    },
+    {
+      "id": "CI-05",
+      "severity": "medium",
+      "title": "Engine has no pooling or health-check config",
+      "evidence": "app/db/base.py: create_async_engine(settings.DATABASE_URL, echo=settings.DEBUG, future=True). No pool_size, max_overflow, pool_pre_ping, or connect_args.",
+      "recommendation": "Add pool_pre_ping=True (handles Postgres restarts gracefully under the 4-worker uvicorn setup) and explicit pool_size/max_overflow tuned to worker count. Set statement_timeout via connect_args for safety.",
+      "effort": "S",
+      "payoff": "Survives Postgres bounces; bounds resource usage per worker."
+    },
+    {
+      "id": "CI-06",
+      "severity": "medium",
+      "title": "Ingestion scripts diverge in DB-access style",
+      "evidence": "scripts/import_oils.py uses raw psycopg2. scripts/import_oils_database.py, seed_database.py, test_seed_idempotent.py use async SQLAlchemy. Two styles for the same job.",
+      "recommendation": "Kill the psycopg2 path. All import/seed scripts should use the async session factory via a small `scripts/_db.py` helper. Fewer dependencies, one code path, no raw SQL injection surface.",
+      "effort": "M",
+      "payoff": "Remove psycopg2-binary from hot path (keep only for Alembic), fewer security review targets."
+    },
+    {
+      "id": "CI-07",
+      "severity": "medium",
+      "title": "Seeding is a 547-line script instead of idempotent SQL + YAML fixtures",
+      "evidence": "scripts/seed_data.py (547 lines) contains hardcoded oil/additive definitions in Python. Every new ingredient requires a code change and a redeploy.",
+      "recommendation": "Move seed data to YAML/JSON fixtures under data/seeds/ (you already have data/oils/saponified_inci.json — extend the pattern). Seeder reads fixtures, upserts by unique key. Then 'add new oil' is a data PR, not a code PR.",
+      "effort": "M",
+      "payoff": "Non-engineers (Shale/Jackie, the actual domain experts) can submit data updates. Faster iteration on reference data."
+    },
+    {
+      "id": "CI-08",
+      "severity": "medium",
+      "title": "Migration numbering is inconsistent",
+      "evidence": "migrations/versions has both sequential names (001_initial_schema.py..007) and hash-prefixed names (21ba28925bc0, aeff6055c7b3, b76343b095ad, bc8a5b9f9392, d4e242f8056c). Plus the stray \\$(ls -t directory.",
+      "recommendation": "Pick one: either all sequential-numbered (human-friendly, what Alembic defaults to discourages, but common), or all hash-prefixed (Alembic default). Mixing signals the team is fighting the tool.",
+      "effort": "S",
+      "payoff": "Easier to reason about migration history; matches team workflow."
+    },
+    {
+      "id": "CI-09",
+      "severity": "medium",
+      "title": "CORS config is a comma-separated string parsed at runtime",
+      "evidence": "config.py has ALLOWED_ORIGINS as a single string, split on comma in allowed_origins_list property. Pydantic-settings supports List[str] natively via JSON or delimiter.",
+      "recommendation": "Use Pydantic's field validator to parse on load. Validate each entry is a valid URL. Default to [] in prod (fail-closed), not to a dev-localhost list (current .env.example leaks that default).",
+      "effort": "S",
+      "payoff": "Fail-closed CORS; catches typos at startup."
+    },
+    {
+      "id": "CI-10",
+      "severity": "medium",
+      "title": "Two deployment paths — docker-compose and Ansible+Quadlet — without clear lane separation",
+      "evidence": "docker-compose.yml + docker-compose.prod.yml + podman/systemd/*.container + ansible/roles/. Three ways to bring up the stack.",
+      "recommendation": "Scope each: docker-compose.yml = dev only (no prod env file), Quadlet + Ansible = prod only. Delete docker-compose.prod.yml if Ansible is authoritative, or delete the compose files if not used locally.",
+      "effort": "S",
+      "payoff": "One source of truth per environment. Less drift between dev and prod."
+    },
+    {
+      "id": "CI-11",
+      "severity": "low",
+      "title": "claudedocs/, agent-responses/, working/ are inside the repo",
+      "evidence": "100+ agent-response files, claudedocs/ reports, working/ scratchpads committed. These are AI session artifacts, not product code.",
+      "recommendation": "Move to a git-ignored or sibling-repo path (e.g., .agent-workspace/ gitignored). Keep only genuinely useful reports as docs/adr/ entries. Current mix pollutes git history and grep results.",
+      "effort": "S",
+      "payoff": "Faster grep, cleaner diffs, clearer repo boundary between product and process."
+    },
+    {
+      "id": "CI-12",
+      "severity": "low",
+      "title": "No structured logging",
+      "evidence": "Codebase has zero logging setup beyond FastAPI/uvicorn defaults. Errors that get caught (CQ-07) just return without logging context.",
+      "recommendation": "Add structlog or loguru with JSON output, correlate via a request-id middleware. Then broad except-clauses can at least log with structure before returning.",
+      "effort": "S",
+      "payoff": "Production triage becomes possible. Pairs with CQ-07."
+    },
+    {
+      "id": "CI-13",
+      "severity": "low",
+      "title": "Spec directory sprawl (.specify/, agent-os/, specs/)",
+      "evidence": "Three parallel spec directories, some features spec'd in two places (e.g., 002-lye-purity in .specify/specs and specs/).",
+      "recommendation": "Already noted in CLAUDE.md. Pick one canonical location going forward. Archive the losers to docs/archive/specs/.",
+      "effort": "S",
+      "payoff": "New contributors stop asking 'which spec is current?'"
+    }
+  ]
+}

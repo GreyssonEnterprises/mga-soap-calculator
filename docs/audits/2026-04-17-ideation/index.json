@@ -1,0 +1,44 @@
+{
+  "project": "mga-soap-calculator",
+  "generated": "2026-04-17",
+  "tech_stack": {
+    "language": "Python 3.11+",
+    "framework": "FastAPI",
+    "orm": "SQLAlchemy 2.0 async",
+    "db": "PostgreSQL 15",
+    "migrations": "Alembic",
+    "auth": "JWT + Argon2id (passlib)",
+    "tests": "pytest + pytest-asyncio",
+    "runtime": "Podman (Quadlet systemd) on Fedora 42",
+    "deploy": "Ansible + vault"
+  },
+  "sizes": {
+    "total_py_lines": 22855,
+    "app_py_lines": 5173,
+    "largest_app_files": [
+      { "path": "app/api/v1/calculate.py", "lines": 556 },
+      { "path": "app/main.py", "lines": 308 },
+      { "path": "app/api/v1/inci.py", "lines": 288 },
+      { "path": "app/services/validation.py", "lines": 249 },
+      { "path": "app/services/percentage_calculator.py", "lines": 248 },
+      { "path": "app/core/security.py", "lines": 241 },
+      { "path": "app/services/three_format_inci_generator.py", "lines": 230 },
+      { "path": "app/services/lye_calculator.py", "lines": 215 }
+    ],
+    "largest_test_files": [
+      { "path": "tests/unit/test_resources_endpoint.py", "lines": 599 },
+      { "path": "tests/unit/test_colorant_model.py", "lines": 574 }
+    ],
+    "largest_script_files": [
+      { "path": "scripts/seed_data.py", "lines": 547 },
+      { "path": "scripts/verify_user_stories.py", "lines": 427 },
+      { "path": "scripts/import_oils_database.py", "lines": 418 }
+    ]
+  },
+  "counts": {
+    "app_py_files": 42,
+    "script_py_files": 12,
+    "migrations": 12,
+    "agent_response_files": "100+"
+  }
+}
