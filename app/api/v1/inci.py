@@ -12,7 +12,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.base import get_db
+from app.db import get_db
 from app.models.calculation import Calculation
 from app.models.oil import Oil
 from app.schemas.inci_label import (

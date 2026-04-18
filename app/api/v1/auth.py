@@ -10,7 +10,7 @@ from app.core.security import (
     get_password_hash,
     verify_password,
 )
-from app.db.base import get_db
+from app.db import get_db
 from app.models.user import User
 from app.schemas.auth import (
     UserInfo,
