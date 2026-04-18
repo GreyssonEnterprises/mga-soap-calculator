@@ -10,8 +10,10 @@ Tests validate:
 - Database insertion with SQLAlchemy
 - Idempotency (re-import doesn't duplicate data)
 """
+
+from unittest.mock import MagicMock
+
 import pytest
-from unittest.mock import Mock, MagicMock
 from sqlalchemy.orm import Session
 
 
@@ -27,7 +29,7 @@ def sample_essential_oil_json():
         "usage_notes": "Most versatile EO for soap making",
         "blends_with": ["Bergamot", "Clary Sage", "Geranium", "Patchouli"],
         "note": "Middle",
-        "category": "floral"
+        "category": "floral",
     }
 
 
@@ -43,7 +45,7 @@ def sample_rose_otto_json():
         "usage_notes": "Extremely expensive; use sparingly",
         "blends_with": ["Bergamot", "Geranium", "Jasmine", "Sandalwood"],
         "note": "Middle",
-        "category": "floral"
+        "category": "floral",
     }
 
 
@@ -57,7 +59,7 @@ def mock_db_session():
 class TestJSONParsing:
     """Test JSON file loading and parsing"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_load_essential_oils_json_file(self):
         """
         GIVEN: essential-oils-usage-reference.json file path
@@ -66,11 +68,11 @@ class TestJSONParsing:
         """
         from scripts.import_essential_oils import load_essential_oils_json
 
-        data = load_essential_oils_json('working/user-feedback/essential-oils-usage-reference.json')
+        data = load_essential_oils_json("working/user-feedback/essential-oils-usage-reference.json")
 
         assert isinstance(data, (dict, list))
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_parse_essential_oil_entry(self, sample_essential_oil_json):
         """
         GIVEN: Single essential oil JSON entry
@@ -81,17 +83,17 @@ class TestJSONParsing:
 
         result = parse_essential_oil_entry(sample_essential_oil_json)
 
-        assert result['name'] == 'Lavender'
-        assert result['botanical_name'] == 'Lavandula angustifolia'
-        assert result['max_usage_rate_pct'] == 3.0
-        assert result['note'] == 'Middle'
-        assert result['category'] == 'floral'
+        assert result["name"] == "Lavender"
+        assert result["botanical_name"] == "Lavandula angustifolia"
+        assert result["max_usage_rate_pct"] == 3.0
+        assert result["note"] == "Middle"
+        assert result["category"] == "floral"
 
 
 class TestMaxUsageRateValidation:
     """Test validation of max usage rate (0.025% - 3.0%)"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_validate_minimum_usage_rate(self, sample_rose_otto_json):
         """
         GIVEN: Rose Otto with 0.025% max usage rate
@@ -100,11 +102,11 @@ class TestMaxUsageRateValidation:
         """
         from scripts.import_essential_oils import validate_usage_rate
 
-        is_valid = validate_usage_rate(sample_rose_otto_json['max_usage_rate_pct'])
+        is_valid = validate_usage_rate(sample_rose_otto_json["max_usage_rate_pct"])
 
         assert is_valid is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_validate_maximum_usage_rate(self, sample_essential_oil_json):
         """
         GIVEN: Lavender with 3.0% max usage rate
@@ -113,11 +115,11 @@ class TestMaxUsageRateValidation:
         """
         from scripts.import_essential_oils import validate_usage_rate
 
-        is_valid = validate_usage_rate(sample_essential_oil_json['max_usage_rate_pct'])
+        is_valid = validate_usage_rate(sample_essential_oil_json["max_usage_rate_pct"])
 
         assert is_valid is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_validate_typical_usage_rates(self):
         """
         GIVEN: Typical EO usage rates
@@ -131,7 +133,7 @@ class TestMaxUsageRateValidation:
         for rate in typical_rates:
             assert validate_usage_rate(rate) is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_reject_too_low_usage_rate(self):
         """
         GIVEN: Usage rate below 0.025%
@@ -144,7 +146,7 @@ class TestMaxUsageRateValidation:
 
         assert is_valid is False
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_reject_too_high_usage_rate(self):
         """
         GIVEN: Usage rate above 3.0%
@@ -157,7 +159,7 @@ class TestMaxUsageRateValidation:
 
         assert is_valid is False
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_reject_negative_usage_rate(self):
         """
         GIVEN: Negative usage rate
@@ -171,10 +173,10 @@ class TestMaxUsageRateValidation:
         assert is_valid is False
 
 
-class TestBlendsWith ArrayHandling:
+class TestBlendsWithArrayHandling:
     """Test JSONB array field handling"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_parse_blends_with_array(self, sample_essential_oil_json):
         """
         GIVEN: EO with blends_with array
@@ -185,12 +187,12 @@ class TestBlendsWith ArrayHandling:
 
         result = parse_essential_oil_entry(sample_essential_oil_json)
 
-        assert 'blends_with' in result
-        assert isinstance(result['blends_with'], list)
-        assert len(result['blends_with']) == 4
-        assert 'Bergamot' in result['blends_with']
+        assert "blends_with" in result
+        assert isinstance(result["blends_with"], list)
+        assert len(result["blends_with"]) == 4
+        assert "Bergamot" in result["blends_with"]
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_handle_empty_blends_with(self):
         """
         GIVEN: EO with empty blends_with array
@@ -205,14 +207,14 @@ class TestBlendsWith ArrayHandling:
             "max_usage_rate_pct": 2.0,
             "blends_with": [],
             "note": "Top",
-            "category": "citrus"
+            "category": "citrus",
         }
 
         result = parse_essential_oil_entry(data)
 
-        assert result['blends_with'] == []
+        assert result["blends_with"] == []
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_handle_missing_blends_with(self):
         """
         GIVEN: EO without blends_with field
@@ -226,20 +228,20 @@ class TestBlendsWith ArrayHandling:
             "botanical_name": "Testus",
             "max_usage_rate_pct": 2.0,
             "note": "Top",
-            "category": "citrus"
+            "category": "citrus",
             # blends_with missing
         }
 
         result = parse_essential_oil_entry(data)
 
         # Should be None or []
-        assert result.get('blends_with') is None or result.get('blends_with') == []
+        assert result.get("blends_with") is None or result.get("blends_with") == []
 
 
 class TestDatabaseInsertion:
     """Test SQLAlchemy database insertion logic"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_create_or_update_essential_oil(self, mock_db_session, sample_essential_oil_json):
         """
         GIVEN: Parsed EO data and database session
@@ -254,18 +256,20 @@ class TestDatabaseInsertion:
         assert mock_db_session.add.called
         assert mock_db_session.commit.called
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_idempotent_import_same_id(self, mock_db_session, sample_essential_oil_json):
         """
         GIVEN: EO with same ID already exists in database
         WHEN: Re-importing same EO
         THEN: Should update existing record, not create duplicate
         """
-        from scripts.import_essential_oils import create_or_update_essential_oil
         from app.models.essential_oil import EssentialOil
+        from scripts.import_essential_oils import create_or_update_essential_oil
 
         # Mock existing EO query
-        existing = EssentialOil(id='lavender', name='Old Lavender', botanical_name='Old', max_usage_rate_pct=2.0)
+        existing = EssentialOil(
+            id="lavender", name="Old Lavender", botanical_name="Old", max_usage_rate_pct=2.0
+        )
         mock_db_session.query.return_value.filter.return_value.first.return_value = existing
 
         create_or_update_essential_oil(mock_db_session, sample_essential_oil_json)
@@ -274,7 +278,7 @@ class TestDatabaseInsertion:
         assert mock_db_session.add.call_count <= 1
         assert mock_db_session.commit.called
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_transaction_rollback_on_error(self, mock_db_session, sample_essential_oil_json):
         """
         GIVEN: Database error during insertion
@@ -296,7 +300,7 @@ class TestDatabaseInsertion:
 class TestBatchImport:
     """Test importing multiple essential oils in batch"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_import_all_essential_oils(self, mock_db_session):
         """
         GIVEN: JSON file with 24 essential oils
@@ -306,14 +310,13 @@ class TestBatchImport:
         from scripts.import_essential_oils import import_all_essential_oils
 
         count = import_all_essential_oils(
-            mock_db_session,
-            'working/user-feedback/essential-oils-usage-reference.json'
+            mock_db_session, "working/user-feedback/essential-oils-usage-reference.json"
         )
 
         # Should import 24 essential oils per spec
         assert count == 24
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_import_with_transaction(self, mock_db_session):
         """
         GIVEN: Multiple EOs to import
@@ -323,8 +326,7 @@ class TestBatchImport:
         from scripts.import_essential_oils import import_all_essential_oils
 
         import_all_essential_oils(
-            mock_db_session,
-            'working/user-feedback/essential-oils-usage-reference.json'
+            mock_db_session, "working/user-feedback/essential-oils-usage-reference.json"
         )
 
         # Should commit once after all imports
@@ -334,7 +336,7 @@ class TestBatchImport:
 class TestIDGeneration:
     """Test generation of essential oil IDs from names"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_generate_id_from_name(self):
         """
         GIVEN: EO name "Lavender"
@@ -347,7 +349,7 @@ class TestIDGeneration:
 
         assert result == "lavender"
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_generate_id_with_spaces(self):
         """
         GIVEN: EO name "Tea Tree"
@@ -360,7 +362,7 @@ class TestIDGeneration:
 
         assert result == "tea_tree"
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_generate_id_with_special_name(self):
         """
         GIVEN: EO name "Rose Otto"
@@ -377,7 +379,7 @@ class TestIDGeneration:
 class TestConfidenceLevelAssignment:
     """Test automatic confidence level assignment based on CPSR validation"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_cpsr_validated_high_confidence(self, sample_essential_oil_json):
         """
         GIVEN: EO with CPSR-validated max usage rate
@@ -389,9 +391,9 @@ class TestConfidenceLevelAssignment:
         result = parse_essential_oil_entry(sample_essential_oil_json)
 
         # CPSR-validated data should have high confidence
-        assert result.get('confidence_level') == 'high'
+        assert result.get("confidence_level") == "high"
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_all_eos_high_confidence(self):
         """
         GIVEN: Essential oils from CPSR-validated source
@@ -403,13 +405,13 @@ class TestConfidenceLevelAssignment:
         # All EOs from essential-oils-usage-reference.json are CPSR-validated
         confidence = determine_confidence_level(has_cpsr_data=True)
 
-        assert confidence == 'high'
+        assert confidence == "high"
 
 
 class TestNoteValidation:
     """Test note field validation (Top, Middle, Base)"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_validate_note_top(self):
         """
         GIVEN: EO with "Top" note
@@ -420,7 +422,7 @@ class TestNoteValidation:
 
         assert validate_note("Top") is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_validate_note_middle(self):
         """
         GIVEN: EO with "Middle" note
@@ -431,7 +433,7 @@ class TestNoteValidation:
 
         assert validate_note("Middle") is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_validate_note_base(self):
         """
         GIVEN: EO with "Base" note
@@ -442,7 +444,7 @@ class TestNoteValidation:
 
         assert validate_note("Base") is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_reject_invalid_note(self):
         """
         GIVEN: EO with invalid note
@@ -457,7 +459,7 @@ class TestNoteValidation:
 class TestCategoryValidation:
     """Test category field validation"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_validate_valid_categories(self):
         """
         GIVEN: EOs with valid categories
@@ -466,12 +468,12 @@ class TestCategoryValidation:
         """
         from scripts.import_essential_oils import validate_category
 
-        valid_categories = ['citrus', 'floral', 'herbal', 'woodsy', 'earthy', 'spice']
+        valid_categories = ["citrus", "floral", "herbal", "woodsy", "earthy", "spice"]
 
         for category in valid_categories:
             assert validate_category(category) is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_reject_invalid_category(self):
         """
         GIVEN: EO with invalid category

@@ -12,6 +12,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from fastapi.testclient import TestClient
+
 from app.main import app
 
 client = TestClient(app)
@@ -33,15 +34,11 @@ def test_us1_90_percent_koh_calculation():
         "oils": [
             {"name": "Olive Oil", "percentage": 70},
             {"name": "Castor Oil", "percentage": 20},
-            {"name": "Coconut Oil", "percentage": 10}
+            {"name": "Coconut Oil", "percentage": 10},
         ],
-        "lye": {
-            "naoh_percent": 10,
-            "koh_percent": 90,
-            "koh_purity": 90
-        },
+        "lye": {"naoh_percent": 10, "koh_percent": 90, "koh_purity": 90},
         "superfat_percent": 1,
-        "batch_size_g": 700
+        "batch_size_g": 700,
     }
 
     response = client.post("/api/v1/calculate", json=payload)
@@ -64,10 +61,14 @@ def test_us1_90_percent_koh_calculation():
     pure_pass = abs(pure_koh - expected_pure) <= tolerance
 
     print(f"Commercial KOH: {koh_weight:.1f}g (expected: {expected_commercial}g)")
-    print(f"  {GREEN}✓{RESET} Within tolerance" if koh_pass else f"  {RED}✗{RESET} Outside tolerance")
+    print(
+        f"  {GREEN}✓{RESET} Within tolerance" if koh_pass else f"  {RED}✗{RESET} Outside tolerance"
+    )
 
     print(f"Pure KOH equivalent: {pure_koh:.1f}g (expected: {expected_pure}g)")
-    print(f"  {GREEN}✓{RESET} Within tolerance" if pure_pass else f"  {RED}✗{RESET} Outside tolerance")
+    print(
+        f"  {GREEN}✓{RESET} Within tolerance" if pure_pass else f"  {RED}✗{RESET} Outside tolerance"
+    )
 
     return koh_pass and pure_pass
 
@@ -82,7 +83,7 @@ def test_us1_default_90_percent():
         "oils": [
             {"name": "Olive Oil", "percentage": 70},
             {"name": "Castor Oil", "percentage": 20},
-            {"name": "Coconut Oil", "percentage": 10}
+            {"name": "Coconut Oil", "percentage": 10},
         ],
         "lye": {
             "naoh_percent": 10,
@@ -90,7 +91,7 @@ def test_us1_default_90_percent():
             # koh_purity omitted - should default to 90
         },
         "superfat_percent": 1,
-        "batch_size_g": 700
+        "batch_size_g": 700,
     }
 
     response = client.post("/api/v1/calculate", json=payload)
@@ -126,10 +127,10 @@ def test_us2_validation_below_50():
         "lye": {
             "naoh_percent": 0,
             "koh_percent": 100,
-            "koh_purity": 49  # Invalid: below minimum
+            "koh_purity": 49,  # Invalid: below minimum
         },
         "superfat_percent": 5,
-        "batch_size_g": 500
+        "batch_size_g": 500,
     }
 
     response = client.post("/api/v1/calculate", json=payload)
@@ -147,7 +148,11 @@ def test_us2_validation_below_50():
     print(f"  {GREEN}✓{RESET} Correctly rejected")
 
     print(f"Error message: {error_msg}")
-    print(f"  {GREEN}✓{RESET} Includes range" if has_range_info else f"  {YELLOW}!{RESET} Missing range info")
+    print(
+        f"  {GREEN}✓{RESET} Includes range"
+        if has_range_info
+        else f"  {YELLOW}!{RESET} Missing range info"
+    )
 
     return True  # Status 400 is the key requirement
 
@@ -163,10 +168,10 @@ def test_us2_validation_above_100():
         "lye": {
             "naoh_percent": 0,
             "koh_percent": 100,
-            "koh_purity": 101  # Invalid: above maximum
+            "koh_purity": 101,  # Invalid: above maximum
         },
         "superfat_percent": 5,
-        "batch_size_g": 500
+        "batch_size_g": 500,
     }
 
     response = client.post("/api/v1/calculate", json=payload)
@@ -198,10 +203,10 @@ def test_us3_warnings_unusual_purity():
         "lye": {
             "naoh_percent": 0,
             "koh_percent": 100,
-            "koh_purity": 75  # Unusual but valid
+            "koh_purity": 75,  # Unusual but valid
         },
         "superfat_percent": 5,
-        "batch_size_g": 500
+        "batch_size_g": 500,
     }
 
     response_low = client.post("/api/v1/recipes/calculate", json=payload_low)
@@ -214,7 +219,7 @@ def test_us3_warnings_unusual_purity():
     data_low = response_low.json()
     warnings_low = data_low.get("recipe", {}).get("warnings", [])
 
-    print(f"75% KOH purity:")
+    print("75% KOH purity:")
     print(f"  HTTP Status: {response_low.status_code} (expected: 200)")
     print(f"  {GREEN}✓{RESET} Calculation succeeded")
     print(f"  Warnings: {len(warnings_low)}")
@@ -229,17 +234,17 @@ def test_us3_warnings_unusual_purity():
         "lye": {
             "naoh_percent": 0,
             "koh_percent": 100,
-            "koh_purity": 98  # Unusual high
+            "koh_purity": 98,  # Unusual high
         },
         "superfat_percent": 5,
-        "batch_size_g": 500
+        "batch_size_g": 500,
     }
 
     response_high = client.post("/api/v1/recipes/calculate", json=payload_high)
     data_high = response_high.json()
     warnings_high = data_high.get("recipe", {}).get("warnings", [])
 
-    print(f"\n98% KOH purity:")
+    print("\n98% KOH purity:")
     print(f"  HTTP Status: {response_high.status_code} (expected: 200)")
     print(f"  Warnings: {len(warnings_high)}")
     if warnings_high:
@@ -253,17 +258,17 @@ def test_us3_warnings_unusual_purity():
         "lye": {
             "naoh_percent": 0,
             "koh_percent": 100,
-            "koh_purity": 90  # Typical commercial
+            "koh_purity": 90,  # Typical commercial
         },
         "superfat_percent": 5,
-        "batch_size_g": 500
+        "batch_size_g": 500,
     }
 
     response_normal = client.post("/api/v1/recipes/calculate", json=payload_normal)
     data_normal = response_normal.json()
     warnings_normal = data_normal.get("recipe", {}).get("warnings", [])
 
-    print(f"\n90% KOH purity (typical):")
+    print("\n90% KOH purity (typical):")
     print(f"  Warnings: {len(warnings_normal)}")
     if not warnings_normal:
         print(f"  {GREEN}✓{RESET} No warning (correct for typical purity)")
@@ -283,16 +288,16 @@ def test_us4_mixed_lye_purity():
         "oils": [
             {"name": "Olive Oil", "percentage": 70},
             {"name": "Castor Oil", "percentage": 20},
-            {"name": "Coconut Oil", "percentage": 10}
+            {"name": "Coconut Oil", "percentage": 10},
         ],
         "lye": {
             "naoh_percent": 10,
             "koh_percent": 90,
             "koh_purity": 90,  # 90% KOH
-            "naoh_purity": 98  # 98% NaOH
+            "naoh_purity": 98,  # 98% NaOH
         },
         "superfat_percent": 1,
-        "batch_size_g": 700
+        "batch_size_g": 700,
     }
 
     response = client.post("/api/v1/calculate", json=payload)
@@ -338,14 +343,9 @@ def test_us5_response_schema():
 
     payload = {
         "oils": [{"name": "Olive Oil", "percentage": 100}],
-        "lye": {
-            "naoh_percent": 10,
-            "koh_percent": 90,
-            "koh_purity": 90,
-            "naoh_purity": 98
-        },
+        "lye": {"naoh_percent": 10, "koh_percent": 90, "koh_purity": 90, "naoh_purity": 98},
         "superfat_percent": 5,
-        "batch_size_g": 500
+        "batch_size_g": 500,
     }
 
     response = client.post("/api/v1/calculate", json=payload)
@@ -363,13 +363,17 @@ def test_us5_response_schema():
         "pure_koh_equivalent_g",
         "pure_naoh_equivalent_g",
         "koh_weight_g",
-        "naoh_weight_g"
+        "naoh_weight_g",
     ]
 
     all_present = True
     for field in required_fields:
         present = field in lye
-        print(f"  {field}: {GREEN}✓{RESET} Present" if present else f"  {field}: {RED}✗{RESET} Missing")
+        print(
+            f"  {field}: {GREEN}✓{RESET} Present"
+            if present
+            else f"  {field}: {RED}✗{RESET} Missing"
+        )
         if present:
             print(f"    Value: {lye[field]}")
         all_present = all_present and present
@@ -378,9 +382,17 @@ def test_us5_response_schema():
     koh_echoed = lye.get("koh_purity") == 90.0
     naoh_echoed = lye.get("naoh_purity") == 98.0
 
-    print(f"\nDefault echo verification:")
-    print(f"  koh_purity=90: {GREEN}✓{RESET}" if koh_echoed else f"  koh_purity: {RED}✗{RESET} {lye.get('koh_purity')}")
-    print(f"  naoh_purity=98: {GREEN}✓{RESET}" if naoh_echoed else f"  naoh_purity: {RED}✗{RESET} {lye.get('naoh_purity')}")
+    print("\nDefault echo verification:")
+    print(
+        f"  koh_purity=90: {GREEN}✓{RESET}"
+        if koh_echoed
+        else f"  koh_purity: {RED}✗{RESET} {lye.get('koh_purity')}"
+    )
+    print(
+        f"  naoh_purity=98: {GREEN}✓{RESET}"
+        if naoh_echoed
+        else f"  naoh_purity: {RED}✗{RESET} {lye.get('naoh_purity')}"
+    )
 
     return all_present and koh_echoed and naoh_echoed
 

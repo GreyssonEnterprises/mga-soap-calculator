@@ -4,6 +4,7 @@ Script to seed the database with oils and additives.
 Usage:
     python scripts/seed_database.py
 """
+
 import asyncio
 import sys
 from pathlib import Path
@@ -12,12 +13,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.core.config import settings
-from app.models.oil import Oil
 from app.models.additive import Additive
-from scripts.seed_data import OIL_SEED_DATA, ADDITIVE_SEED_DATA
+from app.models.oil import Oil
+from scripts.seed_data import ADDITIVE_SEED_DATA, OIL_SEED_DATA
 
 
 async def seed_database():
@@ -47,9 +48,7 @@ async def seed_database():
 
         for oil_data in OIL_SEED_DATA:
             # Check if oil already exists
-            result = await session.execute(
-                select(Oil).where(Oil.id == oil_data["id"])
-            )
+            result = await session.execute(select(Oil).where(Oil.id == oil_data["id"]))
             existing_oil = result.scalar_one_or_none()
 
             if existing_oil:
@@ -74,24 +73,30 @@ async def seed_database():
             existing_additive = result.scalar_one_or_none()
 
             if existing_additive:
-                confidence_emoji = {"high": "🟢", "medium": "🟡", "low": "🔴"}[additive_data["confidence_level"]]
+                confidence_emoji = {"high": "🟢", "medium": "🟡", "low": "🔴"}[
+                    additive_data["confidence_level"]
+                ]
                 print(f"  ⏭ {confidence_emoji} {additive_data['common_name']} (already exists)")
                 additives_skipped += 1
             else:
                 additive = Additive(**additive_data)
                 session.add(additive)
-                confidence_emoji = {"high": "🟢", "medium": "🟡", "low": "🔴"}[additive.confidence_level]
-                print(f"  ✓ {confidence_emoji} {additive.common_name} ({additive.confidence_level})")
+                confidence_emoji = {"high": "🟢", "medium": "🟡", "low": "🔴"}[
+                    additive.confidence_level
+                ]
+                print(
+                    f"  ✓ {confidence_emoji} {additive.common_name} ({additive.confidence_level})"
+                )
                 additives_added += 1
 
         # Commit all new records
         if oils_added > 0 or additives_added > 0:
             await session.commit()
-            print(f"\n✅ Database seed completed!")
+            print("\n✅ Database seed completed!")
             print(f"   - Oils: {oils_added} added, {oils_skipped} skipped")
             print(f"   - Additives: {additives_added} added, {additives_skipped} skipped")
         else:
-            print(f"\n✓ No new data to add")
+            print("\n✓ No new data to add")
             print(f"   - All {len(OIL_SEED_DATA)} oils already present")
             print(f"   - All {len(ADDITIVE_SEED_DATA)} additives already present")
 

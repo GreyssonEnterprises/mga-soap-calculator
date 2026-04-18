@@ -3,41 +3,33 @@ Colorant endpoints for natural color recommendations.
 
 Provides color filtering by 9 color families.
 """
-from typing import Optional, Literal
 
-from fastapi import APIRouter, Depends, Query, HTTPException
-from sqlalchemy import select, func, or_
+from typing import Literal
+
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.base import get_db
 from app.models.colorant import Colorant
 from app.schemas.colorant import (
-    ColorantListResponse,
     ColorantListItem,
+    ColorantListResponse,
 )
 
-router = APIRouter(
-    prefix="/api/v1",
-    tags=["colorants"]
-)
+router = APIRouter(prefix="/api/v1", tags=["colorants"])
 
 
 @router.get("/colorants", response_model=ColorantListResponse)
 async def list_colorants(
     limit: int = Query(50, ge=1, le=100, description="Items per page"),
     offset: int = Query(0, ge=0, description="Pagination offset"),
-    search: Optional[str] = Query(None, description="Search by name or botanical name"),
-    color: Optional[Literal["yellow", "orange", "pink", "red", "blue", "purple", "brown", "green", "black"]] = Query(
-        None,
-        description="Filter by color category",
-        alias="category"
-    ),
-    sort_by: Literal["name", "color_category"] = Query(
-        "name",
-        description="Field to sort by"
-    ),
+    search: str | None = Query(None, description="Search by name or botanical name"),
+    color: Literal["yellow", "orange", "pink", "red", "blue", "purple", "brown", "green", "black"]
+    | None = Query(None, description="Filter by color category", alias="category"),
+    sort_by: Literal["name", "color_category"] = Query("name", description="Field to sort by"),
     sort_order: Literal["asc", "desc"] = Query("asc", description="Sort direction"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ) -> ColorantListResponse:
     """
     List available colorants with pagination and filtering.
@@ -49,7 +41,8 @@ async def list_colorants(
         limit: Items per page (1-100, default 50)
         offset: Pagination offset (default 0)
         search: Case-insensitive search on name or botanical_name
-        color: Filter by color category (yellow, orange, pink, red, blue, purple, brown, green, black)
+        color: Filter by color category
+            (yellow, orange, pink, red, blue, purple, brown, green, black)
         sort_by: Field to sort by (name, color_category)
         sort_order: Sort direction (asc, desc)
 
@@ -63,10 +56,7 @@ async def list_colorants(
     if search:
         search_pattern = f"%{search}%"
         query = query.where(
-            or_(
-                Colorant.name.ilike(search_pattern),
-                Colorant.botanical_name.ilike(search_pattern)
-            )
+            or_(Colorant.name.ilike(search_pattern), Colorant.botanical_name.ilike(search_pattern))
         )
 
     # Apply color category filter
@@ -103,7 +93,7 @@ async def list_colorants(
             method=colorant.method,
             color_range=colorant.color_range_description,
             warnings=colorant.warnings,
-            notes=colorant.notes
+            notes=colorant.notes,
         )
         colorant_items.append(item)
 
@@ -112,5 +102,5 @@ async def list_colorants(
         total_count=total_count,
         limit=limit,
         offset=offset,
-        has_more=(offset + limit) < total_count
+        has_more=(offset + limit) < total_count,
     )

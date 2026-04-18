@@ -9,9 +9,11 @@ Tests the industry-first additive effect modeling:
 
 Phase 5 - Task 5.1.3 - SCHEMA CORRECTED
 """
+
 import pytest
 from httpx import AsyncClient
-from tests.test_helpers import build_calculation_request, build_oil_input, build_additive_input
+
+from tests.test_helpers import build_additive_input, build_calculation_request, build_oil_input
 
 
 @pytest.mark.asyncio
@@ -29,15 +31,12 @@ async def test_additive_effects_on_quality_metrics(client: AsyncClient):
     register_data = {
         "email": "additive_effects_user@test.com",
         "password": "SecurePass123!",
-        "full_name": "Additive Effects User"
+        "full_name": "Additive Effects User",
     }
 
     await client.post("/api/v1/auth/register", json=register_data)
 
-    login_data = {
-        "email": register_data["email"],
-        "password": register_data["password"]
-    }
+    login_data = {"email": register_data["email"], "password": register_data["password"]}
     response = await client.post("/api/v1/auth/login", json=login_data)
     access_token = response.json()["access_token"]
     headers = {"Authorization": f"Bearer {access_token}"}
@@ -46,11 +45,11 @@ async def test_additive_effects_on_quality_metrics(client: AsyncClient):
     baseline_request = build_calculation_request(
         oils=[
             build_oil_input("olive_oil", percentage=50.0),
-            build_oil_input("avocado_oil", percentage=50.0)
+            build_oil_input("avocado_oil", percentage=50.0),
         ],
         superfat_percent=5.0,
         water_percent_of_oils=38.0,
-        lye_type="NaOH"
+        lye_type="NaOH",
     )
 
     response = await client.post("/api/v1/calculate", json=baseline_request, headers=headers)
@@ -58,21 +57,21 @@ async def test_additive_effects_on_quality_metrics(client: AsyncClient):
     baseline = response.json()
 
     baseline_hardness = baseline["quality_metrics"]["hardness"]
-    baseline_cleansing = baseline["quality_metrics"]["cleansing"]
-    baseline_conditioning = baseline["quality_metrics"]["conditioning"]
-    baseline_bubbly = baseline["quality_metrics"]["bubbly_lather"]
-    baseline_creamy = baseline["quality_metrics"]["creamy_lather"]
+    baseline["quality_metrics"]["cleansing"]
+    baseline["quality_metrics"]["conditioning"]
+    baseline["quality_metrics"]["bubbly_lather"]
+    baseline["quality_metrics"]["creamy_lather"]
 
     # Same calculation with Kaolin Clay (increases hardness) - CORRECTED SCHEMA
     with_clay_request = build_calculation_request(
         oils=[
             build_oil_input("olive_oil", percentage=50.0),
-            build_oil_input("avocado_oil", percentage=50.0)
+            build_oil_input("avocado_oil", percentage=50.0),
         ],
         superfat_percent=5.0,
         water_percent_of_oils=38.0,
         lye_type="NaOH",
-        additives=[build_additive_input("kaolin_clay", weight_g=10.0)]
+        additives=[build_additive_input("kaolin_clay", weight_g=10.0)],
     )
 
     response = await client.post("/api/v1/calculate", json=with_clay_request, headers=headers)
@@ -80,7 +79,7 @@ async def test_additive_effects_on_quality_metrics(client: AsyncClient):
     with_clay = response.json()
 
     clay_hardness = with_clay["quality_metrics"]["hardness"]
-    clay_cleansing = with_clay["quality_metrics"]["cleansing"]
+    with_clay["quality_metrics"]["cleansing"]
 
     # Kaolin Clay should increase hardness
     assert clay_hardness > baseline_hardness, "Kaolin Clay should increase hardness"
@@ -103,15 +102,12 @@ async def test_multiple_additives_cumulative_effects(client: AsyncClient):
     register_data = {
         "email": "multi_additive_user@test.com",
         "password": "SecurePass123!",
-        "full_name": "Multi Additive User"
+        "full_name": "Multi Additive User",
     }
 
     await client.post("/api/v1/auth/register", json=register_data)
 
-    login_data = {
-        "email": register_data["email"],
-        "password": register_data["password"]
-    }
+    login_data = {"email": register_data["email"], "password": register_data["password"]}
     response = await client.post("/api/v1/auth/login", json=login_data)
     access_token = response.json()["access_token"]
     headers = {"Authorization": f"Bearer {access_token}"}
@@ -121,7 +117,7 @@ async def test_multiple_additives_cumulative_effects(client: AsyncClient):
         oils=[build_oil_input("olive_oil", percentage=100.0)],
         superfat_percent=5.0,
         water_percent_of_oils=38.0,
-        lye_type="NaOH"
+        lye_type="NaOH",
     )
 
     response = await client.post("/api/v1/calculate", json=baseline_request, headers=headers)
@@ -134,7 +130,7 @@ async def test_multiple_additives_cumulative_effects(client: AsyncClient):
         superfat_percent=5.0,
         water_percent_of_oils=38.0,
         lye_type="NaOH",
-        additives=[build_additive_input("kaolin_clay", weight_g=10.0)]
+        additives=[build_additive_input("kaolin_clay", weight_g=10.0)],
     )
 
     response = await client.post("/api/v1/calculate", json=single_additive_request, headers=headers)
@@ -149,11 +145,13 @@ async def test_multiple_additives_cumulative_effects(client: AsyncClient):
         lye_type="NaOH",
         additives=[
             build_additive_input("kaolin_clay", weight_g=10.0),
-            build_additive_input("sea_salt", weight_g=5.0)
-        ]
+            build_additive_input("sea_salt", weight_g=5.0),
+        ],
     )
 
-    response = await client.post("/api/v1/calculate", json=multiple_additive_request, headers=headers)
+    response = await client.post(
+        "/api/v1/calculate", json=multiple_additive_request, headers=headers
+    )
     multiple = response.json()
     multiple_hardness = multiple["quality_metrics"]["hardness"]
 
@@ -175,15 +173,12 @@ async def test_additive_amount_scaling(client: AsyncClient):
     register_data = {
         "email": "scaling_user@test.com",
         "password": "SecurePass123!",
-        "full_name": "Scaling User"
+        "full_name": "Scaling User",
     }
 
     await client.post("/api/v1/auth/register", json=register_data)
 
-    login_data = {
-        "email": register_data["email"],
-        "password": register_data["password"]
-    }
+    login_data = {"email": register_data["email"], "password": register_data["password"]}
     response = await client.post("/api/v1/auth/login", json=login_data)
     access_token = response.json()["access_token"]
     headers = {"Authorization": f"Bearer {access_token}"}
@@ -194,7 +189,7 @@ async def test_additive_amount_scaling(client: AsyncClient):
         superfat_percent=5.0,
         water_percent_of_oils=38.0,
         lye_type="NaOH",
-        additives=[build_additive_input("kaolin_clay", weight_g=5.0)]
+        additives=[build_additive_input("kaolin_clay", weight_g=5.0)],
     )
 
     response = await client.post("/api/v1/calculate", json=small_request, headers=headers)
@@ -206,7 +201,7 @@ async def test_additive_amount_scaling(client: AsyncClient):
         superfat_percent=5.0,
         water_percent_of_oils=38.0,
         lye_type="NaOH",
-        additives=[build_additive_input("kaolin_clay", weight_g=20.0)]
+        additives=[build_additive_input("kaolin_clay", weight_g=20.0)],
     )
 
     response = await client.post("/api/v1/calculate", json=large_request, headers=headers)
@@ -247,15 +242,12 @@ async def test_zero_additive_amount(client: AsyncClient):
     register_data = {
         "email": "zero_additive_user@test.com",
         "password": "SecurePass123!",
-        "full_name": "Zero Additive User"
+        "full_name": "Zero Additive User",
     }
 
     await client.post("/api/v1/auth/register", json=register_data)
 
-    login_data = {
-        "email": register_data["email"],
-        "password": register_data["password"]
-    }
+    login_data = {"email": register_data["email"], "password": register_data["password"]}
     response = await client.post("/api/v1/auth/login", json=login_data)
     access_token = response.json()["access_token"]
     headers = {"Authorization": f"Bearer {access_token}"}
@@ -266,7 +258,7 @@ async def test_zero_additive_amount(client: AsyncClient):
         superfat_percent=5.0,
         water_percent_of_oils=38.0,
         lye_type="NaOH",
-        additives=[build_additive_input("kaolin_clay", weight_g=0.0)]
+        additives=[build_additive_input("kaolin_clay", weight_g=0.0)],
     )
 
     response = await client.post("/api/v1/calculate", json=zero_request, headers=headers)

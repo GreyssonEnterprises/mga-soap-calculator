@@ -9,6 +9,7 @@ Tests validate:
 - Recommendation calculation logic (light/standard/heavy)
 - Warning system integration
 """
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -19,22 +20,22 @@ def sample_honey_in_db(db_session):
     from app.models.additive import Additive
 
     honey = Additive(
-        id='honey',
-        common_name='Honey',
-        inci_name='Mel',
+        id="honey",
+        common_name="Honey",
+        inci_name="Mel",
         typical_usage_min_percent=1.0,
         typical_usage_max_percent=3.0,
         usage_rate_standard_percent=2.0,
-        when_to_add='to oils',
-        preparation_instructions='Warm honey slightly if crystallized',
-        mixing_tips='Mix thoroughly into oils before adding lye',
-        category='lather_booster',
+        when_to_add="to oils",
+        preparation_instructions="Warm honey slightly if crystallized",
+        mixing_tips="Mix thoroughly into oils before adding lye",
+        category="lather_booster",
         accelerates_trace=True,
         causes_overheating=True,
         can_be_scratchy=False,
         turns_brown=False,
-        quality_effects={'bubbly_lather': 5.0},
-        confidence_level='high',
+        quality_effects={"bubbly_lather": 5.0},
+        confidence_level="high",
         verified_by_mga=True,
     )
     db_session.add(honey)
@@ -48,22 +49,22 @@ def sample_salt_in_db(db_session):
     from app.models.additive import Additive
 
     salt = Additive(
-        id='salt',
-        common_name='Salt',
-        inci_name='Sodium Chloride',
+        id="salt",
+        common_name="Salt",
+        inci_name="Sodium Chloride",
         typical_usage_min_percent=1.0,
         typical_usage_max_percent=3.0,
         usage_rate_standard_percent=2.0,
-        when_to_add='to lye water',
-        preparation_instructions='Dissolve in lye water',
-        mixing_tips='Add to hot lye water and stir until dissolved',
-        category='hardener',
+        when_to_add="to lye water",
+        preparation_instructions="Dissolve in lye water",
+        mixing_tips="Add to hot lye water and stir until dissolved",
+        category="hardener",
         accelerates_trace=False,
         causes_overheating=False,
         can_be_scratchy=False,
         turns_brown=False,
-        quality_effects={'bar_hardness': 5.0},
-        confidence_level='high',
+        quality_effects={"bar_hardness": 5.0},
+        confidence_level="high",
         verified_by_mga=True,
     )
     db_session.add(salt)
@@ -74,7 +75,7 @@ def sample_salt_in_db(db_session):
 class TestAdditivesList:
     """Test GET /api/v1/additives endpoint"""
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_list_all_additives(self, client: TestClient, sample_honey_in_db, sample_salt_in_db):
         """
         GIVEN: Multiple additives in database
@@ -85,10 +86,10 @@ class TestAdditivesList:
 
         assert response.status_code == 200
         data = response.json()
-        assert 'additives' in data or 'items' in data
-        assert data['total_count'] >= 2
+        assert "additives" in data or "items" in data
+        assert data["total_count"] >= 2
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_list_additives_with_pagination(self, client: TestClient, sample_honey_in_db):
         """
         GIVEN: Additives in database
@@ -99,11 +100,13 @@ class TestAdditivesList:
 
         assert response.status_code == 200
         data = response.json()
-        assert 'limit' in data or 'page_size' in data
-        assert 'offset' in data or 'page' in data
+        assert "limit" in data or "page_size" in data
+        assert "offset" in data or "page" in data
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
-    def test_filter_by_category_lather_booster(self, client: TestClient, sample_honey_in_db, sample_salt_in_db):
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
+    def test_filter_by_category_lather_booster(
+        self, client: TestClient, sample_honey_in_db, sample_salt_in_db
+    ):
         """
         GIVEN: Additives with different categories
         WHEN: GET /api/v1/additives?category=lather_booster
@@ -115,12 +118,14 @@ class TestAdditivesList:
         data = response.json()
 
         # Should only return honey (lather_booster), not salt (hardener)
-        items = data.get('additives') or data.get('items')
+        items = data.get("additives") or data.get("items")
         assert len(items) >= 1
-        assert all(item['category'] == 'lather_booster' for item in items)
+        assert all(item["category"] == "lather_booster" for item in items)
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
-    def test_filter_by_category_hardener(self, client: TestClient, sample_honey_in_db, sample_salt_in_db):
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
+    def test_filter_by_category_hardener(
+        self, client: TestClient, sample_honey_in_db, sample_salt_in_db
+    ):
         """
         GIVEN: Additives with different categories
         WHEN: GET /api/v1/additives?category=hardener
@@ -131,15 +136,15 @@ class TestAdditivesList:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('additives') or data.get('items')
+        items = data.get("additives") or data.get("items")
         assert len(items) >= 1
-        assert all(item['category'] == 'hardener' for item in items)
+        assert all(item["category"] == "hardener" for item in items)
 
 
 class TestAdditiveRecommendation:
     """Test GET /api/v1/additives/{id}/recommend endpoint"""
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_honey_standard(self, client: TestClient, sample_honey_in_db):
         """
         GIVEN: Honey at 2% standard usage
@@ -152,11 +157,11 @@ class TestAdditiveRecommendation:
         data = response.json()
 
         # Check standard recommendation
-        standard = data['recommendations']['standard']
-        assert standard['amount_g'] == pytest.approx(10.0, rel=0.01)
-        assert standard['usage_percentage'] == 2.0
+        standard = data["recommendations"]["standard"]
+        assert standard["amount_g"] == pytest.approx(10.0, rel=0.01)
+        assert standard["usage_percentage"] == 2.0
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_honey_all_levels(self, client: TestClient, sample_honey_in_db):
         """
         GIVEN: Honey with light/standard/heavy usage rates
@@ -169,20 +174,20 @@ class TestAdditiveRecommendation:
         data = response.json()
 
         # Should have light, standard, heavy recommendations
-        assert 'light' in data['recommendations']
-        assert 'standard' in data['recommendations']
-        assert 'heavy' in data['recommendations']
+        assert "light" in data["recommendations"]
+        assert "standard" in data["recommendations"]
+        assert "heavy" in data["recommendations"]
 
         # Light: 500g × 1% = 5g
-        assert data['recommendations']['light']['amount_g'] == pytest.approx(5.0, rel=0.01)
+        assert data["recommendations"]["light"]["amount_g"] == pytest.approx(5.0, rel=0.01)
 
         # Standard: 500g × 2% = 10g
-        assert data['recommendations']['standard']['amount_g'] == pytest.approx(10.0, rel=0.01)
+        assert data["recommendations"]["standard"]["amount_g"] == pytest.approx(10.0, rel=0.01)
 
         # Heavy: 500g × 3% = 15g
-        assert data['recommendations']['heavy']['amount_g'] == pytest.approx(15.0, rel=0.01)
+        assert data["recommendations"]["heavy"]["amount_g"] == pytest.approx(15.0, rel=0.01)
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_includes_instructions(self, client: TestClient, sample_honey_in_db):
         """
         GIVEN: Honey with preparation instructions and mixing tips
@@ -194,11 +199,11 @@ class TestAdditiveRecommendation:
         assert response.status_code == 200
         data = response.json()
 
-        assert data['when_to_add'] == 'to oils'
-        assert 'warm honey' in data['preparation_instructions'].lower()
-        assert 'mix thoroughly' in data['mixing_tips'].lower()
+        assert data["when_to_add"] == "to oils"
+        assert "warm honey" in data["preparation_instructions"].lower()
+        assert "mix thoroughly" in data["mixing_tips"].lower()
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_includes_warnings(self, client: TestClient, sample_honey_in_db):
         """
         GIVEN: Honey with accelerates_trace and causes_overheating warnings
@@ -210,14 +215,14 @@ class TestAdditiveRecommendation:
         assert response.status_code == 200
         data = response.json()
 
-        assert 'warnings' in data
-        assert len(data['warnings']) == 2
+        assert "warnings" in data
+        assert len(data["warnings"]) == 2
 
-        warning_text = ' '.join(data['warnings']).lower()
-        assert 'trace' in warning_text
-        assert 'overheating' in warning_text
+        warning_text = " ".join(data["warnings"]).lower()
+        assert "trace" in warning_text
+        assert "overheating" in warning_text
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_salt_no_warnings(self, client: TestClient, sample_salt_in_db):
         """
         GIVEN: Salt with no warning flags
@@ -229,10 +234,10 @@ class TestAdditiveRecommendation:
         assert response.status_code == 200
         data = response.json()
 
-        assert 'warnings' in data
-        assert len(data['warnings']) == 0
+        assert "warnings" in data
+        assert len(data["warnings"]) == 0
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_different_batch_sizes(self, client: TestClient, sample_honey_in_db):
         """
         GIVEN: Honey recommendations
@@ -243,15 +248,15 @@ class TestAdditiveRecommendation:
         response_100 = client.get("/api/v1/additives/honey/recommend?batch_size_g=100")
         assert response_100.status_code == 200
         data_100 = response_100.json()
-        assert data_100['recommendations']['standard']['amount_g'] == pytest.approx(2.0, rel=0.01)
+        assert data_100["recommendations"]["standard"]["amount_g"] == pytest.approx(2.0, rel=0.01)
 
         # Test 1000g batch
         response_1000 = client.get("/api/v1/additives/honey/recommend?batch_size_g=1000")
         assert response_1000.status_code == 200
         data_1000 = response_1000.json()
-        assert data_1000['recommendations']['standard']['amount_g'] == pytest.approx(20.0, rel=0.01)
+        assert data_1000["recommendations"]["standard"]["amount_g"] == pytest.approx(20.0, rel=0.01)
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_invalid_additive_id(self, client: TestClient):
         """
         GIVEN: Non-existent additive ID
@@ -262,7 +267,7 @@ class TestAdditiveRecommendation:
 
         assert response.status_code == 404
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_missing_batch_size(self, client: TestClient, sample_honey_in_db):
         """
         GIVEN: Honey additive
@@ -273,7 +278,7 @@ class TestAdditiveRecommendation:
 
         assert response.status_code == 422
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_negative_batch_size(self, client: TestClient, sample_honey_in_db):
         """
         GIVEN: Honey additive
@@ -288,7 +293,7 @@ class TestAdditiveRecommendation:
 class TestRecommendationCalculation:
     """Test calculation logic accuracy"""
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_calculation_formula_accuracy(self, client: TestClient, sample_honey_in_db):
         """
         GIVEN: Honey at 2% usage rate
@@ -301,9 +306,9 @@ class TestRecommendationCalculation:
         data = response.json()
 
         # Formula: (500 × 2) / 100 = 10.0
-        assert data['recommendations']['standard']['amount_g'] == 10.0
+        assert data["recommendations"]["standard"]["amount_g"] == 10.0
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_gram_to_ounce_conversion(self, client: TestClient, sample_honey_in_db):
         """
         GIVEN: Honey recommendation in grams
@@ -315,13 +320,13 @@ class TestRecommendationCalculation:
         assert response.status_code == 200
         data = response.json()
 
-        amount_g = data['recommendations']['standard']['amount_g']
-        amount_oz = data['recommendations']['standard']['amount_oz']
+        amount_g = data["recommendations"]["standard"]["amount_g"]
+        amount_oz = data["recommendations"]["standard"]["amount_oz"]
 
         # Conversion: 10g / 28.35 ≈ 0.35 oz
         assert amount_oz == pytest.approx(amount_g / 28.35, rel=0.01)
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_rounding_to_one_decimal(self, client: TestClient, sample_honey_in_db):
         """
         GIVEN: Calculation resulting in multiple decimals
@@ -334,7 +339,7 @@ class TestRecommendationCalculation:
         assert response.status_code == 200
         data = response.json()
 
-        amount = data['recommendations']['standard']['amount_g']
+        amount = data["recommendations"]["standard"]["amount_g"]
 
         # Should be rounded to 1 decimal: 333 × 2% = 6.66 → 6.7
         assert amount == pytest.approx(6.7, rel=0.01)

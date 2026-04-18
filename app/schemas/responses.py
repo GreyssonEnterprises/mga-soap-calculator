@@ -4,14 +4,17 @@ Response Pydantic models for API (Task 3.1.2)
 TDD Evidence: Tests written first in test_response_models.py
 Implements spec Section 3.1 response schema.
 """
+
 from datetime import datetime
-from typing import List, Dict, Optional, Any
+from typing import Any
 from uuid import UUID
+
 from pydantic import BaseModel
 
 
 class OilOutput(BaseModel):
     """Oil output with calculated weights and percentages"""
+
     id: str
     common_name: str  # Fixed: was 'name', spec requires 'common_name'
     weight_g: float
@@ -28,8 +31,9 @@ class LyeOutput(BaseModel):
     - pure_koh_equivalent_g: Theoretical pure KOH amount
     - pure_naoh_equivalent_g: Theoretical pure NaOH amount
     """
+
     naoh_weight_g: float  # Fixed: was 'naoh_g', spec requires 'naoh_weight_g'
-    koh_weight_g: float   # Fixed: was 'koh_g', spec requires 'koh_weight_g'
+    koh_weight_g: float  # Fixed: was 'koh_g', spec requires 'koh_weight_g'
     total_lye_g: float
     naoh_percent: float
     koh_percent: float
@@ -41,6 +45,7 @@ class LyeOutput(BaseModel):
 
 class AdditiveOutput(BaseModel):
     """Additive output with calculated weights and percentages"""
+
     id: str
     name: str
     weight_g: float
@@ -49,14 +54,15 @@ class AdditiveOutput(BaseModel):
 
 class RecipeOutput(BaseModel):
     """Complete normalized recipe with all ingredients"""
+
     total_oil_weight_g: float
-    oils: List[OilOutput]
+    oils: list[OilOutput]
     lye: LyeOutput
     water_weight_g: float
     water_method: str  # Fixed: Added missing field from spec Section 3.1
     water_method_value: float  # Fixed: Added missing field from spec Section 3.1
     superfat_percent: float
-    additives: List[AdditiveOutput]
+    additives: list[AdditiveOutput]
 
 
 class QualityMetrics(BaseModel):
@@ -68,6 +74,7 @@ class QualityMetrics(BaseModel):
     - longevity, stability
     - iodine, ins (calculated values)
     """
+
     hardness: float
     cleansing: float
     conditioning: float
@@ -81,9 +88,10 @@ class QualityMetrics(BaseModel):
 
 class AdditiveEffect(BaseModel):
     """Per-additive quality effect breakdown"""
+
     additive_id: str
     additive_name: str
-    effects: Dict[str, float]  # Metric name -> absolute change
+    effects: dict[str, float]  # Metric name -> absolute change
     confidence: str  # high, medium, low
     verified_by_mga: bool
 
@@ -96,6 +104,7 @@ class FattyAcidProfile(BaseModel):
     - Saturated: lauric, myristic, palmitic, stearic
     - Unsaturated: ricinoleic, oleic, linoleic, linolenic
     """
+
     lauric: float
     myristic: float
     palmitic: float
@@ -108,6 +117,7 @@ class FattyAcidProfile(BaseModel):
 
 class SaturatedUnsaturatedRatio(BaseModel):
     """Saturated:Unsaturated fatty acid ratio"""
+
     saturated: float
     unsaturated: float
     ratio: str  # Format: "28:70"
@@ -115,10 +125,11 @@ class SaturatedUnsaturatedRatio(BaseModel):
 
 class Warning(BaseModel):
     """Non-blocking warning message"""
+
     code: str
     message: str
     severity: str  # warning, info
-    details: Optional[Dict[str, Any]] = None
+    details: dict[str, Any] | None = None
 
 
 class CalculationResponse(BaseModel):
@@ -137,23 +148,25 @@ class CalculationResponse(BaseModel):
     - saturated_unsaturated_ratio: Sat:Unsat ratio
     - warnings: Non-blocking issues
     """
+
     calculation_id: UUID
     timestamp: datetime
     user_id: UUID
     recipe: RecipeOutput
     quality_metrics: QualityMetrics
     quality_metrics_base: QualityMetrics
-    additive_effects: List[AdditiveEffect]
+    additive_effects: list[AdditiveEffect]
     fatty_acid_profile: FattyAcidProfile
     saturated_unsaturated_ratio: SaturatedUnsaturatedRatio
-    warnings: List[Warning]
+    warnings: list[Warning]
 
 
 class ErrorDetail(BaseModel):
     """Error information"""
+
     code: str
     message: str
-    details: Optional[Dict[str, Any]] = None
+    details: dict[str, Any] | None = None
 
 
 class ErrorResponse(BaseModel):
@@ -170,4 +183,5 @@ class ErrorResponse(BaseModel):
     - FORBIDDEN: User trying to access another user's calculation
     - NOT_FOUND: Calculation ID not found
     """
+
     error: ErrorDetail

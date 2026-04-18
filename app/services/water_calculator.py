@@ -6,7 +6,6 @@ Three methods per spec Section 5.2:
 2. Lye concentration (% of water+lye solution)
 3. Water:lye ratio
 """
-from typing import Literal
 
 
 def calculate_water_from_oil_percent(total_oil_weight_g: float, water_percent: float) -> float:
@@ -25,7 +24,9 @@ def calculate_water_from_oil_percent(total_oil_weight_g: float, water_percent: f
     return round(water_g, 1)
 
 
-def calculate_water_from_lye_concentration(total_lye_weight_g: float, lye_concentration_percent: float) -> float:
+def calculate_water_from_lye_concentration(
+    total_lye_weight_g: float, lye_concentration_percent: float
+) -> float:
     """
     Method 2: Lye concentration (lye as % of total lye solution)
 

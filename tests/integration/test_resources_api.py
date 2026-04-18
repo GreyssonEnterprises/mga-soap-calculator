@@ -8,9 +8,10 @@ Tests with actual test database to verify:
 - Sorting works as expected
 - Filtering produces correct results
 """
+
 import pytest
-from httpx import AsyncClient
 from fastapi import status
+from httpx import AsyncClient
 
 
 class TestOilsEndpointIntegration:
@@ -89,10 +90,9 @@ class TestOilsEndpointIntegration:
 
         # All results should contain "olive" in common_name or inci_name (case-insensitive)
         for oil in data["oils"]:
-            assert (
-                "olive" in oil["common_name"].lower()
-                or "olive" in oil["inci_name"].lower()
-            ), f"Oil {oil['id']} doesn't match search term 'olive'"
+            assert "olive" in oil["common_name"].lower() or "olive" in oil["inci_name"].lower(), (
+                f"Oil {oil['id']} doesn't match search term 'olive'"
+            )
 
     @pytest.mark.asyncio
     async def test_list_oils_search_by_inci_name(self, async_client: AsyncClient):
@@ -106,10 +106,7 @@ class TestOilsEndpointIntegration:
 
         # All results should contain "cocos" (case-insensitive)
         for oil in data["oils"]:
-            assert (
-                "cocos" in oil["common_name"].lower()
-                or "cocos" in oil["inci_name"].lower()
-            )
+            assert "cocos" in oil["common_name"].lower() or "cocos" in oil["inci_name"].lower()
 
     @pytest.mark.asyncio
     async def test_list_oils_search_case_insensitive(self, async_client: AsyncClient):
@@ -183,7 +180,9 @@ class TestOilsEndpointIntegration:
         assert response.status_code == status.HTTP_200_OK
 
         ins_values = [oil["ins_value"] for oil in data["oils"]]
-        assert ins_values == sorted(ins_values, reverse=True), "Oils not sorted by ins_value descending"
+        assert ins_values == sorted(ins_values, reverse=True), (
+            "Oils not sorted by ins_value descending"
+        )
 
     @pytest.mark.asyncio
     async def test_list_oils_sort_by_iodine_value_asc(self, async_client: AsyncClient):
@@ -337,7 +336,9 @@ class TestAdditivesEndpointIntegration:
             assert isinstance(additive["quality_effects"], dict)
             assert isinstance(additive["confidence_level"], str)
             assert isinstance(additive["verified_by_mga"], bool)
-            assert additive["safety_warnings"] is None or isinstance(additive["safety_warnings"], dict)
+            assert additive["safety_warnings"] is None or isinstance(
+                additive["safety_warnings"], dict
+            )
 
     @pytest.mark.asyncio
     async def test_list_additives_search_functionality(self, async_client: AsyncClient):
@@ -351,8 +352,7 @@ class TestAdditivesEndpointIntegration:
         # All results should contain "clay" (case-insensitive)
         for additive in data["additives"]:
             assert (
-                "clay" in additive["common_name"].lower()
-                or "clay" in additive["inci_name"].lower()
+                "clay" in additive["common_name"].lower() or "clay" in additive["inci_name"].lower()
             )
 
     @pytest.mark.asyncio
@@ -416,9 +416,7 @@ class TestAdditivesEndpointIntegration:
     @pytest.mark.asyncio
     async def test_list_additives_combined_filters(self, async_client: AsyncClient):
         """Test combining multiple filters"""
-        response = await async_client.get(
-            "/api/v1/additives?confidence=high&verified_only=true"
-        )
+        response = await async_client.get("/api/v1/additives?confidence=high&verified_only=true")
         data = response.json()
 
         assert response.status_code == status.HTTP_200_OK

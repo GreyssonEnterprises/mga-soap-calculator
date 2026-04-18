@@ -15,7 +15,6 @@ import json
 import logging
 import re
 from pathlib import Path
-from typing import Optional
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -24,13 +23,14 @@ from app.db.base import AsyncSessionLocal
 from app.models.additive import Additive
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 # Source data file
-DATA_FILE = Path(__file__).parent.parent / "working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json"
+DATA_FILE = (
+    Path(__file__).parent.parent
+    / "working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json"
+)
 
 
 def parse_usage_rate(usage_rate_str: str) -> tuple[float, float]:
@@ -140,7 +140,7 @@ async def import_additives(dry_run: bool = False, verbose: bool = False) -> None
     """
     # Load source data
     logger.info(f"Loading data from {DATA_FILE}")
-    with open(DATA_FILE, "r") as f:
+    with open(DATA_FILE) as f:
         data = json.load(f)
 
     additives_raw = data["additives_reference"]
@@ -165,9 +165,7 @@ async def import_additives(dry_run: bool = False, verbose: bool = False) -> None
         logger.info(f"Found {len(existing_ids)} existing additives")
 
         # Filter new additives
-        new_additives = [
-            add for add in additives_mapped if add["id"] not in existing_ids
-        ]
+        new_additives = [add for add in additives_mapped if add["id"] not in existing_ids]
 
         if not new_additives:
             logger.info("No new additives to import")
@@ -189,17 +187,13 @@ async def import_additives(dry_run: bool = False, verbose: bool = False) -> None
 
 def main():
     """CLI entry point."""
-    parser = argparse.ArgumentParser(
-        description="Import additives from JSON reference data"
-    )
+    parser = argparse.ArgumentParser(description="Import additives from JSON reference data")
     parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Validate data without inserting to database",
     )
-    parser.add_argument(
-        "--verbose", "-v", action="store_true", help="Show detailed progress"
-    )
+    parser.add_argument("--verbose", "-v", action="store_true", help="Show detailed progress")
 
     args = parser.parse_args()
 

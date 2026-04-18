@@ -1,9 +1,10 @@
 """User model for authentication and calculation ownership"""
+
 import uuid
 from datetime import datetime
 
 import sqlalchemy as sa
-from sqlalchemy import String, DateTime
+from sqlalchemy import DateTime, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship, validates
 
@@ -34,10 +35,10 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
-        comment="MUST be Argon2id hash format ($argon2id$ prefix). Use app.core.security.get_password_hash() to hash passwords.",
+        comment="MUST be Argon2id hash format ($argon2id$ prefix). Use app.core.security.get_password_hash() to hash passwords.",  # noqa: E501
     )
 
-    @validates('hashed_password')
+    @validates("hashed_password")
     def validate_hashed_password(self, key, value):
         """Validate that password is properly Argon2id-hashed
 
@@ -60,7 +61,7 @@ class User(Base):
 
         # Verify Argon2id hash format
         # Argon2id hashes start with $argon2id$ followed by version and parameters
-        if not value.startswith('$argon2id$'):
+        if not value.startswith("$argon2id$"):
             raise ValueError(
                 "Password must be Argon2id-hashed before assignment. "
                 "Use app.core.security.get_password_hash('your_password') to hash passwords. "
@@ -75,6 +76,7 @@ class User(Base):
             )
 
         return value
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,

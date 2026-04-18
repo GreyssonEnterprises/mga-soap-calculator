@@ -7,10 +7,10 @@ providing detailed quality reports.
 Usage:
     python scripts/validate_oils_data.py <json_path>
 """
-import sys
+
 import json
+import sys
 from pathlib import Path
-from typing import Dict
 
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -59,7 +59,9 @@ def main():
                     complete_profiles += 1
 
             completeness_pct = (complete_profiles / len(oils_data)) * 100
-            print(f"   - Complete fatty acid profiles: {complete_profiles}/{len(oils_data)} ({completeness_pct:.2f}%)")
+            print(
+                f"   - Complete fatty acid profiles: {complete_profiles}/{len(oils_data)} ({completeness_pct:.2f}%)"  # noqa: E501
+            )
 
             sys.exit(0)
         else:

@@ -1,6 +1,4 @@
 """Tests for authentication endpoints (registration and login)"""
-import uuid
-from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 from fastapi import status
@@ -8,8 +6,8 @@ from httpx import AsyncClient
 from passlib.hash import bcrypt
 from sqlalchemy import select
 
+from app.core.security import decode_access_token
 from app.models.user import User
-from app.core.security import create_access_token, decode_access_token
 
 
 class TestUserRegistration:
@@ -18,15 +16,9 @@ class TestUserRegistration:
     @pytest.mark.asyncio
     async def test_register_user_success(self, async_client: AsyncClient, test_db_session):
         """Test successful user registration"""
-        request_data = {
-            "email": "newuser@example.com",
-            "password": "SecurePassword123!"
-        }
+        request_data = {"email": "newuser@example.com", "password": "SecurePassword123!"}
 
-        response = await async_client.post(
-            "/api/v1/auth/register",
-            json=request_data
-        )
+        response = await async_client.post("/api/v1/auth/register", json=request_data)
 
         assert response.status_code == status.HTTP_201_CREATED
 
@@ -52,22 +44,15 @@ class TestUserRegistration:
         """Test registration with duplicate email"""
         # Create existing user
         existing_user = User(
-            email="existing@example.com",
-            hashed_password=bcrypt.hash("ExistingPassword123!")
+            email="existing@example.com", hashed_password=bcrypt.hash("ExistingPassword123!")
         )
         test_db_session.add(existing_user)
         await test_db_session.commit()
 
         # Try to register with same email
-        request_data = {
-            "email": "existing@example.com",
-            "password": "NewPassword456!"
-        }
+        request_data = {"email": "existing@example.com", "password": "NewPassword456!"}
 
-        response = await async_client.post(
-            "/api/v1/auth/register",
-            json=request_data
-        )
+        response = await async_client.post("/api/v1/auth/register", json=request_data)
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         data = response.json()
@@ -77,15 +62,9 @@ class TestUserRegistration:
     @pytest.mark.asyncio
     async def test_register_invalid_email_format(self, async_client: AsyncClient):
         """Test registration with invalid email format"""
-        request_data = {
-            "email": "not-an-email",
-            "password": "SecurePassword123!"
-        }
+        request_data = {"email": "not-an-email", "password": "SecurePassword123!"}
 
-        response = await async_client.post(
-            "/api/v1/auth/register",
-            json=request_data
-        )
+        response = await async_client.post("/api/v1/auth/register", json=request_data)
 
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
@@ -94,13 +73,10 @@ class TestUserRegistration:
         """Test registration with weak password"""
         request_data = {
             "email": "newuser@example.com",
-            "password": "weak"  # Too short
+            "password": "weak",  # Too short
         }
 
-        response = await async_client.post(
-            "/api/v1/auth/register",
-            json=request_data
-        )
+        response = await async_client.post("/api/v1/auth/register", json=request_data)
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         data = response.json()
@@ -116,24 +92,15 @@ class TestUserLogin:
         """Test successful login with valid credentials"""
         # Create a user
         password = "TestPassword123!"
-        user = User(
-            email="testuser@example.com",
-            hashed_password=bcrypt.hash(password)
-        )
+        user = User(email="testuser@example.com", hashed_password=bcrypt.hash(password))
         test_db_session.add(user)
         await test_db_session.commit()
         await test_db_session.refresh(user)
 
         # Login request
-        request_data = {
-            "email": "testuser@example.com",
-            "password": password
-        }
+        request_data = {"email": "testuser@example.com", "password": password}
 
-        response = await async_client.post(
-            "/api/v1/auth/login",
-            json=request_data
-        )
+        response = await async_client.post("/api/v1/auth/login", json=request_data)
 
         assert response.status_code == status.HTTP_200_OK
 
@@ -155,22 +122,15 @@ class TestUserLogin:
         """Test login with incorrect password"""
         # Create a user
         user = User(
-            email="testuser@example.com",
-            hashed_password=bcrypt.hash("CorrectPassword123!")
+            email="testuser@example.com", hashed_password=bcrypt.hash("CorrectPassword123!")
         )
         test_db_session.add(user)
         await test_db_session.commit()
 
         # Login with wrong password
-        request_data = {
-            "email": "testuser@example.com",
-            "password": "WrongPassword456!"
-        }
+        request_data = {"email": "testuser@example.com", "password": "WrongPassword456!"}
 
-        response = await async_client.post(
-            "/api/v1/auth/login",
-            json=request_data
-        )
+        response = await async_client.post("/api/v1/auth/login", json=request_data)
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
         data = response.json()
@@ -180,15 +140,9 @@ class TestUserLogin:
     @pytest.mark.asyncio
     async def test_login_nonexistent_user(self, async_client: AsyncClient):
         """Test login with non-existent email"""
-        request_data = {
-            "email": "nonexistent@example.com",
-            "password": "SomePassword123!"
-        }
+        request_data = {"email": "nonexistent@example.com", "password": "SomePassword123!"}
 
-        response = await async_client.post(
-            "/api/v1/auth/login",
-            json=request_data
-        )
+        response = await async_client.post("/api/v1/auth/login", json=request_data)
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
         data = response.json()
@@ -198,14 +152,8 @@ class TestUserLogin:
     @pytest.mark.asyncio
     async def test_login_invalid_email_format(self, async_client: AsyncClient):
         """Test login with invalid email format"""
-        request_data = {
-            "email": "not-an-email",
-            "password": "SomePassword123!"
-        }
+        request_data = {"email": "not-an-email", "password": "SomePassword123!"}
 
-        response = await async_client.post(
-            "/api/v1/auth/login",
-            json=request_data
-        )
+        response = await async_client.post("/api/v1/auth/login", json=request_data)
 
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY

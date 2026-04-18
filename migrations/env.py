@@ -1,20 +1,16 @@
 """Alembic environment configuration"""
+
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
 from alembic import context
+from sqlalchemy import engine_from_config, pool
+
+from app.core.config import settings
 
 # Import models and Base
 from app.db.base import Base
-from app.core.config import settings
 
 # Import all models to ensure they're registered with Base.metadata
-from app.models.user import User
-from app.models.oil import Oil
-from app.models.additive import Additive
-from app.models.calculation import Calculation
 
 # this is the Alembic Config object
 config = context.config
@@ -53,10 +49,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection,
-            target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

@@ -3,45 +3,40 @@ Essential oil endpoints for safe usage recommendations.
 
 Provides max safe usage calculations and blending guidance.
 """
-from typing import Optional, Literal
 
-from fastapi import APIRouter, Depends, Query, HTTPException
-from sqlalchemy import select, func, or_
+from typing import Literal
+
+from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.base import get_db
 from app.models.essential_oil import EssentialOil
 from app.schemas.essential_oil import (
-    EssentialOilListResponse,
     EssentialOilListItem,
+    EssentialOilListResponse,
     EssentialOilRecommendationResponse,
 )
 
-router = APIRouter(
-    prefix="/api/v1",
-    tags=["essential_oils"]
-)
+router = APIRouter(prefix="/api/v1", tags=["essential_oils"])
 
 
 @router.get("/essential-oils", response_model=EssentialOilListResponse)
 async def list_essential_oils(
     limit: int = Query(50, ge=1, le=100, description="Items per page"),
     offset: int = Query(0, ge=0, description="Pagination offset"),
-    search: Optional[str] = Query(None, description="Search by common name or botanical name"),
-    category: Optional[Literal["citrus", "floral", "herbaceous", "woody", "spicy"]] = Query(
-        None,
-        description="Filter by scent category"
+    search: str | None = Query(None, description="Search by common name or botanical name"),
+    category: Literal["citrus", "floral", "herbaceous", "woody", "spicy"] | None = Query(
+        None, description="Filter by scent category"
     ),
-    note: Optional[Literal["top", "middle", "base"]] = Query(
-        None,
-        description="Filter by fragrance note"
+    note: Literal["top", "middle", "base"] | None = Query(
+        None, description="Filter by fragrance note"
     ),
     sort_by: Literal["common_name", "max_usage_rate_pct"] = Query(
-        "common_name",
-        description="Field to sort by"
+        "common_name", description="Field to sort by"
     ),
     sort_order: Literal["asc", "desc"] = Query("asc", description="Sort direction"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ) -> EssentialOilListResponse:
     """
     List available essential oils with pagination and filtering.
@@ -70,7 +65,7 @@ async def list_essential_oils(
         query = query.where(
             or_(
                 EssentialOil.common_name.ilike(search_pattern),
-                EssentialOil.botanical_name.ilike(search_pattern)
+                EssentialOil.botanical_name.ilike(search_pattern),
             )
         )
 
@@ -106,7 +101,7 @@ async def list_essential_oils(
         total_count=total_count,
         limit=limit,
         offset=offset,
-        has_more=(offset + limit) < total_count
+        has_more=(offset + limit) < total_count,
     )
 
 
@@ -114,7 +109,7 @@ async def list_essential_oils(
 async def recommend_essential_oil(
     eo_id: str,
     batch_size_g: float = Query(..., ge=0.1, description="Batch size in grams"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ) -> EssentialOilRecommendationResponse:
     """
     Calculate essential oil amount at max safe usage rate.
@@ -168,5 +163,5 @@ async def recommend_essential_oil(
         note=eo.note,
         category=eo.category,
         blends_with=eo.blends_with,
-        warnings=warnings_text
+        warnings=warnings_text,
     )

@@ -9,7 +9,6 @@ Formulas per spec Section 5.1:
 - Lye needed = Total SAP × (1 - superfat/100)
 - For mixed lye: NaOH_weight = total_lye × naoh_percent/100
 """
-from typing import Dict, List
 
 
 class OilInput:
@@ -31,10 +30,10 @@ class LyeResult:
 
 
 def calculate_lye(
-    oils: List[OilInput],
+    oils: list[OilInput],
     superfat_percent: float,
     naoh_percent: float = 100.0,
-    koh_percent: float = 0.0
+    koh_percent: float = 0.0,
 ) -> LyeResult:
     """
     Calculate lye weights for soap recipe.
@@ -67,9 +66,7 @@ def calculate_lye(
         raise ValueError(f"Superfat must be 0-100%, got {superfat_percent}")
 
     if abs(naoh_percent + koh_percent - 100.0) > 0.01:
-        raise ValueError(
-            f"NaOH% + KOH% must equal 100%, got {naoh_percent} + {koh_percent}"
-        )
+        raise ValueError(f"NaOH% + KOH% must equal 100%, got {naoh_percent} + {koh_percent}")
 
     # Calculate weighted-average SAP for the lye blend
     # Formula A: For each oil, blend its SAP values by lye percentages
@@ -79,10 +76,7 @@ def calculate_lye(
 
     for oil in oils:
         # Blend this oil's SAP values by the lye percentages
-        oil_blended_sap = (
-            oil.sap_naoh * (naoh_percent / 100) +
-            oil.sap_koh * (koh_percent / 100)
-        )
+        oil_blended_sap = oil.sap_naoh * (naoh_percent / 100) + oil.sap_koh * (koh_percent / 100)
         # Weight by this oil's contribution to total
         oil_weight_ratio = oil.weight_g / total_oil_weight
         weighted_sap += oil_blended_sap * oil_weight_ratio
@@ -98,14 +92,10 @@ def calculate_lye(
     naoh_needed = total_lye_needed * (naoh_percent / 100)
     koh_needed = total_lye_needed * (koh_percent / 100)
 
-    return LyeResult(
-        naoh_g=naoh_needed,
-        koh_g=koh_needed,
-        total_g=total_lye_needed
-    )
+    return LyeResult(naoh_g=naoh_needed, koh_g=koh_needed, total_g=total_lye_needed)
 
 
-def validate_superfat(superfat_percent: float) -> Dict[str, str]:
+def validate_superfat(superfat_percent: float) -> dict[str, str]:
     """
     Validate superfat percentage and generate warnings.
 
@@ -122,14 +112,14 @@ def validate_superfat(superfat_percent: float) -> Dict[str, str]:
     """
     if superfat_percent < 0:
         return {
-            'level': 'error',
-            'message': f'Negative superfat ({superfat_percent}%) is dangerous - lye-heavy soap!'
+            "level": "error",
+            "message": f"Negative superfat ({superfat_percent}%) is dangerous - lye-heavy soap!",
         }
 
     if superfat_percent > 20:
         return {
-            'level': 'warning',
-            'message': f'High superfat ({superfat_percent}%) may produce soft, greasy bars'
+            "level": "warning",
+            "message": f"High superfat ({superfat_percent}%) may produce soft, greasy bars",
         }
 
     return {}
@@ -139,8 +129,8 @@ def calculate_lye_with_purity(
     pure_koh_needed: float,
     pure_naoh_needed: float,
     koh_purity: float = 90.0,
-    naoh_purity: float = 100.0
-) -> Dict[str, any]:
+    naoh_purity: float = 100.0,
+) -> dict[str, any]:
     """
     Calculate commercial lye weights adjusted for purity.
 
@@ -193,17 +183,21 @@ def calculate_lye_with_purity(
 
     # KOH typical range: 85-95%
     if koh_purity < 85 or koh_purity > 95:
-        warnings.append({
-            "type": "unusual_purity",
-            "message": f"KOH purity of {koh_purity}% is outside typical commercial range (85-95%)"
-        })
+        warnings.append(
+            {
+                "type": "unusual_purity",
+                "message": f"KOH purity of {koh_purity}% is outside typical commercial range (85-95%)",  # noqa: E501
+            }
+        )
 
     # NaOH typical range: 98-100%
     if naoh_purity < 98:
-        warnings.append({
-            "type": "unusual_purity",
-            "message": f"NaOH purity of {naoh_purity}% is below typical commercial grade (98-100%)"
-        })
+        warnings.append(
+            {
+                "type": "unusual_purity",
+                "message": f"NaOH purity of {naoh_purity}% is below typical commercial grade (98-100%)",  # noqa: E501
+            }
+        )
 
     return {
         "commercial_koh_g": round(commercial_koh, 1),
@@ -211,5 +205,5 @@ def calculate_lye_with_purity(
         "pure_koh_equivalent_g": round(pure_koh_needed, 1),
         "pure_naoh_equivalent_g": round(pure_naoh_needed, 1),
         "total_lye_g": round(commercial_koh + commercial_naoh, 1),
-        "warnings": warnings if warnings else None
+        "warnings": warnings if warnings else None,
     }

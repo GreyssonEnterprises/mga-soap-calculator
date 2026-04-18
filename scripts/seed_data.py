@@ -366,7 +366,9 @@ ADDITIVE_SEED_DATA = [
         },
         "confidence_level": "high",
         "verified_by_mga": False,
-        "safety_warnings": {"heat": "High heat risk - use cool temperatures, may cause gel phase cracking"},
+        "safety_warnings": {
+            "heat": "High heat risk - use cool temperatures, may cause gel phase cracking"
+        },
     },
     {
         "id": "colloidal_oatmeal",
@@ -411,7 +413,9 @@ ADDITIVE_SEED_DATA = [
         },
         "confidence_level": "high",
         "verified_by_mga": False,
-        "safety_warnings": {"usage": "For brine method only (1-3%). Salt bars require 50-100% usage with high coconut oil."},
+        "safety_warnings": {
+            "usage": "For brine method only (1-3%). Salt bars require 50-100% usage with high coconut oil."  # noqa: E501
+        },
     },
     # Medium Confidence Additives
     {
@@ -444,7 +448,9 @@ ADDITIVE_SEED_DATA = [
         },
         "confidence_level": "medium",
         "verified_by_mga": False,
-        "safety_warnings": {"skin_type": "Strong absorption - may be drying for dry/sensitive skin"},
+        "safety_warnings": {
+            "skin_type": "Strong absorption - may be drying for dry/sensitive skin"
+        },
     },
     {
         "id": "french_green_clay",
@@ -510,7 +516,9 @@ ADDITIVE_SEED_DATA = [
         },
         "confidence_level": "medium",
         "verified_by_mga": False,
-        "safety_warnings": {"heat": "Prevent gel phase to avoid browning - refrigerate after molding"},
+        "safety_warnings": {
+            "heat": "Prevent gel phase to avoid browning - refrigerate after molding"
+        },
     },
     # Low Confidence Additives - Not validated by MGA domain expert
     {
@@ -525,7 +533,7 @@ ADDITIVE_SEED_DATA = [
         "confidence_level": "low",
         "verified_by_mga": False,
         "safety_warnings": {
-            "note": "Aesthetic colorant (blue-green). Not validated by MGA domain expert. Effect modeling based on limited sources.",
+            "note": "Aesthetic colorant (blue-green). Not validated by MGA domain expert. Effect modeling based on limited sources.",  # noqa: E501
         },
     },
     {
@@ -540,7 +548,7 @@ ADDITIVE_SEED_DATA = [
         "confidence_level": "low",
         "verified_by_mga": False,
         "safety_warnings": {
-            "note": "Aesthetic colorant (yellow/orange). Not validated by MGA domain expert. Effect modeling based on limited sources.",
+            "note": "Aesthetic colorant (yellow/orange). Not validated by MGA domain expert. Effect modeling based on limited sources.",  # noqa: E501
             "staining": "May cause temporary skin staining - test on small area first",
         },
     },

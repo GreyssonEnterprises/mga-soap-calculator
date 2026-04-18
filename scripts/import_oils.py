@@ -10,31 +10,35 @@ Handles:
 
 import json
 import sys
-from datetime import datetime
+
 import psycopg2
 from psycopg2.extras import Json
 
+
 def load_oils_file(filepath):
     """Load and validate the oils JSON file"""
-    with open(filepath, 'r') as f:
+    with open(filepath) as f:
         data = json.load(f)
 
-    if 'oils' not in data:
+    if "oils" not in data:
         raise ValueError("JSON file must have 'oils' key")
 
-    return data['oils']
+    return data["oils"]
+
 
 def connect_db(db_url):
     """Connect to PostgreSQL database"""
     # Convert asyncpg URL to psycopg2 format
     # postgresql+asyncpg://user:pass@host:port/db -> postgresql://user:pass@host:port/db
-    sync_url = db_url.replace('+asyncpg', '')
+    sync_url = db_url.replace("+asyncpg", "")
     return psycopg2.connect(sync_url)
+
 
 def get_existing_oil_ids(cursor):
     """Get set of existing oil IDs from database"""
     cursor.execute("SELECT id FROM oils")
     return {row[0] for row in cursor.fetchall()}
+
 
 def insert_oil(cursor, oil):
     """Insert a new oil into the database"""
@@ -48,17 +52,21 @@ def insert_oil(cursor, oil):
         )
     """
 
-    cursor.execute(sql, {
-        'id': oil['id'],
-        'common_name': oil['common_name'],
-        'inci_name': oil.get('inci_name', ''),
-        'sap_value_naoh': oil['sap_value_naoh'],
-        'sap_value_koh': oil['sap_value_koh'],
-        'iodine_value': oil['iodine_value'],
-        'ins_value': oil['ins_value'],
-        'fatty_acids': Json(oil['fatty_acids']),
-        'quality_contributions': Json(oil['quality_contributions'])
-    })
+    cursor.execute(
+        sql,
+        {
+            "id": oil["id"],
+            "common_name": oil["common_name"],
+            "inci_name": oil.get("inci_name", ""),
+            "sap_value_naoh": oil["sap_value_naoh"],
+            "sap_value_koh": oil["sap_value_koh"],
+            "iodine_value": oil["iodine_value"],
+            "ins_value": oil["ins_value"],
+            "fatty_acids": Json(oil["fatty_acids"]),
+            "quality_contributions": Json(oil["quality_contributions"]),
+        },
+    )
+
 
 def update_oil(cursor, oil):
     """Update an existing oil in the database"""
@@ -76,17 +84,21 @@ def update_oil(cursor, oil):
         WHERE id = %(id)s
     """
 
-    cursor.execute(sql, {
-        'id': oil['id'],
-        'common_name': oil['common_name'],
-        'inci_name': oil.get('inci_name', ''),
-        'sap_value_naoh': oil['sap_value_naoh'],
-        'sap_value_koh': oil['sap_value_koh'],
-        'iodine_value': oil['iodine_value'],
-        'ins_value': oil['ins_value'],
-        'fatty_acids': Json(oil['fatty_acids']),
-        'quality_contributions': Json(oil['quality_contributions'])
-    })
+    cursor.execute(
+        sql,
+        {
+            "id": oil["id"],
+            "common_name": oil["common_name"],
+            "inci_name": oil.get("inci_name", ""),
+            "sap_value_naoh": oil["sap_value_naoh"],
+            "sap_value_koh": oil["sap_value_koh"],
+            "iodine_value": oil["iodine_value"],
+            "ins_value": oil["ins_value"],
+            "fatty_acids": Json(oil["fatty_acids"]),
+            "quality_contributions": Json(oil["quality_contributions"]),
+        },
+    )
+
 
 def main():
     if len(sys.argv) < 3:
@@ -100,7 +112,7 @@ def main():
     oils = load_oils_file(oils_file)
     print(f"Loaded {len(oils)} oils from file")
 
-    print(f"Connecting to database...")
+    print("Connecting to database...")
     conn = connect_db(db_url)
     cursor = conn.cursor()
 
@@ -114,7 +126,7 @@ def main():
 
     for oil in oils:
         try:
-            oil_id = oil['id']
+            oil_id = oil["id"]
 
             if oil_id in existing_ids:
                 # Update existing oil
@@ -136,13 +148,14 @@ def main():
     cursor.close()
     conn.close()
 
-    print("\n" + "="*60)
-    print(f"Import complete!")
+    print("\n" + "=" * 60)
+    print("Import complete!")
     print(f"  New oils added: {new_count}")
     print(f"  Existing oils updated: {updated_count}")
     print(f"  Errors: {error_count}")
     print(f"  Total processed: {len(oils)}")
-    print("="*60)
+    print("=" * 60)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

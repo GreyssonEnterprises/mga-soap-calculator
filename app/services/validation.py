@@ -4,12 +4,12 @@ Business Validation Logic (Tasks 3.2.1, 3.2.2, 3.2.3)
 TDD Evidence: Tests written first in test_validation_logic.py
 Implements spec Section 6 validation rules and warning generation.
 """
-from typing import List, Dict, Optional, Tuple
-from app.schemas.requests import OilInput, AdditiveInput
+
+from app.schemas.requests import AdditiveInput, OilInput
 from app.schemas.responses import Warning
 
 
-def validate_oil_percentages(percentages: List[float]) -> bool:
+def validate_oil_percentages(percentages: list[float]) -> bool:
     """
     Validate that oil percentages sum to exactly 100%.
 
@@ -30,17 +30,14 @@ def validate_oil_percentages(percentages: List[float]) -> bool:
 
     # Floating point tolerance of 0.1%
     if abs(total - 100.0) > 0.1:
-        raise ValueError(
-            f"Oil percentages must sum to exactly 100%, got {total:.2f}%"
-        )
+        raise ValueError(f"Oil percentages must sum to exactly 100%, got {total:.2f}%")
 
     return True
 
 
 def normalize_oil_inputs(
-    oils: List[OilInput],
-    total_weight_g: Optional[float] = None
-) -> List[OilInput]:
+    oils: list[OilInput], total_weight_g: float | None = None
+) -> list[OilInput]:
     """
     Normalize oil inputs to have both weight_g AND percentage.
 
@@ -63,11 +60,7 @@ def normalize_oil_inputs(
         for oil in oils:
             percentage = (oil.weight_g / total) * 100
             normalized.append(
-                OilInput(
-                    id=oil.id,
-                    weight_g=oil.weight_g,
-                    percentage=round(percentage, 1)
-                )
+                OilInput(id=oil.id, weight_g=oil.weight_g, percentage=round(percentage, 1))
             )
 
     # Case 2: All oils have percentages
@@ -78,11 +71,7 @@ def normalize_oil_inputs(
         for oil in oils:
             weight_g = (oil.percentage / 100) * total_weight_g
             normalized.append(
-                OilInput(
-                    id=oil.id,
-                    weight_g=round(weight_g, 1),
-                    percentage=oil.percentage
-                )
+                OilInput(id=oil.id, weight_g=round(weight_g, 1), percentage=oil.percentage)
             )
 
     # Case 3: Mixed weights and percentages (more complex normalization)
@@ -94,9 +83,8 @@ def normalize_oil_inputs(
 
 
 def normalize_additive_inputs(
-    additives: List[AdditiveInput],
-    total_oil_weight_g: float
-) -> List[AdditiveInput]:
+    additives: list[AdditiveInput], total_oil_weight_g: float
+) -> list[AdditiveInput]:
     """
     Normalize additive inputs to have both weight_g AND percentage.
 
@@ -115,9 +103,7 @@ def normalize_additive_inputs(
             percentage = (additive.weight_g / total_oil_weight_g) * 100
             normalized.append(
                 AdditiveInput(
-                    id=additive.id,
-                    weight_g=additive.weight_g,
-                    percentage=round(percentage, 1)
+                    id=additive.id, weight_g=additive.weight_g, percentage=round(percentage, 1)
                 )
             )
         elif additive.percentage is not None:
@@ -125,16 +111,14 @@ def normalize_additive_inputs(
             weight_g = (additive.percentage / 100) * total_oil_weight_g
             normalized.append(
                 AdditiveInput(
-                    id=additive.id,
-                    weight_g=round(weight_g, 1),
-                    percentage=additive.percentage
+                    id=additive.id, weight_g=round(weight_g, 1), percentage=additive.percentage
                 )
             )
 
     return normalized
 
 
-def generate_superfat_warnings(superfat_percent: float) -> List[Warning]:
+def generate_superfat_warnings(superfat_percent: float) -> list[Warning]:
     """
     Generate warnings for extreme superfat values.
 
@@ -151,12 +135,14 @@ def generate_superfat_warnings(superfat_percent: float) -> List[Warning]:
     warnings = []
 
     if superfat_percent > 20.0:
-        warnings.append(Warning(
-            code="HIGH_SUPERFAT",
-            message=f"Superfat >20% (got {superfat_percent}%) may produce soft, greasy bars",
-            severity="warning",
-            details={"superfat_percent": superfat_percent}
-        ))
+        warnings.append(
+            Warning(
+                code="HIGH_SUPERFAT",
+                message=f"Superfat >20% (got {superfat_percent}%) may produce soft, greasy bars",
+                severity="warning",
+                details={"superfat_percent": superfat_percent},
+            )
+        )
 
     return warnings
 
@@ -179,7 +165,7 @@ def generate_unknown_additive_warning(additive_id: str) -> Warning:
         code="UNKNOWN_ADDITIVE_ID",
         message=f"Additive '{additive_id}' not found in database - excluded from calculation",
         severity="warning",
-        details={"additive_id": additive_id}
+        details={"additive_id": additive_id},
     )
 
 
@@ -200,7 +186,7 @@ def round_to_precision(value: float, decimals: int = 1) -> float:
     return round(value, decimals)
 
 
-def round_quality_metrics(metrics: Dict[str, float]) -> Dict[str, float]:
+def round_quality_metrics(metrics: dict[str, float]) -> dict[str, float]:
     """
     Apply precision rounding to all quality metrics.
 
@@ -210,15 +196,13 @@ def round_quality_metrics(metrics: Dict[str, float]) -> Dict[str, float]:
     Returns:
         Dictionary with all values rounded to 1 decimal
     """
-    return {
-        name: round_to_precision(value)
-        for name, value in metrics.items()
-    }
+    return {name: round_to_precision(value) for name, value in metrics.items()}
 
 
 # Database validation functions (will be implemented with async/await in endpoint)
 
-async def validate_oil_ids_exist(oil_ids: List[str], db) -> Tuple[bool, List[str]]:
+
+async def validate_oil_ids_exist(oil_ids: list[str], db) -> tuple[bool, list[str]]:
     """
     Validate that all oil IDs exist in database.
 
@@ -234,7 +218,7 @@ async def validate_oil_ids_exist(oil_ids: List[str], db) -> Tuple[bool, List[str
     pass
 
 
-async def validate_additive_ids(additive_ids: List[str], db) -> List[Warning]:
+async def validate_additive_ids(additive_ids: list[str], db) -> list[Warning]:
     """
     Validate additive IDs and generate warnings for unknown ones.
 

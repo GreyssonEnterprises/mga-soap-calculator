@@ -1,10 +1,10 @@
 """Essential oil model with safe usage rates and blending guidance"""
+
 from datetime import datetime
 from decimal import Decimal
-from typing import Optional
 
 import sqlalchemy as sa
-from sqlalchemy import String, DateTime, Numeric, Text
+from sqlalchemy import DateTime, Numeric, String, Text
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -29,12 +29,12 @@ class EssentialOil(Base):
         String(100),
         nullable=False,
     )
-    botanical_name: Mapped[Optional[str]] = mapped_column(
+    botanical_name: Mapped[str | None] = mapped_column(
         String(200),
         nullable=True,
         comment="Scientific botanical name for precise identification",
     )
-    inci_name: Mapped[Optional[str]] = mapped_column(
+    inci_name: Mapped[str | None] = mapped_column(
         String(200),
         nullable=True,
         comment="INCI (International Nomenclature of Cosmetic Ingredients) name",
@@ -44,37 +44,37 @@ class EssentialOil(Base):
         nullable=False,
         comment="Maximum safe usage rate as percentage of batch weight (0.025 to 3.0)",
     )
-    scent_profile: Mapped[Optional[str]] = mapped_column(
+    scent_profile: Mapped[str | None] = mapped_column(
         String(500),
         nullable=True,
         comment="Descriptive scent characteristics",
     )
-    usage_notes: Mapped[Optional[str]] = mapped_column(
+    usage_notes: Mapped[str | None] = mapped_column(
         Text,
         nullable=True,
         comment="Usage guidance and historical context",
     )
-    note: Mapped[Optional[str]] = mapped_column(
+    note: Mapped[str | None] = mapped_column(
         String(50),  # Increased from 20 to handle longer notes
         nullable=True,
         comment="Fragrance note: top, middle, or base",
     )
-    blends_with: Mapped[Optional[list]] = mapped_column(
+    blends_with: Mapped[list | None] = mapped_column(
         ARRAY(String),
         nullable=True,
         comment="List of essential oil IDs that blend well with this oil",
     )
-    category: Mapped[Optional[str]] = mapped_column(
+    category: Mapped[str | None] = mapped_column(
         String(50),
         nullable=True,
         comment="Scent category: citrus, floral, herbaceous, woody, spicy, etc.",
     )
-    warnings: Mapped[Optional[str]] = mapped_column(
+    warnings: Mapped[str | None] = mapped_column(
         String(500),
         nullable=True,
-        comment="Safety warnings: fades quickly, accelerates trace, skin sensitivity, photosensitivity",
+        comment="Safety warnings: fades quickly, accelerates trace, skin sensitivity, photosensitivity",  # noqa: E501
     )
-    color_effect: Mapped[Optional[str]] = mapped_column(
+    color_effect: Mapped[str | None] = mapped_column(
         String(200),
         nullable=True,
         comment="Expected color impact on soap",
@@ -93,4 +93,4 @@ class EssentialOil(Base):
     )
 
     def __repr__(self) -> str:
-        return f"<EssentialOil(id={self.id}, name={self.common_name}, max_rate={self.max_usage_rate_pct}%)>"
+        return f"<EssentialOil(id={self.id}, name={self.common_name}, max_rate={self.max_usage_rate_pct}%)>"  # noqa: E501

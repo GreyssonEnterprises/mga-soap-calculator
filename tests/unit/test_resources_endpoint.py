@@ -4,15 +4,16 @@ Unit tests for resource discovery endpoints (oils and additives).
 Tests pagination, search, sorting, filtering without requiring database.
 Uses mocked database queries to isolate endpoint logic.
 """
+
+from unittest.mock import AsyncMock, Mock
+
 import pytest
-from unittest.mock import AsyncMock, Mock, patch
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.v1.resources import list_oils, list_additives
-from app.models.oil import Oil
+from app.api.v1.resources import list_additives, list_oils
 from app.models.additive import Additive
-from app.schemas.resource import OilListResponse, AdditiveListResponse
+from app.models.oil import Oil
+from app.schemas.resource import AdditiveListResponse, OilListResponse
 
 
 class TestOilsEndpointLogic:
@@ -48,12 +49,7 @@ class TestOilsEndpointLogic:
 
         # Call endpoint
         response = await list_oils(
-            limit=50,
-            offset=0,
-            search=None,
-            sort_by="common_name",
-            sort_order="asc",
-            db=mock_db
+            limit=50, offset=0, search=None, sort_by="common_name", sort_order="asc", db=mock_db
         )
 
         # Verify response structure
@@ -92,12 +88,7 @@ class TestOilsEndpointLogic:
         mock_db.execute = AsyncMock(side_effect=[mock_count_result, mock_result])
 
         response = await list_oils(
-            limit=10,
-            offset=0,
-            search=None,
-            sort_by="common_name",
-            sort_order="asc",
-            db=mock_db
+            limit=10, offset=0, search=None, sort_by="common_name", sort_order="asc", db=mock_db
         )
 
         # has_more should be True: offset(0) + limit(10) < total(15)
@@ -131,12 +122,7 @@ class TestOilsEndpointLogic:
         mock_db.execute = AsyncMock(side_effect=[mock_count_result, mock_result])
 
         response = await list_oils(
-            limit=10,
-            offset=5,
-            search=None,
-            sort_by="common_name",
-            sort_order="asc",
-            db=mock_db
+            limit=10, offset=5, search=None, sort_by="common_name", sort_order="asc", db=mock_db
         )
 
         # has_more should be False: offset(5) + limit(10) >= total(10)
@@ -157,12 +143,7 @@ class TestOilsEndpointLogic:
         mock_db.execute = AsyncMock(side_effect=[mock_count_result, mock_result])
 
         response = await list_oils(
-            limit=50,
-            offset=0,
-            search=None,
-            sort_by="common_name",
-            sort_order="asc",
-            db=mock_db
+            limit=50, offset=0, search=None, sort_by="common_name", sort_order="asc", db=mock_db
         )
 
         assert response.total_count == 0
@@ -198,12 +179,7 @@ class TestOilsEndpointLogic:
 
             # Should not raise exception
             response = await list_oils(
-                limit=50,
-                offset=0,
-                search=None,
-                sort_by=sort_field,
-                sort_order="asc",
-                db=mock_db
+                limit=50, offset=0, search=None, sort_by=sort_field, sort_order="asc", db=mock_db
             )
 
             assert len(response.oils) == 1
@@ -236,12 +212,7 @@ class TestOilsEndpointLogic:
             mock_db.execute = AsyncMock(side_effect=[mock_count_result, mock_result])
 
             response = await list_oils(
-                limit=50,
-                offset=0,
-                search=None,
-                sort_by=sort_field,
-                sort_order="desc",
-                db=mock_db
+                limit=50, offset=0, search=None, sort_by=sort_field, sort_order="desc", db=mock_db
             )
 
             assert len(response.oils) == 1
@@ -282,7 +253,7 @@ class TestAdditivesEndpointLogic:
             verified_only=False,
             sort_by="common_name",
             sort_order="asc",
-            db=mock_db
+            db=mock_db,
         )
 
         assert isinstance(response, AdditiveListResponse)
@@ -326,7 +297,7 @@ class TestAdditivesEndpointLogic:
             verified_only=False,
             sort_by="common_name",
             sort_order="asc",
-            db=mock_db
+            db=mock_db,
         )
 
         assert len(response.additives) == 1
@@ -364,7 +335,7 @@ class TestAdditivesEndpointLogic:
             verified_only=True,
             sort_by="common_name",
             sort_order="asc",
-            db=mock_db
+            db=mock_db,
         )
 
         assert len(response.additives) == 1
@@ -402,7 +373,7 @@ class TestAdditivesEndpointLogic:
             verified_only=True,
             sort_by="common_name",
             sort_order="asc",
-            db=mock_db
+            db=mock_db,
         )
 
         assert len(response.additives) == 1
@@ -444,7 +415,7 @@ class TestAdditivesEndpointLogic:
                 verified_only=False,
                 sort_by="common_name",
                 sort_order="asc",
-                db=mock_db
+                db=mock_db,
             )
 
             assert len(response.additives) == 1
@@ -471,7 +442,7 @@ class TestAdditivesEndpointLogic:
             verified_only=False,
             sort_by="common_name",
             sort_order="asc",
-            db=mock_db
+            db=mock_db,
         )
 
         assert response.total_count == 0
@@ -513,7 +484,7 @@ class TestAdditivesEndpointLogic:
                 verified_only=False,
                 sort_by=sort_field,
                 sort_order="asc",
-                db=mock_db
+                db=mock_db,
             )
 
             assert len(response.additives) == 1
@@ -549,12 +520,7 @@ class TestPaginationCalculations:
         mock_db.execute = AsyncMock(side_effect=[mock_count_result, mock_result])
 
         response = await list_oils(
-            limit=50,
-            offset=0,
-            search=None,
-            sort_by="common_name",
-            sort_order="asc",
-            db=mock_db
+            limit=50, offset=0, search=None, sort_by="common_name", sort_order="asc", db=mock_db
         )
 
         # 0 + 50 = 50 (not less than 50, so has_more = False)
@@ -587,12 +553,7 @@ class TestPaginationCalculations:
         mock_db.execute = AsyncMock(side_effect=[mock_count_result, mock_result])
 
         response = await list_oils(
-            limit=50,
-            offset=0,
-            search=None,
-            sort_by="common_name",
-            sort_order="asc",
-            db=mock_db
+            limit=50, offset=0, search=None, sort_by="common_name", sort_order="asc", db=mock_db
         )
 
         # 0 + 50 = 50 < 51 (has_more = True)

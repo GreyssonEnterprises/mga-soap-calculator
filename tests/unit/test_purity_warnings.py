@@ -21,18 +21,15 @@ Test Coverage:
 
 import pytest
 
-
 # ============================================================================
 # FIXTURES
 # ============================================================================
 
+
 @pytest.fixture
 def typical_commercial_koh():
     """Typical commercial KOH purity (no warning expected)."""
-    return {
-        "purity_values": [85.0, 87.0, 90.0, 92.0, 95.0],
-        "expected_warning": False
-    }
+    return {"purity_values": [85.0, 87.0, 90.0, 92.0, 95.0], "expected_warning": False}
 
 
 @pytest.fixture
@@ -41,7 +38,7 @@ def unusual_low_koh():
     return {
         "purity_values": [50.0, 60.0, 75.0, 80.0, 84.0],
         "expected_warning": True,
-        "warning_type": "low_purity"
+        "warning_type": "low_purity",
     }
 
 
@@ -51,17 +48,14 @@ def unusual_high_koh():
     return {
         "purity_values": [96.0, 97.0, 98.0, 99.0, 100.0],
         "expected_warning": True,
-        "warning_type": "high_purity"
+        "warning_type": "high_purity",
     }
 
 
 @pytest.fixture
 def typical_commercial_naoh():
     """Typical commercial NaOH purity (no warning expected)."""
-    return {
-        "purity_values": [98.0, 99.0, 100.0],
-        "expected_warning": False
-    }
+    return {"purity_values": [98.0, 99.0, 100.0], "expected_warning": False}
 
 
 @pytest.fixture
@@ -70,13 +64,14 @@ def unusual_low_naoh():
     return {
         "purity_values": [50.0, 70.0, 85.0, 90.0, 95.0, 97.0],
         "expected_warning": True,
-        "warning_type": "low_purity"
+        "warning_type": "low_purity",
     }
 
 
 # ============================================================================
 # WARNING GENERATION TESTS - KOH
 # ============================================================================
+
 
 class TestKOHPurityWarnings:
     """Test warning generation for unusual KOH purity values."""
@@ -142,6 +137,7 @@ class TestKOHPurityWarnings:
 # WARNING GENERATION TESTS - NaOH
 # ============================================================================
 
+
 class TestNaOHPurityWarnings:
     """Test warning generation for unusual NaOH purity values."""
 
@@ -183,6 +179,7 @@ class TestNaOHPurityWarnings:
 # ============================================================================
 # WARNING MESSAGE TESTS
 # ============================================================================
+
 
 class TestPurityWarningMessages:
     """Test warning message content and clarity."""
@@ -235,6 +232,7 @@ class TestPurityWarningMessages:
 # WARNING RESPONSE STRUCTURE TESTS
 # ============================================================================
 
+
 class TestPurityWarningResponseStructure:
     """Test warnings appear in correct response structure."""
 
@@ -275,6 +273,7 @@ class TestPurityWarningResponseStructure:
 # ============================================================================
 # WARNING NON-BLOCKING TESTS
 # ============================================================================
+
 
 class TestPurityWarningsNonBlocking:
     """Test warnings don't prevent calculations from succeeding."""

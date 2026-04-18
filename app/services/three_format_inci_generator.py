@@ -6,7 +6,7 @@ and common_names formats from calculation recipe data.
 
 All ingredients sorted by percentage (descending) per regulatory requirements.
 """
-from typing import Dict, List, Optional, Tuple
+
 from decimal import Decimal
 
 from app.models.oil import Oil
@@ -19,11 +19,11 @@ class IngredientData:
     def __init__(
         self,
         raw_inci_name: str,
-        saponified_inci_name: Optional[str],
+        saponified_inci_name: str | None,
         common_name: str,
         percentage: float,
         category: str,
-        notes: Optional[str] = None
+        notes: str | None = None,
     ):
         self.raw_inci_name = raw_inci_name
         self.saponified_inci_name = saponified_inci_name
@@ -68,18 +68,19 @@ def calculate_total_batch_weight(recipe_data: dict) -> Decimal:
 
 def generate_three_format_labels(
     recipe_data: dict,
-    oils_dict: Dict[str, Oil],
+    oils_dict: dict[str, Oil],
     format_filter: str = "all",
     include_percentages: bool = False,
-    line_by_line: bool = False
-) -> Tuple[Optional[str], Optional[str], Optional[str], List[Dict]]:
+    line_by_line: bool = False,
+) -> tuple[str | None, str | None, str | None, list[dict]]:
     """
     Generate INCI labels in all three formats from recipe data
 
     Args:
         recipe_data: Recipe JSONB data from Calculation model
         oils_dict: Dictionary of oil_id -> Oil model instances
-        format_filter: Which formats to generate ("all", "raw_inci", "saponified_inci", "common_names")
+        format_filter: Which formats to generate
+            ("all", "raw_inci", "saponified_inci", "common_names")
         include_percentages: Whether to include percentage values in label strings
         line_by_line: Whether to use newline separation instead of commas
 
@@ -110,20 +111,22 @@ def generate_three_format_labels(
         raise ValueError("Recipe has zero total weight")
 
     # Build ingredient list with all data
-    ingredients: List[IngredientData] = []
+    ingredients: list[IngredientData] = []
 
     # Add water
     water_weight = Decimal(str(recipe_data.get("water_weight_g", 0)))
     if water_weight > 0:
         water_pct = float((water_weight / total_weight) * 100)
-        ingredients.append(IngredientData(
-            raw_inci_name="Aqua",
-            saponified_inci_name="Aqua",
-            common_name="Water",
-            percentage=water_pct,
-            category="water",
-            notes=None
-        ))
+        ingredients.append(
+            IngredientData(
+                raw_inci_name="Aqua",
+                saponified_inci_name="Aqua",
+                common_name="Water",
+                percentage=water_pct,
+                category="water",
+                notes=None,
+            )
+        )
 
     # Add oils
     oils = recipe_data.get("oils", [])
@@ -144,37 +147,43 @@ def generate_three_format_labels(
         else:
             saponified_name, _ = get_saponified_inci_name(oil, lye_type)
 
-        ingredients.append(IngredientData(
-            raw_inci_name=oil.inci_name,
-            saponified_inci_name=saponified_name,
-            common_name=oil.common_name,
-            percentage=percentage,
-            category="oil",
-            notes=f"Saponifies to {saponified_name}"
-        ))
+        ingredients.append(
+            IngredientData(
+                raw_inci_name=oil.inci_name,
+                saponified_inci_name=saponified_name,
+                common_name=oil.common_name,
+                percentage=percentage,
+                category="oil",
+                notes=f"Saponifies to {saponified_name}",
+            )
+        )
 
     # Add lye (only in raw format, not in saponified)
     if naoh_weight > 0:
         lye_pct = float((Decimal(str(naoh_weight)) / total_weight) * 100)
-        ingredients.append(IngredientData(
-            raw_inci_name="Sodium Hydroxide",
-            saponified_inci_name=None,  # Not in saponified format
-            common_name="Sodium Hydroxide",
-            percentage=lye_pct,
-            category="lye",
-            notes="Excluded in saponified format"
-        ))
+        ingredients.append(
+            IngredientData(
+                raw_inci_name="Sodium Hydroxide",
+                saponified_inci_name=None,  # Not in saponified format
+                common_name="Sodium Hydroxide",
+                percentage=lye_pct,
+                category="lye",
+                notes="Excluded in saponified format",
+            )
+        )
 
     if koh_weight > 0:
         lye_pct = float((Decimal(str(koh_weight)) / total_weight) * 100)
-        ingredients.append(IngredientData(
-            raw_inci_name="Potassium Hydroxide",
-            saponified_inci_name=None,  # Not in saponified format
-            common_name="Potassium Hydroxide",
-            percentage=lye_pct,
-            category="lye",
-            notes="Excluded in saponified format"
-        ))
+        ingredients.append(
+            IngredientData(
+                raw_inci_name="Potassium Hydroxide",
+                saponified_inci_name=None,  # Not in saponified format
+                common_name="Potassium Hydroxide",
+                percentage=lye_pct,
+                category="lye",
+                notes="Excluded in saponified format",
+            )
+        )
 
     # Sort by percentage (descending) - REGULATORY REQUIREMENT
     ingredients.sort(key=lambda x: x.percentage, reverse=True)
@@ -220,11 +229,13 @@ def generate_three_format_labels(
     # Build ingredients breakdown (all ingredients, all formats)
     breakdown = []
     for ing in ingredients:
-        breakdown.append({
-            "name": ing.raw_inci_name,  # Use raw INCI as default name
-            "percentage": round(ing.percentage, 1),
-            "category": ing.category,
-            "notes": ing.notes
-        })
+        breakdown.append(
+            {
+                "name": ing.raw_inci_name,  # Use raw INCI as default name
+                "percentage": round(ing.percentage, 1),
+                "category": ing.category,
+                "notes": ing.notes,
+            }
+        )
 
     return raw_inci, saponified_inci, common_names, breakdown

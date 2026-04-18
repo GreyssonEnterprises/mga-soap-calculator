@@ -1,9 +1,9 @@
 """Oil model with SAP values and fatty acid profiles"""
+
 from datetime import datetime
-from typing import Optional
 
 import sqlalchemy as sa
-from sqlalchemy import String, Float, DateTime
+from sqlalchemy import DateTime, Float, String
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -33,10 +33,10 @@ class Oil(Base):
         String(200),
         nullable=False,
     )
-    saponified_inci_name: Mapped[Optional[str]] = mapped_column(
+    saponified_inci_name: Mapped[str | None] = mapped_column(
         String(200),
         nullable=True,
-        comment="Post-saponification INCI name (e.g., 'Sodium Cocoate' or 'Potassium Cocoate')"
+        comment="Post-saponification INCI name (e.g., 'Sodium Cocoate' or 'Potassium Cocoate')",
     )
     sap_value_naoh: Mapped[float] = mapped_column(
         Float,
@@ -61,12 +61,12 @@ class Oil(Base):
     fatty_acids: Mapped[dict] = mapped_column(
         JSONB,
         nullable=False,
-        comment="Percentages of 8 fatty acids: lauric, myristic, palmitic, stearic, ricinoleic, oleic, linoleic, linolenic",
+        comment="Percentages of 8 fatty acids: lauric, myristic, palmitic, stearic, ricinoleic, oleic, linoleic, linolenic",  # noqa: E501
     )
     quality_contributions: Mapped[dict] = mapped_column(
         JSONB,
         nullable=False,
-        comment="Contribution to 7 quality metrics: hardness, cleansing, conditioning, bubbly_lather, creamy_lather, longevity, stability",
+        comment="Contribution to 7 quality metrics: hardness, cleansing, conditioning, bubbly_lather, creamy_lather, longevity, stability",  # noqa: E501
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

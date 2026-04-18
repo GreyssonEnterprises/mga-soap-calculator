@@ -1,10 +1,10 @@
 """Additive model with quality effect modifiers"""
+
 from datetime import datetime
 from decimal import Decimal
-from typing import Optional
 
 import sqlalchemy as sa
-from sqlalchemy import String, Float, Boolean, DateTime, Numeric
+from sqlalchemy import Boolean, DateTime, Float, Numeric, String
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -46,7 +46,7 @@ class Additive(Base):
     quality_effects: Mapped[dict] = mapped_column(
         JSONB,
         nullable=False,
-        comment="Absolute modifiers to quality metrics at 2% usage. Scale proportionally for other usage rates.",
+        comment="Absolute modifiers to quality metrics at 2% usage. Scale proportionally for other usage rates.",  # noqa: E501
     )
     confidence_level: Mapped[str] = mapped_column(
         String(20),
@@ -59,46 +59,46 @@ class Additive(Base):
         default=False,
         comment="Whether MGA has empirically validated effects",
     )
-    safety_warnings: Mapped[Optional[dict]] = mapped_column(
+    safety_warnings: Mapped[dict | None] = mapped_column(
         JSONB,
         nullable=True,
         comment="Optional safety information and usage notes",
     )
     # Smart calculator fields
-    usage_rate_min_pct: Mapped[Optional[Decimal]] = mapped_column(
+    usage_rate_min_pct: Mapped[Decimal | None] = mapped_column(
         Numeric(5, 2),
         nullable=True,
         comment="Minimum usage percentage for calculator (light usage)",
     )
-    usage_rate_max_pct: Mapped[Optional[Decimal]] = mapped_column(
+    usage_rate_max_pct: Mapped[Decimal | None] = mapped_column(
         Numeric(5, 2),
         nullable=True,
         comment="Maximum usage percentage for calculator (heavy usage)",
     )
-    usage_rate_standard_pct: Mapped[Optional[Decimal]] = mapped_column(
+    usage_rate_standard_pct: Mapped[Decimal | None] = mapped_column(
         Numeric(5, 2),
         nullable=True,
         comment="Standard recommended usage percentage for calculator",
     )
-    when_to_add: Mapped[Optional[str]] = mapped_column(
+    when_to_add: Mapped[str | None] = mapped_column(
         String(200),
         nullable=True,
         comment="Timing guidance: to oils, to lye water, at trace, etc.",
     )
-    preparation_instructions: Mapped[Optional[str]] = mapped_column(
+    preparation_instructions: Mapped[str | None] = mapped_column(
         String(500),
         nullable=True,
         comment="How to prepare additive before incorporation",
     )
-    category: Mapped[Optional[str]] = mapped_column(
+    category: Mapped[str | None] = mapped_column(
         String(50),
         nullable=True,
         comment="Additive category: exfoliant, colorant, lather_booster, hardener, clay, botanical",
     )
-    warnings: Mapped[Optional[dict]] = mapped_column(
+    warnings: Mapped[dict | None] = mapped_column(
         JSONB,
         nullable=True,
-        comment="Specific warnings: accelerates_trace, causes_overheating, can_be_scratchy, turns_brown",
+        comment="Specific warnings: accelerates_trace, causes_overheating, can_be_scratchy, turns_brown",  # noqa: E501
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
@@ -114,4 +114,6 @@ class Additive(Base):
     )
 
     def __repr__(self) -> str:
-        return f"<Additive(id={self.id}, name={self.common_name}, confidence={self.confidence_level})>"
+        return (
+            f"<Additive(id={self.id}, name={self.common_name}, confidence={self.confidence_level})>"
+        )

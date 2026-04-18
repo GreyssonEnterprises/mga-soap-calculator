@@ -4,9 +4,10 @@ Integration tests for idempotent oil import.
 Tests verify that import script can be run multiple times safely
 without creating duplicates or errors.
 """
+
 import pytest
-from sqlalchemy import select, func, delete
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy import delete, func, select
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.core.config import settings
 from app.models.oil import Oil
@@ -80,16 +81,12 @@ class TestImportIdempotency:
         await import_oils_database(json_path)
 
         # Get 10 oils to delete
-        result = await test_db_session.execute(
-            select(Oil).limit(10)
-        )
+        result = await test_db_session.execute(select(Oil).limit(10))
         oils_to_delete = result.scalars().all()
         deleted_ids = [oil.id for oil in oils_to_delete]
 
         # Delete those 10 oils
-        await test_db_session.execute(
-            delete(Oil).where(Oil.id.in_(deleted_ids))
-        )
+        await test_db_session.execute(delete(Oil).where(Oil.id.in_(deleted_ids)))
         await test_db_session.commit()
 
         # Count after deletion
@@ -110,9 +107,7 @@ class TestImportIdempotency:
 
         # Verify deleted oils are back
         for oil_id in deleted_ids:
-            result = await test_db_session.execute(
-                select(Oil).where(Oil.id == oil_id)
-            )
+            result = await test_db_session.execute(select(Oil).where(Oil.id == oil_id))
             restored_oil = result.scalar_one_or_none()
             assert restored_oil is not None, f"Oil {oil_id} not restored"
 
@@ -131,5 +126,6 @@ class TestImportIdempotency:
 
         # Verify no duplicates
         unique_ids = set(all_ids)
-        assert len(all_ids) == len(unique_ids), \
+        assert len(all_ids) == len(unique_ids), (
             f"Found {len(all_ids) - len(unique_ids)} duplicate IDs"
+        )

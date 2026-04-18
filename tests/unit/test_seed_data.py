@@ -5,13 +5,14 @@ Written: 2025-11-01 (before seed_data.py implementation)
 Phase: Phase 1 Foundation
 Evidence: Test-first development - seed data implemented to pass these tests
 """
+
 import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.oil import Oil
 from app.models.additive import Additive
-from scripts.seed_data import OIL_SEED_DATA, ADDITIVE_SEED_DATA
+from app.models.oil import Oil
+from scripts.seed_data import ADDITIVE_SEED_DATA, OIL_SEED_DATA
 
 
 @pytest.mark.unit
@@ -26,14 +27,25 @@ async def test_oil_seed_data_olive_oil_sap_values():
     olive_oil = next((oil for oil in OIL_SEED_DATA if oil["id"] == "olive_oil"), None)
 
     assert olive_oil is not None, "Olive Oil must be in seed data"
-    assert olive_oil["sap_value_naoh"] == 0.134, "Olive Oil NaOH SAP must be 0.134 (spec requirement)"
+    assert olive_oil["sap_value_naoh"] == 0.134, (
+        "Olive Oil NaOH SAP must be 0.134 (spec requirement)"
+    )
     assert olive_oil["sap_value_koh"] == 0.188, "Olive Oil KOH SAP must be 0.188 (spec requirement)"
 
 
 @pytest.mark.unit
 async def test_oil_seed_data_complete_fatty_acid_profiles():
     """Test that all oils have complete 8 fatty acid profiles"""
-    required_fatty_acids = ["lauric", "myristic", "palmitic", "stearic", "ricinoleic", "oleic", "linoleic", "linolenic"]
+    required_fatty_acids = [
+        "lauric",
+        "myristic",
+        "palmitic",
+        "stearic",
+        "ricinoleic",
+        "oleic",
+        "linoleic",
+        "linolenic",
+    ]
 
     for oil in OIL_SEED_DATA:
         assert "fatty_acids" in oil, f"{oil['id']} missing fatty_acids"
@@ -44,7 +56,15 @@ async def test_oil_seed_data_complete_fatty_acid_profiles():
 @pytest.mark.unit
 async def test_oil_seed_data_complete_quality_contributions():
     """Test that all oils have complete 7 quality metric contributions"""
-    required_metrics = ["hardness", "cleansing", "conditioning", "bubbly_lather", "creamy_lather", "longevity", "stability"]
+    required_metrics = [
+        "hardness",
+        "cleansing",
+        "conditioning",
+        "bubbly_lather",
+        "creamy_lather",
+        "longevity",
+        "stability",
+    ]
 
     for oil in OIL_SEED_DATA:
         assert "quality_contributions" in oil, f"{oil['id']} missing quality_contributions"
@@ -71,8 +91,12 @@ async def test_additive_seed_data_kaolin_clay_effects():
     kaolin = next((add for add in ADDITIVE_SEED_DATA if add["id"] == "kaolin_clay"), None)
 
     assert kaolin is not None, "Kaolin Clay must be in seed data"
-    assert kaolin["quality_effects"]["hardness"] == 4.0, "Kaolin hardness effect should be +4.0 at 2% usage"
-    assert kaolin["quality_effects"]["creamy_lather"] == 7.0, "Kaolin creamy lather effect should be +7.0 at 2% usage"
+    assert kaolin["quality_effects"]["hardness"] == 4.0, (
+        "Kaolin hardness effect should be +4.0 at 2% usage"
+    )
+    assert kaolin["quality_effects"]["creamy_lather"] == 7.0, (
+        "Kaolin creamy lather effect should be +7.0 at 2% usage"
+    )
     assert kaolin["typical_usage_min_percent"] == 1.0
     assert kaolin["typical_usage_max_percent"] == 3.0
 
@@ -80,11 +104,17 @@ async def test_additive_seed_data_kaolin_clay_effects():
 @pytest.mark.unit
 async def test_additive_seed_data_sodium_lactate_effects():
     """Test that Sodium Lactate effects match research data"""
-    sodium_lactate = next((add for add in ADDITIVE_SEED_DATA if add["id"] == "sodium_lactate"), None)
+    sodium_lactate = next(
+        (add for add in ADDITIVE_SEED_DATA if add["id"] == "sodium_lactate"), None
+    )
 
     assert sodium_lactate is not None, "Sodium Lactate must be in seed data"
-    assert sodium_lactate["quality_effects"]["hardness"] == 12.0, "Sodium lactate hardness effect should be +12.0"
-    assert sodium_lactate["confidence_level"] == "high", "Sodium lactate should have high confidence"
+    assert sodium_lactate["quality_effects"]["hardness"] == 12.0, (
+        "Sodium lactate hardness effect should be +12.0"
+    )
+    assert sodium_lactate["confidence_level"] == "high", (
+        "Sodium lactate should have high confidence"
+    )
 
 
 @pytest.mark.unit
@@ -102,7 +132,9 @@ async def test_additive_seed_data_high_confidence_additives_present():
     seed_data_ids = [add["id"] for add in ADDITIVE_SEED_DATA]
 
     for additive_id in high_confidence_ids:
-        assert additive_id in seed_data_ids, f"High-confidence additive '{additive_id}' missing from seed data"
+        assert additive_id in seed_data_ids, (
+            f"High-confidence additive '{additive_id}' missing from seed data"
+        )
 
 
 @pytest.mark.unit
@@ -112,7 +144,9 @@ async def test_additive_seed_data_confidence_levels_set():
 
     for additive in ADDITIVE_SEED_DATA:
         assert "confidence_level" in additive, f"{additive['id']} missing confidence_level"
-        assert additive["confidence_level"] in valid_confidence_levels, f"{additive['id']} has invalid confidence_level"
+        assert additive["confidence_level"] in valid_confidence_levels, (
+            f"{additive['id']} has invalid confidence_level"
+        )
 
 
 @pytest.mark.unit
@@ -145,7 +179,9 @@ async def test_seed_additives_can_be_inserted(test_db_session: AsyncSession):
     # Insert first additive from seed data if it doesn't already exist
     additive_data = ADDITIVE_SEED_DATA[0]
 
-    existing_result = await test_db_session.execute(select(Additive).where(Additive.id == additive_data["id"]))
+    existing_result = await test_db_session.execute(
+        select(Additive).where(Additive.id == additive_data["id"])
+    )
     existing = existing_result.scalar_one_or_none()
 
     if existing is None:
@@ -154,7 +190,9 @@ async def test_seed_additives_can_be_inserted(test_db_session: AsyncSession):
         await test_db_session.commit()
 
     # Query back
-    result = await test_db_session.execute(select(Additive).where(Additive.id == additive_data["id"]))
+    result = await test_db_session.execute(
+        select(Additive).where(Additive.id == additive_data["id"])
+    )
     inserted_additive = result.scalar_one()
 
     assert inserted_additive.id == additive_data["id"]

@@ -3,16 +3,17 @@ Test helper utilities for corrected API request formats.
 
 Provides properly formatted request builders matching app/schemas/requests.py
 """
-from typing import List, Dict, Any
+
+from typing import Any
 
 
 def build_calculation_request(
-    oils: List[Dict[str, Any]],
+    oils: list[dict[str, Any]],
     superfat_percent: float = 5.0,
     water_percent_of_oils: float = 38.0,
     lye_type: str = "NaOH",
-    additives: List[Dict[str, Any]] = None
-) -> Dict[str, Any]:
+    additives: list[dict[str, Any]] = None,
+) -> dict[str, Any]:
     """
     Build a properly formatted calculation request.
 
@@ -29,25 +30,24 @@ def build_calculation_request(
     # Convert simplified lye_type to LyeConfig format
     lye_config = {
         "naoh_percent": 100.0 if lye_type == "NaOH" else 0.0,
-        "koh_percent": 0.0 if lye_type == "NaOH" else 100.0
+        "koh_percent": 0.0 if lye_type == "NaOH" else 100.0,
     }
 
     # Build water config (using water_percent_of_oils as default method)
-    water_config = {
-        "method": "water_percent_of_oils",
-        "value": water_percent_of_oils
-    }
+    water_config = {"method": "water_percent_of_oils", "value": water_percent_of_oils}
 
     return {
         "oils": oils,
         "lye": lye_config,
         "water": water_config,
         "superfat_percent": superfat_percent,
-        "additives": additives or []
+        "additives": additives or [],
     }
 
 
-def build_oil_input(oil_id: str, percentage: float = None, weight_g: float = None) -> Dict[str, Any]:
+def build_oil_input(
+    oil_id: str, percentage: float = None, weight_g: float = None
+) -> dict[str, Any]:
     """
     Build properly formatted OilInput.
 
@@ -67,7 +67,9 @@ def build_oil_input(oil_id: str, percentage: float = None, weight_g: float = Non
     return oil
 
 
-def build_additive_input(additive_id: str, weight_g: float = None, percentage: float = None) -> Dict[str, Any]:
+def build_additive_input(
+    additive_id: str, weight_g: float = None, percentage: float = None
+) -> dict[str, Any]:
     """
     Build properly formatted AdditiveInput.
 

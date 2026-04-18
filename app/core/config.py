@@ -1,4 +1,6 @@
 """Application configuration using Pydantic Settings"""
+
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -7,7 +9,16 @@ class Settings(BaseSettings):
 
     # Database
     DATABASE_URL: str
-    DATABASE_URL_SYNC: str
+    DATABASE_URL_SYNC: str = ""
+
+    @model_validator(mode="after")
+    def derive_sync_url(self) -> "Settings":
+        if not self.DATABASE_URL_SYNC:
+            url = self.DATABASE_URL
+            url = url.replace("postgresql+asyncpg://", "postgresql+psycopg2://")
+            url = url.replace("postgresql://", "postgresql+psycopg2://")
+            self.DATABASE_URL_SYNC = url
+        return self
 
     # JWT
     SECRET_KEY: str

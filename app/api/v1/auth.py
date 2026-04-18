@@ -1,13 +1,10 @@
 """Authentication endpoints for user registration and login"""
-import uuid
-from datetime import timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.config import settings
 from app.core.security import (
     create_access_token,
     get_password_hash,
@@ -16,11 +13,11 @@ from app.core.security import (
 from app.db.base import get_db
 from app.models.user import User
 from app.schemas.auth import (
-    UserRegisterRequest,
-    UserRegisterResponse,
+    UserInfo,
     UserLoginRequest,
     UserLoginResponse,
-    UserInfo,
+    UserRegisterRequest,
+    UserRegisterResponse,
 )
 
 router = APIRouter(
@@ -34,7 +31,7 @@ router = APIRouter(
     response_model=UserRegisterResponse,
     status_code=status.HTTP_201_CREATED,
     summary="Register a new user",
-    description="Create a new user account with email and password"
+    description="Create a new user account with email and password",
 )
 async def register(
     request: UserRegisterRequest,
@@ -60,18 +57,14 @@ async def register(
 
     if existing_user:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email already registered"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered"
         )
 
     # Hash the password
     hashed_password = get_password_hash(request.password)
 
     # Create new user
-    new_user = User(
-        email=request.email,
-        hashed_password=hashed_password
-    )
+    new_user = User(email=request.email, hashed_password=hashed_password)
 
     try:
         db.add(new_user)
@@ -80,14 +73,11 @@ async def register(
     except IntegrityError:
         await db.rollback()
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email already registered"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered"
         )
 
     return UserRegisterResponse(
-        id=new_user.id,
-        email=new_user.email,
-        message="User registered successfully"
+        id=new_user.id, email=new_user.email, message="User registered successfully"
     )
 
 
@@ -95,7 +85,7 @@ async def register(
     "/login",
     response_model=UserLoginResponse,
     summary="Login user",
-    description="Authenticate user with email and password to receive JWT token"
+    description="Authenticate user with email and password to receive JWT token",
 )
 async def login(
     request: UserLoginRequest,
@@ -128,18 +118,8 @@ async def login(
         )
 
     # Create JWT token
-    access_token = create_access_token(
-        data={
-            "sub": str(user.id),
-            "email": user.email
-        }
-    )
+    access_token = create_access_token(data={"sub": str(user.id), "email": user.email})
 
     return UserLoginResponse(
-        access_token=access_token,
-        token_type="bearer",
-        user=UserInfo(
-            id=user.id,
-            email=user.email
-        )
+        access_token=access_token, token_type="bearer", user=UserInfo(id=user.id, email=user.email)
     )

@@ -16,12 +16,11 @@ Test Coverage:
 """
 
 import pytest
-from pydantic import ValidationError
-
 
 # ============================================================================
 # FIXTURES
 # ============================================================================
+
 
 @pytest.fixture
 def valid_purity_values():
@@ -48,20 +47,21 @@ def sample_recipe_base():
         "oils": [
             {"name": "Olive Oil", "percentage": 70},
             {"name": "Castor Oil", "percentage": 20},
-            {"name": "Coconut Oil", "percentage": 10}
+            {"name": "Coconut Oil", "percentage": 10},
         ],
         "lye": {
             "naoh_percent": 10,
             "koh_percent": 90,
         },
         "superfat_percent": 1,
-        "batch_size_g": 700
+        "batch_size_g": 700,
     }
 
 
 # ============================================================================
 # VALIDATION TESTS - VALID VALUES
 # ============================================================================
+
 
 class TestPurityValidationValidValues:
     """Test that valid purity values (50-100%) are accepted."""
@@ -117,6 +117,7 @@ class TestPurityValidationValidValues:
 # VALIDATION TESTS - INVALID VALUES
 # ============================================================================
 
+
 class TestPurityValidationInvalidValues:
     """Test that invalid purity values are rejected with clear errors."""
 
@@ -171,6 +172,7 @@ class TestPurityValidationInvalidValues:
 # ERROR MESSAGE TESTS
 # ============================================================================
 
+
 class TestPurityValidationErrorMessages:
     """Test that validation error messages are clear and actionable."""
 
@@ -211,6 +213,7 @@ class TestPurityValidationErrorMessages:
 # ============================================================================
 # DEFAULT VALUE TESTS
 # ============================================================================
+
 
 class TestPurityDefaultValues:
     """Test default purity values when fields are omitted."""
@@ -263,6 +266,7 @@ class TestPurityDefaultValues:
 # ============================================================================
 # TYPE VALIDATION TESTS
 # ============================================================================
+
 
 class TestPurityTypeValidation:
     """Test purity fields accept correct types and reject invalid types."""

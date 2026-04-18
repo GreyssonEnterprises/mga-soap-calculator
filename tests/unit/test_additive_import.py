@@ -10,8 +10,10 @@ Tests validate:
 - Idempotency (re-import doesn't duplicate data)
 - Warning flag mapping
 """
+
+from unittest.mock import MagicMock
+
 import pytest
-from unittest.mock import Mock, patch, MagicMock
 from sqlalchemy.orm import Session
 
 
@@ -26,13 +28,10 @@ def sample_additive_json():
         "preparation": "Warm honey slightly if crystallized",
         "mixing_tips": "Mix thoroughly into oils before adding lye",
         "category": "lather_booster",
-        "effects": {
-            "bubbly_lather": 5.0,
-            "bar_longevity": -2.0
-        },
+        "effects": {"bubbly_lather": 5.0, "bar_longevity": -2.0},
         "warnings": ["accelerates trace", "causes overheating"],
         "confidence": "high",
-        "mga_verified": True
+        "mga_verified": True,
     }
 
 
@@ -46,7 +45,7 @@ def mock_db_session():
 class TestJSONParsing:
     """Test JSON file loading and parsing"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_load_additives_json_file(self):
         """
         GIVEN: additives-usage-reference.json file path
@@ -55,12 +54,14 @@ class TestJSONParsing:
         """
         from scripts.import_additives_extended import load_additives_json
 
-        data = load_additives_json('working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json')
+        data = load_additives_json(
+            "working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json"
+        )
 
         assert isinstance(data, dict)
-        assert 'additives' in data or isinstance(data, list)
+        assert "additives" in data or isinstance(data, list)
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_parse_additive_entry(self, sample_additive_json):
         """
         GIVEN: Single additive JSON entry
@@ -71,18 +72,18 @@ class TestJSONParsing:
 
         result = parse_additive_entry(sample_additive_json)
 
-        assert result['common_name'] == 'Honey'
-        assert result['inci_name'] == 'Mel'
-        assert result['when_to_add'] == 'to oils'
-        assert result['category'] == 'lather_booster'
-        assert result['confidence_level'] == 'high'
-        assert result['verified_by_mga'] is True
+        assert result["common_name"] == "Honey"
+        assert result["inci_name"] == "Mel"
+        assert result["when_to_add"] == "to oils"
+        assert result["category"] == "lather_booster"
+        assert result["confidence_level"] == "high"
+        assert result["verified_by_mga"] is True
 
 
 class TestUsageRateConversion:
     """Test conversion from tablespoon PPO to percentage"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_convert_tablespoon_to_percent(self):
         """
         GIVEN: Usage rate "1 tablespoon PPO"
@@ -97,7 +98,7 @@ class TestUsageRateConversion:
 
         assert result == pytest.approx(2.0, rel=0.1)
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_convert_teaspoon_to_percent(self):
         """
         GIVEN: Usage rate "1 teaspoon PPO"
@@ -112,7 +113,7 @@ class TestUsageRateConversion:
 
         assert result == pytest.approx(1.0, rel=0.1)
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_convert_range_to_min_max_percent(self):
         """
         GIVEN: Usage rate "1-3 tablespoons PPO"
@@ -126,7 +127,7 @@ class TestUsageRateConversion:
         assert min_pct == pytest.approx(2.0, rel=0.1)  # 1 tablespoon
         assert max_pct == pytest.approx(6.0, rel=0.1)  # 3 tablespoons
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_convert_percent_to_percent(self):
         """
         GIVEN: Usage rate already in percent "2%"
@@ -139,7 +140,7 @@ class TestUsageRateConversion:
 
         assert result == 2.0
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_handle_descriptive_usage(self):
         """
         GIVEN: Descriptive usage "Light dusting"
@@ -157,7 +158,7 @@ class TestUsageRateConversion:
 class TestWarningFlagMapping:
     """Test mapping warning strings to boolean flags"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_map_accelerates_trace_warning(self):
         """
         GIVEN: Warning list containing "accelerates trace"
@@ -169,9 +170,9 @@ class TestWarningFlagMapping:
         warnings = ["accelerates trace", "causes overheating"]
         flags = map_warning_flags(warnings)
 
-        assert flags['accelerates_trace'] is True
+        assert flags["accelerates_trace"] is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_map_causes_overheating_warning(self):
         """
         GIVEN: Warning list containing "causes overheating"
@@ -183,9 +184,9 @@ class TestWarningFlagMapping:
         warnings = ["causes overheating"]
         flags = map_warning_flags(warnings)
 
-        assert flags['causes_overheating'] is True
+        assert flags["causes_overheating"] is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_map_can_be_scratchy_warning(self):
         """
         GIVEN: Warning list containing "can be scratchy"
@@ -197,9 +198,9 @@ class TestWarningFlagMapping:
         warnings = ["can be scratchy"]
         flags = map_warning_flags(warnings)
 
-        assert flags['can_be_scratchy'] is True
+        assert flags["can_be_scratchy"] is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_map_turns_brown_warning(self):
         """
         GIVEN: Warning list containing "turns brown"
@@ -211,9 +212,9 @@ class TestWarningFlagMapping:
         warnings = ["turns brown"]
         flags = map_warning_flags(warnings)
 
-        assert flags['turns_brown'] is True
+        assert flags["turns_brown"] is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_map_multiple_warnings(self):
         """
         GIVEN: Warning list with multiple warnings
@@ -225,12 +226,12 @@ class TestWarningFlagMapping:
         warnings = ["accelerates trace", "can be scratchy", "turns brown"]
         flags = map_warning_flags(warnings)
 
-        assert flags['accelerates_trace'] is True
-        assert flags['can_be_scratchy'] is True
-        assert flags['turns_brown'] is True
-        assert flags['causes_overheating'] is False  # Not in list
+        assert flags["accelerates_trace"] is True
+        assert flags["can_be_scratchy"] is True
+        assert flags["turns_brown"] is True
+        assert flags["causes_overheating"] is False  # Not in list
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_map_no_warnings(self):
         """
         GIVEN: Empty warning list
@@ -242,16 +243,16 @@ class TestWarningFlagMapping:
         warnings = []
         flags = map_warning_flags(warnings)
 
-        assert flags['accelerates_trace'] is False
-        assert flags['causes_overheating'] is False
-        assert flags['can_be_scratchy'] is False
-        assert flags['turns_brown'] is False
+        assert flags["accelerates_trace"] is False
+        assert flags["causes_overheating"] is False
+        assert flags["can_be_scratchy"] is False
+        assert flags["turns_brown"] is False
 
 
 class TestDatabaseInsertion:
     """Test SQLAlchemy database insertion logic"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_create_or_update_additive(self, mock_db_session, sample_additive_json):
         """
         GIVEN: Parsed additive data and database session
@@ -266,7 +267,7 @@ class TestDatabaseInsertion:
         assert mock_db_session.add.called
         assert mock_db_session.commit.called
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_idempotent_import_same_id(self, mock_db_session, sample_additive_json):
         """
         GIVEN: Additive with same ID already exists in database
@@ -274,10 +275,11 @@ class TestDatabaseInsertion:
         THEN: Should update existing record, not create duplicate
         """
         from scripts.import_additives_extended import create_or_update_additive
+
         from app.models.additive import Additive
 
         # Mock existing additive query
-        existing = Additive(id='honey', common_name='Old Honey')
+        existing = Additive(id="honey", common_name="Old Honey")
         mock_db_session.query.return_value.filter.return_value.first.return_value = existing
 
         create_or_update_additive(mock_db_session, sample_additive_json)
@@ -286,7 +288,7 @@ class TestDatabaseInsertion:
         assert mock_db_session.add.call_count <= 1
         assert mock_db_session.commit.called
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_transaction_rollback_on_error(self, mock_db_session, sample_additive_json):
         """
         GIVEN: Database error during insertion
@@ -308,7 +310,7 @@ class TestDatabaseInsertion:
 class TestBatchImport:
     """Test importing multiple additives in batch"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_import_all_additives(self, mock_db_session):
         """
         GIVEN: JSON file with 19 additives
@@ -319,13 +321,13 @@ class TestBatchImport:
 
         count = import_all_additives(
             mock_db_session,
-            'working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json'
+            "working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json",
         )
 
         # Should import 19 additives per spec
         assert count == 19
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_import_with_transaction(self, mock_db_session):
         """
         GIVEN: Multiple additives to import
@@ -336,13 +338,13 @@ class TestBatchImport:
 
         import_all_additives(
             mock_db_session,
-            'working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json'
+            "working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json",
         )
 
         # Should commit once after all imports
         assert mock_db_session.commit.called
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_import_reports_progress(self, mock_db_session, capsys):
         """
         GIVEN: Multiple additives to import
@@ -353,19 +355,19 @@ class TestBatchImport:
 
         import_all_additives(
             mock_db_session,
-            'working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json'
+            "working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json",
         )
 
         captured = capsys.readouterr()
 
         # Should print progress
-        assert 'imported' in captured.out.lower() or 'importing' in captured.out.lower()
+        assert "imported" in captured.out.lower() or "importing" in captured.out.lower()
 
 
 class TestIDGeneration:
     """Test generation of additive IDs from names"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_generate_id_from_name(self):
         """
         GIVEN: Additive name "Honey"
@@ -378,7 +380,7 @@ class TestIDGeneration:
 
         assert result == "honey"
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_generate_id_with_spaces(self):
         """
         GIVEN: Additive name "Sodium Lactate"
@@ -391,7 +393,7 @@ class TestIDGeneration:
 
         assert result == "sodium_lactate"
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_generate_id_with_special_chars(self):
         """
         GIVEN: Additive name "Salt (Sea Salt)"
@@ -403,14 +405,14 @@ class TestIDGeneration:
         result = generate_additive_id("Salt (Sea Salt)")
 
         # Should remove or replace special characters
-        assert '(' not in result
-        assert ')' not in result
+        assert "(" not in result
+        assert ")" not in result
 
 
 class TestDataValidation:
     """Test validation of imported data"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_validate_required_fields(self, sample_additive_json):
         """
         GIVEN: Additive data
@@ -425,7 +427,7 @@ class TestDataValidation:
         assert is_valid is True
         assert len(errors) == 0
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_validate_missing_required_field(self):
         """
         GIVEN: Additive data missing required field
@@ -444,7 +446,7 @@ class TestDataValidation:
         assert is_valid is False
         assert len(errors) > 0
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_validate_usage_rate_range(self):
         """
         GIVEN: Additive with invalid usage rate (negative or >100%)

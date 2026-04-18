@@ -10,13 +10,12 @@ Metrics per spec Section 5.3:
 
 Additive effects from research file - scaled by usage rate.
 """
-from typing import List, Dict, Optional
 
 
 class OilContribution:
     """Oil with weight and quality contributions"""
 
-    def __init__(self, weight_g: float, percentage: float, quality_contributions: Dict[str, float]):
+    def __init__(self, weight_g: float, percentage: float, quality_contributions: dict[str, float]):
         self.weight_g = weight_g
         self.percentage = percentage
         self.quality_contributions = quality_contributions
@@ -26,10 +25,7 @@ class AdditiveEffect:
     """Additive with usage rate and quality effects"""
 
     def __init__(
-        self,
-        weight_g: float,
-        quality_effects: Dict[str, float],
-        confidence_level: str = "high"
+        self, weight_g: float, quality_effects: dict[str, float], confidence_level: str = "high"
     ):
         self.weight_g = weight_g
         self.quality_effects = quality_effects
@@ -40,16 +36,16 @@ class QualityMetrics:
     """Quality metrics result"""
 
     def __init__(self, **metrics):
-        self.hardness = round(metrics.get('hardness', 0), 1)
-        self.cleansing = round(metrics.get('cleansing', 0), 1)
-        self.conditioning = round(metrics.get('conditioning', 0), 1)
-        self.bubbly_lather = round(metrics.get('bubbly_lather', 0), 1)
-        self.creamy_lather = round(metrics.get('creamy_lather', 0), 1)
-        self.longevity = round(metrics.get('longevity', 0), 1)
-        self.stability = round(metrics.get('stability', 0), 1)
+        self.hardness = round(metrics.get("hardness", 0), 1)
+        self.cleansing = round(metrics.get("cleansing", 0), 1)
+        self.conditioning = round(metrics.get("conditioning", 0), 1)
+        self.bubbly_lather = round(metrics.get("bubbly_lather", 0), 1)
+        self.creamy_lather = round(metrics.get("creamy_lather", 0), 1)
+        self.longevity = round(metrics.get("longevity", 0), 1)
+        self.stability = round(metrics.get("stability", 0), 1)
 
 
-def calculate_base_metrics_from_oils(oils: List[OilContribution]) -> QualityMetrics:
+def calculate_base_metrics_from_oils(oils: list[OilContribution]) -> QualityMetrics:
     """
     Calculate quality metrics from oil blend only (no additives yet).
 
@@ -57,13 +53,13 @@ def calculate_base_metrics_from_oils(oils: List[OilContribution]) -> QualityMetr
     TDD Evidence: Validates against SoapCalc reference recipe
     """
     metrics = {
-        'hardness': 0.0,
-        'cleansing': 0.0,
-        'conditioning': 0.0,
-        'bubbly_lather': 0.0,
-        'creamy_lather': 0.0,
-        'longevity': 0.0,
-        'stability': 0.0
+        "hardness": 0.0,
+        "cleansing": 0.0,
+        "conditioning": 0.0,
+        "bubbly_lather": 0.0,
+        "creamy_lather": 0.0,
+        "longevity": 0.0,
+        "stability": 0.0,
     }
 
     for oil in oils:
@@ -77,9 +73,7 @@ def calculate_base_metrics_from_oils(oils: List[OilContribution]) -> QualityMetr
 
 
 def apply_additive_effects(
-    base_metrics: QualityMetrics,
-    total_oil_weight_g: float,
-    additives: List[AdditiveEffect]
+    base_metrics: QualityMetrics, total_oil_weight_g: float, additives: list[AdditiveEffect]
 ) -> QualityMetrics:
     """
     Apply additive quality effects to base metrics.
@@ -96,13 +90,13 @@ def apply_additive_effects(
     """
     # Start with base metrics
     adjusted = {
-        'hardness': base_metrics.hardness,
-        'cleansing': base_metrics.cleansing,
-        'conditioning': base_metrics.conditioning,
-        'bubbly_lather': base_metrics.bubbly_lather,
-        'creamy_lather': base_metrics.creamy_lather,
-        'longevity': base_metrics.longevity,
-        'stability': base_metrics.stability
+        "hardness": base_metrics.hardness,
+        "cleansing": base_metrics.cleansing,
+        "conditioning": base_metrics.conditioning,
+        "bubbly_lather": base_metrics.bubbly_lather,
+        "creamy_lather": base_metrics.creamy_lather,
+        "longevity": base_metrics.longevity,
+        "stability": base_metrics.stability,
     }
 
     for additive in additives:
@@ -121,7 +115,7 @@ def apply_additive_effects(
     return QualityMetrics(**adjusted)
 
 
-def calculate_ins_value(oils: List[OilContribution]) -> float:
+def calculate_ins_value(oils: list[OilContribution]) -> float:
     """
     Calculate INS (Iodine Number Saponification) value.
 
@@ -136,7 +130,7 @@ def calculate_ins_value(oils: List[OilContribution]) -> float:
     return 0.0
 
 
-def calculate_iodine_value(oils: List[OilContribution]) -> float:
+def calculate_iodine_value(oils: list[OilContribution]) -> float:
     """
     Calculate Iodine value (measure of unsaturation).
 

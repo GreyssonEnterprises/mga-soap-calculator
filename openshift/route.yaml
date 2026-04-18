@@ -1,0 +1,15 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: mga-soap-calculator
+  namespace: mga-soap-calculator
+spec:
+  host: mga-soap-calculator.apps.sno.greysson.com
+  to:
+    kind: Service
+    name: mga-soap-calculator
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

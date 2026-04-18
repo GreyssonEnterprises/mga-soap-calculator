@@ -1,12 +1,12 @@
 """Calculation model for storing recipe calculations"""
+
 import uuid
 from datetime import datetime
 from decimal import Decimal
-from typing import Optional
 
 import sqlalchemy as sa
-from sqlalchemy import ForeignKey, DateTime, Numeric
-from sqlalchemy.dialects.postgresql import UUID, JSONB
+from sqlalchemy import DateTime, ForeignKey, Numeric
+from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -65,12 +65,12 @@ class Calculation(Base):
         server_default="100.00",
         comment="NaOH purity percentage (50-100). Default 100% reflects commercial grade.",
     )
-    pure_koh_equivalent_g: Mapped[Optional[Decimal]] = mapped_column(
+    pure_koh_equivalent_g: Mapped[Decimal | None] = mapped_column(
         Numeric(10, 2),
         nullable=True,
         comment="Theoretical pure KOH amount before purity adjustment",
     )
-    pure_naoh_equivalent_g: Mapped[Optional[Decimal]] = mapped_column(
+    pure_naoh_equivalent_g: Mapped[Decimal | None] = mapped_column(
         Numeric(10, 2),
         nullable=True,
         comment="Theoretical pure NaOH amount before purity adjustment",

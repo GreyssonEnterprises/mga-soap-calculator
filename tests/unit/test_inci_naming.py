@@ -3,16 +3,19 @@ Unit tests for INCI naming service
 
 TDD RED PHASE: These tests MUST FAIL initially (no implementation exists yet)
 """
-import pytest
+
 from unittest.mock import Mock
+
+import pytest
+
+from app.models.oil import Oil
 
 # Import will fail initially - this is expected in RED phase
 from app.services.inci_naming import (
-    get_saponified_inci_name,
     generate_saponified_name,
-    load_reference_data
+    get_saponified_inci_name,
+    load_reference_data,
 )
-from app.models.oil import Oil
 
 
 class TestLoadReferenceData:
@@ -28,13 +31,7 @@ class TestLoadReferenceData:
         """Reference data should contain common oils"""
         data = load_reference_data()
         # Test subset of 37 oils from research.md
-        expected_oils = [
-            'coconut-oil',
-            'olive-oil',
-            'palm-oil',
-            'castor-oil',
-            'shea-butter'
-        ]
+        expected_oils = ["coconut-oil", "olive-oil", "palm-oil", "castor-oil", "shea-butter"]
         for oil_id in expected_oils:
             assert oil_id in data, f"Expected oil {oil_id} not in reference data"
 
@@ -43,10 +40,10 @@ class TestLoadReferenceData:
         data = load_reference_data()
         first_oil = next(iter(data.values()))
 
-        assert 'saponified_inci_naoh' in first_oil
-        assert 'saponified_inci_koh' in first_oil
-        assert isinstance(first_oil['saponified_inci_naoh'], str)
-        assert isinstance(first_oil['saponified_inci_koh'], str)
+        assert "saponified_inci_naoh" in first_oil
+        assert "saponified_inci_koh" in first_oil
+        assert isinstance(first_oil["saponified_inci_naoh"], str)
+        assert isinstance(first_oil["saponified_inci_koh"], str)
 
 
 class TestGenerateSaponifiedName:

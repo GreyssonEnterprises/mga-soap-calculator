@@ -9,13 +9,14 @@ Provides:
 - Smart additive calculator with usage recommendations
 - Complete OpenAPI/Swagger documentation
 """
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 
+from app.api.v1 import additives, auth, calculate, colorants, essential_oils, inci, resources
 from app.core.config import settings
-from app.api.v1 import auth, calculate, resources, additives, essential_oils, colorants, inci
 
 
 def custom_openapi():
@@ -165,12 +166,9 @@ All responses follow this structure:
         "properties": {
             "error_code": {"type": "string", "example": "INVALID_OIL_PERCENTAGES"},
             "message": {"type": "string", "example": "Oil percentages must sum to 100.0%"},
-            "details": {
-                "type": "array",
-                "items": {"type": "object"}
-            }
+            "details": {"type": "array", "items": {"type": "object"}},
         },
-        "required": ["error_code", "message"]
+        "required": ["error_code", "message"],
     }
 
     app.openapi_schema = openapi_schema
@@ -233,12 +231,12 @@ app.include_router(inci.router)
                     "example": {
                         "status": "healthy",
                         "version": "1.0.0",
-                        "environment": "production"
+                        "environment": "production",
                     }
                 }
-            }
+            },
         }
-    }
+    },
 )
 async def health_check():
     """
@@ -250,7 +248,7 @@ async def health_check():
     return {
         "status": "healthy",
         "version": settings.APP_VERSION,
-        "environment": settings.ENVIRONMENT
+        "environment": settings.ENVIRONMENT,
     }
 
 
@@ -269,12 +267,12 @@ async def health_check():
                         "error": "API version required",
                         "detail": "Did you mean /api/v1/auth/register?",
                         "correct_path": "/api/v1/auth/register",
-                        "hint": "All API endpoints require /v1/ prefix"
+                        "hint": "All API endpoints require /v1/ prefix",
                     }
                 }
-            }
+            },
         }
-    }
+    },
 )
 async def redirect_missing_v1(path: str):
     """
@@ -300,8 +298,8 @@ async def redirect_missing_v1(path: str):
                 "error": "API version required",
                 "detail": f"Did you mean {correct_path}?",
                 "correct_path": correct_path,
-                "hint": "All API endpoints require /v1/ prefix"
-            }
+                "hint": "All API endpoints require /v1/ prefix",
+            },
         )
 
     # If we somehow got here with a v1/ path, return generic 404

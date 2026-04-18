@@ -4,33 +4,34 @@ Backfill saponified_inci_name from reference data
 
 Usage: python scripts/backfill_saponified_inci_names.py
 """
-import json
+
 import asyncio
-from pathlib import Path
+import json
 import sys
+from pathlib import Path
 
 # Add project root to path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select  # noqa: E402
+from sqlalchemy.ext.asyncio import AsyncSession  # noqa: E402
 
-from app.db.base import AsyncSessionLocal
-from app.models.oil import Oil
+from app.db.base import AsyncSessionLocal  # noqa: E402
+from app.models.oil import Oil  # noqa: E402
 
 
 async def load_reference_data() -> dict:
     """Load saponified INCI reference data from JSON file"""
     reference_file = project_root / "app" / "data" / "saponified-inci-terms.json"
 
-    with open(reference_file, 'r') as f:
+    with open(reference_file) as f:
         data = json.load(f)
 
     # Build lookup dictionary: oil_id -> saponified_inci_naoh
     lookup = {}
-    for oil_entry in data['oils']:
-        lookup[oil_entry['oil_id']] = oil_entry['saponified_inci_naoh']
+    for oil_entry in data["oils"]:
+        lookup[oil_entry["oil_id"]] = oil_entry["saponified_inci_naoh"]
 
     return lookup
 
@@ -62,9 +63,9 @@ async def backfill_oils(session: AsyncSession, reference_lookup: dict) -> dict:
     await session.commit()
 
     return {
-        'updated_count': updated_count,
-        'missing_count': missing_count,
-        'total_count': len(oils)
+        "updated_count": updated_count,
+        "missing_count": missing_count,
+        "total_count": len(oils),
     }
 
 
@@ -89,7 +90,7 @@ async def main():
     print(f"✓ Updated with reference data: {stats['updated_count']}")
     print(f"⚠ Missing reference data: {stats['missing_count']}")
 
-    if stats['missing_count'] > 0:
+    if stats["missing_count"] > 0:
         print("\n⚠ ACTION REQUIRED:")
         print("  Review oils without reference data above and either:")
         print("  1. Add entries to app/data/saponified-inci-terms.json")

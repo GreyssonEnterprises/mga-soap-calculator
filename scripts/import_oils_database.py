@@ -18,27 +18,27 @@ Exit Codes:
     1: Validation error or JSON parse error
     2: Database error
 """
+
 import asyncio
 import json
 import sys
 from pathlib import Path
-from typing import Dict, Tuple, List
 
 # Add parent directory to path to import app modules
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.core.config import settings
 from app.models.oil import Oil
-
 
 # ============================================================================
 # VALIDATION FUNCTIONS
 # ============================================================================
 
-def validate_sap_naoh_range(sap_value: float) -> Tuple[bool, str]:
+
+def validate_sap_naoh_range(sap_value: float) -> tuple[bool, str]:
     """
     Validate SAP NaOH value is within range [0.000, 0.350].
 
@@ -56,7 +56,7 @@ def validate_sap_naoh_range(sap_value: float) -> Tuple[bool, str]:
     return False, f"SAP NaOH {sap_value:.3f} outside valid range [0.000, 0.350]"
 
 
-def validate_sap_koh_range(sap_value: float) -> Tuple[bool, str]:
+def validate_sap_koh_range(sap_value: float) -> tuple[bool, str]:
     """
     Validate SAP KOH value is within range [0.000, 0.490].
 
@@ -74,7 +74,7 @@ def validate_sap_koh_range(sap_value: float) -> Tuple[bool, str]:
     return False, f"SAP KOH {sap_value:.3f} outside valid range [0.000, 0.490]"
 
 
-def validate_fatty_acids_sum(fatty_acids: Dict[str, float], oil_id: str) -> Tuple[bool, str]:
+def validate_fatty_acids_sum(fatty_acids: dict[str, float], oil_id: str) -> tuple[bool, str]:
     """
     Validate fatty acids sum to reasonable range (allowing incomplete profiles).
 
@@ -91,7 +91,13 @@ def validate_fatty_acids_sum(fatty_acids: Dict[str, float], oil_id: str) -> Tupl
         (is_valid, error_message)
     """
     # Special materials without typical fatty acid profiles
-    special_materials = ["pine_tar", "candelilla_wax", "carnauba_wax", "jojoba_liquid_wax_ester", "beeswax"]
+    special_materials = [
+        "pine_tar",
+        "candelilla_wax",
+        "carnauba_wax",
+        "jojoba_liquid_wax_ester",
+        "beeswax",
+    ]
     if oil_id in special_materials:
         return True, ""
 
@@ -106,7 +112,7 @@ def validate_fatty_acids_sum(fatty_acids: Dict[str, float], oil_id: str) -> Tupl
     return False, f"Fatty acids sum {fatty_acid_sum:.1f}% outside valid range [30, 105]"
 
 
-def validate_quality_metrics_range(quality_metrics: Dict[str, float]) -> Tuple[bool, str]:
+def validate_quality_metrics_range(quality_metrics: dict[str, float]) -> tuple[bool, str]:
     """
     Validate quality metrics are in range [0, 100].
 
@@ -120,12 +126,15 @@ def validate_quality_metrics_range(quality_metrics: Dict[str, float]) -> Tuple[b
     """
     for metric_name, metric_value in quality_metrics.items():
         if not (0 <= metric_value <= 100):
-            return False, f"Quality metric '{metric_name}' value {metric_value} outside valid range [0, 100]"
+            return (
+                False,
+                f"Quality metric '{metric_name}' value {metric_value} outside valid range [0, 100]",
+            )
 
     return True, ""
 
 
-def validate_oil_data(oil_id: str, oil_data: Dict) -> Tuple[bool, str]:
+def validate_oil_data(oil_id: str, oil_data: dict) -> tuple[bool, str]:
     """
     Validate complete oil data against all rules.
 
@@ -169,7 +178,8 @@ def validate_oil_data(oil_id: str, oil_data: Dict) -> Tuple[bool, str]:
 # DATA LOADING FUNCTIONS
 # ============================================================================
 
-def load_oils_from_json(json_path: str) -> Dict[str, dict]:
+
+def load_oils_from_json(json_path: str) -> dict[str, dict]:
     """
     Load oils data from JSON file.
 
@@ -187,14 +197,14 @@ def load_oils_from_json(json_path: str) -> Dict[str, dict]:
     if not path.exists():
         raise FileNotFoundError(f"JSON file not found: {json_path}")
 
-    with open(path, 'r', encoding='utf-8') as f:
+    with open(path, encoding="utf-8") as f:
         data = json.load(f)
 
     # The JSON structure is a dictionary with oil_id as keys
     return data
 
 
-def validate_all_oils(oils_data: Dict[str, dict]) -> Tuple[bool, List[str]]:
+def validate_all_oils(oils_data: dict[str, dict]) -> tuple[bool, list[str]]:
     """
     Validate all oils before import (fail-fast).
 
@@ -226,6 +236,7 @@ def validate_all_oils(oils_data: Dict[str, dict]) -> Tuple[bool, List[str]]:
 # DATABASE FUNCTIONS
 # ============================================================================
 
+
 async def is_oil_exists(session: AsyncSession, oil_id: str) -> bool:
     """
     Check if oil already exists in database.
@@ -237,17 +248,15 @@ async def is_oil_exists(session: AsyncSession, oil_id: str) -> bool:
     Returns:
         True if oil exists, False otherwise
     """
-    result = await session.execute(
-        select(Oil).where(Oil.id == oil_id)
-    )
+    result = await session.execute(select(Oil).where(Oil.id == oil_id))
     return result.scalar_one_or_none() is not None
 
 
 async def import_oils_database(
     json_path: str = "working/user-feedback/oils-db-additions/complete-oils-database.json",
     dry_run: bool = False,
-    verbose: bool = False
-) -> Tuple[int, int]:
+    verbose: bool = False,
+) -> tuple[int, int]:
     """
     Import oils from JSON to database with validation and idempotency.
 
@@ -302,7 +311,7 @@ async def import_oils_database(
 
     # If dry-run, stop here
     if dry_run:
-        print(f"\n✅ Dry-run validation successful!")
+        print("\n✅ Dry-run validation successful!")
         print(f"   - {len(oils_data)} oils ready for import")
         return 0, 0
 
@@ -340,7 +349,7 @@ async def import_oils_database(
                         iodine_value=oil_data["iodine_value"],
                         ins_value=oil_data["ins_value"],
                         fatty_acids=oil_data["fatty_acids"],
-                        quality_contributions=oil_data["quality_contributions"]
+                        quality_contributions=oil_data["quality_contributions"],
                     )
 
                     session.add(oil)
@@ -370,27 +379,20 @@ async def import_oils_database(
 # CLI INTERFACE
 # ============================================================================
 
+
 def main():
     """Command-line interface for oil import script."""
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Import 147 comprehensive oils to database"
-    )
+    parser = argparse.ArgumentParser(description="Import 147 comprehensive oils to database")
     parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Validate data without importing to database"
+        "--dry-run", action="store_true", help="Validate data without importing to database"
     )
-    parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Show detailed progress information"
-    )
+    parser.add_argument("--verbose", action="store_true", help="Show detailed progress information")
     parser.add_argument(
         "--json-path",
         default="working/user-feedback/oils-db-additions/complete-oils-database.json",
-        help="Path to JSON file with oils data"
+        help="Path to JSON file with oils data",
     )
 
     args = parser.parse_args()
@@ -398,13 +400,11 @@ def main():
     try:
         added, skipped = asyncio.run(
             import_oils_database(
-                json_path=args.json_path,
-                dry_run=args.dry_run,
-                verbose=args.verbose
+                json_path=args.json_path, dry_run=args.dry_run, verbose=args.verbose
             )
         )
 
-        print(f"\n✅ Import completed successfully!")
+        print("\n✅ Import completed successfully!")
         print(f"   - Oils added: {added}")
         print(f"   - Oils skipped: {skipped}")
         sys.exit(0)

@@ -3,8 +3,9 @@ INCI label generation service
 
 Orchestrates percentage calculation and INCI naming to produce complete labels
 """
-from typing import List, Tuple, Dict, Any
+
 from decimal import Decimal
+from typing import Any
 
 from app.models.oil import Oil
 from app.services.inci_naming import get_saponified_inci_name
@@ -15,11 +16,7 @@ class InciIngredientDetail:
     """Detailed ingredient information for INCI label"""
 
     def __init__(
-        self,
-        oil: Oil,
-        percentage: Decimal,
-        saponified_inci_name: str,
-        is_generated: bool
+        self, oil: Oil, percentage: Decimal, saponified_inci_name: str, is_generated: bool
     ):
         self.oil_id = oil.id
         self.common_name = oil.common_name
@@ -30,15 +27,15 @@ class InciIngredientDetail:
     def to_dict(self) -> dict:
         """Convert to dictionary for API response"""
         return {
-            'oil_id': self.oil_id,
-            'common_name': self.common_name,
-            'saponified_inci_name': self.saponified_inci_name,
-            'percentage': self.percentage,
-            'is_generated': self.is_generated
+            "oil_id": self.oil_id,
+            "common_name": self.common_name,
+            "saponified_inci_name": self.saponified_inci_name,
+            "percentage": self.percentage,
+            "is_generated": self.is_generated,
         }
 
 
-def sort_ingredients_by_percentage(ingredients: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def sort_ingredients_by_percentage(ingredients: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """
     Sort ingredients by percentage in descending order.
 
@@ -70,14 +67,12 @@ def sort_ingredients_by_percentage(ingredients: List[Dict[str, Any]]) -> List[Di
 
     # Sort by percentage descending
     # Create new list to avoid modifying original
-    return sorted(ingredients, key=lambda x: x['percentage'], reverse=True)
+    return sorted(ingredients, key=lambda x: x["percentage"], reverse=True)
 
 
 def generate_inci_label(
-    oil_weights: dict[str, Decimal],
-    oils_dict: dict[str, Oil],
-    lye_type: str
-) -> Tuple[str, List[InciIngredientDetail]]:
+    oil_weights: dict[str, Decimal], oils_dict: dict[str, Oil], lye_type: str
+) -> tuple[str, list[InciIngredientDetail]]:
     """
     Generate complete INCI label from oil weights.
 
@@ -128,7 +123,7 @@ def generate_inci_label(
             oil=oil,
             percentage=percentage,
             saponified_inci_name=saponified_name,
-            is_generated=is_generated
+            is_generated=is_generated,
         )
         ingredient_details.append(detail)
 

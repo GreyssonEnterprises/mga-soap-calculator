@@ -8,11 +8,12 @@ NOTE: These tests require database seed data (oils) to be present.
 Run with: pytest tests/integration/test_batch_size_api.py --seed-data
 Or manually ensure olive_oil and coconut_oil exist in test database.
 """
+
 import pytest
 from httpx import AsyncClient
-from sqlalchemy.ext.asyncio import AsyncSession
-from app.models.user import User
+
 from app.core.security import create_access_token, get_password_hash
+from app.models.user import User
 
 
 @pytest.fixture
@@ -24,7 +25,7 @@ async def authenticated_client(async_client: AsyncClient, async_session):
     test_user = User(
         email="batchtest@mga-automotive.com",
         username="batchtest",
-        hashed_password=get_password_hash("testpassword123")
+        hashed_password=get_password_hash("testpassword123"),
     )
     async_session.add(test_user)
     await async_session.commit()
@@ -51,21 +52,12 @@ class TestBatchSizeAPIIntegration:
         response = await authenticated_client.post(
             "/api/v1/calculate",
             json={
-                "oils": [
-                    {"id": "olive_oil", "percentage": 100.0}
-                ],
+                "oils": [{"id": "olive_oil", "percentage": 100.0}],
                 "total_oil_weight_g": 700.0,  # CRITICAL: Request 700g
-                "lye": {
-                    "naoh_percent": 0,
-                    "koh_percent": 100,
-                    "koh_purity": 90
-                },
-                "water": {
-                    "method": "water_percent_of_oils",
-                    "value": 38.0
-                },
-                "superfat_percent": 5.0
-            }
+                "lye": {"naoh_percent": 0, "koh_percent": 100, "koh_purity": 90},
+                "water": {"method": "water_percent_of_oils", "value": 38.0},
+                "superfat_percent": 5.0,
+            },
         )
 
         assert response.status_code == 200
@@ -91,21 +83,12 @@ class TestBatchSizeAPIIntegration:
         response = await authenticated_client.post(
             "/api/v1/calculate",
             json={
-                "oils": [
-                    {"id": "coconut_oil", "percentage": 100.0}
-                ],
+                "oils": [{"id": "coconut_oil", "percentage": 100.0}],
                 "total_oil_weight_g": 1500.0,
-                "lye": {
-                    "naoh_percent": 0,
-                    "koh_percent": 100,
-                    "koh_purity": 90
-                },
-                "water": {
-                    "method": "water_percent_of_oils",
-                    "value": 38.0
-                },
-                "superfat_percent": 5.0
-            }
+                "lye": {"naoh_percent": 0, "koh_percent": 100, "koh_purity": 90},
+                "water": {"method": "water_percent_of_oils", "value": 38.0},
+                "superfat_percent": 5.0,
+            },
         )
 
         assert response.status_code == 200
@@ -123,21 +106,12 @@ class TestBatchSizeAPIIntegration:
         response = await authenticated_client.post(
             "/api/v1/calculate",
             json={
-                "oils": [
-                    {"id": "olive_oil", "percentage": 100.0}
-                ],
+                "oils": [{"id": "olive_oil", "percentage": 100.0}],
                 # total_oil_weight_g omitted - should default to 1000
-                "lye": {
-                    "naoh_percent": 0,
-                    "koh_percent": 100,
-                    "koh_purity": 90
-                },
-                "water": {
-                    "method": "water_percent_of_oils",
-                    "value": 38.0
-                },
-                "superfat_percent": 5.0
-            }
+                "lye": {"naoh_percent": 0, "koh_percent": 100, "koh_purity": 90},
+                "water": {"method": "water_percent_of_oils", "value": 38.0},
+                "superfat_percent": 5.0,
+            },
         )
 
         assert response.status_code == 200
@@ -158,20 +132,13 @@ class TestBatchSizeAPIIntegration:
             json={
                 "oils": [
                     {"id": "olive_oil", "percentage": 70.0},
-                    {"id": "coconut_oil", "percentage": 30.0}
+                    {"id": "coconut_oil", "percentage": 30.0},
                 ],
                 "total_oil_weight_g": 700.0,
-                "lye": {
-                    "naoh_percent": 0,
-                    "koh_percent": 100,
-                    "koh_purity": 90
-                },
-                "water": {
-                    "method": "water_percent_of_oils",
-                    "value": 38.0
-                },
-                "superfat_percent": 5.0
-            }
+                "lye": {"naoh_percent": 0, "koh_percent": 100, "koh_purity": 90},
+                "water": {"method": "water_percent_of_oils", "value": 38.0},
+                "superfat_percent": 5.0,
+            },
         )
 
         assert response.status_code == 200
@@ -197,24 +164,13 @@ class TestBatchSizeAPIIntegration:
         response = await authenticated_client.post(
             "/api/v1/calculate",
             json={
-                "oils": [
-                    {"id": "olive_oil", "percentage": 100.0}
-                ],
+                "oils": [{"id": "olive_oil", "percentage": 100.0}],
                 "total_oil_weight_g": 700.0,
-                "lye": {
-                    "naoh_percent": 0,
-                    "koh_percent": 100,
-                    "koh_purity": 90
-                },
-                "water": {
-                    "method": "water_percent_of_oils",
-                    "value": 38.0
-                },
+                "lye": {"naoh_percent": 0, "koh_percent": 100, "koh_purity": 90},
+                "water": {"method": "water_percent_of_oils", "value": 38.0},
                 "superfat_percent": 5.0,
-                "additives": [
-                    {"id": "kaolin_clay", "weight_g": 20.0}
-                ]
-            }
+                "additives": [{"id": "kaolin_clay", "weight_g": 20.0}],
+            },
         )
 
         assert response.status_code == 200
@@ -234,21 +190,12 @@ class TestBatchSizeAPIIntegration:
         response = await authenticated_client.post(
             "/api/v1/calculate",
             json={
-                "oils": [
-                    {"id": "olive_oil", "percentage": 100.0}
-                ],
+                "oils": [{"id": "olive_oil", "percentage": 100.0}],
                 "total_oil_weight_g": 50.0,
-                "lye": {
-                    "naoh_percent": 0,
-                    "koh_percent": 100,
-                    "koh_purity": 90
-                },
-                "water": {
-                    "method": "water_percent_of_oils",
-                    "value": 38.0
-                },
-                "superfat_percent": 5.0
-            }
+                "lye": {"naoh_percent": 0, "koh_percent": 100, "koh_purity": 90},
+                "water": {"method": "water_percent_of_oils", "value": 38.0},
+                "superfat_percent": 5.0,
+            },
         )
 
         assert response.status_code == 200
@@ -266,21 +213,12 @@ class TestBatchSizeAPIIntegration:
         response = await authenticated_client.post(
             "/api/v1/calculate",
             json={
-                "oils": [
-                    {"id": "olive_oil", "percentage": 100.0}
-                ],
+                "oils": [{"id": "olive_oil", "percentage": 100.0}],
                 "total_oil_weight_g": 5000.0,
-                "lye": {
-                    "naoh_percent": 0,
-                    "koh_percent": 100,
-                    "koh_purity": 90
-                },
-                "water": {
-                    "method": "water_percent_of_oils",
-                    "value": 38.0
-                },
-                "superfat_percent": 5.0
-            }
+                "lye": {"naoh_percent": 0, "koh_percent": 100, "koh_purity": 90},
+                "water": {"method": "water_percent_of_oils", "value": 38.0},
+                "superfat_percent": 5.0,
+            },
         )
 
         assert response.status_code == 200
@@ -303,21 +241,16 @@ class TestBatchSizeRegressionAPI:
         response = await authenticated_client.post(
             "/api/v1/calculate",
             json={
-                "oils": [
-                    {"id": "olive_oil", "percentage": 100.0}
-                ],
+                "oils": [{"id": "olive_oil", "percentage": 100.0}],
                 "total_oil_weight_g": 700.0,
                 "lye": {
                     "naoh_percent": 0,
                     "koh_percent": 100,
-                    "koh_purity": 85.0  # Non-standard purity
+                    "koh_purity": 85.0,  # Non-standard purity
                 },
-                "water": {
-                    "method": "water_percent_of_oils",
-                    "value": 38.0
-                },
-                "superfat_percent": 5.0
-            }
+                "water": {"method": "water_percent_of_oils", "value": 38.0},
+                "superfat_percent": 5.0,
+            },
         )
 
         assert response.status_code == 200
@@ -339,21 +272,12 @@ class TestBatchSizeRegressionAPI:
         response = await authenticated_client.post(
             "/api/v1/calculate",
             json={
-                "oils": [
-                    {"id": "olive_oil", "percentage": 100.0}
-                ],
+                "oils": [{"id": "olive_oil", "percentage": 100.0}],
                 "total_oil_weight_g": 700.0,
-                "lye": {
-                    "naoh_percent": 0,
-                    "koh_percent": 100,
-                    "koh_purity": 90
-                },
-                "water": {
-                    "method": "lye_concentration",
-                    "value": 33.0
-                },
-                "superfat_percent": 5.0
-            }
+                "lye": {"naoh_percent": 0, "koh_percent": 100, "koh_purity": 90},
+                "water": {"method": "lye_concentration", "value": 33.0},
+                "superfat_percent": 5.0,
+            },
         )
 
         assert response.status_code == 200
@@ -368,21 +292,12 @@ class TestBatchSizeRegressionAPI:
         response = await authenticated_client.post(
             "/api/v1/calculate",
             json={
-                "oils": [
-                    {"id": "olive_oil", "percentage": 100.0}
-                ],
+                "oils": [{"id": "olive_oil", "percentage": 100.0}],
                 "total_oil_weight_g": 700.0,
-                "lye": {
-                    "naoh_percent": 0,
-                    "koh_percent": 100,
-                    "koh_purity": 90
-                },
-                "water": {
-                    "method": "water_lye_ratio",
-                    "value": 2.0
-                },
-                "superfat_percent": 5.0
-            }
+                "lye": {"naoh_percent": 0, "koh_percent": 100, "koh_purity": 90},
+                "water": {"method": "water_lye_ratio", "value": 2.0},
+                "superfat_percent": 5.0,
+            },
         )
 
         assert response.status_code == 200

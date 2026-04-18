@@ -8,9 +8,8 @@ Tests the complete flow:
 2. Service orchestration (percentage calc + INCI naming)
 3. Response formatting
 """
-import pytest
+
 from fastapi.testclient import TestClient
-from decimal import Decimal
 
 from app.main import app
 
@@ -26,10 +25,10 @@ class TestInciLabelEndpointBasic:
             "formulation": {
                 "oils": [
                     {"oil_id": "coconut_oil", "weight_grams": 300},
-                    {"oil_id": "olive_oil", "weight_grams": 700}
+                    {"oil_id": "olive_oil", "weight_grams": 700},
                 ]
             },
-            "lye_type": "naoh"
+            "lye_type": "naoh",
         }
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
@@ -56,10 +55,10 @@ class TestInciLabelEndpointBasic:
                 "oils": [
                     {"oil_id": "coconut_oil", "weight_grams": 200},
                     {"oil_id": "olive_oil", "weight_grams": 500},
-                    {"oil_id": "palm_oil", "weight_grams": 300}
+                    {"oil_id": "palm_oil", "weight_grams": 300},
                 ]
             },
-            "lye_type": "naoh"
+            "lye_type": "naoh",
         }
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
@@ -81,10 +80,10 @@ class TestInciLabelEndpointBasic:
             "formulation": {
                 "oils": [
                     {"oil_id": "coconut_oil", "weight_grams": 500},
-                    {"oil_id": "olive_oil", "weight_grams": 500}
+                    {"oil_id": "olive_oil", "weight_grams": 500},
                 ]
             },
-            "lye_type": "koh"
+            "lye_type": "koh",
         }
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
@@ -108,10 +107,10 @@ class TestInciLabelEndpointIngredientDetails:
             "formulation": {
                 "oils": [
                     {"oil_id": "coconut_oil", "weight_grams": 300},
-                    {"oil_id": "olive_oil", "weight_grams": 700}
+                    {"oil_id": "olive_oil", "weight_grams": 700},
                 ]
             },
-            "lye_type": "naoh"
+            "lye_type": "naoh",
         }
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
@@ -132,10 +131,10 @@ class TestInciLabelEndpointIngredientDetails:
             "formulation": {
                 "oils": [
                     {"oil_id": "coconut_oil", "weight_grams": 500},
-                    {"oil_id": "castor_oil", "weight_grams": 500}
+                    {"oil_id": "castor_oil", "weight_grams": 500},
                 ]
             },
-            "lye_type": "naoh"
+            "lye_type": "naoh",
         }
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
@@ -155,11 +154,11 @@ class TestInciLabelEndpointIngredientDetails:
             "formulation": {
                 "oils": [
                     {"oil_id": "coconut_oil", "weight_grams": 100},  # 10%
-                    {"oil_id": "olive_oil", "weight_grams": 600},    # 60%
-                    {"oil_id": "palm_oil", "weight_grams": 300}      # 30%
+                    {"oil_id": "olive_oil", "weight_grams": 600},  # 60%
+                    {"oil_id": "palm_oil", "weight_grams": 300},  # 30%
                 ]
             },
-            "lye_type": "naoh"
+            "lye_type": "naoh",
         }
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
@@ -180,20 +179,14 @@ class TestInciLabelEndpointValidation:
 
     def test_missing_oils_returns_422(self):
         """Request without oils should return validation error"""
-        payload = {
-            "formulation": {},
-            "lye_type": "naoh"
-        }
+        payload = {"formulation": {}, "lye_type": "naoh"}
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
         assert response.status_code == 422
 
     def test_empty_oils_list_returns_422(self):
         """Empty oils list should return validation error"""
-        payload = {
-            "formulation": {"oils": []},
-            "lye_type": "naoh"
-        }
+        payload = {"formulation": {"oils": []}, "lye_type": "naoh"}
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
         assert response.status_code == 422
@@ -201,10 +194,8 @@ class TestInciLabelEndpointValidation:
     def test_invalid_lye_type_returns_422(self):
         """Invalid lye type should return validation error"""
         payload = {
-            "formulation": {
-                "oils": [{"oil_id": "coconut_oil", "weight_grams": 500}]
-            },
-            "lye_type": "invalid"
+            "formulation": {"oils": [{"oil_id": "coconut_oil", "weight_grams": 500}]},
+            "lye_type": "invalid",
         }
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
@@ -213,10 +204,8 @@ class TestInciLabelEndpointValidation:
     def test_negative_weight_returns_422(self):
         """Negative weight should return validation error"""
         payload = {
-            "formulation": {
-                "oils": [{"oil_id": "coconut_oil", "weight_grams": -100}]
-            },
-            "lye_type": "naoh"
+            "formulation": {"oils": [{"oil_id": "coconut_oil", "weight_grams": -100}]},
+            "lye_type": "naoh",
         }
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
@@ -225,10 +214,8 @@ class TestInciLabelEndpointValidation:
     def test_nonexistent_oil_returns_404(self):
         """Requesting nonexistent oil should return 404"""
         payload = {
-            "formulation": {
-                "oils": [{"oil_id": "nonexistent-oil", "weight_grams": 500}]
-            },
-            "lye_type": "naoh"
+            "formulation": {"oils": [{"oil_id": "nonexistent-oil", "weight_grams": 500}]},
+            "lye_type": "naoh",
         }
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
@@ -242,10 +229,8 @@ class TestInciLabelEndpointEdgeCases:
     def test_single_oil_formula(self):
         """Single oil should produce valid INCI label at 100%"""
         payload = {
-            "formulation": {
-                "oils": [{"oil_id": "olive_oil", "weight_grams": 1000}]
-            },
-            "lye_type": "naoh"
+            "formulation": {"oils": [{"oil_id": "olive_oil", "weight_grams": 1000}]},
+            "lye_type": "naoh",
         }
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
@@ -264,13 +249,10 @@ class TestInciLabelEndpointEdgeCases:
             {"oil_id": "olive_oil", "weight_grams": 200},
             {"oil_id": "palm_oil", "weight_grams": 150},
             {"oil_id": "castor_oil", "weight_grams": 50},
-            {"oil_id": "shea_butter", "weight_grams": 100}
+            {"oil_id": "shea_butter", "weight_grams": 100},
         ]
 
-        payload = {
-            "formulation": {"oils": oils},
-            "lye_type": "naoh"
-        }
+        payload = {"formulation": {"oils": oils}, "lye_type": "naoh"}
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
 
@@ -288,10 +270,10 @@ class TestInciLabelEndpointEdgeCases:
             "formulation": {
                 "oils": [
                     {"oil_id": "olive_oil", "weight_grams": 990},
-                    {"oil_id": "coconut_oil", "weight_grams": 10}
+                    {"oil_id": "coconut_oil", "weight_grams": 10},
                 ]
             },
-            "lye_type": "naoh"
+            "lye_type": "naoh",
         }
 
         response = client.post("/api/v1/inci/generate-label", json=payload)
