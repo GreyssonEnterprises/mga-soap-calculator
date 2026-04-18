@@ -15,6 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 
+from app import __version__
 from app.api.v1 import additives, auth, calculate, colorants, essential_oils, inci, resources
 from app.core.config import settings
 
@@ -26,7 +27,7 @@ def custom_openapi():
 
     openapi_schema = get_openapi(
         title="MGA Soap Calculator API",
-        version="1.0.0",
+        version=__version__,
         description="""
 ## Professional-Grade Soap Recipe Calculator
 
@@ -178,7 +179,7 @@ All responses follow this structure:
 # Create FastAPI application
 app = FastAPI(
     title="MGA Soap Calculator API",
-    version="1.0.0",
+    version=__version__,
     description="Professional-grade soap recipe calculator with JWT authentication",
     docs_url="/docs",
     redoc_url="/redoc",
