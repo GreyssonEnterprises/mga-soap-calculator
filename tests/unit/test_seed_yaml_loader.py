@@ -65,13 +65,16 @@ class TestSeedFilePresence:
 
 
 class TestSeedCountsPreserved:
-    def test_oil_count_matches_baseline(self):
-        # 11 oils, per pre-migration ``scripts/test_seed_idempotent.py``.
-        assert len(OIL_SEED_DATA) == 11
+    # Catalog may grow over time as new oils / additives are added for MGA
+    # reference recipes. Assert the pre-migration baseline is preserved as a
+    # floor — never fewer than the 11 oils and 14 additives the Phase 3 YAML
+    # migration captured from the prior Python seed script.
 
-    def test_additive_count_matches_baseline(self):
-        # 14 additives, per pre-migration ``scripts/test_seed_idempotent.py``.
-        assert len(ADDITIVE_SEED_DATA) == 14
+    def test_oil_count_at_or_above_baseline(self):
+        assert len(OIL_SEED_DATA) >= 11
+
+    def test_additive_count_at_or_above_baseline(self):
+        assert len(ADDITIVE_SEED_DATA) >= 14
 
 
 class TestOilRecordShape:

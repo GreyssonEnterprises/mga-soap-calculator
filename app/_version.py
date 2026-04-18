@@ -13,5 +13,5 @@ Both forms always share the same date prefix. Do not edit by hand; run
 ``scripts/bump-version.fish`` instead.
 """
 
-VERSION = "2026.4.18-3"
-VERSION_PEP440 = "2026.4.18.3"
+VERSION = "2026.4.18-4"
+VERSION_PEP440 = "2026.4.18.4"

@@ -1,0 +1,73 @@
+# Reference recipes — MGA production soap recipes captured from
+# Shale + Jackie's working docs via Patterson.
+#
+# Purpose
+# -------
+# These are canonical MGA recipes, preserved in the repository so that:
+#
+#   1. The application has a known set of realistic inputs for QA /
+#      regression testing against the calculator.
+#   2. Future frontend work can offer "try one of MGA's recipes" as
+#      onboarding examples (with owner approval).
+#   3. We can validate calculator parity against the prior workflow
+#      (SoapCalc + spreadsheets) by re-running these recipes and
+#      diffing quality metrics + lye amounts.
+#
+# Format
+# ------
+# Each recipe is a dict with:
+#   - id: snake_case slug
+#   - common_name: display name Shale + Jackie use
+#   - description: short note about the recipe (scent, intent, finish)
+#   - lye:
+#       type: naoh | koh | mixed
+#       naoh_percent / koh_percent (if mixed)
+#       naoh_purity / koh_purity (percentages)
+#   - water:
+#       method: percent_of_oils | lye_concentration | water_lye_ratio
+#       value: float (meaning depends on method)
+#   - superfat_percent: 0-20 (nominal)
+#   - oils: list of {id, percentage}   — ids must match seed-data.yaml
+#   - additives (optional): list of {id, percentage}
+#   - essential_oils (optional): list of {id, percentage}
+#   - notes (optional): freeform text (process steps, cure time, etc.)
+#   - catalog_gaps (optional): list of ingredients referenced by the
+#     recipe but NOT present in the current catalog. Lets future
+#     catalog-expansion work know what to prioritize.
+#
+# Do NOT edit by hand without Shale or Jackie's approval — these reflect
+# real production formulations.
+
+recipes:
+- id: midnight_morsels
+  common_name: Midnight Morsels
+  aliases: [Addies Mints]
+  description: >-
+    Minty mint soap bar. Babassu-backed hardness, conditioning from
+    avocado and hemp, coconut/babassu for cleansing and lather,
+    castor to stabilize foam. Cocoa powder for color (post-calc).
+    Vanilla oleoresin for scent depth (post-calc, not a saponifiable
+    fat).
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,  percentage: 25.88}
+  - {id: cocoa_butter, percentage: 20.00}
+  - {id: avocado_oil,  percentage: 26.00}
+  - {id: babassu_oil,  percentage: 15.12}
+  - {id: castor_oil,   percentage:  5.00}
+  - {id: hemp_seed_oil, percentage: 8.00}
+  catalog_gaps:
+  - vanilla_oleoresin (fragrance/scent component, not a saponifiable oil — category
+    TBD, likely Additive with 'fragrance' category or a future EssentialOil-adjacent
+    record)
+  - cocoa_powder (colorant, post-cook — would live in Colorant table once populated)
+  notes: |-
+    Calc parity reference recorded by Patterson on 2026-04-18 via Slack,
+    from the Midnight Garden Apothecary recipe document. Use for
+    regression testing when changing calculation logic.
