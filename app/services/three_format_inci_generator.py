@@ -48,9 +48,11 @@ def calculate_total_batch_weight(recipe_data: dict) -> Decimal:
     total = Decimal("0")
 
     # Add oil weights
+    # NOTE: persisted recipe_data uses "weight_g" (see _calculation_pipeline).
+    # Keep in sync with the main oil-iteration loop below.
     oils = recipe_data.get("oils", [])
     for oil_item in oils:
-        weight = Decimal(str(oil_item.get("weight_grams", 0)))
+        weight = Decimal(str(oil_item.get("weight_g", 0)))
         total += weight
 
     # Add water weight
