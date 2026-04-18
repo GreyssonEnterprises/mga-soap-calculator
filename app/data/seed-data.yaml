@@ -263,6 +263,54 @@ oils:
     creamy_lather: 2.0
     longevity: 2.0
     stability: 10.0
+- id: babassu_oil
+  common_name: Babassu Oil
+  inci_name: Orbignya Oleifera Seed Oil
+  sap_value_naoh: 0.175
+  sap_value_koh: 0.247
+  iodine_value: 15.0
+  ins_value: 230.0
+  fatty_acids:
+    lauric: 50.0
+    myristic: 20.0
+    palmitic: 11.0
+    stearic: 4.0
+    ricinoleic: 0.0
+    oleic: 10.0
+    linoleic: 2.0
+    linolenic: 0.0
+  quality_contributions:
+    hardness: 85.0
+    cleansing: 70.0
+    conditioning: 12.0
+    bubbly_lather: 70.0
+    creamy_lather: 15.0
+    longevity: 85.0
+    stability: 80.0
+- id: hemp_seed_oil
+  common_name: Hemp Seed Oil
+  inci_name: Cannabis Sativa Seed Oil
+  sap_value_naoh: 0.1345
+  sap_value_koh: 0.1884
+  iodine_value: 165.0
+  ins_value: -40.0
+  fatty_acids:
+    lauric: 0.0
+    myristic: 0.0
+    palmitic: 6.0
+    stearic: 2.0
+    ricinoleic: 0.0
+    oleic: 12.0
+    linoleic: 57.0
+    linolenic: 20.0
+  quality_contributions:
+    hardness: 8.0
+    cleansing: 0.0
+    conditioning: 89.0
+    bubbly_lather: 0.0
+    creamy_lather: 6.0
+    longevity: 10.0
+    stability: 5.0
 additives:
 - id: sodium_lactate
   common_name: Sodium Lactate
