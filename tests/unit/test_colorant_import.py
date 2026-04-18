@@ -52,7 +52,7 @@ def mock_db_session():
 class TestJSONParsing:
     """Test JSON file loading and parsing"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_load_colorants_json_file(self):
         """
         GIVEN: natural-colorants-reference.json file path
@@ -67,7 +67,7 @@ class TestJSONParsing:
         # Should have 9 color family keys
         assert len(data.keys()) == 9
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_parse_yellow_category(self):
         """
         GIVEN: Yellow colorants array from JSON
@@ -82,7 +82,7 @@ class TestJSONParsing:
         # Per spec: 14 yellow colorants
         assert len(data["yellow"]) >= 10  # At least 10 yellow options
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_parse_colorant_entry(self, sample_yellow_colorant_json):
         """
         GIVEN: Single colorant JSON entry
@@ -105,7 +105,7 @@ class TestJSONParsing:
 class TestCategoryDistribution:
     """Test 9 color family distribution"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_all_nine_categories_present(self):
         """
         GIVEN: natural-colorants-reference.json
@@ -131,7 +131,7 @@ class TestCategoryDistribution:
         for category in expected_categories:
             assert category in data
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_count_colorants_by_category(self):
         """
         GIVEN: Colorants JSON with 79 total colorants
@@ -151,7 +151,7 @@ class TestCategoryDistribution:
 class TestDatabaseInsertion:
     """Test SQLAlchemy database insertion logic"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_create_or_update_colorant(self, mock_db_session, sample_yellow_colorant_json):
         """
         GIVEN: Parsed colorant data and database session
@@ -166,7 +166,7 @@ class TestDatabaseInsertion:
         assert mock_db_session.add.called
         assert mock_db_session.commit.called
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_idempotent_import_same_id(self, mock_db_session, sample_yellow_colorant_json):
         """
         GIVEN: Colorant with same ID already exists
@@ -193,7 +193,7 @@ class TestDatabaseInsertion:
         assert mock_db_session.add.call_count <= 1
         assert mock_db_session.commit.called
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_transaction_rollback_on_error(self, mock_db_session, sample_yellow_colorant_json):
         """
         GIVEN: Database error during insertion
@@ -217,7 +217,7 @@ class TestDatabaseInsertion:
 class TestBatchImport:
     """Test importing all colorants in batch"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_import_all_colorants(self, mock_db_session):
         """
         GIVEN: JSON file with 79 colorants across 9 categories
@@ -233,7 +233,7 @@ class TestBatchImport:
         # Should import 79 colorants per spec
         assert count == 79
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_import_by_category(self, mock_db_session):
         """
         GIVEN: Colorants organized by 9 color families
@@ -253,7 +253,7 @@ class TestBatchImport:
 class TestIDGeneration:
     """Test generation of colorant IDs from names"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_generate_id_from_name(self):
         """
         GIVEN: Colorant name "Turmeric"
@@ -266,7 +266,7 @@ class TestIDGeneration:
 
         assert result == "turmeric"
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_generate_id_with_spaces(self):
         """
         GIVEN: Colorant name "Annatto Seeds"
@@ -279,7 +279,7 @@ class TestIDGeneration:
 
         assert result == "annatto_seeds"
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_generate_id_with_special_chars(self):
         """
         GIVEN: Colorant name "Clay (Red)"
@@ -298,7 +298,7 @@ class TestIDGeneration:
 class TestWarningsHandling:
     """Test optional warnings field handling"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_parse_colorant_with_warnings(self, sample_yellow_colorant_json):
         """
         GIVEN: Colorant with warnings field
@@ -312,7 +312,7 @@ class TestWarningsHandling:
         assert result["warnings"] is not None
         assert "stain" in result["warnings"].lower()
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_parse_colorant_without_warnings(self, sample_blue_colorant_json):
         """
         GIVEN: Colorant without warnings field
@@ -330,7 +330,7 @@ class TestWarningsHandling:
 class TestConfidenceLevelAssignment:
     """Test automatic confidence level assignment"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_assign_medium_confidence_default(self, sample_yellow_colorant_json):
         """
         GIVEN: Colorant from community-sourced data
@@ -344,7 +344,7 @@ class TestConfidenceLevelAssignment:
         # Natural colorants data is community-sourced → medium confidence
         assert result.get("confidence_level") == "medium"
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_mga_verified_false_by_default(self, sample_yellow_colorant_json):
         """
         GIVEN: Colorant from reference data
@@ -361,7 +361,7 @@ class TestConfidenceLevelAssignment:
 class TestMethodValidation:
     """Test method field validation"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_valid_method_infuse(self):
         """
         GIVEN: Colorant with infusion method
@@ -373,7 +373,7 @@ class TestMethodValidation:
         method = "Infuse in oil"
         assert validate_method(method) is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_valid_method_add_at_trace(self):
         """
         GIVEN: Colorant with add at trace method
@@ -385,7 +385,7 @@ class TestMethodValidation:
         method = "Add at trace"
         assert validate_method(method) is True
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_valid_method_add_to_lye(self):
         """
         GIVEN: Colorant with add to lye method
@@ -401,7 +401,7 @@ class TestMethodValidation:
 class TestDataQuality:
     """Test data quality validation"""
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_validate_required_fields_present(self, sample_yellow_colorant_json):
         """
         GIVEN: Colorant data
@@ -415,7 +415,7 @@ class TestDataQuality:
         assert is_valid is True
         assert len(errors) == 0
 
-    @pytest.skip("TDD: RED phase - import script doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - import script doesn't exist yet")
     def test_validate_missing_required_field(self):
         """
         GIVEN: Colorant data missing required field

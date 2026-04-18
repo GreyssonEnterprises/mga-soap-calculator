@@ -89,7 +89,7 @@ def sample_peppermint_in_db(db_session):
 class TestEssentialOilsList:
     """Test GET /api/v1/essential-oils endpoint"""
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_list_all_essential_oils(
         self, client: TestClient, sample_lavender_in_db, sample_peppermint_in_db
     ):
@@ -105,7 +105,7 @@ class TestEssentialOilsList:
         assert "essential_oils" in data or "items" in data
         assert data["total_count"] >= 2
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_list_with_pagination(self, client: TestClient, sample_lavender_in_db):
         """
         GIVEN: Essential oils in database
@@ -118,7 +118,7 @@ class TestEssentialOilsList:
         data = response.json()
         assert "limit" in data or "page_size" in data
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_list_includes_essential_fields(self, client: TestClient, sample_lavender_in_db):
         """
         GIVEN: Essential oils in database
@@ -143,7 +143,7 @@ class TestEssentialOilsList:
 class TestEssentialOilRecommendation:
     """Test GET /api/v1/essential-oils/{id}/recommend endpoint"""
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_lavender_500g_batch(self, client: TestClient, sample_lavender_in_db):
         """
         GIVEN: Lavender at 3% max usage rate
@@ -158,7 +158,7 @@ class TestEssentialOilRecommendation:
         assert data["amount_g"] == pytest.approx(15.0, rel=0.01)
         assert data["usage_percentage"] == 3.0
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_rose_otto_very_low_rate(self, client: TestClient, sample_rose_otto_in_db):
         """
         GIVEN: Rose Otto at 0.025% max usage rate
@@ -174,7 +174,7 @@ class TestEssentialOilRecommendation:
         assert data["amount_g"] == pytest.approx(0.125, rel=0.01)
         assert data["usage_percentage"] == 0.025
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_peppermint_2_percent(self, client: TestClient, sample_peppermint_in_db):
         """
         GIVEN: Peppermint at 2% max usage rate
@@ -189,7 +189,7 @@ class TestEssentialOilRecommendation:
         assert data["amount_g"] == pytest.approx(10.0, rel=0.01)
         assert data["usage_percentage"] == 2.0
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_includes_scent_profile(self, client: TestClient, sample_lavender_in_db):
         """
         GIVEN: Lavender with scent profile
@@ -204,7 +204,7 @@ class TestEssentialOilRecommendation:
         assert "scent_profile" in data
         assert "floral" in data["scent_profile"].lower()
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_includes_blends_with(self, client: TestClient, sample_lavender_in_db):
         """
         GIVEN: Lavender with blends_with recommendations
@@ -221,7 +221,7 @@ class TestEssentialOilRecommendation:
         assert len(data["blends_with"]) >= 3
         assert "Bergamot" in data["blends_with"]
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_includes_note_category(self, client: TestClient, sample_lavender_in_db):
         """
         GIVEN: Lavender with note and category
@@ -236,7 +236,7 @@ class TestEssentialOilRecommendation:
         assert data["note"] == "Middle"
         assert data["category"] == "floral"
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_includes_warnings(self, client: TestClient, sample_peppermint_in_db):
         """
         GIVEN: Peppermint with warnings
@@ -251,7 +251,7 @@ class TestEssentialOilRecommendation:
         assert "warnings" in data
         assert "sensitivity" in data["warnings"].lower()
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_no_warnings_if_none(self, client: TestClient, sample_lavender_in_db):
         """
         GIVEN: Lavender without warnings
@@ -266,7 +266,7 @@ class TestEssentialOilRecommendation:
         # Warnings should be None or not present
         assert data.get("warnings") is None or data.get("warnings") == ""
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_different_batch_sizes(self, client: TestClient, sample_lavender_in_db):
         """
         GIVEN: Lavender recommendations
@@ -283,7 +283,7 @@ class TestEssentialOilRecommendation:
         assert response_1000.status_code == 200
         assert response_1000.json()["amount_g"] == pytest.approx(30.0, rel=0.01)
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_gram_to_ounce_conversion(self, client: TestClient, sample_lavender_in_db):
         """
         GIVEN: Lavender recommendation in grams
@@ -301,7 +301,7 @@ class TestEssentialOilRecommendation:
         # 15g / 28.35 ≈ 0.53 oz
         assert amount_oz == pytest.approx(amount_g / 28.35, rel=0.01)
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_invalid_eo_id(self, client: TestClient):
         """
         GIVEN: Non-existent essential oil ID
@@ -312,7 +312,7 @@ class TestEssentialOilRecommendation:
 
         assert response.status_code == 404
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_missing_batch_size(self, client: TestClient, sample_lavender_in_db):
         """
         GIVEN: Lavender essential oil
@@ -323,7 +323,7 @@ class TestEssentialOilRecommendation:
 
         assert response.status_code == 422
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_negative_batch_size(self, client: TestClient, sample_lavender_in_db):
         """
         GIVEN: Lavender essential oil
@@ -338,7 +338,7 @@ class TestEssentialOilRecommendation:
 class TestMaxUsageRateCalculation:
     """Test max usage rate validation and calculation"""
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_calculation_uses_max_rate(self, client: TestClient, sample_lavender_in_db):
         """
         GIVEN: Lavender with 3% max usage rate
@@ -354,7 +354,7 @@ class TestMaxUsageRateCalculation:
         assert data["amount_g"] == 15.0
         assert data["usage_percentage"] == 3.0
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_calculation_precision_for_low_rates(self, client: TestClient, sample_rose_otto_in_db):
         """
         GIVEN: Rose Otto with very low max rate (0.025%)

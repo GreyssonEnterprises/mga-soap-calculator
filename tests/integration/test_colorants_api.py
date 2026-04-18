@@ -105,7 +105,7 @@ def sample_charcoal_in_db(db_session):
 class TestColorantsList:
     """Test GET /api/v1/colorants endpoint"""
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_list_all_colorants(
         self,
         client: TestClient,
@@ -125,7 +125,7 @@ class TestColorantsList:
         assert "colorants" in data or "items" in data
         assert data["total_count"] >= 3
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_list_with_pagination(self, client: TestClient, sample_turmeric_in_db):
         """
         GIVEN: Colorants in database
@@ -139,7 +139,7 @@ class TestColorantsList:
         assert "limit" in data or "page_size" in data
         assert "offset" in data or "page" in data
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_list_includes_essential_fields(self, client: TestClient, sample_turmeric_in_db):
         """
         GIVEN: Colorants in database
@@ -165,7 +165,7 @@ class TestColorantsList:
 class TestColorantCategoryFiltering:
     """Test category filtering for 9 color families"""
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_filter_yellow_category(
         self, client: TestClient, sample_turmeric_in_db, sample_annatto_in_db
     ):
@@ -184,7 +184,7 @@ class TestColorantCategoryFiltering:
         # All returned items should be yellow category
         assert all(item["category"] == "yellow" for item in items)
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_filter_orange_category(
         self, client: TestClient, sample_turmeric_in_db, sample_annatto_in_db
     ):
@@ -202,7 +202,7 @@ class TestColorantCategoryFiltering:
         assert len(items) >= 1
         assert all(item["category"] == "orange" for item in items)
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_filter_green_category(self, client: TestClient, sample_spirulina_in_db):
         """
         GIVEN: Green colorant in database
@@ -218,7 +218,7 @@ class TestColorantCategoryFiltering:
         assert len(items) >= 1
         assert all(item["category"] == "green" for item in items)
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_filter_black_category(self, client: TestClient, sample_charcoal_in_db):
         """
         GIVEN: Black colorant in database
@@ -234,7 +234,7 @@ class TestColorantCategoryFiltering:
         assert len(items) >= 1
         assert all(item["category"] == "black" for item in items)
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_filter_all_nine_categories(self, client: TestClient, db_session):
         """
         GIVEN: Database with colorants in all 9 categories
@@ -280,7 +280,7 @@ class TestColorantCategoryFiltering:
             assert len(items) >= 1
             assert all(item["category"] == category for item in items)
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_filter_invalid_category(self, client: TestClient, sample_turmeric_in_db):
         """
         GIVEN: Colorants in database
@@ -301,7 +301,7 @@ class TestColorantCategoryFiltering:
 class TestColorantResponseSchema:
     """Test response schema validation"""
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_response_includes_usage(self, client: TestClient, sample_turmeric_in_db):
         """
         GIVEN: Colorant with usage information
@@ -319,7 +319,7 @@ class TestColorantResponseSchema:
         assert "usage" in turmeric
         assert "1 tsp PPO" in turmeric["usage"]
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_response_includes_method(self, client: TestClient, sample_turmeric_in_db):
         """
         GIVEN: Colorant with method information
@@ -337,7 +337,7 @@ class TestColorantResponseSchema:
         assert "method" in turmeric
         assert "infuse" in turmeric["method"].lower()
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_response_includes_color_range(self, client: TestClient, sample_turmeric_in_db):
         """
         GIVEN: Colorant with color_range information
@@ -355,7 +355,7 @@ class TestColorantResponseSchema:
         assert "color_range" in turmeric
         assert "yellow" in turmeric["color_range"].lower()
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_response_includes_warnings_when_present(
         self, client: TestClient, sample_turmeric_in_db
     ):
@@ -375,7 +375,7 @@ class TestColorantResponseSchema:
         assert "warnings" in turmeric
         assert "stain" in turmeric["warnings"].lower()
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_response_warnings_null_when_absent(self, client: TestClient, sample_annatto_in_db):
         """
         GIVEN: Colorant without warnings
@@ -397,7 +397,7 @@ class TestColorantResponseSchema:
 class TestColorantPagination:
     """Test pagination with colorants"""
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_pagination_with_category_filter(self, client: TestClient, db_session):
         """
         GIVEN: Multiple colorants in same category
@@ -431,7 +431,7 @@ class TestColorantPagination:
         assert len(items) == 5
         assert all(item["category"] == "yellow" for item in items)
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_pagination_has_more_indicator(self, client: TestClient, db_session):
         """
         GIVEN: More colorants than page size
@@ -467,7 +467,7 @@ class TestColorantPagination:
 class TestColorantSorting:
     """Test default sorting behavior"""
 
-    @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - endpoint doesn't exist yet")
     def test_default_sort_by_name(self, client: TestClient, db_session):
         """
         GIVEN: Multiple colorants

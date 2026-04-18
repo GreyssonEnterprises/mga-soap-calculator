@@ -19,7 +19,7 @@ from app.models.colorant import Colorant
 class TestColorantModelStructure:
     """Test Colorant model field structure"""
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_required_id_field(self):
         """
         GIVEN: Colorant model definition
@@ -32,7 +32,7 @@ class TestColorantModelStructure:
         assert "id" in columns
         assert columns["id"].primary_key is True
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_name_field(self):
         """
         GIVEN: Colorant model definition
@@ -45,7 +45,7 @@ class TestColorantModelStructure:
         assert "name" in columns
         assert columns["name"].nullable is False
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_botanical_field(self):
         """
         GIVEN: Colorant model definition
@@ -58,7 +58,7 @@ class TestColorantModelStructure:
         assert "botanical" in columns
         assert columns["botanical"].nullable is False
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_category_field(self):
         """
         GIVEN: Colorant model definition
@@ -71,7 +71,7 @@ class TestColorantModelStructure:
         assert "category" in columns
         assert columns["category"].nullable is False
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_usage_field(self):
         """
         GIVEN: Colorant model definition
@@ -84,7 +84,7 @@ class TestColorantModelStructure:
         assert "usage" in columns
         assert columns["usage"].nullable is True
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_method_field(self):
         """
         GIVEN: Colorant model definition
@@ -97,7 +97,7 @@ class TestColorantModelStructure:
         assert "method" in columns
         assert columns["method"].nullable is False
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_color_range_field(self):
         """
         GIVEN: Colorant model definition
@@ -110,7 +110,7 @@ class TestColorantModelStructure:
         assert "color_range" in columns
         assert columns["color_range"].nullable is False
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_warnings_field(self):
         """
         GIVEN: Colorant model definition
@@ -123,7 +123,7 @@ class TestColorantModelStructure:
         assert "warnings" in columns
         assert columns["warnings"].nullable is True
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_confidence_level_field(self):
         """
         GIVEN: Colorant model definition
@@ -136,7 +136,7 @@ class TestColorantModelStructure:
         assert "confidence_level" in columns
         assert columns["confidence_level"].nullable is False
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_verified_by_mga_field(self):
         """
         GIVEN: Colorant model definition
@@ -169,7 +169,7 @@ class TestColorantInstanceCreation:
             "verified_by_mga": True,
         }
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_create_colorant_with_all_fields(self, sample_colorant_data):
         """
         GIVEN: Sample colorant data
@@ -189,7 +189,7 @@ class TestColorantInstanceCreation:
         assert colorant.confidence_level == "high"
         assert colorant.verified_by_mga is True
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_create_colorant_minimal_fields(self):
         """
         GIVEN: Minimal colorant data
@@ -216,7 +216,7 @@ class TestColorantInstanceCreation:
         assert colorant.confidence_level == "low"
         assert colorant.verified_by_mga is False
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_nullable_fields_can_be_none(self):
         """
         GIVEN: Colorant without optional fields
@@ -243,7 +243,7 @@ class TestColorantInstanceCreation:
 class TestColorantCategoryValidation:
     """Test category field validation for 9 color families"""
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_all_nine_color_categories(self):
         """
         GIVEN: Colorants with all 9 valid color categories
@@ -276,7 +276,7 @@ class TestColorantCategoryValidation:
             )
             assert colorant.category == category
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_yellow_category_examples(self):
         """
         GIVEN: Yellow colorants (turmeric, calendula, etc.)
@@ -302,7 +302,7 @@ class TestColorantCategoryValidation:
             )
             assert colorant.category == "yellow"
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_orange_category_examples(self):
         """
         GIVEN: Orange colorants (annatto, paprika, etc.)
@@ -322,7 +322,7 @@ class TestColorantCategoryValidation:
 
         assert colorant.category == "orange"
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_red_category_examples(self):
         """
         GIVEN: Red colorants (madder root, rose clay, etc.)
@@ -342,7 +342,7 @@ class TestColorantCategoryValidation:
 
         assert colorant.category == "red"
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_green_category_examples(self):
         """
         GIVEN: Green colorants (spirulina, chlorella, etc.)
@@ -362,7 +362,7 @@ class TestColorantCategoryValidation:
 
         assert colorant.category == "green"
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_blue_category_examples(self):
         """
         GIVEN: Blue colorants (woad, indigo, etc.)
@@ -382,7 +382,7 @@ class TestColorantCategoryValidation:
 
         assert colorant.category == "blue"
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_purple_category_examples(self):
         """
         GIVEN: Purple colorants (alkanet root, purple sweet potato, etc.)
@@ -402,7 +402,7 @@ class TestColorantCategoryValidation:
 
         assert colorant.category == "purple"
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_brown_category_examples(self):
         """
         GIVEN: Brown colorants (coffee, cocoa, cinnamon, etc.)
@@ -423,7 +423,7 @@ class TestColorantCategoryValidation:
 
         assert colorant.category == "brown"
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_black_category_examples(self):
         """
         GIVEN: Black colorants (activated charcoal, black oxide, etc.)
@@ -448,7 +448,7 @@ class TestColorantCategoryValidation:
 class TestColorantMethodValidation:
     """Test method field validation"""
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_infusion_method(self):
         """
         GIVEN: Colorant using infusion method
@@ -468,7 +468,7 @@ class TestColorantMethodValidation:
 
         assert "infuse" in colorant.method.lower()
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_add_at_trace_method(self):
         """
         GIVEN: Colorant using add at trace method
@@ -488,7 +488,7 @@ class TestColorantMethodValidation:
 
         assert "trace" in colorant.method.lower()
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_add_to_lye_method(self):
         """
         GIVEN: Colorant using add to lye method
@@ -512,7 +512,7 @@ class TestColorantMethodValidation:
 class TestColorantWarnings:
     """Test warnings field handling"""
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_scratchy_warning(self):
         """
         GIVEN: Colorant with scratchy warning
@@ -533,7 +533,7 @@ class TestColorantWarnings:
 
         assert "scratchy" in colorant.warnings.lower()
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_staining_warning(self):
         """
         GIVEN: Colorant with staining warning
@@ -554,7 +554,7 @@ class TestColorantWarnings:
 
         assert "stain" in colorant.warnings.lower()
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_accelerates_trace_warning(self):
         """
         GIVEN: Colorant with accelerates trace warning

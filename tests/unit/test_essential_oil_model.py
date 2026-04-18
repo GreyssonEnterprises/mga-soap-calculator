@@ -20,7 +20,7 @@ from app.models.essential_oil import EssentialOil
 class TestEssentialOilModelStructure:
     """Test EssentialOil model field structure"""
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_required_id_field(self):
         """
         GIVEN: EssentialOil model definition
@@ -33,7 +33,7 @@ class TestEssentialOilModelStructure:
         assert "id" in columns
         assert columns["id"].primary_key is True
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_name_field(self):
         """
         GIVEN: EssentialOil model definition
@@ -46,7 +46,7 @@ class TestEssentialOilModelStructure:
         assert "name" in columns
         assert columns["name"].nullable is False
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_botanical_name_field(self):
         """
         GIVEN: EssentialOil model definition
@@ -59,7 +59,7 @@ class TestEssentialOilModelStructure:
         assert "botanical_name" in columns
         assert columns["botanical_name"].nullable is False
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_max_usage_rate_pct_field(self):
         """
         GIVEN: EssentialOil model definition
@@ -73,7 +73,7 @@ class TestEssentialOilModelStructure:
         assert columns["max_usage_rate_pct"].type.python_type is float
         assert columns["max_usage_rate_pct"].nullable is False
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_scent_profile_field(self):
         """
         GIVEN: EssentialOil model definition
@@ -86,7 +86,7 @@ class TestEssentialOilModelStructure:
         assert "scent_profile" in columns
         assert columns["scent_profile"].nullable is True
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_blends_with_field(self):
         """
         GIVEN: EssentialOil model definition
@@ -100,7 +100,7 @@ class TestEssentialOilModelStructure:
         # JSONB field for array of string recommendations
         assert columns["blends_with"].nullable is True
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_note_field(self):
         """
         GIVEN: EssentialOil model definition
@@ -113,7 +113,7 @@ class TestEssentialOilModelStructure:
         assert "note" in columns
         assert hasattr(columns["note"].type, "length")
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_category_field(self):
         """
         GIVEN: EssentialOil model definition
@@ -126,7 +126,7 @@ class TestEssentialOilModelStructure:
         assert "category" in columns
         assert hasattr(columns["category"].type, "length")
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_warnings_field(self):
         """
         GIVEN: EssentialOil model definition
@@ -139,7 +139,7 @@ class TestEssentialOilModelStructure:
         assert "warnings" in columns
         assert columns["warnings"].nullable is True
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_color_effect_field(self):
         """
         GIVEN: EssentialOil model definition
@@ -152,7 +152,7 @@ class TestEssentialOilModelStructure:
         assert "color_effect" in columns
         assert columns["color_effect"].nullable is True
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_confidence_level_field(self):
         """
         GIVEN: EssentialOil model definition
@@ -165,7 +165,7 @@ class TestEssentialOilModelStructure:
         assert "confidence_level" in columns
         assert columns["confidence_level"].nullable is False
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_has_verified_by_mga_field(self):
         """
         GIVEN: EssentialOil model definition
@@ -200,7 +200,7 @@ class TestEssentialOilInstanceCreation:
             "verified_by_mga": True,
         }
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_create_essential_oil_with_all_fields(self, sample_essential_oil_data):
         """
         GIVEN: Sample essential oil data
@@ -222,7 +222,7 @@ class TestEssentialOilInstanceCreation:
         assert eo.confidence_level == "high"
         assert eo.verified_by_mga is True
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_create_essential_oil_minimal_fields(self):
         """
         GIVEN: Minimal essential oil data
@@ -249,7 +249,7 @@ class TestEssentialOilInstanceCreation:
 class TestEssentialOilUsageRateValidation:
     """Test usage rate constraints"""
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_usage_rate_minimum_boundary(self):
         """
         GIVEN: Essential oil with very low max usage rate (0.025%)
@@ -267,7 +267,7 @@ class TestEssentialOilUsageRateValidation:
 
         assert eo.max_usage_rate_pct == 0.025
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_usage_rate_maximum_boundary(self):
         """
         GIVEN: Essential oil with maximum safe usage rate (3%)
@@ -285,7 +285,7 @@ class TestEssentialOilUsageRateValidation:
 
         assert eo.max_usage_rate_pct == 3.0
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_usage_rate_typical_values(self):
         """
         GIVEN: Essential oils with typical usage rates
@@ -316,7 +316,7 @@ class TestEssentialOilUsageRateValidation:
 class TestEssentialOilJSONBFields:
     """Test JSONB array field handling"""
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_blends_with_array_storage(self):
         """
         GIVEN: Essential oil with blends_with array
@@ -338,7 +338,7 @@ class TestEssentialOilJSONBFields:
         assert isinstance(eo.blends_with, list)
         assert len(eo.blends_with) == 4
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_blends_with_empty_array(self):
         """
         GIVEN: Essential oil with empty blends_with array
@@ -357,7 +357,7 @@ class TestEssentialOilJSONBFields:
 
         assert eo.blends_with == []
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_blends_with_nullable(self):
         """
         GIVEN: Essential oil without blends_with specified
@@ -380,7 +380,7 @@ class TestEssentialOilJSONBFields:
 class TestEssentialOilCategoryValidation:
     """Test category field validation"""
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_valid_categories(self):
         """
         GIVEN: Essential oils with valid categories
@@ -405,7 +405,7 @@ class TestEssentialOilCategoryValidation:
 class TestEssentialOilNoteValidation:
     """Test note field validation (Top, Middle, Base)"""
 
-    @pytest.skip("TDD: RED phase - model doesn't exist yet")
+    @pytest.mark.skip(reason="TDD: RED phase - model doesn't exist yet")
     def test_valid_notes(self):
         """
         GIVEN: Essential oils with valid note classifications
