@@ -71,3 +71,1066 @@ recipes:
     Calc parity reference recorded by Patterson on 2026-04-18 via Slack,
     from the Midnight Garden Apothecary recipe document. Use for
     regression testing when changing calculation logic.
+
+# ---------------------------------------------------------------------------
+# Recipes below transcribed 2026-04-18 from Shale's working docs on
+# shale-personal-mini:
+#   /Users/shalegreysson/Documents/gdrive-greysson/mga/projects/recipes/
+#
+# MGA's "Standard Base" formulation (~16 of 17 saponified recipes use it):
+#   Beef Tallow   30.24%
+#   Coconut Oil   25.88%
+#   Avocado Oil   20.88%
+#   Babassu Oil   10.00%
+#   Hemp Oil       8.00%
+#   Castor Oil     5.00%
+# Standard lye: 50% concentration (1:1 water:lye), 5% superfat, NaOH only.
+# Standard scaffold additives: 2% sodium lactate, 2% kaolin clay, 0.2%
+# tussah silk (with variations per recipe).
+#
+# BIG CATALOG GAP: Beef Tallow is the dominant oil in nearly every MGA
+# recipe but is not yet in seed-data.yaml. Flagged in every relevant
+# recipe's catalog_gaps.
+#
+# Three source files were NOT transcribed (not saponified soap recipes —
+# they use a pre-made Stephenson Foaming Bath Butter / surfactant base
+# and have no lye calculation):
+#   - grease monkey grit.md      (sugar scrub on OPC base)
+#   - skull-garden-scalp-scrub.md (sugar scrub on OPC base)
+#   - whipped-soap-base.md        (surfactant base formulation, no oils)
+# These would need a different product-type schema (Surfactant/M&P base).
+# ---------------------------------------------------------------------------
+
+- id: cafe_walnut
+  common_name: Cafe Walnut
+  aliases: [Cafe Walnut Limited Edition]
+  description: >-
+    Hot-process three-layer coffee-shop bar. Dark coffee bottom, mocha
+    middle, creamy ivory top with melt-and-pour coffee bean embeds and
+    mica drizzle. Modified MGA base adds walnut oil and roasted coffee
+    bean oil (10% combined) for nutty/roasted undertones; caffeine
+    powder and cappuccino fragrance layered in.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 10.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate, percentage: 2.0}
+  - {id: kaolin_clay,    percentage: 2.0}
+  - {id: silk,           percentage: 0.2}
+  essential_oils: []
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog; BLOCKS recipe
+    representation)
+  - walnut_oil (5.00% — saponifiable fat not in oil catalog)
+  - coffee_bean_oil_roasted (5.00% — saponifiable fat not in oil catalog)
+  - caffeine_powder (2% — functional additive not cataloged)
+  - cappuccino_fragrance_oil (5% layered; fragrance oils category TBD)
+  - cocoa_powder, activated_charcoal_colorant, brown_mica, ivory_mica
+    (colorants — out of scope for oils/additives/EO lists)
+  notes: |-
+    Hot process, 3 layers (33/33/34% batter split). Source calls out
+    "Beef Tallow, Walnut Oil, Coffee Bean Oil (Roasted)" as present in
+    the 'already in API' list at doc time — those entries have since
+    been removed or were never seeded. Oil percentages WILL NOT sum
+    to 100 in the YAML block above (80.76%) until tallow/walnut/coffee
+    are added to the catalog; validator should treat this recipe as
+    catalog-incomplete rather than as a math error. Cure 24-48h min,
+    1-2 weeks optimal. Cappuccino FO split 2.5% per bottom/middle
+    layer; top layer unscented.
+  source_file: cafe-walnut-55lb.md
+
+- id: lavender_charcoal_clay_facial_bar
+  common_name: Lavender Charcoal Clay Facial Bar
+  description: >-
+    Small-batch 6-lb facial bar using the MGA standard base with a
+    detoxifying additive stack (bentonite + kaolin clay, activated
+    charcoal, colloidal oats, goat milk powder) and a gentle lavender
+    + tea tree essential oil blend. Tamanu oil added at trace as 5%
+    superfat. Aimed at facial use, lighter scenting than signature bars.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,     percentage: 2.0}
+  - {id: kaolin_clay,        percentage: 0.37}
+  - {id: bentonite_clay,     percentage: 0.37}
+  - {id: colloidal_oatmeal,  percentage: 0.29}
+  - {id: activated_charcoal, percentage: 0.26}
+  - {id: goat_milk_powder,   percentage: 0.59}
+  - {id: silk,               percentage: 0.2}
+  essential_oils:
+  - {id: lavender_essential_oil, name: Lavender EO, percentage: 2.0}
+  - {id: tea_tree_essential_oil, name: Tea Tree EO, percentage: 0.5}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - tamanu_oil (5% added at trace as superfat — saponifiable fat not in catalog)
+  - lavender_essential_oil, tea_tree_essential_oil (essential oils not
+    cataloged yet)
+  - activated_charcoal (catalog entry exists with id 'activated_charcoal' —
+    used both as additive and colorant in recipes)
+  notes: |-
+    Small test/retail batch: 6 lbs oils (2,722g) vs. 55-lb production
+    batches. Clay and oatmeal percentages in the YAML above are
+    converted from the source's tablespoon measurements (~10g kaolin,
+    ~10g bentonite, ~8g oats, ~7g charcoal, ~16g goat milk over 2,722g
+    oils). Tamanu oil (5%) listed as a trace-added superfat in the
+    source doc but not in the catalog; currently omitted from oils[]
+    and flagged in catalog_gaps. Cold process, 4-6 week cure.
+  source_file: lavender-charcoal-clay-facial-bar.md
+
+- id: lavender_dreams
+  common_name: Lavender Dreams
+  aliases: [Lavender Bubbles]
+  description: >-
+    Cold-process soft-pink-and-deep-purple drop-swirl bar in the MGA
+    standard base, lightly scented at 3% with pure English lavender
+    (no vanilla — unlike Lavenilla). Goat milk powder in place of
+    bentonite gives exceptional creamy lather (52.4) and a bubbly
+    bump (+5 bubbly from the goat milk alone).
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate, percentage: 2.0}
+  - {id: kaolin_clay,    percentage: 2.0}
+  - {id: goat_milk_powder, percentage: 2.0}
+  - {id: silk,           percentage: 0.2}
+  essential_oils:
+  - {id: lavender_essential_oil_english, name: Lavender (English) EO, percentage: 3.0}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - lavender_essential_oil_english (EO not in catalog)
+  - soft_pink_mica, deep_purple_mica (colorants, out of scope for EO list)
+  notes: |-
+    Cold process, drop swirl: 75% soft pink base + 25% deep purple
+    swirl. Goat's milk can slightly caramelize/tint; no vanilla =
+    no major discoloration. 4-6 week minimum cure (high lye conc.
+    needs longer). API calc parity reference ID in source doc:
+    cd639d51-2d28-40bc-9a29-80103689832a. Created originally for
+    nieces wanting "pretty lavender."
+  source_file: lavender-dreams-55lb.md
+
+- id: lavenilla
+  common_name: Lavenilla
+  description: >-
+    MGA's signature bar. Cold-process standard-base soap scented with
+    a 1:1 lavender EO + vanilla oleoresin blend at 5% total. Vanilla
+    causes natural tan-to-brown discoloration over time (intentional
+    rustic aesthetic). Highest hardness in the signature line (73.7)
+    thanks to sodium lactate + kaolin stack on the standard base.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate, percentage: 2.0}
+  - {id: kaolin_clay,    percentage: 2.0}
+  - {id: silk,           percentage: 0.2}
+  essential_oils:
+  - {id: lavender_essential_oil_english, name: Lavender (English) EO, percentage: 2.5}
+  - {id: vanilla_oleoresin,              name: Vanilla Oleoresin,     percentage: 2.5}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - lavender_essential_oil_english, vanilla_oleoresin (not in catalog;
+    vanilla_oleoresin is technically a resin/fragrance rather than EO)
+  notes: |-
+    Cold process. The "soap that started it all" — original MGA
+    signature. Vanilla will discolor over cure; this is expected.
+    4-6 week minimum cure, 6-8 weeks optimal.
+  source_file: lavenilla-55lb.md
+
+- id: lavenilla_8lb_test
+  common_name: Lavenilla (8 lb Test Batch)
+  description: >-
+    Hot-process test-batch scale-down of the Lavenilla signature
+    (÷6.875 from 55 lb production). Same percentages and additive
+    stack; documented 2026-03-25 for smaller-batch validation and
+    new-mold testing.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate, percentage: 2.0}
+  - {id: kaolin_clay,    percentage: 2.0}
+  - {id: silk,           percentage: 0.2}
+  essential_oils:
+  - {id: lavender_essential_oil_english, name: Lavender (English) EO, percentage: 2.5}
+  - {id: vanilla_oleoresin,              name: Vanilla Oleoresin,     percentage: 2.5}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - lavender_essential_oil_english, vanilla_oleoresin (not in catalog)
+  notes: |-
+    Hot process variant of the CP Lavenilla signature. 8 lbs (3,629g)
+    oils. Recipe-history section of the source doc mentions a "dual
+    clay formula" but the actual additive table lists only kaolin +
+    sodium lactate + silk — transcribed the table verbatim; the
+    history may be referring to a different/older formulation.
+  source_file: lavenilla-8lb-test.md
+
+- id: mermaid_tears
+  common_name: Mermaid Tears
+  description: >-
+    Ocean-themed fragrance bar on the MGA standard base. Four-FO
+    aquatic blend (Pacific Pearl, Jade, Sea Moss, Ocean Shores) at
+    5% total. Multi-layer design with dark blue, dark teal, and
+    purple mica swirls over a titanium-dioxide-whitened base.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate, percentage: 2.0}
+  - {id: kaolin_clay,    percentage: 2.0}
+  - {id: silk,           percentage: 0.2}
+  essential_oils:
+  - {id: pacific_pearl_fo, name: Pacific Pearl (FO), percentage: 1.25}
+  - {id: jade_fo,          name: Jade (FO),          percentage: 1.25}
+  - {id: sea_moss_fo,      name: Sea Moss (FO),      percentage: 1.25}
+  - {id: ocean_shores_fo,  name: Ocean Shores (FO),  percentage: 1.25}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - pacific_pearl_fo, jade_fo, sea_moss_fo, ocean_shores_fo (fragrance
+    oils — fragrance-oil category TBD; listed under essential_oils for
+    schema convenience)
+  - titanium_dioxide, dark_blue_mica, dark_teal_mica, purple_mica
+    (colorants, out of scope for oils/additives/EO lists)
+  notes: |-
+    Cold process. FOs are not true EOs — aquatic/ocean synthetic
+    blends. Multi-color swirl: TiO2-whitened base with three colored
+    portions swirled in.
+  source_file: mermaid-tears-55lb.md
+
+- id: mintyplotion
+  common_name: Mintyplotion
+  description: >-
+    Tripled-mint cold-process bar: peppermint + spearmint + eucalyptus
+    EO blend at 5.75% total with 1% added menthol crystals for cooling
+    sensation. Standard MGA base. Green-mica swirl design
+    (kelly/seafoam/forest).
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,   percentage: 2.0}
+  - {id: kaolin_clay,      percentage: 2.0}
+  - {id: silk,             percentage: 0.2}
+  - {id: menthol_crystals, percentage: 1.0}
+  essential_oils:
+  - {id: peppermint_essential_oil, name: Peppermint EO,  percentage: 2.5}
+  - {id: spearmint_essential_oil,  name: Spearmint EO,   percentage: 2.5}
+  - {id: eucalyptus_essential_oil, name: Eucalyptus EO,  percentage: 0.75}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - menthol_crystals (additive not in catalog; cooling sensation agent)
+  - peppermint_essential_oil, spearmint_essential_oil,
+    eucalyptus_essential_oil (not in catalog)
+  - kelly_green_mica, seafoam_green_mica, forest_green_mica
+    (colorants, out of scope)
+  notes: |-
+    Cold process. Menthol crystals (1%) dissolved in warmed oils
+    around 110°F before lye addition. Total scent load is 5.75% EO +
+    1% menthol — aggressive by MGA standards. Intended for intense
+    cooling sensation.
+  source_file: mintyplotion-recipe-55lb.md
+
+- id: oats_and_honey
+  common_name: Oats and Honey
+  description: >-
+    Hot-process breakfast-bar variation on the MGA standard base with
+    colloidal oatmeal + goat milk powder dispersed in oils, honey and
+    vanilla-bean paste added post-cook with vanilla oleoresin scent.
+    Highest creamy lather in the signature line (56.0) thanks to the
+    oats + goat milk combo. Highly conditioning (58.9).
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: colloidal_oatmeal, percentage: 2.0}
+  - {id: goat_milk_powder,  percentage: 2.0}
+  - {id: honey,             percentage: 2.0}
+  essential_oils:
+  - {id: vanilla_oleoresin, name: Vanilla Oleoresin, percentage: 5.0}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - vanilla_bean_paste (~0.44% post-cook; additive not cataloged)
+  - vanilla_oleoresin (resin/fragrance — not in catalog)
+  notes: |-
+    Hot process. Honey and vanilla bean paste added AFTER cook with
+    the oleoresin to preserve scent and avoid scorching. No sodium
+    lactate, no kaolin, no silk in this recipe — oats + goat milk
+    carry the creamy-lather contribution.
+  source_file: oats-and-honey-55lb.md
+
+- id: orange_spice
+  common_name: Orange Spice
+  description: >-
+    Autumn/holiday bar on the MGA standard base. Layered orange EO
+    stack (sweet + 5-fold + 10-fold) for staying-power citrus, with
+    cinnamon leaf + clove bud for warm spice (both at 0.6%, the max
+    safe usage level in CP soap).
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate, percentage: 2.0}
+  - {id: kaolin_clay,    percentage: 2.0}
+  - {id: silk,           percentage: 0.2}
+  essential_oils:
+  - {id: sweet_orange_essential_oil,   name: Sweet Orange EO,    percentage: 3.0}
+  - {id: orange_5fold_essential_oil,   name: Orange 5-Fold EO,   percentage: 0.5}
+  - {id: orange_10fold_essential_oil,  name: Orange 10-Fold EO,  percentage: 0.3}
+  - {id: cinnamon_leaf_essential_oil,  name: Cinnamon Leaf EO,   percentage: 0.6}
+  - {id: clove_bud_essential_oil,      name: Clove Bud EO,       percentage: 0.6}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - all five essential oils above not in catalog
+  - cinnamon and clove at 0.6% are at max-safe usage per source doc —
+    safety validator should warn if user exceeds these
+  notes: |-
+    Cold process. Cinnamon leaf and clove bud are both at IFRA
+    max-safe levels for leave-on products in CP soap. Exceeding
+    either risks skin irritation. Good regression case for
+    calculator's essential-oil safety warnings.
+  source_file: orange-spice-55lb.md
+
+- id: roses_and_cream
+  common_name: Roses and Cream
+  description: >-
+    Three-layer cold-process bar: black-charcoal bottom scented with
+    vanilla oleoresin + sandalwood, red-clay middle with hibiscus +
+    patchouli, pink rose-kaolin top with hibiscus + rose absolute.
+    Standard MGA base with colloidal oats + goat milk + sodium
+    lactate additive stack (no kaolin in the base — each layer gets
+    its own clay).
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: colloidal_oatmeal, percentage: 2.0}
+  - {id: goat_milk_powder,  percentage: 2.0}
+  - {id: sodium_lactate,    percentage: 2.0}
+  - {id: silk,              percentage: 0.2}
+  essential_oils:
+  - {id: vanilla_oleoresin,           name: Vanilla Oleoresin,  percentage: 3.0}
+  - {id: sandalwood_essential_oil,    name: Sandalwood EO,      percentage: 1.0}
+  - {id: patchouli_essential_oil,     name: Patchouli EO,       percentage: 1.0}
+  - {id: rose_absolute_essential_oil, name: Rose Absolute EO,   percentage: 1.0}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - vanilla_oleoresin, sandalwood_essential_oil, patchouli_essential_oil,
+    rose_absolute_essential_oil (not in catalog)
+  - hibiscus_powder (botanical exfoliant/colorant, middle + top layers)
+  - activated_charcoal_colorant (bottom layer, 1-2 tsp PPO)
+  - moroccan_red_clay_ghassoul, rose_kaolin_clay (per-layer clays, not
+    in catalog)
+  notes: |-
+    Cold process, 3-layer. Total scent load 6% (vanilla 3% + three
+    EOs at 1% each). Per-layer clays (activated charcoal, Ghassoul
+    red, rose kaolin) are colorants within each layer — not base
+    additives.
+  source_file: roses-and-cream-55lb.md
+
+- id: the_parlor
+  common_name: The Parlor
+  description: >-
+    Luxury butter-heavy bar — the only saponified recipe in the MGA
+    lineup with NO tallow. Nine oils/butters (cocoa, kokum, mango
+    seed, cupuacu butters + hemp, babassu, coconut, avocado, castor)
+    for exceptional creaminess (53.8) and conditioning (50.9). Earthy
+    patchouli-frankincense-vetiver blend.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: cocoa_butter,  percentage: 10.00}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: goat_milk_powder, percentage: 2.0}
+  - {id: sodium_lactate, percentage: 2.0}
+  - {id: kaolin_clay,    percentage: 2.0}
+  - {id: silk,           percentage: 0.2}
+  essential_oils:
+  - {id: patchouli_essential_oil,     name: Patchouli EO,      percentage: 2.05}
+  - {id: frankincense_essential_oil,  name: Frankincense EO,   percentage: 1.35}
+  - {id: vetiver_essential_oil,       name: Vetiver EO,        percentage: 0.70}
+  - {id: ylang_ylang_essential_oil,   name: Ylang Ylang EO,    percentage: 0.45}
+  - {id: rose_geranium_essential_oil, name: Rose Geranium EO,  percentage: 0.45}
+  catalog_gaps:
+  - kokum_butter (8% — saponifiable fat not in catalog)
+  - mango_seed_butter (7% — saponifiable fat not in catalog)
+  - cupuacu_butter (5.24% — saponifiable fat not in catalog)
+  - patchouli_essential_oil, frankincense_essential_oil,
+    vetiver_essential_oil, ylang_ylang_essential_oil,
+    rose_geranium_essential_oil (not in catalog)
+  notes: |-
+    Cold process. UNIQUE: no beef tallow — the oils[] list above
+    covers only 79.76% of the actual recipe (missing kokum 8% +
+    mango seed 7% + cupuacu 5.24% = 20.24% of formula). Will not
+    percentage-sum to 100 until those butters are cataloged. Most
+    expensive bar in the line due to butter cost. Named after parlor
+    rooms — Victorian luxury aesthetic.
+  source_file: the-parlor-55lb.md
+
+- id: the_sentinel
+  common_name: The Sentinel
+  description: >-
+    Forest/woods masculine bar on the MGA standard base. Seven-EO
+    blend (bergamot, balsam fir, black spruce, cedarwood, patchouli,
+    myrrh, sandalwood) all at ~0.71% each for 5% total. Bentonite
+    clay (2%) replaces kaolin; activated charcoal (1 tsp PPO) for
+    color.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,     percentage: 2.0}
+  - {id: bentonite_clay,     percentage: 2.0}
+  - {id: silk,               percentage: 0.2}
+  - {id: activated_charcoal, percentage: 0.44}
+  essential_oils:
+  - {id: bergamot_essential_oil,    name: Bergamot EO,     percentage: 0.71}
+  - {id: balsam_fir_essential_oil,  name: Balsam Fir EO,   percentage: 0.71}
+  - {id: black_spruce_essential_oil,name: Black Spruce EO, percentage: 0.71}
+  - {id: cedarwood_essential_oil,   name: Cedarwood EO,    percentage: 0.71}
+  - {id: patchouli_essential_oil,   name: Patchouli EO,    percentage: 0.71}
+  - {id: myrrh_essential_oil,       name: Myrrh EO,        percentage: 0.72}
+  - {id: sandalwood_essential_oil,  name: Sandalwood EO,   percentage: 0.72}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - activated_charcoal (used as an additive but not in the additive seed;
+    flagged here so future catalog expansion sees it)
+  - all seven essential oils above not in catalog
+  notes: |-
+    Cold process. Activated charcoal listed in source as "1 tsp PPO"
+    (per pound of oil); converted to ~0.44% of oils at 55-lb batch
+    (110g / 24,948g = 0.44%). Bentonite is the unique additive here
+    vs. the usual kaolin in most standard-base recipes.
+  source_file: the-sentinel-55lb.md
+
+- id: valhalla_calling
+  common_name: Valhalla Calling
+  description: >-
+    Premium hot-process bar with 7-day resin-infused oils (frankincense,
+    myrrh, copal in half the base oils). Scented with amber paste +
+    frankincense + myrrh EOs at 3% total. Lead time: 1 week for
+    resin infusion before soap making. Natural cream-to-golden color
+    from the resins.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate, percentage: 2.0}
+  - {id: kaolin_clay,    percentage: 2.0}
+  - {id: silk,           percentage: 0.2}
+  essential_oils:
+  - {id: amber_paste,                name: Amber Paste,         percentage: 1.0}
+  - {id: frankincense_essential_oil, name: Frankincense EO,     percentage: 1.0}
+  - {id: myrrh_essential_oil,        name: Myrrh EO,            percentage: 1.0}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - frankincense_resin, myrrh_resin, copal_resin (infusion resins,
+    ~1,335g total across 12,474g of infusion oils — functional/
+    botanical, not cataloged)
+  - amber_paste, frankincense_essential_oil, myrrh_essential_oil
+    (not in catalog)
+  notes: |-
+    Hot process with resin-infused oils. Half the base oils
+    (12,474g) are infused with ground frankincense + myrrh + copal
+    resin (4 oz each per 7 lbs oil, ~1,335g total) at 99°F in a
+    water bath for 7 days before soap making. Lead time and resin
+    cost make this the most expensive bar in the lineup.
+  source_file: valhalla-calling-55lb.md
+
+- id: vanvan
+  common_name: Van Van
+  description: >-
+    Hoodoo/folk-magic reference bar — classic Van Van oil blend
+    (lemongrass, citronella, vetivert, palmarosa, gingergrass) at
+    5% total on the MGA standard base. Bright lemongrass-forward
+    with grassy/earthy undertones.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate, percentage: 2.0}
+  - {id: kaolin_clay,    percentage: 2.0}
+  - {id: silk,           percentage: 0.2}
+  essential_oils:
+  - {id: lemongrass_essential_oil,  name: Lemongrass EO,  percentage: 3.00}
+  - {id: citronella_essential_oil,  name: Citronella EO,  percentage: 1.50}
+  - {id: vetivert_essential_oil,    name: Vetivert EO,    percentage: 0.175}
+  - {id: palmarosa_essential_oil,   name: Palmarosa EO,   percentage: 0.15}
+  - {id: gingergrass_essential_oil, name: Gingergrass EO, percentage: 0.175}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - all five essential oils above not in catalog
+  notes: |-
+    Cold process. Traditional Van Van oil blend proportions:
+    lemongrass 60%, citronella 30%, vetivert 3.5%, palmarosa 3%,
+    gingergrass 3.5% of the blend (rescaled to 5% of oils in the
+    recipe). Cultural/ritual-product positioning in REC's retail
+    line.
+  source_file: vanvan-55lb.md
+
+# --- Midnight High Tea collection ------------------------------------------
+# Eight bars sharing a "Midnight Black Base" (standard base oils +
+# charcoal-forward additive stack with 70% black + 30% accent design).
+# Additive stack: 2% sodium lactate, 1.5% activated charcoal,
+# 1% kaolin clay, 0.2% silk. Each bar differs only by scent stack,
+# accent color, and (sometimes) the 30% accent's additives.
+
+- id: midnight_high_tea_base_black
+  common_name: Midnight High Tea — Base Black
+  aliases: [Black Base, Midnight Black Base]
+  description: >-
+    The collection base for Midnight High Tea: MGA standard oils
+    with a charcoal-forward additive stack (1.5% activated charcoal
+    + 1% kaolin + 2% sodium lactate + 0.2% silk) for a deep-matte
+    black bar. Unscented base used directly or subdivided into
+    accent colors per collection recipe.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,     percentage: 2.0}
+  - {id: activated_charcoal, percentage: 1.5}
+  - {id: kaolin_clay,        percentage: 1.0}
+  - {id: silk,               percentage: 0.2}
+  essential_oils: []
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - activated_charcoal (additive used throughout this collection but not in the additive seed catalog; flagged for future catalog expansion)
+  notes: |-
+    Cold process. Base-only recipe used to seed all eight Midnight
+    High Tea scented variations. Predicted hardness 73.7 is the
+    collection-wide baseline (matches Lavenilla hardness thanks to
+    shared standard-base + sodium lactate stack).
+  source_file: midnight-high-tea/base-recipe-black-55lb.md
+
+- id: midnight_high_tea_constances_pomander
+  common_name: Constance's Pomander
+  aliases: [Midnight High Tea — Constance's Pomander]
+  description: >-
+    Midnight High Tea variant. Black base with 30% orange "chunks"
+    accent. Spicy orange-and-clove pomander scent (orange 10x +
+    blood orange + clove bud + black tea + amber/musk).
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,     percentage: 2.0}
+  - {id: activated_charcoal, percentage: 1.5}
+  - {id: kaolin_clay,        percentage: 1.0}
+  - {id: silk,               percentage: 0.2}
+  essential_oils:
+  - {id: orange_10fold_essential_oil, name: Orange 10x EO,    percentage: 2.0}
+  - {id: blood_orange_essential_oil,  name: Blood Orange EO,  percentage: 0.5}
+  - {id: clove_bud_essential_oil,     name: Clove Bud EO,     percentage: 1.0}
+  - {id: black_tea_fo,                name: Black Tea FO,     percentage: 1.0}
+  - {id: amber_musk_fo,               name: Amber/Musk FO,    percentage: 0.5}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - activated_charcoal (additive used throughout this collection but not in the additive seed catalog; flagged for future catalog expansion)
+  - orange_10fold_essential_oil, blood_orange_essential_oil,
+    clove_bud_essential_oil (not in catalog)
+  - black_tea_fo, amber_musk_fo (fragrance oils, not cataloged)
+  - burnt_sienna_oxide, orange_mica (accent colorants, not cataloged)
+  notes: |-
+    Cold process. Warning: clove bud EO accelerates trace — work
+    quickly or reserve for final cook stage. 70% black base / 30%
+    orange accent (oxide + mica colored) chunks design.
+  source_file: midnight-high-tea/constances-pomander-55lb.md
+
+- id: midnight_high_tea_crimson_stain
+  common_name: The Crimson Stain
+  aliases: [Midnight High Tea — Crimson Stain]
+  description: >-
+    Midnight High Tea variant. Dark-berry-and-patchouli scent
+    (raspberry + strawberry + cake batter + dark patchouli + oakmoss).
+    Black base with 30% crimson-red accent.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,     percentage: 2.0}
+  - {id: activated_charcoal, percentage: 1.5}
+  - {id: kaolin_clay,        percentage: 1.0}
+  - {id: silk,               percentage: 0.2}
+  essential_oils:
+  - {id: raspberry_jam_fo,        name: Raspberry Jam FO,       percentage: 2.0}
+  - {id: strawberry_fo,           name: Strawberry FO,          percentage: 1.0}
+  - {id: cake_batter_fo,          name: Vanilla/Cake Batter FO, percentage: 0.5}
+  - {id: patchouli_essential_oil, name: Dark Patchouli EO,      percentage: 0.5}
+  - {id: oakmoss_dirt_fo,         name: Oakmoss/Dirt FO,        percentage: 0.5}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - activated_charcoal (additive used throughout this collection but not in the additive seed catalog; flagged for future catalog expansion)
+  - patchouli_essential_oil (not in catalog)
+  - raspberry_jam_fo, strawberry_fo, cake_batter_fo, oakmoss_dirt_fo
+    (fragrance oils, not cataloged)
+  - red_40_lake, red_mica (accent colorants)
+  notes: |-
+    Cold process. 70% black / 30% crimson-red accent. Sweet-dark
+    narrative scent.
+  source_file: midnight-high-tea/crimson-stain-55lb.md
+
+- id: midnight_high_tea_curators_tart
+  common_name: The Curator's Tart
+  aliases: [Midnight High Tea — Curator's Tart]
+  description: >-
+    Midnight High Tea variant. Boozy dark-fruit scent (black
+    currant/fig + brandy/cognac + oak/woodsmoke + amber). Black
+    base with 30% plum/bruised-purple accent.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,     percentage: 2.0}
+  - {id: activated_charcoal, percentage: 1.5}
+  - {id: kaolin_clay,        percentage: 1.0}
+  - {id: silk,               percentage: 0.2}
+  essential_oils:
+  - {id: black_currant_fig_fo, name: Black Currant/Fig FO, percentage: 2.0}
+  - {id: brandy_cognac_fo,     name: Brandy/Cognac FO,     percentage: 1.0}
+  - {id: oak_woodsmoke_fo,     name: Oak/Woodsmoke FO,     percentage: 1.0}
+  - {id: amber_fo,             name: Amber FO,             percentage: 0.5}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - activated_charcoal (additive used throughout this collection but not in the additive seed catalog; flagged for future catalog expansion)
+  - all four fragrance oils above not in catalog
+  - purple_mica, blue_mica (accent colorants)
+  notes: |-
+    Cold process. 70% black / 30% plum-purple accent.
+  source_file: midnight-high-tea/curators-tart-55lb.md
+
+- id: midnight_high_tea_cyanide_and_lace
+  common_name: Cyanide and Lace
+  aliases: [Midnight High Tea — Cyanide and Lace]
+  description: >-
+    Midnight High Tea variant. Almond-and-buttercream base with
+    airy floral top (bitter almond + vanilla oleoresin + heliotrope +
+    clean cotton). Black base with 30% white-accent titanium-dioxide
+    lace pattern.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,     percentage: 2.0}
+  - {id: activated_charcoal, percentage: 1.5}
+  - {id: kaolin_clay,        percentage: 1.0}
+  - {id: silk,               percentage: 0.2}
+  essential_oils:
+  - {id: bitter_almond_essential_oil, name: Bitter Almond EO,       percentage: 1.5}
+  - {id: vanilla_oleoresin,           name: Vanilla Oleoresin,      percentage: 1.5}
+  - {id: heliotrope_fo,               name: Heliotrope FO,          percentage: 0.5}
+  - {id: clean_cotton_linen_fo,       name: Clean Cotton/Linen FO,  percentage: 0.5}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - activated_charcoal (additive used throughout this collection but not in the additive seed catalog; flagged for future catalog expansion)
+  - bitter_almond_essential_oil, vanilla_oleoresin (not cataloged)
+  - heliotrope_fo, clean_cotton_linen_fo (fragrance oils, not cataloged)
+  - titanium_dioxide (accent colorant — white lace effect)
+  notes: |-
+    Cold process. 70% black / 30% white accent. Bitter almond EO at
+    1.5% is strong — check IFRA usage for leave-on products before
+    scaling up.
+  source_file: midnight-high-tea/cyanide-and-lace-55lb.md
+
+- id: midnight_high_tea_gingerbread_mausoleum
+  common_name: The Gingerbread Mausoleum
+  aliases: [Midnight High Tea — Gingerbread Mausoleum]
+  description: >-
+    Midnight High Tea variant. Ginger-spice-and-smoke scent
+    (ginger + cinnamon leaf + molasses + cedarwood + birch tar).
+    Black base with 20% rust "crumbling stone" top accent.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,     percentage: 2.0}
+  - {id: activated_charcoal, percentage: 1.5}
+  - {id: kaolin_clay,        percentage: 1.0}
+  - {id: silk,               percentage: 0.2}
+  essential_oils:
+  - {id: ginger_essential_oil,         name: Ginger EO,               percentage: 1.5}
+  - {id: cinnamon_leaf_essential_oil,  name: Cinnamon Leaf EO,        percentage: 1.0}
+  - {id: molasses_brown_sugar_fo,      name: Molasses/Brown Sugar FO, percentage: 1.0}
+  - {id: cedarwood_atlas_essential_oil,name: Cedarwood Atlas EO,      percentage: 0.5}
+  - {id: birch_tar_smoke_fo,           name: Birch Tar/Smoke FO,      percentage: 0.5}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - activated_charcoal (additive used throughout this collection but not in the additive seed catalog; flagged for future catalog expansion)
+  - ginger_essential_oil, cinnamon_leaf_essential_oil,
+    cedarwood_atlas_essential_oil (not in catalog)
+  - molasses_brown_sugar_fo, birch_tar_smoke_fo (fragrance oils,
+    not cataloged)
+  - bronze_mica, copper_mica, cocoa_powder (accent colorants)
+  notes: |-
+    Cold process. 80% black base / 20% rust top (larger-than-usual
+    black fraction for this collection — most Midnight High Tea
+    recipes are 70/30). Cinnamon leaf is an accelerator — work fast.
+  source_file: midnight-high-tea/gingerbread-mausoleum-55lb.md
+
+- id: midnight_high_tea_locked_library
+  common_name: The Locked Library
+  aliases: [Midnight High Tea — Locked Library]
+  description: >-
+    Midnight High Tea variant. Old-book scent: leather + hazelnut/
+    coffee + sandalwood/oak + vanilla/benzoin + cedarwood. Black base
+    with dual accent — 15% antique-gold + 15% parchment-tan.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,     percentage: 2.0}
+  - {id: activated_charcoal, percentage: 1.5}
+  - {id: kaolin_clay,        percentage: 1.0}
+  - {id: silk,               percentage: 0.2}
+  essential_oils:
+  - {id: leather_fo,                 name: Leather FO,            percentage: 1.5}
+  - {id: hazelnut_coffee_fo,         name: Hazelnut/Coffee FO,    percentage: 1.0}
+  - {id: sandalwood_oak_fo,          name: Sandalwood/Oak FO,     percentage: 1.0}
+  - {id: vanilla_benzoin_fo,         name: Vanilla/Benzoin FO,    percentage: 0.5}
+  - {id: cedarwood_essential_oil,    name: Cedarwood EO,          percentage: 0.5}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - activated_charcoal (additive used throughout this collection but not in the additive seed catalog; flagged for future catalog expansion)
+  - cedarwood_essential_oil (not in catalog)
+  - leather_fo, hazelnut_coffee_fo, sandalwood_oak_fo,
+    vanilla_benzoin_fo (fragrance oils, not cataloged)
+  - gold_mica, titanium_dioxide, brown_oxide (accent colorants)
+  notes: |-
+    Cold process. 70% black / 15% gold / 15% parchment-tan three-way
+    design.
+  source_file: midnight-high-tea/locked-library-55lb.md
+
+- id: midnight_high_tea_mourning_truffle
+  common_name: The Mourning Truffle
+  aliases: [Midnight High Tea — Mourning Truffle]
+  description: >-
+    Midnight High Tea variant. Dark-chocolate-and-tobacco scent
+    (dark chocolate + coffee + tobacco leaf + vanilla bourbon).
+    Two shades of black — matte base + glossy-black mica sparkle
+    accent (30%).
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,     percentage: 2.0}
+  - {id: activated_charcoal, percentage: 1.5}
+  - {id: kaolin_clay,        percentage: 1.0}
+  - {id: silk,               percentage: 0.2}
+  essential_oils:
+  - {id: dark_chocolate_fo,        name: Dark Chocolate FO,    percentage: 2.0}
+  - {id: coffee_essential_oil,     name: Coffee EO/Absolute,   percentage: 1.0}
+  - {id: tobacco_leaf_fo,          name: Tobacco Leaf FO,      percentage: 1.0}
+  - {id: vanilla_bourbon_fo,       name: Vanilla Bourbon FO,   percentage: 0.5}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - activated_charcoal (additive used throughout this collection but not in the additive seed catalog; flagged for future catalog expansion)
+  - coffee_essential_oil (not in catalog)
+  - dark_chocolate_fo, tobacco_leaf_fo, vanilla_bourbon_fo
+    (fragrance oils, not cataloged)
+  - black_mica_sparkle (accent colorant)
+  notes: |-
+    Cold process. 70% matte black (charcoal) / 30% glossy black
+    (black mica) — a tone-on-tone variant in a collection otherwise
+    defined by high-contrast accents.
+  source_file: midnight-high-tea/mourning-truffle-55lb.md
+
+- id: midnight_high_tea_ophelias_garden
+  common_name: Ophelia's Garden
+  aliases: [Midnight High Tea — Ophelia's Garden]
+  description: >-
+    Midnight High Tea variant. English-rose-and-lavender scent with
+    aquatic/green underlay (English rose + lavender 40/42 + willow/
+    ozone + oakmoss). Black base with 30% mauve swirl.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,     percentage: 2.0}
+  - {id: activated_charcoal, percentage: 1.5}
+  - {id: kaolin_clay,        percentage: 1.0}
+  - {id: silk,               percentage: 0.2}
+  essential_oils:
+  - {id: english_rose_fo,              name: English Rose FO,        percentage: 2.0}
+  - {id: lavender_40_42_essential_oil, name: Lavender 40/42 EO,      percentage: 1.5}
+  - {id: willow_ozone_fo,              name: Willow/Ozone FO,        percentage: 0.5}
+  - {id: oakmoss_absolute,             name: Oakmoss Absolute (diluted), percentage: 0.5}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - activated_charcoal (additive used throughout this collection but not in the additive seed catalog; flagged for future catalog expansion)
+  - lavender_40_42_essential_oil, oakmoss_absolute (not in catalog)
+  - english_rose_fo, willow_ozone_fo (fragrance oils, not cataloged)
+  - purple_mica, pink_clay (accent colorants)
+  notes: |-
+    Cold process. 70% black / 30% mauve swirl.
+  source_file: midnight-high-tea/ophelias-garden-55lb.md
+
+- id: midnight_high_tea_yellow_wallpaper
+  common_name: The Yellow Wallpaper
+  aliases: [Midnight High Tea — Yellow Wallpaper]
+  description: >-
+    Midnight High Tea variant. Sickly-lemon Earl-Grey-tea scent
+    (lemon 5-fold + bergamot + beeswax/honey + petrichor/dust).
+    Black base with 30% yellow swirl accent.
+  lye:
+    type: naoh
+    naoh_purity: 100
+  water:
+    method: water_lye_ratio
+    value: 1.0
+  superfat_percent: 5
+  oils:
+  - {id: coconut_oil,   percentage: 25.88}
+  - {id: avocado_oil,   percentage: 20.88}
+  - {id: babassu_oil,   percentage: 10.00}
+  - {id: hemp_seed_oil, percentage:  8.00}
+  - {id: castor_oil,    percentage:  5.00}
+  additives:
+  - {id: sodium_lactate,     percentage: 2.0}
+  - {id: activated_charcoal, percentage: 1.5}
+  - {id: kaolin_clay,        percentage: 1.0}
+  - {id: silk,               percentage: 0.2}
+  essential_oils:
+  - {id: lemon_5fold_essential_oil, name: Lemon EO (5-Fold),     percentage: 2.0}
+  - {id: bergamot_essential_oil,    name: Bergamot EO,           percentage: 1.0}
+  - {id: beeswax_honey_fo,          name: Beeswax/Honey FO,      percentage: 1.0}
+  - {id: petrichor_dust_fo,         name: Petrichor/Dust FO,     percentage: 0.5}
+  catalog_gaps:
+  - beef_tallow (30.24% — saponifiable fat not in oil catalog)
+  - activated_charcoal (additive used throughout this collection but not in the additive seed catalog; flagged for future catalog expansion)
+  - lemon_5fold_essential_oil, bergamot_essential_oil (not in catalog)
+  - beeswax_honey_fo, petrichor_dust_fo (fragrance oils, not cataloged)
+  - yellow_mica, neon_yellow_pigment (accent colorants)
+  notes: |-
+    Cold process. 70% black / 30% yellow swirl. Named for the
+    Charlotte Perkins Gilman short story.
+  source_file: midnight-high-tea/yellow-wallpaper-55lb.md
