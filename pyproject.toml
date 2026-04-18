@@ -1,6 +1,6 @@
 [project]
 name = "mga-soap-calculator-api"
-version = "1.4.2"
+version = "1.5.0"
 description = "Core Soap Calculation API with additive effect modeling"
 authors = [{ name = "Midnight Garden Apothecary", email = "info@midnightgardenapothecary.com" }]
 readme = "README.md"
