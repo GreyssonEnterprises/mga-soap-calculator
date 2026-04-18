@@ -109,7 +109,11 @@ async def resolve_inputs(request: CalculationRequest, db: AsyncSession) -> Resol
             # Percentages provided — validate sum first, then derive weights.
             percentages = [oil.percentage for oil in request.oils if oil.percentage is not None]
             validate_oil_percentages(percentages)
-            total_oil_weight_g = request.total_oil_weight_g
+            # total_oil_weight_g is Optional in the schema but has a 1000.0 default;
+            # coerce defensively so the downstream float contract holds.
+            total_oil_weight_g = (
+                request.total_oil_weight_g if request.total_oil_weight_g is not None else 1000.0
+            )
             normalized_oils = normalize_oil_inputs(request.oils, total_weight_g=total_oil_weight_g)
     except ValueError as exc:
         raise HTTPException(
@@ -206,11 +210,17 @@ def compute_recipe(inputs: ResolvedInputs) -> ComputedRecipe:
         naoh_percent=inputs.lye.naoh_percent,
         koh_percent=inputs.lye.koh_percent,
     )
+    # LyeConfig declares koh_purity/naoh_purity as Optional with defaults; coalesce
+    # any None through to the service-layer defaults (90/100) so mypy is happy and
+    # the behavior is identical.
+    koh_purity: float = inputs.lye.koh_purity if inputs.lye.koh_purity is not None else 90.0
+    naoh_purity: float = inputs.lye.naoh_purity if inputs.lye.naoh_purity is not None else 100.0
+
     purity_result = calculate_lye_with_purity(
         pure_koh_needed=base_lye.koh_g,
         pure_naoh_needed=base_lye.naoh_g,
-        koh_purity=inputs.lye.koh_purity,
-        naoh_purity=inputs.lye.naoh_purity,
+        koh_purity=koh_purity,
+        naoh_purity=naoh_purity,
     )
     for purity_warning in purity_result.warnings:
         warnings.append(
@@ -326,8 +336,8 @@ def compute_recipe(inputs: ResolvedInputs) -> ComputedRecipe:
             total_lye_g=purity_result.total_lye_g,
             naoh_percent=inputs.lye.naoh_percent,
             koh_percent=inputs.lye.koh_percent,
-            koh_purity=inputs.lye.koh_purity,
-            naoh_purity=inputs.lye.naoh_purity,
+            koh_purity=koh_purity,
+            naoh_purity=naoh_purity,
             pure_koh_equivalent_g=purity_result.pure_koh_equivalent_g,
             pure_naoh_equivalent_g=purity_result.pure_naoh_equivalent_g,
         ),
