@@ -4,7 +4,9 @@ Request Pydantic models for API validation (Task 3.1.1)
 TDD Evidence: Tests written first in test_request_models.py
 Implements spec Section 3.1 request schema with validation rules.
 """
-from typing import Optional, List, Literal
+
+from typing import Literal
+
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 
@@ -16,11 +18,12 @@ class OilInput(BaseModel):
     - At least one of weight_g or percentage must be provided
     - Not both (one must be None)
     """
-    id: str
-    weight_g: Optional[float] = None
-    percentage: Optional[float] = None
 
-    @model_validator(mode='after')
+    id: str
+    weight_g: float | None = None
+    percentage: float | None = None
+
+    @model_validator(mode="after")
     def validate_weight_or_percentage(self):
         """Ensure at least one of weight_g or percentage is provided"""
         if self.weight_g is None and self.percentage is None:
@@ -39,19 +42,18 @@ class LyeConfig(BaseModel):
 
     Feature: KOH/NaOH Purity Support (Spec 002-lye-purity)
     """
+
     naoh_percent: float
     koh_percent: float
-    koh_purity: Optional[float] = Field(default=90.0, ge=50.0, le=100.0)
-    naoh_purity: Optional[float] = Field(default=100.0, ge=50.0, le=100.0)
+    koh_purity: float | None = Field(default=90.0, ge=50.0, le=100.0)
+    naoh_purity: float | None = Field(default=100.0, ge=50.0, le=100.0)
 
-    @model_validator(mode='after')
+    @model_validator(mode="after")
     def validate_percentage_sum(self):
         """Ensure lye percentages sum to 100%"""
         total = self.naoh_percent + self.koh_percent
         if abs(total - 100.0) > 0.01:  # Floating point tolerance
-            raise ValueError(
-                f"NaOH and KOH percentages must sum to 100%, got {total}"
-            )
+            raise ValueError(f"NaOH and KOH percentages must sum to 100%, got {total}")
         return self
 
 
@@ -64,6 +66,7 @@ class WaterConfig(BaseModel):
     2. lye_concentration: Lye concentration (% of water+lye solution)
     3. water_lye_ratio: Water:lye ratio
     """
+
     method: Literal["water_percent_of_oils", "lye_concentration", "water_lye_ratio"]
     value: float
 
@@ -74,11 +77,12 @@ class AdditiveInput(BaseModel):
 
     Similar validation to OilInput - at least one must be provided.
     """
-    id: str
-    weight_g: Optional[float] = None
-    percentage: Optional[float] = None
 
-    @model_validator(mode='after')
+    id: str
+    weight_g: float | None = None
+    percentage: float | None = None
+
+    @model_validator(mode="after")
     def validate_weight_or_percentage(self):
         """Ensure at least one of weight_g or percentage is provided"""
         if self.weight_g is None and self.percentage is None:
@@ -100,14 +104,15 @@ class CalculationRequest(BaseModel):
     - additives: List of additive inputs (default: empty list)
     - total_oil_weight_g: Total batch size when using percentages (default: 1000g)
     """
-    oils: List[OilInput]
+
+    oils: list[OilInput]
     lye: LyeConfig
     water: WaterConfig
     superfat_percent: float
-    additives: List[AdditiveInput] = []
-    total_oil_weight_g: Optional[float] = Field(default=1000.0, gt=0)
+    additives: list[AdditiveInput] = []
+    total_oil_weight_g: float | None = Field(default=1000.0, gt=0)
 
-    @field_validator('oils')
+    @field_validator("oils")
     @classmethod
     def validate_oils_not_empty(cls, v):
         """Ensure at least one oil is provided"""
@@ -115,7 +120,7 @@ class CalculationRequest(BaseModel):
             raise ValueError("At least one oil must be provided")
         return v
 
-    @field_validator('superfat_percent')
+    @field_validator("superfat_percent")
     @classmethod
     def validate_superfat_range(cls, v):
         """Ensure superfat is in valid range"""

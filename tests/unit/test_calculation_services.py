@@ -3,21 +3,18 @@ Tests for water, quality metrics, and fatty acid calculators
 
 TDD Evidence: Tests core calculation algorithms against spec requirements
 """
-import pytest
-from app.services.water_calculator import (
-    calculate_water_from_oil_percent,
-    calculate_water_from_lye_concentration,
-    calculate_water_from_lye_ratio
-)
+
+from app.services.fatty_acid_calculator import OilFattyAcids, calculate_fatty_acid_profile
 from app.services.quality_metrics_calculator import (
-    OilContribution,
     AdditiveEffect,
+    OilContribution,
+    apply_additive_effects,
     calculate_base_metrics_from_oils,
-    apply_additive_effects
 )
-from app.services.fatty_acid_calculator import (
-    OilFattyAcids,
-    calculate_fatty_acid_profile
+from app.services.water_calculator import (
+    calculate_water_from_lye_concentration,
+    calculate_water_from_lye_ratio,
+    calculate_water_from_oil_percent,
 )
 
 
@@ -56,29 +53,29 @@ class TestQualityMetricsFromOils:
                 weight_g=500,
                 percentage=50.0,
                 quality_contributions={
-                    'hardness': 17,
-                    'cleansing': 0,
-                    'conditioning': 82,
-                    'bubbly_lather': 0,
-                    'creamy_lather': 16,
-                    'longevity': 17,
-                    'stability': 91
-                }
+                    "hardness": 17,
+                    "cleansing": 0,
+                    "conditioning": 82,
+                    "bubbly_lather": 0,
+                    "creamy_lather": 16,
+                    "longevity": 17,
+                    "stability": 91,
+                },
             ),
             # 50% Coconut: hardness 79, cleansing 67, conditioning 10
             OilContribution(
                 weight_g=500,
                 percentage=50.0,
                 quality_contributions={
-                    'hardness': 79,
-                    'cleansing': 67,
-                    'conditioning': 10,
-                    'bubbly_lather': 67,
-                    'creamy_lather': 17,
-                    'longevity': 79,
-                    'stability': 10
-                }
-            )
+                    "hardness": 79,
+                    "cleansing": 67,
+                    "conditioning": 10,
+                    "bubbly_lather": 67,
+                    "creamy_lather": 17,
+                    "longevity": 79,
+                    "stability": 10,
+                },
+            ),
         ]
 
         metrics = calculate_base_metrics_from_oils(oils)
@@ -105,11 +102,8 @@ class TestAdditiveEffects:
         additives = [
             AdditiveEffect(
                 weight_g=20,  # 20g = 2% of 1000g oils
-                quality_effects={
-                    'hardness': 4.0,
-                    'creamy_lather': 7.0
-                },
-                confidence_level="high"
+                quality_effects={"hardness": 4.0, "creamy_lather": 7.0},
+                confidence_level="high",
             )
         ]
 
@@ -135,10 +129,7 @@ class TestAdditiveEffects:
         additives = [
             AdditiveEffect(
                 weight_g=30,  # 30g = 3% of 1000g oils
-                quality_effects={
-                    'hardness': 4.0,
-                    'creamy_lather': 7.0
-                }
+                quality_effects={"hardness": 4.0, "creamy_lather": 7.0},
             )
         ]
 
@@ -162,9 +153,9 @@ class TestAdditiveEffects:
 
         additives = [
             # Kaolin @ 2%: +4.0 hardness
-            AdditiveEffect(weight_g=20, quality_effects={'hardness': 4.0}),
+            AdditiveEffect(weight_g=20, quality_effects={"hardness": 4.0}),
             # Sodium Lactate @ 3%: +12.0 hardness at 2%, scaled to 3% = 18.0
-            AdditiveEffect(weight_g=30, quality_effects={'hardness': 12.0})
+            AdditiveEffect(weight_g=30, quality_effects={"hardness": 12.0}),
         ]
 
         adjusted = apply_additive_effects(base, total_oil_weight, additives)
@@ -185,30 +176,30 @@ class TestFattyAcidProfile:
             OilFattyAcids(
                 percentage=50.0,
                 fatty_acids={
-                    'lauric': 0,
-                    'myristic': 0,
-                    'palmitic': 11,
-                    'stearic': 4,
-                    'oleic': 72,
-                    'linoleic': 10,
-                    'linolenic': 1,
-                    'ricinoleic': 0
-                }
+                    "lauric": 0,
+                    "myristic": 0,
+                    "palmitic": 11,
+                    "stearic": 4,
+                    "oleic": 72,
+                    "linoleic": 10,
+                    "linolenic": 1,
+                    "ricinoleic": 0,
+                },
             ),
             # 50% Coconut: high lauric
             OilFattyAcids(
                 percentage=50.0,
                 fatty_acids={
-                    'lauric': 48,
-                    'myristic': 19,
-                    'palmitic': 9,
-                    'stearic': 3,
-                    'oleic': 8,
-                    'linoleic': 2,
-                    'linolenic': 0,
-                    'ricinoleic': 0
-                }
-            )
+                    "lauric": 48,
+                    "myristic": 19,
+                    "palmitic": 9,
+                    "stearic": 3,
+                    "oleic": 8,
+                    "linoleic": 2,
+                    "linolenic": 0,
+                    "ricinoleic": 0,
+                },
+            ),
         ]
 
         profile = calculate_fatty_acid_profile(oils)
@@ -224,15 +215,15 @@ class TestFattyAcidProfile:
             OilFattyAcids(
                 percentage=100.0,
                 fatty_acids={
-                    'lauric': 20,
-                    'myristic': 10,
-                    'palmitic': 10,
-                    'stearic': 5,
-                    'oleic': 40,
-                    'linoleic': 10,
-                    'linolenic': 2,
-                    'ricinoleic': 0
-                }
+                    "lauric": 20,
+                    "myristic": 10,
+                    "palmitic": 10,
+                    "stearic": 5,
+                    "oleic": 40,
+                    "linoleic": 10,
+                    "linolenic": 2,
+                    "ricinoleic": 0,
+                },
             )
         ]
 
@@ -250,21 +241,29 @@ class TestFattyAcidProfile:
             OilFattyAcids(
                 percentage=100.0,
                 fatty_acids={
-                    'lauric': 48,
-                    'myristic': 19,
-                    'palmitic': 9,
-                    'stearic': 3,
-                    'oleic': 8,
-                    'linoleic': 2,
-                    'linolenic': 0,
-                    'ricinoleic': 0
-                }
+                    "lauric": 48,
+                    "myristic": 19,
+                    "palmitic": 9,
+                    "stearic": 3,
+                    "oleic": 8,
+                    "linoleic": 2,
+                    "linolenic": 0,
+                    "ricinoleic": 0,
+                },
             )
         ]
 
         profile = calculate_fatty_acid_profile(oils)
 
-        total = (profile.lauric + profile.myristic + profile.palmitic + profile.stearic +
-                 profile.oleic + profile.linoleic + profile.linolenic + profile.ricinoleic)
+        total = (
+            profile.lauric
+            + profile.myristic
+            + profile.palmitic
+            + profile.stearic
+            + profile.oleic
+            + profile.linoleic
+            + profile.linolenic
+            + profile.ricinoleic
+        )
 
         assert 85 < total <= 100, f"Total fatty acids {total}% should be 85-100%"

@@ -5,16 +5,17 @@ Written: 2025-11-01 (before model implementation)
 Phase: Phase 1 Foundation
 Evidence: Test-first development - models implemented to pass these tests
 """
+
 import pytest
 from passlib.hash import bcrypt
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.user import User
-from app.models.oil import Oil
 from app.models.additive import Additive
 from app.models.calculation import Calculation
+from app.models.oil import Oil
+from app.models.user import User
 
 
 @pytest.mark.unit
@@ -39,7 +40,7 @@ async def test_user_model_creation(test_db_session: AsyncSession):
     assert user.id is not None  # UUID generated
     assert user.email == "test@example.com"
     # Verify it's a bcrypt hash (starts with $2b$)
-    assert user.hashed_password.startswith(('$2a$', '$2b$', '$2y$'))
+    assert user.hashed_password.startswith(("$2a$", "$2b$", "$2y$"))
     # Verify password can be verified
     assert bcrypt.verify(plaintext_password, user.hashed_password)
     # Verify wrong password fails
@@ -161,8 +162,25 @@ async def test_oil_model_sap_values_match_spec(test_db_session: AsyncSession):
         sap_value_koh=0.188,  # Must match spec exactly
         iodine_value=84.0,
         ins_value=109.0,
-        fatty_acids={"lauric": 0, "myristic": 0, "palmitic": 11, "stearic": 4, "ricinoleic": 0, "oleic": 72, "linoleic": 10, "linolenic": 1},
-        quality_contributions={"hardness": 17, "cleansing": 0, "conditioning": 83, "bubbly_lather": 0, "creamy_lather": 15, "longevity": 25, "stability": 50},
+        fatty_acids={
+            "lauric": 0,
+            "myristic": 0,
+            "palmitic": 11,
+            "stearic": 4,
+            "ricinoleic": 0,
+            "oleic": 72,
+            "linoleic": 10,
+            "linolenic": 1,
+        },
+        quality_contributions={
+            "hardness": 17,
+            "cleansing": 0,
+            "conditioning": 83,
+            "bubbly_lather": 0,
+            "creamy_lather": 15,
+            "longevity": 25,
+            "stability": 50,
+        },
     )
 
     test_db_session.add(olive_oil)

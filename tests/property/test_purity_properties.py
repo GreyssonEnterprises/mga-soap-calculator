@@ -16,11 +16,8 @@ Properties Tested:
 6. Reversibility: (weight * purity) recovers pure equivalent
 """
 
-import pytest
-from hypothesis import given, assume, strategies as st
-from decimal import Decimal
-import math
-
+from hypothesis import assume, given
+from hypothesis import strategies as st
 
 # ============================================================================
 # HYPOTHESIS STRATEGIES
@@ -30,7 +27,9 @@ import math
 purity_strategy = st.floats(min_value=50.0, max_value=100.0, allow_nan=False, allow_infinity=False)
 
 # Reasonable pure lye weights: 1g to 500g
-pure_weight_strategy = st.floats(min_value=1.0, max_value=500.0, allow_nan=False, allow_infinity=False)
+pure_weight_strategy = st.floats(
+    min_value=1.0, max_value=500.0, allow_nan=False, allow_infinity=False
+)
 
 # Purity pairs for comparison testing
 purity_pair_strategy = st.tuples(purity_strategy, purity_strategy)
@@ -39,6 +38,7 @@ purity_pair_strategy = st.tuples(purity_strategy, purity_strategy)
 # ============================================================================
 # PROPERTY TESTS - MATHEMATICAL INVARIANTS
 # ============================================================================
+
 
 class TestPurityFormulaProperties:
     """Test universal properties of purity adjustment formula."""
@@ -107,6 +107,7 @@ class TestPurityFormulaProperties:
 # PROPERTY TESTS - BOUNDARY BEHAVIOR
 # ============================================================================
 
+
 class TestPurityBoundaryProperties:
     """Test properties at boundary conditions."""
 
@@ -120,7 +121,6 @@ class TestPurityBoundaryProperties:
 
         Rationale: 50% pure means half is active ingredient.
         """
-        purity = 50.0
 
         # TODO: Implement property test
         # Expected: commercial_weight == pure_weight * 2.0
@@ -141,6 +141,7 @@ class TestPurityBoundaryProperties:
 # ============================================================================
 # PROPERTY TESTS - PRECISION
 # ============================================================================
+
 
 class TestPurityPrecisionProperties:
     """Test precision properties across full value range."""
@@ -175,6 +176,7 @@ class TestPurityPrecisionProperties:
 # ============================================================================
 # PROPERTY TESTS - VALIDATION BOUNDARIES
 # ============================================================================
+
 
 class TestPurityValidationProperties:
     """Test validation boundary properties."""
@@ -223,6 +225,7 @@ class TestPurityValidationProperties:
 # PROPERTY TESTS - MIXED LYE INDEPENDENCE
 # ============================================================================
 
+
 class TestMixedLyePurityProperties:
     """Test properties of independent KOH/NaOH purity adjustments."""
 
@@ -230,15 +233,9 @@ class TestMixedLyePurityProperties:
         pure_koh=pure_weight_strategy,
         pure_naoh=pure_weight_strategy,
         koh_purity=purity_strategy,
-        naoh_purity=purity_strategy
+        naoh_purity=purity_strategy,
     )
-    def test_property_independent_adjustments(
-        self,
-        pure_koh,
-        pure_naoh,
-        koh_purity,
-        naoh_purity
-    ):
+    def test_property_independent_adjustments(self, pure_koh, pure_naoh, koh_purity, naoh_purity):
         """
         Property: KOH and NaOH purity adjustments are independent.
 
@@ -251,17 +248,8 @@ class TestMixedLyePurityProperties:
         # TODO: Implement property test
         # Expected: KOH and NaOH calculations are independent
 
-    @given(
-        pure_koh=pure_weight_strategy,
-        koh_purity1=purity_strategy,
-        koh_purity2=purity_strategy
-    )
-    def test_property_naoh_unaffected_by_koh_purity(
-        self,
-        pure_koh,
-        koh_purity1,
-        koh_purity2
-    ):
+    @given(pure_koh=pure_weight_strategy, koh_purity1=purity_strategy, koh_purity2=purity_strategy)
+    def test_property_naoh_unaffected_by_koh_purity(self, pure_koh, koh_purity1, koh_purity2):
         """
         Property: NaOH weight unaffected by KOH purity changes.
 
@@ -276,6 +264,7 @@ class TestMixedLyePurityProperties:
 # ============================================================================
 # PROPERTY TESTS - EDGE CASES
 # ============================================================================
+
 
 class TestPurityEdgeCaseProperties:
     """Test properties at extreme edge cases."""

@@ -4,25 +4,25 @@ INCI label generation API endpoints
 User Story 1: Generate INCI labels for soap formulations
 Spec 003: Generate three-format INCI labels from saved calculations
 """
-from typing import Dict
+
 from decimal import Decimal
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, status
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_db
-from app.models.oil import Oil
 from app.models.calculation import Calculation
+from app.models.oil import Oil
 from app.schemas.inci_label import (
+    InciIngredient,
     InciLabelRequest,
     InciLabelResponse,
-    InciIngredient,
-    ThreeFormatInciResponse
+    ThreeFormatInciResponse,
 )
 from app.services.label_generator import generate_inci_label
 from app.services.three_format_inci_generator import generate_three_format_labels
-from sqlalchemy import select
 
 router = APIRouter(prefix="/api/v1/inci", tags=["INCI Labels"])
 
@@ -43,11 +43,10 @@ The endpoint:
 5. Returns formatted INCI label string + detailed ingredient list
 
 INCI labels list ingredients in descending order by percentage.
-    """
+    """,
 )
 async def generate_inci_label_endpoint(
-    request: InciLabelRequest,
-    db: AsyncSession = Depends(get_db)
+    request: InciLabelRequest, db: AsyncSession = Depends(get_db)
 ):
     """
     Generate INCI label for soap formulation.
@@ -102,15 +101,12 @@ async def generate_inci_label_endpoint(
     """
     # Step 1: Extract oil IDs and weights
     oil_ids = [item.oil_id for item in request.formulation.oils]
-    oil_weights: Dict[str, Decimal] = {
-        item.oil_id: Decimal(str(item.weight_grams))
-        for item in request.formulation.oils
+    oil_weights: dict[str, Decimal] = {
+        item.oil_id: Decimal(str(item.weight_grams)) for item in request.formulation.oils
     }
 
     # Step 2: Fetch oils from database
-    result = await db.execute(
-        select(Oil).where(Oil.id.in_(oil_ids))
-    )
+    result = await db.execute(select(Oil).where(Oil.id.in_(oil_ids)))
     oils_list = result.scalars().all()
 
     # Verify all oils were found
@@ -119,7 +115,7 @@ async def generate_inci_label_endpoint(
         missing_ids = set(oil_ids) - found_ids
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Oil(s) not found in database: {', '.join(missing_ids)}"
+            detail=f"Oil(s) not found in database: {', '.join(missing_ids)}",
         )
 
     # Create oil lookup dictionary
@@ -128,15 +124,10 @@ async def generate_inci_label_endpoint(
     # Step 3: Generate INCI label
     try:
         inci_label, ingredient_details = generate_inci_label(
-            oil_weights=oil_weights,
-            oils_dict=oils_dict,
-            lye_type=request.lye_type
+            oil_weights=oil_weights, oils_dict=oils_dict, lye_type=request.lye_type
         )
     except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
     # Step 4: Calculate total oil weight
     total_weight = sum(oil_weights.values())
@@ -148,7 +139,7 @@ async def generate_inci_label_endpoint(
             common_name=detail.common_name,
             saponified_inci_name=detail.saponified_inci_name,
             percentage=detail.percentage,
-            is_generated=detail.is_generated
+            is_generated=detail.is_generated,
         )
         for detail in ingredient_details
     ]
@@ -157,7 +148,7 @@ async def generate_inci_label_endpoint(
         inci_label=inci_label,
         ingredients=ingredients,
         total_oil_weight=float(total_weight),
-        lye_type_used=request.lye_type
+        lye_type_used=request.lye_type,
     )
 
 
@@ -190,14 +181,14 @@ Example:
 ```
 GET /api/v1/inci/calculations/123e4567-e89b-12d3-a456-426614174000/inci-label?format=all
 ```
-    """
+    """,
 )
 async def get_calculation_inci_label(
     calculation_id: UUID,
     format: str = Query("all", regex="^(all|raw_inci|saponified_inci|common_names)$"),
     include_percentages: bool = Query(False),
     line_by_line: bool = Query(False),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ):
     """
     Generate INCI label for a saved calculation (recipe).
@@ -224,15 +215,13 @@ async def get_calculation_inci_label(
     - 422: Invalid format parameter
     """
     # Step 1: Fetch calculation from database
-    result = await db.execute(
-        select(Calculation).where(Calculation.id == calculation_id)
-    )
+    result = await db.execute(select(Calculation).where(Calculation.id == calculation_id))
     calculation = result.scalar_one_or_none()
 
     if not calculation:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Calculation with ID {calculation_id} not found"
+            detail=f"Calculation with ID {calculation_id} not found",
         )
 
     # Step 2: Extract recipe data from calculation
@@ -243,13 +232,10 @@ async def get_calculation_inci_label(
 
     if not oil_ids:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Calculation contains no oils"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Calculation contains no oils"
         )
 
-    result = await db.execute(
-        select(Oil).where(Oil.id.in_(oil_ids))
-    )
+    result = await db.execute(select(Oil).where(Oil.id.in_(oil_ids)))
     oils_list = result.scalars().all()
 
     # Verify all oils were found
@@ -258,7 +244,7 @@ async def get_calculation_inci_label(
         missing_ids = set(oil_ids) - found_ids
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Oil(s) not found in database: {', '.join(missing_ids)}"
+            detail=f"Oil(s) not found in database: {', '.join(missing_ids)}",
         )
 
     # Create oil lookup dictionary
@@ -271,18 +257,15 @@ async def get_calculation_inci_label(
             oils_dict=oils_dict,
             format_filter=format,
             include_percentages=include_percentages,
-            line_by_line=line_by_line
+            line_by_line=line_by_line,
         )
     except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
     # Step 5: Return response
     return ThreeFormatInciResponse(
         raw_inci=raw_inci,
         saponified_inci=saponified_inci,
         common_names=common_names,
-        ingredients_breakdown=breakdown if format == "all" or include_percentages else None
+        ingredients_breakdown=breakdown if format == "all" or include_percentages else None,
     )

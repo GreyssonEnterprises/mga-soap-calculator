@@ -8,10 +8,12 @@ User Story:
 - As a professional soap maker, I want to generate INCI labels for my SAVED recipes
 - The endpoint should work with Calculation IDs (saved recipes), not raw formulations
 """
+
+from uuid import uuid4
+
 import pytest
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
-from uuid import uuid4
 
 from app.models.calculation import Calculation
 from app.models.user import User
@@ -50,25 +52,15 @@ async def sample_calculation(test_db_session: AsyncSession, sample_user: User) -
         recipe_data={
             "oils": [
                 {"oil_id": "coconut-oil", "weight_grams": 300.0},
-                {"oil_id": "olive-oil", "weight_grams": 700.0}
+                {"oil_id": "olive-oil", "weight_grams": 700.0},
             ],
-            "lye": {
-                "naoh_weight_g": 135.0,
-                "koh_weight_g": 0.0,
-                "type": "naoh"
-            },
+            "lye": {"naoh_weight_g": 135.0, "koh_weight_g": 0.0, "type": "naoh"},
             "water_weight_g": 300.0,
-            "superfat_percent": 5.0
+            "superfat_percent": 5.0,
         },
-        results_data={
-            "quality_metrics": {
-                "hardness": 29,
-                "cleansing": 18,
-                "conditioning": 59
-            }
-        },
+        results_data={"quality_metrics": {"hardness": 29, "cleansing": 18, "conditioning": 59}},
         koh_purity=90.0,
-        naoh_purity=100.0
+        naoh_purity=100.0,
     )
     test_db_session.add(calculation)
     await test_db_session.commit()
@@ -77,10 +69,7 @@ async def sample_calculation(test_db_session: AsyncSession, sample_user: User) -
 
 
 @pytest.mark.asyncio
-async def test_get_inci_label_all_formats(
-    client: AsyncClient,
-    sample_calculation: Calculation
-):
+async def test_get_inci_label_all_formats(client: AsyncClient, sample_calculation: Calculation):
     """
     Test GET /api/v1/inci/calculations/{id}/inci-label with format=all
 
@@ -90,8 +79,7 @@ async def test_get_inci_label_all_formats(
     - Water percentage included properly
     """
     response = await client.get(
-        f"/api/v1/inci/calculations/{sample_calculation.id}/inci-label",
-        params={"format": "all"}
+        f"/api/v1/inci/calculations/{sample_calculation.id}/inci-label", params={"format": "all"}
     )
 
     assert response.status_code == 200
@@ -123,15 +111,14 @@ async def test_get_inci_label_all_formats(
 
 @pytest.mark.asyncio
 async def test_get_inci_label_single_format_raw(
-    client: AsyncClient,
-    sample_calculation: Calculation
+    client: AsyncClient, sample_calculation: Calculation
 ):
     """
     Test format=raw_inci returns ONLY raw format
     """
     response = await client.get(
         f"/api/v1/inci/calculations/{sample_calculation.id}/inci-label",
-        params={"format": "raw_inci"}
+        params={"format": "raw_inci"},
     )
 
     assert response.status_code == 200
@@ -145,15 +132,14 @@ async def test_get_inci_label_single_format_raw(
 
 @pytest.mark.asyncio
 async def test_get_inci_label_single_format_saponified(
-    client: AsyncClient,
-    sample_calculation: Calculation
+    client: AsyncClient, sample_calculation: Calculation
 ):
     """
     Test format=saponified_inci returns ONLY saponified format
     """
     response = await client.get(
         f"/api/v1/inci/calculations/{sample_calculation.id}/inci-label",
-        params={"format": "saponified_inci"}
+        params={"format": "saponified_inci"},
     )
 
     assert response.status_code == 200
@@ -167,15 +153,14 @@ async def test_get_inci_label_single_format_saponified(
 
 @pytest.mark.asyncio
 async def test_get_inci_label_single_format_common_names(
-    client: AsyncClient,
-    sample_calculation: Calculation
+    client: AsyncClient, sample_calculation: Calculation
 ):
     """
     Test format=common_names returns ONLY common names format
     """
     response = await client.get(
         f"/api/v1/inci/calculations/{sample_calculation.id}/inci-label",
-        params={"format": "common_names"}
+        params={"format": "common_names"},
     )
 
     assert response.status_code == 200
@@ -189,18 +174,14 @@ async def test_get_inci_label_single_format_common_names(
 
 @pytest.mark.asyncio
 async def test_get_inci_label_with_percentages(
-    client: AsyncClient,
-    sample_calculation: Calculation
+    client: AsyncClient, sample_calculation: Calculation
 ):
     """
     Test include_percentages=true adds percentage values to labels
     """
     response = await client.get(
         f"/api/v1/inci/calculations/{sample_calculation.id}/inci-label",
-        params={
-            "format": "saponified_inci",
-            "include_percentages": True
-        }
+        params={"format": "saponified_inci", "include_percentages": True},
     )
 
     assert response.status_code == 200
@@ -221,18 +202,14 @@ async def test_get_inci_label_with_percentages(
 
 @pytest.mark.asyncio
 async def test_get_inci_label_line_by_line_format(
-    client: AsyncClient,
-    sample_calculation: Calculation
+    client: AsyncClient, sample_calculation: Calculation
 ):
     """
     Test line_by_line=true returns newline-separated format
     """
     response = await client.get(
         f"/api/v1/inci/calculations/{sample_calculation.id}/inci-label",
-        params={
-            "format": "raw_inci",
-            "line_by_line": True
-        }
+        params={"format": "raw_inci", "line_by_line": True},
     )
 
     assert response.status_code == 200
@@ -247,16 +224,12 @@ async def test_get_inci_label_line_by_line_format(
 
 
 @pytest.mark.asyncio
-async def test_get_inci_label_nonexistent_calculation(
-    client: AsyncClient
-):
+async def test_get_inci_label_nonexistent_calculation(client: AsyncClient):
     """
     Test 404 response for non-existent calculation ID
     """
     fake_id = uuid4()
-    response = await client.get(
-        f"/api/v1/inci/calculations/{fake_id}/inci-label"
-    )
+    response = await client.get(f"/api/v1/inci/calculations/{fake_id}/inci-label")
 
     assert response.status_code == 404
     data = response.json()
@@ -265,25 +238,21 @@ async def test_get_inci_label_nonexistent_calculation(
 
 @pytest.mark.asyncio
 async def test_get_inci_label_invalid_format_parameter(
-    client: AsyncClient,
-    sample_calculation: Calculation
+    client: AsyncClient, sample_calculation: Calculation
 ):
     """
     Test 422 validation error for invalid format parameter
     """
     response = await client.get(
         f"/api/v1/inci/calculations/{sample_calculation.id}/inci-label",
-        params={"format": "invalid_format"}
+        params={"format": "invalid_format"},
     )
 
     assert response.status_code == 422
 
 
 @pytest.mark.asyncio
-async def test_inci_label_percentage_sorting(
-    client: AsyncClient,
-    sample_calculation: Calculation
-):
+async def test_inci_label_percentage_sorting(client: AsyncClient, sample_calculation: Calculation):
     """
     Test that ingredients are sorted by percentage (descending)
 
@@ -292,10 +261,7 @@ async def test_inci_label_percentage_sorting(
     """
     response = await client.get(
         f"/api/v1/inci/calculations/{sample_calculation.id}/inci-label",
-        params={
-            "format": "all",
-            "include_percentages": True
-        }
+        params={"format": "all", "include_percentages": True},
     )
 
     assert response.status_code == 200
@@ -309,18 +275,14 @@ async def test_inci_label_percentage_sorting(
 
 
 @pytest.mark.asyncio
-async def test_inci_label_includes_water(
-    client: AsyncClient,
-    sample_calculation: Calculation
-):
+async def test_inci_label_includes_water(client: AsyncClient, sample_calculation: Calculation):
     """
     Test that water is included in INCI label with proper INCI name
 
     Water should appear as "Aqua" or "Water" depending on format.
     """
     response = await client.get(
-        f"/api/v1/inci/calculations/{sample_calculation.id}/inci-label",
-        params={"format": "all"}
+        f"/api/v1/inci/calculations/{sample_calculation.id}/inci-label", params={"format": "all"}
     )
 
     assert response.status_code == 200
@@ -336,9 +298,7 @@ async def test_inci_label_includes_water(
 
 @pytest.mark.asyncio
 async def test_inci_label_koh_soap_uses_potassium_salts(
-    test_db_session: AsyncSession,
-    client: AsyncClient,
-    sample_user: User
+    test_db_session: AsyncSession, client: AsyncClient, sample_user: User
 ):
     """
     Test that KOH soaps use "Potassium" instead of "Sodium" in saponified names
@@ -350,19 +310,15 @@ async def test_inci_label_koh_soap_uses_potassium_salts(
         recipe_data={
             "oils": [
                 {"oil_id": "coconut-oil", "weight_grams": 500.0},
-                {"oil_id": "olive-oil", "weight_grams": 500.0}
+                {"oil_id": "olive-oil", "weight_grams": 500.0},
             ],
-            "lye": {
-                "naoh_weight_g": 0.0,
-                "koh_weight_g": 189.0,
-                "type": "koh"
-            },
+            "lye": {"naoh_weight_g": 0.0, "koh_weight_g": 189.0, "type": "koh"},
             "water_weight_g": 400.0,
-            "superfat_percent": 5.0
+            "superfat_percent": 5.0,
         },
         results_data={"quality_metrics": {}},
         koh_purity=90.0,
-        naoh_purity=100.0
+        naoh_purity=100.0,
     )
     test_db_session.add(koh_calculation)
     await test_db_session.commit()
@@ -370,7 +326,7 @@ async def test_inci_label_koh_soap_uses_potassium_salts(
 
     response = await client.get(
         f"/api/v1/inci/calculations/{koh_calculation.id}/inci-label",
-        params={"format": "saponified_inci"}
+        params={"format": "saponified_inci"},
     )
 
     assert response.status_code == 200

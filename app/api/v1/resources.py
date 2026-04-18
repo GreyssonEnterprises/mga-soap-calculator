@@ -4,39 +4,36 @@ Resource discovery endpoints for oils and additives.
 Provides public access to reference data for recipe formulation.
 No authentication required - this is public reference information.
 """
-from typing import Optional, Literal
+
+from typing import Literal
 
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import select, func, or_
+from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.base import get_db
-from app.models.oil import Oil
 from app.models.additive import Additive
+from app.models.oil import Oil
 from app.schemas.resource import (
-    OilListResponse,
-    OilListItem,
+    AdditiveListItem,
     AdditiveListResponse,
-    AdditiveListItem
+    OilListItem,
+    OilListResponse,
 )
 
-router = APIRouter(
-    prefix="/api/v1",
-    tags=["resources"]
-)
+router = APIRouter(prefix="/api/v1", tags=["resources"])
 
 
 @router.get("/oils", response_model=OilListResponse)
 async def list_oils(
     limit: int = Query(50, ge=1, le=100, description="Items per page"),
     offset: int = Query(0, ge=0, description="Number of items to skip"),
-    search: Optional[str] = Query(None, description="Search by common name or INCI name"),
+    search: str | None = Query(None, description="Search by common name or INCI name"),
     sort_by: Literal["common_name", "ins_value", "iodine_value"] = Query(
-        "common_name",
-        description="Field to sort by"
+        "common_name", description="Field to sort by"
     ),
     sort_order: Literal["asc", "desc"] = Query("asc", description="Sort direction"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ) -> OilListResponse:
     """
     List available oils with pagination and filtering.
@@ -61,10 +58,7 @@ async def list_oils(
     if search:
         search_pattern = f"%{search}%"
         query = query.where(
-            or_(
-                Oil.common_name.ilike(search_pattern),
-                Oil.inci_name.ilike(search_pattern)
-            )
+            or_(Oil.common_name.ilike(search_pattern), Oil.inci_name.ilike(search_pattern))
         )
 
     # Get total count before pagination
@@ -91,7 +85,7 @@ async def list_oils(
         total_count=total_count,
         limit=limit,
         offset=offset,
-        has_more=(offset + limit) < total_count
+        has_more=(offset + limit) < total_count,
     )
 
 
@@ -99,18 +93,16 @@ async def list_oils(
 async def list_additives(
     limit: int = Query(50, ge=1, le=100, description="Items per page"),
     offset: int = Query(0, ge=0, description="Number of items to skip"),
-    search: Optional[str] = Query(None, description="Search by common name or INCI name"),
-    confidence: Optional[Literal["high", "medium", "low"]] = Query(
-        None,
-        description="Filter by confidence level"
+    search: str | None = Query(None, description="Search by common name or INCI name"),
+    confidence: Literal["high", "medium", "low"] | None = Query(
+        None, description="Filter by confidence level"
     ),
     verified_only: bool = Query(False, description="Only show MGA-verified additives"),
     sort_by: Literal["common_name", "confidence_level"] = Query(
-        "common_name",
-        description="Field to sort by"
+        "common_name", description="Field to sort by"
     ),
     sort_order: Literal["asc", "desc"] = Query("asc", description="Sort direction"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ) -> AdditiveListResponse:
     """
     List available additives with pagination and filtering.
@@ -138,8 +130,7 @@ async def list_additives(
         search_pattern = f"%{search}%"
         query = query.where(
             or_(
-                Additive.common_name.ilike(search_pattern),
-                Additive.inci_name.ilike(search_pattern)
+                Additive.common_name.ilike(search_pattern), Additive.inci_name.ilike(search_pattern)
             )
         )
 
@@ -149,7 +140,7 @@ async def list_additives(
 
     # Apply verified filter
     if verified_only:
-        query = query.where(Additive.verified_by_mga == True)
+        query = query.where(Additive.verified_by_mga)
 
     # Get total count before pagination
     count_query = select(func.count()).select_from(query.subquery())
@@ -175,5 +166,5 @@ async def list_additives(
         total_count=total_count,
         limit=limit,
         offset=offset,
-        has_more=(offset + limit) < total_count
+        has_more=(offset + limit) < total_count,
     )

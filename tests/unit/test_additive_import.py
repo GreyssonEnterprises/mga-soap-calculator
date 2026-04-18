@@ -10,8 +10,10 @@ Tests validate:
 - Idempotency (re-import doesn't duplicate data)
 - Warning flag mapping
 """
+
+from unittest.mock import MagicMock
+
 import pytest
-from unittest.mock import Mock, patch, MagicMock
 from sqlalchemy.orm import Session
 
 
@@ -26,13 +28,10 @@ def sample_additive_json():
         "preparation": "Warm honey slightly if crystallized",
         "mixing_tips": "Mix thoroughly into oils before adding lye",
         "category": "lather_booster",
-        "effects": {
-            "bubbly_lather": 5.0,
-            "bar_longevity": -2.0
-        },
+        "effects": {"bubbly_lather": 5.0, "bar_longevity": -2.0},
         "warnings": ["accelerates trace", "causes overheating"],
         "confidence": "high",
-        "mga_verified": True
+        "mga_verified": True,
     }
 
 
@@ -55,10 +54,12 @@ class TestJSONParsing:
         """
         from scripts.import_additives_extended import load_additives_json
 
-        data = load_additives_json('working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json')
+        data = load_additives_json(
+            "working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json"
+        )
 
         assert isinstance(data, dict)
-        assert 'additives' in data or isinstance(data, list)
+        assert "additives" in data or isinstance(data, list)
 
     @pytest.skip("TDD: RED phase - import script doesn't exist yet")
     def test_parse_additive_entry(self, sample_additive_json):
@@ -71,12 +72,12 @@ class TestJSONParsing:
 
         result = parse_additive_entry(sample_additive_json)
 
-        assert result['common_name'] == 'Honey'
-        assert result['inci_name'] == 'Mel'
-        assert result['when_to_add'] == 'to oils'
-        assert result['category'] == 'lather_booster'
-        assert result['confidence_level'] == 'high'
-        assert result['verified_by_mga'] is True
+        assert result["common_name"] == "Honey"
+        assert result["inci_name"] == "Mel"
+        assert result["when_to_add"] == "to oils"
+        assert result["category"] == "lather_booster"
+        assert result["confidence_level"] == "high"
+        assert result["verified_by_mga"] is True
 
 
 class TestUsageRateConversion:
@@ -169,7 +170,7 @@ class TestWarningFlagMapping:
         warnings = ["accelerates trace", "causes overheating"]
         flags = map_warning_flags(warnings)
 
-        assert flags['accelerates_trace'] is True
+        assert flags["accelerates_trace"] is True
 
     @pytest.skip("TDD: RED phase - import script doesn't exist yet")
     def test_map_causes_overheating_warning(self):
@@ -183,7 +184,7 @@ class TestWarningFlagMapping:
         warnings = ["causes overheating"]
         flags = map_warning_flags(warnings)
 
-        assert flags['causes_overheating'] is True
+        assert flags["causes_overheating"] is True
 
     @pytest.skip("TDD: RED phase - import script doesn't exist yet")
     def test_map_can_be_scratchy_warning(self):
@@ -197,7 +198,7 @@ class TestWarningFlagMapping:
         warnings = ["can be scratchy"]
         flags = map_warning_flags(warnings)
 
-        assert flags['can_be_scratchy'] is True
+        assert flags["can_be_scratchy"] is True
 
     @pytest.skip("TDD: RED phase - import script doesn't exist yet")
     def test_map_turns_brown_warning(self):
@@ -211,7 +212,7 @@ class TestWarningFlagMapping:
         warnings = ["turns brown"]
         flags = map_warning_flags(warnings)
 
-        assert flags['turns_brown'] is True
+        assert flags["turns_brown"] is True
 
     @pytest.skip("TDD: RED phase - import script doesn't exist yet")
     def test_map_multiple_warnings(self):
@@ -225,10 +226,10 @@ class TestWarningFlagMapping:
         warnings = ["accelerates trace", "can be scratchy", "turns brown"]
         flags = map_warning_flags(warnings)
 
-        assert flags['accelerates_trace'] is True
-        assert flags['can_be_scratchy'] is True
-        assert flags['turns_brown'] is True
-        assert flags['causes_overheating'] is False  # Not in list
+        assert flags["accelerates_trace"] is True
+        assert flags["can_be_scratchy"] is True
+        assert flags["turns_brown"] is True
+        assert flags["causes_overheating"] is False  # Not in list
 
     @pytest.skip("TDD: RED phase - import script doesn't exist yet")
     def test_map_no_warnings(self):
@@ -242,10 +243,10 @@ class TestWarningFlagMapping:
         warnings = []
         flags = map_warning_flags(warnings)
 
-        assert flags['accelerates_trace'] is False
-        assert flags['causes_overheating'] is False
-        assert flags['can_be_scratchy'] is False
-        assert flags['turns_brown'] is False
+        assert flags["accelerates_trace"] is False
+        assert flags["causes_overheating"] is False
+        assert flags["can_be_scratchy"] is False
+        assert flags["turns_brown"] is False
 
 
 class TestDatabaseInsertion:
@@ -274,10 +275,11 @@ class TestDatabaseInsertion:
         THEN: Should update existing record, not create duplicate
         """
         from scripts.import_additives_extended import create_or_update_additive
+
         from app.models.additive import Additive
 
         # Mock existing additive query
-        existing = Additive(id='honey', common_name='Old Honey')
+        existing = Additive(id="honey", common_name="Old Honey")
         mock_db_session.query.return_value.filter.return_value.first.return_value = existing
 
         create_or_update_additive(mock_db_session, sample_additive_json)
@@ -319,7 +321,7 @@ class TestBatchImport:
 
         count = import_all_additives(
             mock_db_session,
-            'working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json'
+            "working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json",
         )
 
         # Should import 19 additives per spec
@@ -336,7 +338,7 @@ class TestBatchImport:
 
         import_all_additives(
             mock_db_session,
-            'working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json'
+            "working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json",
         )
 
         # Should commit once after all imports
@@ -353,13 +355,13 @@ class TestBatchImport:
 
         import_all_additives(
             mock_db_session,
-            'working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json'
+            "working/user-feedback/additive-calculator-feature-request/additives-usage-reference.json",
         )
 
         captured = capsys.readouterr()
 
         # Should print progress
-        assert 'imported' in captured.out.lower() or 'importing' in captured.out.lower()
+        assert "imported" in captured.out.lower() or "importing" in captured.out.lower()
 
 
 class TestIDGeneration:
@@ -403,8 +405,8 @@ class TestIDGeneration:
         result = generate_additive_id("Salt (Sea Salt)")
 
         # Should remove or replace special characters
-        assert '(' not in result
-        assert ')' not in result
+        assert "(" not in result
+        assert ")" not in result
 
 
 class TestDataValidation:

@@ -4,13 +4,13 @@ Unit tests for oils validation logic.
 Tests validate scientific ranges and data quality requirements
 for oil import process, adjusted for real-world data including waxes and exotic oils.
 """
-import pytest
+
 from scripts.import_oils_database import (
-    validate_sap_naoh_range,
-    validate_sap_koh_range,
     validate_fatty_acids_sum,
-    validate_quality_metrics_range,
     validate_oil_data,
+    validate_quality_metrics_range,
+    validate_sap_koh_range,
+    validate_sap_naoh_range,
 )
 
 
@@ -65,28 +65,52 @@ class TestFattyAcidValidation:
     def test_validate_fatty_acids_sum_valid(self):
         """Fatty acids summing to 30-105% should pass (realistic range for exotic oils/waxes)"""
         fatty_acids_99 = {
-            "lauric": 0, "myristic": 0, "palmitic": 13, "stearic": 4,
-            "oleic": 71, "linoleic": 10, "linolenic": 1, "ricinoleic": 0
+            "lauric": 0,
+            "myristic": 0,
+            "palmitic": 13,
+            "stearic": 4,
+            "oleic": 71,
+            "linoleic": 10,
+            "linolenic": 1,
+            "ricinoleic": 0,
         }  # Sum = 99%
         assert validate_fatty_acids_sum(fatty_acids_99, "test_oil") == (True, "")
 
         fatty_acids_38 = {
-            "lauric": 5, "myristic": 5, "palmitic": 5, "stearic": 5,
-            "oleic": 8, "linoleic": 8, "linolenic": 2, "ricinoleic": 0
+            "lauric": 5,
+            "myristic": 5,
+            "palmitic": 5,
+            "stearic": 5,
+            "oleic": 8,
+            "linoleic": 8,
+            "linolenic": 2,
+            "ricinoleic": 0,
         }  # Sum = 38% (some exotic oils)
         assert validate_fatty_acids_sum(fatty_acids_38, "test_oil") == (True, "")
 
         fatty_acids_104 = {
-            "lauric": 20, "myristic": 20, "palmitic": 20, "stearic": 20,
-            "oleic": 10, "linoleic": 10, "linolenic": 3, "ricinoleic": 1
+            "lauric": 20,
+            "myristic": 20,
+            "palmitic": 20,
+            "stearic": 20,
+            "oleic": 10,
+            "linoleic": 10,
+            "linolenic": 3,
+            "ricinoleic": 1,
         }  # Sum = 104% (measurement variation)
         assert validate_fatty_acids_sum(fatty_acids_104, "test_oil") == (True, "")
 
     def test_validate_fatty_acids_sum_too_low(self):
         """Fatty acids summing below 30% should fail"""
         fatty_acids_low = {
-            "lauric": 5, "myristic": 3, "palmitic": 5, "stearic": 3,
-            "oleic": 5, "linoleic": 3, "linolenic": 0, "ricinoleic": 0
+            "lauric": 5,
+            "myristic": 3,
+            "palmitic": 5,
+            "stearic": 3,
+            "oleic": 5,
+            "linoleic": 3,
+            "linolenic": 0,
+            "ricinoleic": 0,
         }  # Sum = 24%
         is_valid, error = validate_fatty_acids_sum(fatty_acids_low, "test_oil")
         assert is_valid is False
@@ -95,8 +119,14 @@ class TestFattyAcidValidation:
     def test_validate_fatty_acids_sum_too_high(self):
         """Fatty acids summing above 105% should fail"""
         fatty_acids_high = {
-            "lauric": 30, "myristic": 25, "palmitic": 20, "stearic": 15,
-            "oleic": 15, "linoleic": 10, "linolenic": 5, "ricinoleic": 0
+            "lauric": 30,
+            "myristic": 25,
+            "palmitic": 20,
+            "stearic": 15,
+            "oleic": 15,
+            "linoleic": 10,
+            "linolenic": 5,
+            "ricinoleic": 0,
         }  # Sum = 120%
         is_valid, error = validate_fatty_acids_sum(fatty_acids_high, "test_oil")
         assert is_valid is False
@@ -105,8 +135,14 @@ class TestFattyAcidValidation:
     def test_pine_tar_special_case(self):
         """Pine Tar can have zero fatty acids (resin-based)"""
         fatty_acids_zero = {
-            "lauric": 0, "myristic": 0, "palmitic": 0, "stearic": 0,
-            "oleic": 0, "linoleic": 0, "linolenic": 0, "ricinoleic": 0
+            "lauric": 0,
+            "myristic": 0,
+            "palmitic": 0,
+            "stearic": 0,
+            "oleic": 0,
+            "linoleic": 0,
+            "linolenic": 0,
+            "ricinoleic": 0,
         }
         is_valid, error = validate_fatty_acids_sum(fatty_acids_zero, "pine_tar")
         assert is_valid is True
@@ -119,26 +155,38 @@ class TestQualityMetricsValidation:
     def test_validate_quality_metrics_range_valid(self):
         """Quality metrics in 0-100 range should pass"""
         quality_metrics = {
-            "hardness": 17.0, "cleansing": 0.0, "conditioning": 82.0,
-            "bubbly_lather": 0.0, "creamy_lather": 17.0,
-            "longevity": 17.0, "stability": 82.0
+            "hardness": 17.0,
+            "cleansing": 0.0,
+            "conditioning": 82.0,
+            "bubbly_lather": 0.0,
+            "creamy_lather": 17.0,
+            "longevity": 17.0,
+            "stability": 82.0,
         }
         assert validate_quality_metrics_range(quality_metrics) == (True, "")
 
         # Pure fatty acids can have 100
         quality_metrics_100 = {
-            "hardness": 100.0, "cleansing": 100.0, "conditioning": 0.0,
-            "bubbly_lather": 100.0, "creamy_lather": 0.0,
-            "longevity": 100.0, "stability": 0.0
+            "hardness": 100.0,
+            "cleansing": 100.0,
+            "conditioning": 0.0,
+            "bubbly_lather": 100.0,
+            "creamy_lather": 0.0,
+            "longevity": 100.0,
+            "stability": 0.0,
         }
         assert validate_quality_metrics_range(quality_metrics_100) == (True, "")
 
     def test_validate_quality_metrics_range_negative(self):
         """Negative quality metrics should fail"""
         quality_metrics = {
-            "hardness": -5.0, "cleansing": 0.0, "conditioning": 82.0,
-            "bubbly_lather": 0.0, "creamy_lather": 17.0,
-            "longevity": 17.0, "stability": 82.0
+            "hardness": -5.0,
+            "cleansing": 0.0,
+            "conditioning": 82.0,
+            "bubbly_lather": 0.0,
+            "creamy_lather": 17.0,
+            "longevity": 17.0,
+            "stability": 82.0,
         }
         is_valid, error = validate_quality_metrics_range(quality_metrics)
         assert is_valid is False
@@ -147,9 +195,13 @@ class TestQualityMetricsValidation:
     def test_validate_quality_metrics_range_too_high(self):
         """Quality metrics above 100 should fail"""
         quality_metrics = {
-            "hardness": 150.0, "cleansing": 0.0, "conditioning": 82.0,
-            "bubbly_lather": 0.0, "creamy_lather": 17.0,
-            "longevity": 17.0, "stability": 82.0
+            "hardness": 150.0,
+            "cleansing": 0.0,
+            "conditioning": 82.0,
+            "bubbly_lather": 0.0,
+            "creamy_lather": 17.0,
+            "longevity": 17.0,
+            "stability": 82.0,
         }
         is_valid, error = validate_quality_metrics_range(quality_metrics)
         assert is_valid is False
@@ -170,14 +222,24 @@ class TestOilDataValidation:
             "iodine_value": 81.0,
             "ins_value": 109.0,
             "fatty_acids": {
-                "lauric": 0, "myristic": 0, "palmitic": 13, "stearic": 4,
-                "oleic": 71, "linoleic": 10, "linolenic": 1, "ricinoleic": 0
+                "lauric": 0,
+                "myristic": 0,
+                "palmitic": 13,
+                "stearic": 4,
+                "oleic": 71,
+                "linoleic": 10,
+                "linolenic": 1,
+                "ricinoleic": 0,
             },
             "quality_contributions": {
-                "hardness": 17.0, "cleansing": 0.0, "conditioning": 82.0,
-                "bubbly_lather": 0.0, "creamy_lather": 17.0,
-                "longevity": 17.0, "stability": 82.0
-            }
+                "hardness": 17.0,
+                "cleansing": 0.0,
+                "conditioning": 82.0,
+                "bubbly_lather": 0.0,
+                "creamy_lather": 17.0,
+                "longevity": 17.0,
+                "stability": 82.0,
+            },
         }
         is_valid, error = validate_oil_data("olive_oil", oil_data)
         assert is_valid is True
@@ -194,14 +256,24 @@ class TestOilDataValidation:
             "iodine_value": 81.0,
             "ins_value": 109.0,
             "fatty_acids": {
-                "lauric": 0, "myristic": 0, "palmitic": 13, "stearic": 4,
-                "oleic": 71, "linoleic": 10, "linolenic": 1, "ricinoleic": 0
+                "lauric": 0,
+                "myristic": 0,
+                "palmitic": 13,
+                "stearic": 4,
+                "oleic": 71,
+                "linoleic": 10,
+                "linolenic": 1,
+                "ricinoleic": 0,
             },
             "quality_contributions": {
-                "hardness": 17.0, "cleansing": 0.0, "conditioning": 82.0,
-                "bubbly_lather": 0.0, "creamy_lather": 17.0,
-                "longevity": 17.0, "stability": 82.0
-            }
+                "hardness": 17.0,
+                "cleansing": 0.0,
+                "conditioning": 82.0,
+                "bubbly_lather": 0.0,
+                "creamy_lather": 17.0,
+                "longevity": 17.0,
+                "stability": 82.0,
+            },
         }
         is_valid, error = validate_oil_data("invalid_oil", oil_data)
         assert is_valid is False
@@ -218,14 +290,24 @@ class TestOilDataValidation:
             "iodine_value": 81.0,
             "ins_value": 109.0,
             "fatty_acids": {
-                "lauric": 5, "myristic": 3, "palmitic": 5, "stearic": 3,
-                "oleic": 3, "linoleic": 3, "linolenic": 2, "ricinoleic": 0
+                "lauric": 5,
+                "myristic": 3,
+                "palmitic": 5,
+                "stearic": 3,
+                "oleic": 3,
+                "linoleic": 3,
+                "linolenic": 2,
+                "ricinoleic": 0,
             },  # Sum = 24% (too low, below 30%)
             "quality_contributions": {
-                "hardness": 17.0, "cleansing": 0.0, "conditioning": 82.0,
-                "bubbly_lather": 0.0, "creamy_lather": 17.0,
-                "longevity": 17.0, "stability": 82.0
-            }
+                "hardness": 17.0,
+                "cleansing": 0.0,
+                "conditioning": 82.0,
+                "bubbly_lather": 0.0,
+                "creamy_lather": 17.0,
+                "longevity": 17.0,
+                "stability": 82.0,
+            },
         }
         is_valid, error = validate_oil_data("invalid_oil", oil_data)
         assert is_valid is False

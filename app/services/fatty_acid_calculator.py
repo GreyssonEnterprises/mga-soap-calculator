@@ -6,13 +6,12 @@ Fatty acids tracked per spec Section 5.4:
 - Saturated: Lauric, Myristic, Palmitic, Stearic
 - Unsaturated: Ricinoleic, Oleic, Linoleic, Linolenic
 """
-from typing import List, Dict
 
 
 class OilFattyAcids:
     """Oil with fatty acid profile"""
 
-    def __init__(self, percentage: float, fatty_acids: Dict[str, float]):
+    def __init__(self, percentage: float, fatty_acids: dict[str, float]):
         self.percentage = percentage
         self.fatty_acids = fatty_acids
 
@@ -22,15 +21,15 @@ class FattyAcidProfile:
 
     def __init__(self, **acids):
         # Saturated
-        self.lauric = round(acids.get('lauric', 0), 1)
-        self.myristic = round(acids.get('myristic', 0), 1)
-        self.palmitic = round(acids.get('palmitic', 0), 1)
-        self.stearic = round(acids.get('stearic', 0), 1)
+        self.lauric = round(acids.get("lauric", 0), 1)
+        self.myristic = round(acids.get("myristic", 0), 1)
+        self.palmitic = round(acids.get("palmitic", 0), 1)
+        self.stearic = round(acids.get("stearic", 0), 1)
         # Unsaturated
-        self.ricinoleic = round(acids.get('ricinoleic', 0), 1)
-        self.oleic = round(acids.get('oleic', 0), 1)
-        self.linoleic = round(acids.get('linoleic', 0), 1)
-        self.linolenic = round(acids.get('linolenic', 0), 1)
+        self.ricinoleic = round(acids.get("ricinoleic", 0), 1)
+        self.oleic = round(acids.get("oleic", 0), 1)
+        self.linoleic = round(acids.get("linoleic", 0), 1)
+        self.linolenic = round(acids.get("linolenic", 0), 1)
 
     @property
     def saturated_total(self) -> float:
@@ -50,7 +49,7 @@ class FattyAcidProfile:
         return f"{sat}:{unsat}"
 
 
-def calculate_fatty_acid_profile(oils: List[OilFattyAcids]) -> FattyAcidProfile:
+def calculate_fatty_acid_profile(oils: list[OilFattyAcids]) -> FattyAcidProfile:
     """
     Calculate weighted average fatty acid profile.
 
@@ -59,14 +58,14 @@ def calculate_fatty_acid_profile(oils: List[OilFattyAcids]) -> FattyAcidProfile:
     TDD Evidence: Profile should sum to ~100% (97-100% due to minor acids)
     """
     acids = {
-        'lauric': 0.0,
-        'myristic': 0.0,
-        'palmitic': 0.0,
-        'stearic': 0.0,
-        'ricinoleic': 0.0,
-        'oleic': 0.0,
-        'linoleic': 0.0,
-        'linolenic': 0.0
+        "lauric": 0.0,
+        "myristic": 0.0,
+        "palmitic": 0.0,
+        "stearic": 0.0,
+        "ricinoleic": 0.0,
+        "oleic": 0.0,
+        "linoleic": 0.0,
+        "linolenic": 0.0,
     }
 
     for oil in oils:

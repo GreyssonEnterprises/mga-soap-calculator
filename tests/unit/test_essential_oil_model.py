@@ -10,8 +10,10 @@ Tests validate:
 - Usage rate validation (0.025% - 3.0%)
 - Confidence level and verification flags
 """
+
 import pytest
 from sqlalchemy import inspect
+
 from app.models.essential_oil import EssentialOil
 
 
@@ -28,8 +30,8 @@ class TestEssentialOilModelStructure:
         inspector = inspect(EssentialOil)
         columns = {col.name: col for col in inspector.columns}
 
-        assert 'id' in columns
-        assert columns['id'].primary_key is True
+        assert "id" in columns
+        assert columns["id"].primary_key is True
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
     def test_has_name_field(self):
@@ -41,8 +43,8 @@ class TestEssentialOilModelStructure:
         inspector = inspect(EssentialOil)
         columns = {col.name: col for col in inspector.columns}
 
-        assert 'name' in columns
-        assert columns['name'].nullable is False
+        assert "name" in columns
+        assert columns["name"].nullable is False
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
     def test_has_botanical_name_field(self):
@@ -54,8 +56,8 @@ class TestEssentialOilModelStructure:
         inspector = inspect(EssentialOil)
         columns = {col.name: col for col in inspector.columns}
 
-        assert 'botanical_name' in columns
-        assert columns['botanical_name'].nullable is False
+        assert "botanical_name" in columns
+        assert columns["botanical_name"].nullable is False
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
     def test_has_max_usage_rate_pct_field(self):
@@ -67,9 +69,9 @@ class TestEssentialOilModelStructure:
         inspector = inspect(EssentialOil)
         columns = {col.name: col for col in inspector.columns}
 
-        assert 'max_usage_rate_pct' in columns
-        assert columns['max_usage_rate_pct'].type.python_type == float
-        assert columns['max_usage_rate_pct'].nullable is False
+        assert "max_usage_rate_pct" in columns
+        assert columns["max_usage_rate_pct"].type.python_type == float
+        assert columns["max_usage_rate_pct"].nullable is False
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
     def test_has_scent_profile_field(self):
@@ -81,8 +83,8 @@ class TestEssentialOilModelStructure:
         inspector = inspect(EssentialOil)
         columns = {col.name: col for col in inspector.columns}
 
-        assert 'scent_profile' in columns
-        assert columns['scent_profile'].nullable is True
+        assert "scent_profile" in columns
+        assert columns["scent_profile"].nullable is True
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
     def test_has_blends_with_field(self):
@@ -94,9 +96,9 @@ class TestEssentialOilModelStructure:
         inspector = inspect(EssentialOil)
         columns = {col.name: col for col in inspector.columns}
 
-        assert 'blends_with' in columns
+        assert "blends_with" in columns
         # JSONB field for array of string recommendations
-        assert columns['blends_with'].nullable is True
+        assert columns["blends_with"].nullable is True
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
     def test_has_note_field(self):
@@ -108,8 +110,8 @@ class TestEssentialOilModelStructure:
         inspector = inspect(EssentialOil)
         columns = {col.name: col for col in inspector.columns}
 
-        assert 'note' in columns
-        assert hasattr(columns['note'].type, 'length')
+        assert "note" in columns
+        assert hasattr(columns["note"].type, "length")
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
     def test_has_category_field(self):
@@ -121,8 +123,8 @@ class TestEssentialOilModelStructure:
         inspector = inspect(EssentialOil)
         columns = {col.name: col for col in inspector.columns}
 
-        assert 'category' in columns
-        assert hasattr(columns['category'].type, 'length')
+        assert "category" in columns
+        assert hasattr(columns["category"].type, "length")
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
     def test_has_warnings_field(self):
@@ -134,8 +136,8 @@ class TestEssentialOilModelStructure:
         inspector = inspect(EssentialOil)
         columns = {col.name: col for col in inspector.columns}
 
-        assert 'warnings' in columns
-        assert columns['warnings'].nullable is True
+        assert "warnings" in columns
+        assert columns["warnings"].nullable is True
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
     def test_has_color_effect_field(self):
@@ -147,8 +149,8 @@ class TestEssentialOilModelStructure:
         inspector = inspect(EssentialOil)
         columns = {col.name: col for col in inspector.columns}
 
-        assert 'color_effect' in columns
-        assert columns['color_effect'].nullable is True
+        assert "color_effect" in columns
+        assert columns["color_effect"].nullable is True
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
     def test_has_confidence_level_field(self):
@@ -160,8 +162,8 @@ class TestEssentialOilModelStructure:
         inspector = inspect(EssentialOil)
         columns = {col.name: col for col in inspector.columns}
 
-        assert 'confidence_level' in columns
-        assert columns['confidence_level'].nullable is False
+        assert "confidence_level" in columns
+        assert columns["confidence_level"].nullable is False
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
     def test_has_verified_by_mga_field(self):
@@ -173,8 +175,8 @@ class TestEssentialOilModelStructure:
         inspector = inspect(EssentialOil)
         columns = {col.name: col for col in inspector.columns}
 
-        assert 'verified_by_mga' in columns
-        assert columns['verified_by_mga'].type.python_type == bool
+        assert "verified_by_mga" in columns
+        assert columns["verified_by_mga"].type.python_type == bool
 
 
 class TestEssentialOilInstanceCreation:
@@ -184,18 +186,18 @@ class TestEssentialOilInstanceCreation:
     def sample_essential_oil_data(self):
         """Sample data for testing essential oil creation"""
         return {
-            'id': 'lavender',
-            'name': 'Lavender',
-            'botanical_name': 'Lavandula angustifolia',
-            'max_usage_rate_pct': 3.0,
-            'scent_profile': 'Floral, sweet, herbaceous',
-            'blends_with': ['Bergamot', 'Clary Sage', 'Geranium', 'Patchouli'],
-            'note': 'Middle',
-            'category': 'floral',
-            'warnings': None,
-            'color_effect': 'May slightly darken soap',
-            'confidence_level': 'high',
-            'verified_by_mga': True,
+            "id": "lavender",
+            "name": "Lavender",
+            "botanical_name": "Lavandula angustifolia",
+            "max_usage_rate_pct": 3.0,
+            "scent_profile": "Floral, sweet, herbaceous",
+            "blends_with": ["Bergamot", "Clary Sage", "Geranium", "Patchouli"],
+            "note": "Middle",
+            "category": "floral",
+            "warnings": None,
+            "color_effect": "May slightly darken soap",
+            "confidence_level": "high",
+            "verified_by_mga": True,
         }
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
@@ -207,17 +209,17 @@ class TestEssentialOilInstanceCreation:
         """
         eo = EssentialOil(**sample_essential_oil_data)
 
-        assert eo.id == 'lavender'
-        assert eo.name == 'Lavender'
-        assert eo.botanical_name == 'Lavandula angustifolia'
+        assert eo.id == "lavender"
+        assert eo.name == "Lavender"
+        assert eo.botanical_name == "Lavandula angustifolia"
         assert eo.max_usage_rate_pct == 3.0
-        assert eo.scent_profile == 'Floral, sweet, herbaceous'
-        assert eo.blends_with == ['Bergamot', 'Clary Sage', 'Geranium', 'Patchouli']
-        assert eo.note == 'Middle'
-        assert eo.category == 'floral'
+        assert eo.scent_profile == "Floral, sweet, herbaceous"
+        assert eo.blends_with == ["Bergamot", "Clary Sage", "Geranium", "Patchouli"]
+        assert eo.note == "Middle"
+        assert eo.category == "floral"
         assert eo.warnings is None
-        assert eo.color_effect == 'May slightly darken soap'
-        assert eo.confidence_level == 'high'
+        assert eo.color_effect == "May slightly darken soap"
+        assert eo.confidence_level == "high"
         assert eo.verified_by_mga is True
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
@@ -228,19 +230,19 @@ class TestEssentialOilInstanceCreation:
         THEN: Should create instance with required fields only
         """
         eo = EssentialOil(
-            id='test',
-            name='Test Oil',
-            botanical_name='Testus oilicus',
+            id="test",
+            name="Test Oil",
+            botanical_name="Testus oilicus",
             max_usage_rate_pct=2.0,
-            confidence_level='low',
+            confidence_level="low",
             verified_by_mga=False,
         )
 
-        assert eo.id == 'test'
-        assert eo.name == 'Test Oil'
-        assert eo.botanical_name == 'Testus oilicus'
+        assert eo.id == "test"
+        assert eo.name == "Test Oil"
+        assert eo.botanical_name == "Testus oilicus"
         assert eo.max_usage_rate_pct == 2.0
-        assert eo.confidence_level == 'low'
+        assert eo.confidence_level == "low"
         assert eo.verified_by_mga is False
 
 
@@ -255,11 +257,11 @@ class TestEssentialOilUsageRateValidation:
         THEN: Should accept minimum safe usage rate (Rose Otto example)
         """
         eo = EssentialOil(
-            id='rose_otto',
-            name='Rose Otto',
-            botanical_name='Rosa damascena',
+            id="rose_otto",
+            name="Rose Otto",
+            botanical_name="Rosa damascena",
             max_usage_rate_pct=0.025,  # Very low - expensive and potent
-            confidence_level='high',
+            confidence_level="high",
             verified_by_mga=True,
         )
 
@@ -273,11 +275,11 @@ class TestEssentialOilUsageRateValidation:
         THEN: Should accept maximum safe usage rate
         """
         eo = EssentialOil(
-            id='test_max',
-            name='Test Max',
-            botanical_name='Testus maximus',
+            id="test_max",
+            name="Test Max",
+            botanical_name="Testus maximus",
             max_usage_rate_pct=3.0,  # Maximum for most EOs
-            confidence_level='medium',
+            confidence_level="medium",
             verified_by_mga=False,
         )
 
@@ -292,20 +294,20 @@ class TestEssentialOilUsageRateValidation:
         """
         # Typical usage rates from CPSR validation
         rates = [
-            ('lavender', 3.0),
-            ('peppermint', 2.0),
-            ('tea_tree', 2.5),
-            ('eucalyptus', 1.5),
-            ('rose_otto', 0.025),
+            ("lavender", 3.0),
+            ("peppermint", 2.0),
+            ("tea_tree", 2.5),
+            ("eucalyptus", 1.5),
+            ("rose_otto", 0.025),
         ]
 
         for eo_id, rate in rates:
             eo = EssentialOil(
                 id=eo_id,
                 name=eo_id.title(),
-                botanical_name=f'{eo_id} botanicus',
+                botanical_name=f"{eo_id} botanicus",
                 max_usage_rate_pct=rate,
-                confidence_level='high',
+                confidence_level="high",
                 verified_by_mga=True,
             )
             assert eo.max_usage_rate_pct == rate
@@ -321,14 +323,14 @@ class TestEssentialOilJSONBFields:
         WHEN: Creating instance
         THEN: Should store array in JSONB field
         """
-        blends = ['Bergamot', 'Cedarwood', 'Geranium', 'Rose']
+        blends = ["Bergamot", "Cedarwood", "Geranium", "Rose"]
         eo = EssentialOil(
-            id='patchouli',
-            name='Patchouli',
-            botanical_name='Pogostemon cablin',
+            id="patchouli",
+            name="Patchouli",
+            botanical_name="Pogostemon cablin",
             max_usage_rate_pct=3.0,
             blends_with=blends,
-            confidence_level='high',
+            confidence_level="high",
             verified_by_mga=True,
         )
 
@@ -344,12 +346,12 @@ class TestEssentialOilJSONBFields:
         THEN: Should accept empty array
         """
         eo = EssentialOil(
-            id='test_empty',
-            name='Test Empty',
-            botanical_name='Testus emptyus',
+            id="test_empty",
+            name="Test Empty",
+            botanical_name="Testus emptyus",
             max_usage_rate_pct=2.0,
             blends_with=[],
-            confidence_level='low',
+            confidence_level="low",
             verified_by_mga=False,
         )
 
@@ -363,12 +365,12 @@ class TestEssentialOilJSONBFields:
         THEN: Should accept None for blends_with
         """
         eo = EssentialOil(
-            id='test_null',
-            name='Test Null',
-            botanical_name='Testus nullus',
+            id="test_null",
+            name="Test Null",
+            botanical_name="Testus nullus",
             max_usage_rate_pct=2.0,
             blends_with=None,
-            confidence_level='low',
+            confidence_level="low",
             verified_by_mga=False,
         )
 
@@ -385,16 +387,16 @@ class TestEssentialOilCategoryValidation:
         WHEN: Creating instances
         THEN: Should accept all valid category values
         """
-        valid_categories = ['citrus', 'floral', 'herbal', 'woodsy', 'earthy', 'spice']
+        valid_categories = ["citrus", "floral", "herbal", "woodsy", "earthy", "spice"]
 
         for idx, category in enumerate(valid_categories):
             eo = EssentialOil(
-                id=f'test_{idx}',
-                name=f'Test {category}',
-                botanical_name=f'Testus {category}',
+                id=f"test_{idx}",
+                name=f"Test {category}",
+                botanical_name=f"Testus {category}",
                 max_usage_rate_pct=2.0,
                 category=category,
-                confidence_level='medium',
+                confidence_level="medium",
                 verified_by_mga=False,
             )
             assert eo.category == category
@@ -411,19 +413,19 @@ class TestEssentialOilNoteValidation:
         THEN: Should accept Top, Middle, Base notes
         """
         notes = [
-            ('bergamot', 'Top'),
-            ('lavender', 'Middle'),
-            ('patchouli', 'Base'),
+            ("bergamot", "Top"),
+            ("lavender", "Middle"),
+            ("patchouli", "Base"),
         ]
 
         for eo_id, note in notes:
             eo = EssentialOil(
                 id=eo_id,
                 name=eo_id.title(),
-                botanical_name=f'{eo_id} botanicus',
+                botanical_name=f"{eo_id} botanicus",
                 max_usage_rate_pct=2.5,
                 note=note,
-                confidence_level='high',
+                confidence_level="high",
                 verified_by_mga=True,
             )
             assert eo.note == note

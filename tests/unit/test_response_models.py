@@ -6,7 +6,7 @@ TDD Evidence:
 - Tests validate response schema against spec Section 3.1
 - Covers complete calculation response structure
 """
-import pytest
+
 from datetime import datetime
 from uuid import uuid4
 
@@ -19,7 +19,7 @@ def test_oil_output_model():
         id="olive_oil",
         common_name="Olive Oil",  # Fixed: spec requires 'common_name' not 'name'
         weight_g=450.0,
-        percentage=45.0
+        percentage=45.0,
     )
 
     assert oil.id == "olive_oil"
@@ -39,7 +39,7 @@ def test_lye_output_model():
 
     lye = LyeOutput(
         naoh_weight_g=naoh_weight,  # Fixed: spec requires 'naoh_weight_g' not 'naoh_g'
-        koh_weight_g=koh_weight,     # Fixed: spec requires 'koh_weight_g' not 'koh_g'
+        koh_weight_g=koh_weight,  # Fixed: spec requires 'koh_weight_g' not 'koh_g'
         total_lye_g=142.6,
         naoh_percent=100.0,
         koh_percent=0.0,
@@ -50,7 +50,7 @@ def test_lye_output_model():
     )
 
     assert lye.naoh_weight_g == 142.6  # Fixed
-    assert lye.koh_weight_g == 0.0     # Fixed
+    assert lye.koh_weight_g == 0.0  # Fixed
     assert lye.total_lye_g == 142.6
     assert lye.naoh_percent == 100.0
     assert lye.koh_percent == 0.0
@@ -65,10 +65,7 @@ def test_additive_output_model():
     from app.schemas.responses import AdditiveOutput
 
     additive = AdditiveOutput(
-        id="kaolin_clay",
-        name="Kaolin Clay (White)",
-        weight_g=20.0,
-        percentage=2.0
+        id="kaolin_clay", name="Kaolin Clay (White)", weight_g=20.0, percentage=2.0
     )
 
     assert additive.id == "kaolin_clay"
@@ -79,7 +76,7 @@ def test_additive_output_model():
 
 def test_recipe_output_model():
     """Test RecipeOutput response model"""
-    from app.schemas.responses import RecipeOutput, OilOutput, LyeOutput, AdditiveOutput
+    from app.schemas.responses import LyeOutput, OilOutput, RecipeOutput
 
     lye_naoh_weight = 142.6
     lye_koh_weight = 0.0
@@ -89,24 +86,30 @@ def test_recipe_output_model():
     recipe = RecipeOutput(
         total_oil_weight_g=1000.0,
         oils=[
-            OilOutput(id="olive_oil", common_name="Olive Oil", weight_g=500.0, percentage=50.0)  # Fixed
+            OilOutput(
+                id="olive_oil", common_name="Olive Oil", weight_g=500.0, percentage=50.0
+            )  # Fixed
         ],
         lye=LyeOutput(
             naoh_weight_g=lye_naoh_weight,  # Fixed
-            koh_weight_g=lye_koh_weight,     # Fixed
+            koh_weight_g=lye_koh_weight,  # Fixed
             total_lye_g=142.6,
             naoh_percent=100.0,
             koh_percent=0.0,
             koh_purity=koh_purity,
             naoh_purity=naoh_purity,
-            pure_koh_equivalent_g=lye_koh_weight / (koh_purity / 100.0) if koh_purity else lye_koh_weight,
-            pure_naoh_equivalent_g=lye_naoh_weight / (naoh_purity / 100.0) if naoh_purity else lye_naoh_weight,
+            pure_koh_equivalent_g=lye_koh_weight / (koh_purity / 100.0)
+            if koh_purity
+            else lye_koh_weight,
+            pure_naoh_equivalent_g=lye_naoh_weight / (naoh_purity / 100.0)
+            if naoh_purity
+            else lye_naoh_weight,
         ),
         water_weight_g=289.5,
         water_method="lye_concentration",  # Fixed: Added missing field
-        water_method_value=33.0,           # Fixed: Added missing field
+        water_method_value=33.0,  # Fixed: Added missing field
         superfat_percent=5.0,
-        additives=[]
+        additives=[],
     )
 
     assert recipe.total_oil_weight_g == 1000.0
@@ -129,7 +132,7 @@ def test_quality_metrics_model():
         longevity=45.0,
         stability=52.0,
         iodine=67.8,
-        ins=148.5
+        ins=148.5,
     )
 
     assert metrics.hardness == 58.0
@@ -150,13 +153,9 @@ def test_additive_effect_model():
     effect = AdditiveEffect(
         additive_id="kaolin_clay",
         additive_name="Kaolin Clay (White)",
-        effects={
-            "hardness": 4.0,
-            "creamy_lather": 7.0,
-            "conditioning": 0.8
-        },
+        effects={"hardness": 4.0, "creamy_lather": 7.0, "conditioning": 0.8},
         confidence="high",
-        verified_by_mga=False
+        verified_by_mga=False,
     )
 
     assert effect.additive_id == "kaolin_clay"
@@ -179,7 +178,7 @@ def test_fatty_acid_profile_model():
         ricinoleic=0.0,
         oleic=52.3,
         linoleic=15.6,
-        linolenic=1.8
+        linolenic=1.8,
     )
 
     assert profile.lauric == 8.5
@@ -196,11 +195,7 @@ def test_saturated_unsaturated_ratio_model():
     """Test SaturatedUnsaturatedRatio response model"""
     from app.schemas.responses import SaturatedUnsaturatedRatio
 
-    ratio = SaturatedUnsaturatedRatio(
-        saturated=28.1,
-        unsaturated=69.7,
-        ratio="28:70"
-    )
+    ratio = SaturatedUnsaturatedRatio(saturated=28.1, unsaturated=69.7, ratio="28:70")
 
     assert ratio.saturated == 28.1
     assert ratio.unsaturated == 69.7
@@ -215,7 +210,7 @@ def test_warning_model():
         code="HIGH_SUPERFAT",
         message="Superfat >20% may produce soft, greasy bars",
         severity="warning",
-        details={"superfat_percent": 25.0}
+        details={"superfat_percent": 25.0},
     )
 
     assert warning.code == "HIGH_SUPERFAT"
@@ -228,13 +223,12 @@ def test_calculation_response_model_complete():
     """Test complete CalculationResponse model"""
     from app.schemas.responses import (
         CalculationResponse,
-        RecipeOutput,
-        OilOutput,
-        LyeOutput,
-        QualityMetrics,
         FattyAcidProfile,
+        LyeOutput,
+        OilOutput,
+        QualityMetrics,
+        RecipeOutput,
         SaturatedUnsaturatedRatio,
-        Warning
     )
 
     calculation_id = uuid4()
@@ -252,24 +246,30 @@ def test_calculation_response_model_complete():
         recipe=RecipeOutput(
             total_oil_weight_g=1000.0,
             oils=[
-                OilOutput(id="olive_oil", common_name="Olive Oil", weight_g=500.0, percentage=50.0)  # Fixed
+                OilOutput(
+                    id="olive_oil", common_name="Olive Oil", weight_g=500.0, percentage=50.0
+                )  # Fixed
             ],
             lye=LyeOutput(
                 naoh_weight_g=naoh_weight,  # Fixed
-                koh_weight_g=koh_weight,     # Fixed
+                koh_weight_g=koh_weight,  # Fixed
                 total_lye_g=142.6,
                 naoh_percent=100.0,
                 koh_percent=0.0,
                 koh_purity=koh_purity,
                 naoh_purity=naoh_purity,
-                pure_koh_equivalent_g=koh_weight / (koh_purity / 100.0) if koh_purity else koh_weight,
-                pure_naoh_equivalent_g=naoh_weight / (naoh_purity / 100.0) if naoh_purity else naoh_weight,
+                pure_koh_equivalent_g=koh_weight / (koh_purity / 100.0)
+                if koh_purity
+                else koh_weight,
+                pure_naoh_equivalent_g=naoh_weight / (naoh_purity / 100.0)
+                if naoh_purity
+                else naoh_weight,
             ),
             water_weight_g=289.5,
             water_method="lye_concentration",  # Fixed: Added missing field
-            water_method_value=33.0,           # Fixed: Added missing field
+            water_method_value=33.0,  # Fixed: Added missing field
             superfat_percent=5.0,
-            additives=[]
+            additives=[],
         ),
         quality_metrics=QualityMetrics(
             hardness=58.0,
@@ -280,7 +280,7 @@ def test_calculation_response_model_complete():
             longevity=45.0,
             stability=52.0,
             iodine=67.8,
-            ins=148.5
+            ins=148.5,
         ),
         quality_metrics_base=QualityMetrics(
             hardness=54.0,
@@ -291,7 +291,7 @@ def test_calculation_response_model_complete():
             longevity=45.0,
             stability=52.0,
             iodine=67.8,
-            ins=148.5
+            ins=148.5,
         ),
         additive_effects=[],
         fatty_acid_profile=FattyAcidProfile(
@@ -302,14 +302,12 @@ def test_calculation_response_model_complete():
             ricinoleic=0.0,
             oleic=52.3,
             linoleic=15.6,
-            linolenic=1.8
+            linolenic=1.8,
         ),
         saturated_unsaturated_ratio=SaturatedUnsaturatedRatio(
-            saturated=28.1,
-            unsaturated=69.7,
-            ratio="28:70"
+            saturated=28.1, unsaturated=69.7, ratio="28:70"
         ),
-        warnings=[]
+        warnings=[],
     )
 
     assert response.calculation_id == calculation_id
@@ -323,13 +321,13 @@ def test_calculation_response_model_complete():
 
 def test_error_response_model():
     """Test ErrorResponse model for error handling"""
-    from app.schemas.responses import ErrorResponse, ErrorDetail
+    from app.schemas.responses import ErrorDetail, ErrorResponse
 
     error = ErrorResponse(
         error=ErrorDetail(
             code="INVALID_OIL_PERCENTAGES",
             message="Oil percentages must sum to exactly 100%",
-            details={"calculated_sum": 99.5, "expected_sum": 100.0}
+            details={"calculated_sum": 99.5, "expected_sum": 100.0},
         )
     )
 

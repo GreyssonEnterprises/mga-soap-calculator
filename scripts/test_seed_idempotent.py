@@ -10,18 +10,19 @@ Tests:
 Usage:
     python scripts/test_seed_idempotent.py
 """
+
 import asyncio
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from sqlalchemy import select, func, delete
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy import delete, func, select
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.core.config import settings
-from app.models.oil import Oil
 from app.models.additive import Additive
+from app.models.oil import Oil
 from scripts.seed_database import seed_database
 
 
@@ -85,11 +86,9 @@ async def test_idempotency():
             async with async_session() as modify_session:
                 # Remove first 3 oils and 5 additives
                 await modify_session.execute(
-                    delete(Oil).where(Oil.id.in_(['olive_oil', 'coconut_oil', 'palm_oil']))
+                    delete(Oil).where(Oil.id.in_(["olive_oil", "coconut_oil", "palm_oil"]))
                 )
-                await modify_session.execute(
-                    delete(Additive).where(Additive.id.like('kaolin%'))
-                )
+                await modify_session.execute(delete(Additive).where(Additive.id.like("kaolin%")))
                 await modify_session.commit()
 
                 oils, additives = await count_records(modify_session)
@@ -118,6 +117,7 @@ async def test_idempotency():
     except Exception as e:
         print(f"\n✗ ERROR: {e}")
         import traceback
+
         traceback.print_exc()
         return False
     finally:

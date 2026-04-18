@@ -9,6 +9,7 @@ Tests validate:
 - Max usage rate validation
 - Scent profile and blending recommendations
 """
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -19,17 +20,17 @@ def sample_lavender_in_db(db_session):
     from app.models.essential_oil import EssentialOil
 
     lavender = EssentialOil(
-        id='lavender',
-        name='Lavender',
-        botanical_name='Lavandula angustifolia',
+        id="lavender",
+        name="Lavender",
+        botanical_name="Lavandula angustifolia",
         max_usage_rate_pct=3.0,
-        scent_profile='Floral, sweet, herbaceous',
-        blends_with=['Bergamot', 'Clary Sage', 'Geranium', 'Patchouli'],
-        note='Middle',
-        category='floral',
+        scent_profile="Floral, sweet, herbaceous",
+        blends_with=["Bergamot", "Clary Sage", "Geranium", "Patchouli"],
+        note="Middle",
+        category="floral",
         warnings=None,
-        color_effect='May slightly darken soap',
-        confidence_level='high',
+        color_effect="May slightly darken soap",
+        confidence_level="high",
         verified_by_mga=True,
     )
     db_session.add(lavender)
@@ -43,17 +44,17 @@ def sample_rose_otto_in_db(db_session):
     from app.models.essential_oil import EssentialOil
 
     rose_otto = EssentialOil(
-        id='rose_otto',
-        name='Rose Otto',
-        botanical_name='Rosa damascena',
+        id="rose_otto",
+        name="Rose Otto",
+        botanical_name="Rosa damascena",
         max_usage_rate_pct=0.025,  # Very low - expensive and potent
-        scent_profile='Deep, rich, floral rose',
-        blends_with=['Bergamot', 'Geranium', 'Jasmine', 'Sandalwood'],
-        note='Middle',
-        category='floral',
-        warnings='Extremely expensive; use sparingly',
+        scent_profile="Deep, rich, floral rose",
+        blends_with=["Bergamot", "Geranium", "Jasmine", "Sandalwood"],
+        note="Middle",
+        category="floral",
+        warnings="Extremely expensive; use sparingly",
         color_effect=None,
-        confidence_level='high',
+        confidence_level="high",
         verified_by_mga=True,
     )
     db_session.add(rose_otto)
@@ -67,17 +68,17 @@ def sample_peppermint_in_db(db_session):
     from app.models.essential_oil import EssentialOil
 
     peppermint = EssentialOil(
-        id='peppermint',
-        name='Peppermint',
-        botanical_name='Mentha piperita',
+        id="peppermint",
+        name="Peppermint",
+        botanical_name="Mentha piperita",
         max_usage_rate_pct=2.0,
-        scent_profile='Fresh, minty, invigorating',
-        blends_with=['Eucalyptus', 'Lavender', 'Rosemary', 'Tea Tree'],
-        note='Top',
-        category='herbal',
-        warnings='May cause skin sensitivity in high concentrations',
+        scent_profile="Fresh, minty, invigorating",
+        blends_with=["Eucalyptus", "Lavender", "Rosemary", "Tea Tree"],
+        note="Top",
+        category="herbal",
+        warnings="May cause skin sensitivity in high concentrations",
         color_effect=None,
-        confidence_level='high',
+        confidence_level="high",
         verified_by_mga=True,
     )
     db_session.add(peppermint)
@@ -89,7 +90,9 @@ class TestEssentialOilsList:
     """Test GET /api/v1/essential-oils endpoint"""
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
-    def test_list_all_essential_oils(self, client: TestClient, sample_lavender_in_db, sample_peppermint_in_db):
+    def test_list_all_essential_oils(
+        self, client: TestClient, sample_lavender_in_db, sample_peppermint_in_db
+    ):
         """
         GIVEN: Multiple essential oils in database
         WHEN: GET /api/v1/essential-oils
@@ -99,8 +102,8 @@ class TestEssentialOilsList:
 
         assert response.status_code == 200
         data = response.json()
-        assert 'essential_oils' in data or 'items' in data
-        assert data['total_count'] >= 2
+        assert "essential_oils" in data or "items" in data
+        assert data["total_count"] >= 2
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_list_with_pagination(self, client: TestClient, sample_lavender_in_db):
@@ -113,7 +116,7 @@ class TestEssentialOilsList:
 
         assert response.status_code == 200
         data = response.json()
-        assert 'limit' in data or 'page_size' in data
+        assert "limit" in data or "page_size" in data
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_list_includes_essential_fields(self, client: TestClient, sample_lavender_in_db):
@@ -127,14 +130,14 @@ class TestEssentialOilsList:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('essential_oils') or data.get('items')
+        items = data.get("essential_oils") or data.get("items")
         assert len(items) >= 1
 
         first_item = items[0]
-        assert 'name' in first_item
-        assert 'botanical_name' in first_item
-        assert 'max_usage_rate_pct' in first_item
-        assert 'category' in first_item
+        assert "name" in first_item
+        assert "botanical_name" in first_item
+        assert "max_usage_rate_pct" in first_item
+        assert "category" in first_item
 
 
 class TestEssentialOilRecommendation:
@@ -152,8 +155,8 @@ class TestEssentialOilRecommendation:
         assert response.status_code == 200
         data = response.json()
 
-        assert data['amount_g'] == pytest.approx(15.0, rel=0.01)
-        assert data['usage_percentage'] == 3.0
+        assert data["amount_g"] == pytest.approx(15.0, rel=0.01)
+        assert data["usage_percentage"] == 3.0
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_rose_otto_very_low_rate(self, client: TestClient, sample_rose_otto_in_db):
@@ -168,8 +171,8 @@ class TestEssentialOilRecommendation:
         data = response.json()
 
         # 500 × 0.025% = 0.125g
-        assert data['amount_g'] == pytest.approx(0.125, rel=0.01)
-        assert data['usage_percentage'] == 0.025
+        assert data["amount_g"] == pytest.approx(0.125, rel=0.01)
+        assert data["usage_percentage"] == 0.025
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_peppermint_2_percent(self, client: TestClient, sample_peppermint_in_db):
@@ -183,8 +186,8 @@ class TestEssentialOilRecommendation:
         assert response.status_code == 200
         data = response.json()
 
-        assert data['amount_g'] == pytest.approx(10.0, rel=0.01)
-        assert data['usage_percentage'] == 2.0
+        assert data["amount_g"] == pytest.approx(10.0, rel=0.01)
+        assert data["usage_percentage"] == 2.0
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_includes_scent_profile(self, client: TestClient, sample_lavender_in_db):
@@ -198,8 +201,8 @@ class TestEssentialOilRecommendation:
         assert response.status_code == 200
         data = response.json()
 
-        assert 'scent_profile' in data
-        assert 'floral' in data['scent_profile'].lower()
+        assert "scent_profile" in data
+        assert "floral" in data["scent_profile"].lower()
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_includes_blends_with(self, client: TestClient, sample_lavender_in_db):
@@ -213,10 +216,10 @@ class TestEssentialOilRecommendation:
         assert response.status_code == 200
         data = response.json()
 
-        assert 'blends_with' in data
-        assert isinstance(data['blends_with'], list)
-        assert len(data['blends_with']) >= 3
-        assert 'Bergamot' in data['blends_with']
+        assert "blends_with" in data
+        assert isinstance(data["blends_with"], list)
+        assert len(data["blends_with"]) >= 3
+        assert "Bergamot" in data["blends_with"]
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_includes_note_category(self, client: TestClient, sample_lavender_in_db):
@@ -230,8 +233,8 @@ class TestEssentialOilRecommendation:
         assert response.status_code == 200
         data = response.json()
 
-        assert data['note'] == 'Middle'
-        assert data['category'] == 'floral'
+        assert data["note"] == "Middle"
+        assert data["category"] == "floral"
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_includes_warnings(self, client: TestClient, sample_peppermint_in_db):
@@ -245,8 +248,8 @@ class TestEssentialOilRecommendation:
         assert response.status_code == 200
         data = response.json()
 
-        assert 'warnings' in data
-        assert 'sensitivity' in data['warnings'].lower()
+        assert "warnings" in data
+        assert "sensitivity" in data["warnings"].lower()
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_no_warnings_if_none(self, client: TestClient, sample_lavender_in_db):
@@ -261,7 +264,7 @@ class TestEssentialOilRecommendation:
         data = response.json()
 
         # Warnings should be None or not present
-        assert data.get('warnings') is None or data.get('warnings') == ''
+        assert data.get("warnings") is None or data.get("warnings") == ""
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_different_batch_sizes(self, client: TestClient, sample_lavender_in_db):
@@ -273,12 +276,12 @@ class TestEssentialOilRecommendation:
         # Test 100g batch: 100 × 3% = 3g
         response_100 = client.get("/api/v1/essential-oils/lavender/recommend?batch_size_g=100")
         assert response_100.status_code == 200
-        assert response_100.json()['amount_g'] == pytest.approx(3.0, rel=0.01)
+        assert response_100.json()["amount_g"] == pytest.approx(3.0, rel=0.01)
 
         # Test 1000g batch: 1000 × 3% = 30g
         response_1000 = client.get("/api/v1/essential-oils/lavender/recommend?batch_size_g=1000")
         assert response_1000.status_code == 200
-        assert response_1000.json()['amount_g'] == pytest.approx(30.0, rel=0.01)
+        assert response_1000.json()["amount_g"] == pytest.approx(30.0, rel=0.01)
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_recommend_gram_to_ounce_conversion(self, client: TestClient, sample_lavender_in_db):
@@ -292,8 +295,8 @@ class TestEssentialOilRecommendation:
         assert response.status_code == 200
         data = response.json()
 
-        amount_g = data['amount_g']
-        amount_oz = data['amount_oz']
+        amount_g = data["amount_g"]
+        amount_oz = data["amount_oz"]
 
         # 15g / 28.35 ≈ 0.53 oz
         assert amount_oz == pytest.approx(amount_g / 28.35, rel=0.01)
@@ -348,8 +351,8 @@ class TestMaxUsageRateCalculation:
         data = response.json()
 
         # Formula: (500 × 3) / 100 = 15.0
-        assert data['amount_g'] == 15.0
-        assert data['usage_percentage'] == 3.0
+        assert data["amount_g"] == 15.0
+        assert data["usage_percentage"] == 3.0
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_calculation_precision_for_low_rates(self, client: TestClient, sample_rose_otto_in_db):
@@ -364,4 +367,4 @@ class TestMaxUsageRateCalculation:
         data = response.json()
 
         # Should maintain precision: 500 × 0.025% = 0.125g
-        assert data['amount_g'] == pytest.approx(0.125, rel=0.001)
+        assert data["amount_g"] == pytest.approx(0.125, rel=0.001)

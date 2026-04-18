@@ -3,9 +3,9 @@ Property-based tests for INCI naming using Hypothesis
 
 Tests edge cases and invariants that should hold for all inputs
 """
-import pytest
-from hypothesis import given, strategies as st, assume
-from hypothesis import settings, HealthCheck
+
+from hypothesis import HealthCheck, assume, given, settings
+from hypothesis import strategies as st
 
 from app.services.inci_naming import generate_saponified_name
 
@@ -15,11 +15,11 @@ class TestInciNamingProperties:
 
     @given(
         common_name=st.text(
-            alphabet=st.characters(whitelist_categories=('Lu', 'Ll', 'Nd', 'Zs')),
+            alphabet=st.characters(whitelist_categories=("Lu", "Ll", "Nd", "Zs")),
             min_size=1,
-            max_size=100
+            max_size=100,
         ),
-        lye_type=st.sampled_from(['naoh', 'koh'])
+        lye_type=st.sampled_from(["naoh", "koh"]),
     )
     @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
     def test_generated_name_always_has_correct_prefix(self, common_name, lye_type):
@@ -30,10 +30,10 @@ class TestInciNamingProperties:
         try:
             result = generate_saponified_name(common_name, lye_type)
 
-            if lye_type == 'naoh':
-                assert result.startswith('Sodium ')
+            if lye_type == "naoh":
+                assert result.startswith("Sodium ")
             else:
-                assert result.startswith('Potassium ')
+                assert result.startswith("Potassium ")
 
         except ValueError:
             # Empty name is acceptable failure
@@ -41,11 +41,9 @@ class TestInciNamingProperties:
 
     @given(
         common_name=st.text(
-            alphabet=st.characters(whitelist_categories=('Lu', 'Ll')),
-            min_size=1,
-            max_size=50
+            alphabet=st.characters(whitelist_categories=("Lu", "Ll")), min_size=1, max_size=50
         ),
-        lye_type=st.sampled_from(['naoh', 'koh'])
+        lye_type=st.sampled_from(["naoh", "koh"]),
     )
     @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
     def test_generated_name_always_ends_with_ate(self, common_name, lye_type):
@@ -54,15 +52,13 @@ class TestInciNamingProperties:
 
         try:
             result = generate_saponified_name(common_name, lye_type)
-            assert result.endswith('ate')
+            assert result.endswith("ate")
         except ValueError:
             pass
 
     @given(
         common_name=st.text(
-            alphabet=st.characters(whitelist_categories=('Lu', 'Ll', 'Zs')),
-            min_size=1,
-            max_size=50
+            alphabet=st.characters(whitelist_categories=("Lu", "Ll", "Zs")), min_size=1, max_size=50
         )
     )
     @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
@@ -71,12 +67,12 @@ class TestInciNamingProperties:
         assume(common_name.strip())
 
         try:
-            naoh_name = generate_saponified_name(common_name, 'naoh')
-            koh_name = generate_saponified_name(common_name, 'koh')
+            naoh_name = generate_saponified_name(common_name, "naoh")
+            koh_name = generate_saponified_name(common_name, "koh")
 
             # Remove prefixes
-            naoh_suffix = naoh_name.replace('Sodium ', '')
-            koh_suffix = koh_name.replace('Potassium ', '')
+            naoh_suffix = naoh_name.replace("Sodium ", "")
+            koh_suffix = koh_name.replace("Potassium ", "")
 
             # Suffixes should be identical
             assert naoh_suffix == koh_suffix
@@ -86,11 +82,9 @@ class TestInciNamingProperties:
 
     @given(
         base_name=st.text(
-            alphabet=st.characters(whitelist_categories=('Lu', 'Ll')),
-            min_size=3,
-            max_size=20
+            alphabet=st.characters(whitelist_categories=("Lu", "Ll")), min_size=3, max_size=20
         ),
-        suffix=st.sampled_from([' Oil', ' Butter', ''])
+        suffix=st.sampled_from([" Oil", " Butter", ""]),
     )
     @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
     def test_suffix_removal_consistent(self, base_name, suffix):
@@ -100,20 +94,20 @@ class TestInciNamingProperties:
         common_name = base_name + suffix
 
         try:
-            result = generate_saponified_name(common_name, 'naoh')
+            result = generate_saponified_name(common_name, "naoh")
 
             # Result should not contain 'Oil' or 'Butter' as separate words
-            assert ' Oil' not in result
-            assert ' Butter' not in result
+            assert " Oil" not in result
+            assert " Butter" not in result
 
         except ValueError:
             pass
 
     @given(
         common_name=st.text(
-            alphabet=st.characters(whitelist_categories=('Lu', 'Ll', 'Zs')),
+            alphabet=st.characters(whitelist_categories=("Lu", "Ll", "Zs")),
             min_size=1,
-            max_size=100
+            max_size=100,
         )
     )
     @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
@@ -122,16 +116,14 @@ class TestInciNamingProperties:
         assume(common_name.strip())
 
         try:
-            result = generate_saponified_name(common_name, 'naoh')
-            assert '  ' not in result
+            result = generate_saponified_name(common_name, "naoh")
+            assert "  " not in result
         except ValueError:
             pass
 
     @given(
         common_name=st.text(
-            alphabet=st.characters(whitelist_categories=('Lu', 'Ll')),
-            min_size=1,
-            max_size=50
+            alphabet=st.characters(whitelist_categories=("Lu", "Ll")), min_size=1, max_size=50
         )
     )
     @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
@@ -140,22 +132,20 @@ class TestInciNamingProperties:
         assume(common_name.strip())
 
         try:
-            result = generate_saponified_name(common_name, 'naoh')
+            result = generate_saponified_name(common_name, "naoh")
             assert len(result) <= 200
         except ValueError:
             pass
 
-    @given(
-        common_name=st.text(min_size=1, max_size=50)
-    )
+    @given(common_name=st.text(min_size=1, max_size=50))
     @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
     def test_deterministic_output(self, common_name):
         """Same input should always produce same output"""
         assume(common_name.strip())
 
         try:
-            result1 = generate_saponified_name(common_name, 'naoh')
-            result2 = generate_saponified_name(common_name, 'naoh')
+            result1 = generate_saponified_name(common_name, "naoh")
+            result2 = generate_saponified_name(common_name, "naoh")
             assert result1 == result2
         except ValueError:
             pass
@@ -164,33 +154,25 @@ class TestInciNamingProperties:
 class TestInciNamingInvariants:
     """Test invariants that should always hold"""
 
-    @given(
-        weight=st.floats(min_value=0.1, max_value=10000.0)
-    )
+    @given(weight=st.floats(min_value=0.1, max_value=10000.0))
     def test_percentage_invariant_for_single_ingredient(self, weight):
         """Single ingredient always has 100% percentage"""
         # This tests integration with percentage calculator
         # For now, just ensure the concept holds
         from decimal import Decimal
 
-        weights = {'only-oil': Decimal(str(weight))}
+        weights = {"only-oil": Decimal(str(weight))}
         total = sum(weights.values())
-        percentage = (weights['only-oil'] / total) * 100
+        percentage = (weights["only-oil"] / total) * 100
 
         assert abs(percentage - 100.0) < 0.0001
 
-    @given(
-        weights=st.lists(
-            st.floats(min_value=0.1, max_value=1000.0),
-            min_size=2,
-            max_size=10
-        )
-    )
+    @given(weights=st.lists(st.floats(min_value=0.1, max_value=1000.0), min_size=2, max_size=10))
     def test_percentages_always_sum_to_100(self, weights):
         """Percentages should always sum to 100 regardless of inputs"""
         from decimal import Decimal
 
-        weight_dict = {f'oil-{i}': Decimal(str(w)) for i, w in enumerate(weights)}
+        weight_dict = {f"oil-{i}": Decimal(str(w)) for i, w in enumerate(weights)}
         total = sum(weight_dict.values())
 
         percentages = {k: (v / total) * 100 for k, v in weight_dict.items()}

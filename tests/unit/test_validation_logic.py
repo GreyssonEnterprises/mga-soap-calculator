@@ -6,8 +6,8 @@ TDD Evidence:
 - Tests business rules per spec Section 6
 - Covers oil percentage validation, lye validation, unknown IDs, warnings
 """
+
 import pytest
-from decimal import Decimal
 
 
 def test_validate_oil_percentages_exact_100():
@@ -58,7 +58,7 @@ def test_normalize_oil_inputs_with_weights():
     oils = [
         OilInput(id="olive_oil", weight_g=500.0, percentage=None),
         OilInput(id="coconut_oil", weight_g=300.0, percentage=None),
-        OilInput(id="palm_oil", weight_g=200.0, percentage=None)
+        OilInput(id="palm_oil", weight_g=200.0, percentage=None),
     ]
 
     normalized = normalize_oil_inputs(oils)
@@ -79,7 +79,7 @@ def test_normalize_oil_inputs_with_percentages():
     oils = [
         OilInput(id="olive_oil", weight_g=None, percentage=50.0),
         OilInput(id="coconut_oil", weight_g=None, percentage=30.0),
-        OilInput(id="palm_oil", weight_g=None, percentage=20.0)
+        OilInput(id="palm_oil", weight_g=None, percentage=20.0),
     ]
 
     # Need total weight for conversion
@@ -145,7 +145,7 @@ def test_precision_rounding_quality_metrics():
         "bubbly_lather": 41.999,
         "creamy_lather": 17.001,
         "longevity": 45.555,
-        "stability": 52.001
+        "stability": 52.001,
     }
 
     rounded = round_quality_metrics(metrics)
@@ -161,8 +161,6 @@ def test_precision_rounding_quality_metrics():
 
 def test_validation_error_unknown_oil_id():
     """Test validation raises error for unknown oil ID"""
-    from app.services.validation import validate_oil_ids_exist
-    from sqlalchemy.ext.asyncio import AsyncSession
 
     # This will be mocked in actual implementation
     # For now, test the interface exists
@@ -172,8 +170,6 @@ def test_validation_error_unknown_oil_id():
 
 def test_validation_error_unknown_additive_returns_warning():
     """Test unknown additive returns warning (non-blocking)"""
-    from app.services.validation import validate_additive_ids
-    from sqlalchemy.ext.asyncio import AsyncSession
 
     # This will be tested with database mock
     # Returns list of warnings for unknown additives

@@ -3,48 +3,41 @@ Additive endpoints for smart calculator recommendations.
 
 Provides usage recommendations with light/standard/heavy options and warnings.
 """
-from typing import Optional, Literal, List, Dict
-from decimal import Decimal
 
-from fastapi import APIRouter, Depends, Query, HTTPException
-from sqlalchemy import select, func, or_
+from typing import Literal
+
+from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.base import get_db
 from app.models.additive import Additive
 from app.schemas.additive import (
-    AdditiveListResponse,
     AdditiveListItem,
+    AdditiveListResponse,
     AdditiveRecommendationResponse,
     UsageRecommendation,
 )
 
-router = APIRouter(
-    prefix="/api/v1",
-    tags=["additives"]
-)
+router = APIRouter(prefix="/api/v1", tags=["additives"])
 
 
 @router.get("/additives", response_model=AdditiveListResponse)
 async def list_additives(
     limit: int = Query(50, ge=1, le=100, description="Items per page"),
     offset: int = Query(0, ge=0, description="Pagination offset"),
-    search: Optional[str] = Query(None, description="Search by common name or INCI name"),
-    category: Optional[Literal["exfoliant", "hardener", "lather_booster", "skin_benefit", "clay"]] = Query(
-        None,
-        description="Filter by category"
-    ),
-    confidence: Optional[Literal["high", "medium", "low"]] = Query(
-        None,
-        description="Filter by confidence level"
+    search: str | None = Query(None, description="Search by common name or INCI name"),
+    category: Literal["exfoliant", "hardener", "lather_booster", "skin_benefit", "clay"]
+    | None = Query(None, description="Filter by category"),
+    confidence: Literal["high", "medium", "low"] | None = Query(
+        None, description="Filter by confidence level"
     ),
     verified_only: bool = Query(False, description="Only show MGA-verified additives"),
     sort_by: Literal["common_name", "confidence_level"] = Query(
-        "common_name",
-        description="Field to sort by"
+        "common_name", description="Field to sort by"
     ),
     sort_order: Literal["asc", "desc"] = Query("asc", description="Sort direction"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ) -> AdditiveListResponse:
     """
     List available additives with pagination and filtering.
@@ -73,8 +66,7 @@ async def list_additives(
         search_pattern = f"%{search}%"
         query = query.where(
             or_(
-                Additive.common_name.ilike(search_pattern),
-                Additive.inci_name.ilike(search_pattern)
+                Additive.common_name.ilike(search_pattern), Additive.inci_name.ilike(search_pattern)
             )
         )
 
@@ -88,7 +80,7 @@ async def list_additives(
 
     # Apply verified filter
     if verified_only:
-        query = query.where(Additive.verified_by_mga == True)
+        query = query.where(Additive.verified_by_mga)
 
     # Get total count before pagination
     count_query = select(func.count()).select_from(query.subquery())
@@ -114,7 +106,7 @@ async def list_additives(
         total_count=total_count,
         limit=limit,
         offset=offset,
-        has_more=(offset + limit) < total_count
+        has_more=(offset + limit) < total_count,
     )
 
 
@@ -122,7 +114,7 @@ async def list_additives(
 async def recommend_additive(
     additive_id: str,
     batch_size_g: float = Query(..., ge=0.1, description="Batch size in grams"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ) -> AdditiveRecommendationResponse:
     """
     Calculate additive amount recommendations for given batch size.
@@ -160,17 +152,19 @@ async def recommend_additive(
         recommendations["light"] = UsageRecommendation(
             amount_g=light_amount_g,
             amount_oz=round(light_amount_g / 28.35, 2),
-            usage_percentage=float(additive.typical_usage_min_percent)
+            usage_percentage=float(additive.typical_usage_min_percent),
         )
 
     # Standard usage (use average of min/max since no standard column exists)
     if additive.typical_usage_min_percent and additive.typical_usage_max_percent:
-        standard_pct = (float(additive.typical_usage_min_percent) + float(additive.typical_usage_max_percent)) / 2
+        standard_pct = (
+            float(additive.typical_usage_min_percent) + float(additive.typical_usage_max_percent)
+        ) / 2
         standard_amount_g = round((batch_size_g * standard_pct) / 100, 1)
         recommendations["standard"] = UsageRecommendation(
             amount_g=standard_amount_g,
             amount_oz=round(standard_amount_g / 28.35, 2),
-            usage_percentage=round(standard_pct, 2)
+            usage_percentage=round(standard_pct, 2),
         )
 
     # Heavy usage (maximum)
@@ -179,11 +173,11 @@ async def recommend_additive(
         recommendations["heavy"] = UsageRecommendation(
             amount_g=heavy_amount_g,
             amount_oz=round(heavy_amount_g / 28.35, 2),
-            usage_percentage=float(additive.typical_usage_max_percent)
+            usage_percentage=float(additive.typical_usage_max_percent),
         )
 
     # Build warnings list from JSONB warnings field
-    warnings_list: List[str] = []
+    warnings_list: list[str] = []
     if additive.warnings:
         if additive.warnings.get("accelerates_trace"):
             warnings_list.append("May accelerate trace")
@@ -204,5 +198,5 @@ async def recommend_additive(
         when_to_add=additive.when_to_add,
         preparation_instructions=additive.preparation_instructions,
         warnings=warnings_list,
-        quality_effects=additive.quality_effects or {}
+        quality_effects=additive.quality_effects or {},
     )

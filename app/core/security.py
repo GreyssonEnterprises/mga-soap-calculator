@@ -1,10 +1,11 @@
 """Security utilities for JWT authentication and password hashing"""
-from datetime import datetime, timedelta, timezone
-from typing import Optional, Any
+
 import uuid
+from datetime import UTC, datetime, timedelta
+from typing import Any
 
 from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlalchemy import select
@@ -59,10 +60,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
         return False
 
 
-def create_access_token(
-    data: dict[str, Any],
-    expires_delta: Optional[timedelta] = None
-) -> str:
+def create_access_token(data: dict[str, Any], expires_delta: timedelta | None = None) -> str:
     """Create a JWT access token
 
     Args:
@@ -85,7 +83,7 @@ def create_access_token(
     to_encode = data.copy()
 
     # Set issued at time
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     to_encode["iat"] = now
 
     # Set expiration time
@@ -97,11 +95,7 @@ def create_access_token(
     to_encode["exp"] = expire
 
     # Encode the JWT
-    encoded_jwt = jwt.encode(
-        to_encode,
-        settings.SECRET_KEY,
-        algorithm=settings.ALGORITHM
-    )
+    encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
     return encoded_jwt
 
@@ -119,11 +113,7 @@ def decode_access_token(token: str) -> dict[str, Any]:
         HTTPException: 401 Unauthorized if token is invalid, expired, or malformed
     """
     try:
-        payload = jwt.decode(
-            token,
-            settings.SECRET_KEY,
-            algorithms=[settings.ALGORITHM]
-        )
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         return payload
     except JWTError as e:
         if "expired" in str(e).lower():
@@ -142,7 +132,7 @@ def decode_access_token(token: str) -> dict[str, Any]:
 
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
-    db: AsyncSession = Depends(get_async_db)
+    db: AsyncSession = Depends(get_async_db),
 ) -> User:
     """Get the current authenticated user from JWT token
 
@@ -208,9 +198,7 @@ async def get_current_user(
 
 
 async def validate_calculation_ownership(
-    calculation_id: uuid.UUID,
-    current_user: User,
-    db: AsyncSession
+    calculation_id: uuid.UUID, current_user: User, db: AsyncSession
 ) -> None:
     """Validate that a user owns a calculation
 
@@ -230,13 +218,10 @@ async def validate_calculation_ownership(
     calculation = result.scalar_one_or_none()
 
     if calculation is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Calculation not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Calculation not found")
 
     if calculation.user_id != current_user.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Access denied - you don't own this calculation"
+            detail="Access denied - you don't own this calculation",
         )

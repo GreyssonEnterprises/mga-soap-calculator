@@ -29,13 +29,13 @@ except ImportError:
     raise
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 # Source data file
-DATA_FILE = Path(__file__).parent.parent / "working/user-feedback/essential-oils-usage-reference.json"
+DATA_FILE = (
+    Path(__file__).parent.parent / "working/user-feedback/essential-oils-usage-reference.json"
+)
 
 
 def generate_eo_id(name: str) -> str:
@@ -92,7 +92,7 @@ async def import_essential_oils(dry_run: bool = False, verbose: bool = False) ->
     """
     # Load source data
     logger.info(f"Loading data from {DATA_FILE}")
-    with open(DATA_FILE, "r") as f:
+    with open(DATA_FILE) as f:
         data = json.load(f)
 
     eos_raw = data["essential_oils_reference"]
@@ -102,9 +102,7 @@ async def import_essential_oils(dry_run: bool = False, verbose: bool = False) ->
     for eo in eos_raw:
         rate = eo["max_usage_rate_pct"]
         if not (0.025 <= rate <= 3.0):
-            logger.warning(
-                f"Unusual usage rate for {eo['name']}: {rate}% (expected 0.025-3.0%)"
-            )
+            logger.warning(f"Unusual usage rate for {eo['name']}: {rate}% (expected 0.025-3.0%)")
 
     # Map to model format
     eos_mapped = [map_essential_oil(raw) for raw in eos_raw]
@@ -159,17 +157,13 @@ async def import_essential_oils(dry_run: bool = False, verbose: bool = False) ->
 
 def main():
     """CLI entry point."""
-    parser = argparse.ArgumentParser(
-        description="Import essential oils from JSON reference data"
-    )
+    parser = argparse.ArgumentParser(description="Import essential oils from JSON reference data")
     parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Validate data without inserting to database",
     )
-    parser.add_argument(
-        "--verbose", "-v", action="store_true", help="Show detailed progress"
-    )
+    parser.add_argument("--verbose", "-v", action="store_true", help="Show detailed progress")
 
     args = parser.parse_args()
 

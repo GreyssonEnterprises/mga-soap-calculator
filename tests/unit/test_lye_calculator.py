@@ -4,12 +4,10 @@ Tests for lye calculator service
 TDD Evidence: Tests written BEFORE implementation refinement
 Validates against SoapCalc reference data for accuracy
 """
+
 import pytest
-from app.services.lye_calculator import (
-    OilInput,
-    calculate_lye,
-    validate_superfat
-)
+
+from app.services.lye_calculator import OilInput, calculate_lye, validate_superfat
 
 
 class TestNaOHCalculation:
@@ -28,12 +26,7 @@ class TestNaOHCalculation:
             OilInput(weight_g=200, sap_naoh=0.142, sap_koh=0.199),  # Palm
         ]
 
-        result = calculate_lye(
-            oils=oils,
-            superfat_percent=5.0,
-            naoh_percent=100.0,
-            koh_percent=0.0
-        )
+        result = calculate_lye(oils=oils, superfat_percent=5.0, naoh_percent=100.0, koh_percent=0.0)
 
         # Calculate expected manually:
         # Olive: 500 * 0.134 = 67.0
@@ -49,12 +42,7 @@ class TestNaOHCalculation:
         """TDD: Test 0% superfat produces maximum lye"""
         oils = [OilInput(weight_g=1000, sap_naoh=0.134, sap_koh=0.188)]
 
-        result = calculate_lye(
-            oils=oils,
-            superfat_percent=0.0,
-            naoh_percent=100.0,
-            koh_percent=0.0
-        )
+        result = calculate_lye(oils=oils, superfat_percent=0.0, naoh_percent=100.0, koh_percent=0.0)
 
         # 1000g * 0.134 * 1.0 = 134.0g
         assert abs(result.naoh_g - 134.0) < 0.1
@@ -64,10 +52,7 @@ class TestNaOHCalculation:
         oils = [OilInput(weight_g=1000, sap_naoh=0.134, sap_koh=0.188)]
 
         result = calculate_lye(
-            oils=oils,
-            superfat_percent=20.0,
-            naoh_percent=100.0,
-            koh_percent=0.0
+            oils=oils, superfat_percent=20.0, naoh_percent=100.0, koh_percent=0.0
         )
 
         # 1000g * 0.134 * 0.80 = 107.2g
@@ -88,12 +73,7 @@ class TestKOHCalculation:
             OilInput(weight_g=200, sap_naoh=0.142, sap_koh=0.199),  # Palm
         ]
 
-        result = calculate_lye(
-            oils=oils,
-            superfat_percent=5.0,
-            naoh_percent=0.0,
-            koh_percent=100.0
-        )
+        result = calculate_lye(oils=oils, superfat_percent=5.0, naoh_percent=0.0, koh_percent=100.0)
 
         # Olive: 500 * 0.188 = 94.0
         # Coconut: 300 * 0.250 = 75.0
@@ -121,12 +101,7 @@ class TestMixedLyeCalculation:
         """
         oils = [OilInput(weight_g=1000, sap_naoh=0.134, sap_koh=0.188)]
 
-        result = calculate_lye(
-            oils=oils,
-            superfat_percent=5.0,
-            naoh_percent=70.0,
-            koh_percent=30.0
-        )
+        result = calculate_lye(oils=oils, superfat_percent=5.0, naoh_percent=70.0, koh_percent=30.0)
 
         # Formula A results (0.1g tolerance)
         assert abs(result.naoh_g - 99.9) < 0.1, f"Expected ~99.9g NaOH, got {result.naoh_g}g"
@@ -145,12 +120,7 @@ class TestMixedLyeCalculation:
         """
         oils = [OilInput(weight_g=1000, sap_naoh=0.140, sap_koh=0.196)]
 
-        result = calculate_lye(
-            oils=oils,
-            superfat_percent=0.0,
-            naoh_percent=50.0,
-            koh_percent=50.0
-        )
+        result = calculate_lye(oils=oils, superfat_percent=0.0, naoh_percent=50.0, koh_percent=50.0)
 
         # Formula A results (0.1g tolerance)
         assert abs(result.naoh_g - 84.0) < 0.1, f"Expected ~84.0g NaOH, got {result.naoh_g}g"
@@ -170,12 +140,7 @@ class TestMixedLyeCalculation:
         """
         oils = [OilInput(weight_g=1000, sap_naoh=0.150, sap_koh=0.210)]
 
-        result = calculate_lye(
-            oils=oils,
-            superfat_percent=0.0,
-            naoh_percent=70.0,
-            koh_percent=30.0
-        )
+        result = calculate_lye(oils=oils, superfat_percent=0.0, naoh_percent=70.0, koh_percent=30.0)
 
         # Weighted SAP = (0.150 × 0.70) + (0.210 × 0.30) = 0.168
         # Total lye = 1000 × 0.168 × 1.0 = 168.0g
@@ -211,14 +176,14 @@ class TestSuperfatValidation:
     def test_high_superfat_warning(self):
         """TDD: Superfat >20% generates warning"""
         result = validate_superfat(25.0)
-        assert result['level'] == 'warning'
-        assert 'soft' in result['message'].lower() or 'greasy' in result['message'].lower()
+        assert result["level"] == "warning"
+        assert "soft" in result["message"].lower() or "greasy" in result["message"].lower()
 
     def test_negative_superfat_error(self):
         """TDD: Negative superfat is dangerous - error level"""
         result = validate_superfat(-5.0)
-        assert result['level'] == 'error'
-        assert 'dangerous' in result['message'].lower() or 'lye-heavy' in result['message'].lower()
+        assert result["level"] == "error"
+        assert "dangerous" in result["message"].lower() or "lye-heavy" in result["message"].lower()
 
     def test_invalid_lye_percentages(self):
         """TDD: Lye percentages must sum to 100%"""

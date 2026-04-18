@@ -9,6 +9,7 @@ Tests validate:
 - Pagination
 - Response schema validation
 """
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -19,15 +20,15 @@ def sample_turmeric_in_db(db_session):
     from app.models.colorant import Colorant
 
     turmeric = Colorant(
-        id='turmeric',
-        name='Turmeric',
-        botanical='Curcuma longa',
-        category='yellow',
-        usage='1 tsp PPO',
-        method='Infuse in oil or add at trace',
-        color_range='Bright yellow to deep golden',
-        warnings='Can stain; may fade over time',
-        confidence_level='high',
+        id="turmeric",
+        name="Turmeric",
+        botanical="Curcuma longa",
+        category="yellow",
+        usage="1 tsp PPO",
+        method="Infuse in oil or add at trace",
+        color_range="Bright yellow to deep golden",
+        warnings="Can stain; may fade over time",
+        confidence_level="high",
         verified_by_mga=True,
     )
     db_session.add(turmeric)
@@ -41,15 +42,15 @@ def sample_annatto_in_db(db_session):
     from app.models.colorant import Colorant
 
     annatto = Colorant(
-        id='annatto_seeds',
-        name='Annatto Seeds',
-        botanical='Bixa orellana',
-        category='orange',
-        usage='1 tsp PPO infused oil',
-        method='Infuse seeds in liquid oil, strain, use infused oil',
-        color_range='Buttery yellow to pumpkin orange',
+        id="annatto_seeds",
+        name="Annatto Seeds",
+        botanical="Bixa orellana",
+        category="orange",
+        usage="1 tsp PPO infused oil",
+        method="Infuse seeds in liquid oil, strain, use infused oil",
+        color_range="Buttery yellow to pumpkin orange",
         warnings=None,
-        confidence_level='high',
+        confidence_level="high",
         verified_by_mga=False,
     )
     db_session.add(annatto)
@@ -63,15 +64,15 @@ def sample_spirulina_in_db(db_session):
     from app.models.colorant import Colorant
 
     spirulina = Colorant(
-        id='spirulina',
-        name='Spirulina Powder',
-        botanical='Arthrospira platensis',
-        category='green',
-        usage='1/4-1 tsp PPO',
-        method='Mix with water, add at trace',
-        color_range='Sage green to teal',
+        id="spirulina",
+        name="Spirulina Powder",
+        botanical="Arthrospira platensis",
+        category="green",
+        usage="1/4-1 tsp PPO",
+        method="Mix with water, add at trace",
+        color_range="Sage green to teal",
         warnings=None,
-        confidence_level='high',
+        confidence_level="high",
         verified_by_mga=True,
     )
     db_session.add(spirulina)
@@ -85,15 +86,15 @@ def sample_charcoal_in_db(db_session):
     from app.models.colorant import Colorant
 
     charcoal = Colorant(
-        id='activated_charcoal',
-        name='Activated Charcoal',
-        botanical='Carbon',
-        category='black',
-        usage='1/4-1 tsp PPO',
-        method='Mix with water, add at light trace',
-        color_range='Gray to black',
-        warnings='Can be messy; may accelerate trace',
-        confidence_level='high',
+        id="activated_charcoal",
+        name="Activated Charcoal",
+        botanical="Carbon",
+        category="black",
+        usage="1/4-1 tsp PPO",
+        method="Mix with water, add at light trace",
+        color_range="Gray to black",
+        warnings="Can be messy; may accelerate trace",
+        confidence_level="high",
         verified_by_mga=True,
     )
     db_session.add(charcoal)
@@ -105,7 +106,13 @@ class TestColorantsList:
     """Test GET /api/v1/colorants endpoint"""
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
-    def test_list_all_colorants(self, client: TestClient, sample_turmeric_in_db, sample_annatto_in_db, sample_spirulina_in_db):
+    def test_list_all_colorants(
+        self,
+        client: TestClient,
+        sample_turmeric_in_db,
+        sample_annatto_in_db,
+        sample_spirulina_in_db,
+    ):
         """
         GIVEN: Multiple colorants in database
         WHEN: GET /api/v1/colorants
@@ -115,8 +122,8 @@ class TestColorantsList:
 
         assert response.status_code == 200
         data = response.json()
-        assert 'colorants' in data or 'items' in data
-        assert data['total_count'] >= 3
+        assert "colorants" in data or "items" in data
+        assert data["total_count"] >= 3
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_list_with_pagination(self, client: TestClient, sample_turmeric_in_db):
@@ -129,8 +136,8 @@ class TestColorantsList:
 
         assert response.status_code == 200
         data = response.json()
-        assert 'limit' in data or 'page_size' in data
-        assert 'offset' in data or 'page' in data
+        assert "limit" in data or "page_size" in data
+        assert "offset" in data or "page" in data
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_list_includes_essential_fields(self, client: TestClient, sample_turmeric_in_db):
@@ -144,22 +151,24 @@ class TestColorantsList:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('colorants') or data.get('items')
+        items = data.get("colorants") or data.get("items")
         assert len(items) >= 1
 
         first_item = items[0]
-        assert 'name' in first_item
-        assert 'botanical' in first_item
-        assert 'category' in first_item
-        assert 'method' in first_item
-        assert 'color_range' in first_item
+        assert "name" in first_item
+        assert "botanical" in first_item
+        assert "category" in first_item
+        assert "method" in first_item
+        assert "color_range" in first_item
 
 
 class TestColorantCategoryFiltering:
     """Test category filtering for 9 color families"""
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
-    def test_filter_yellow_category(self, client: TestClient, sample_turmeric_in_db, sample_annatto_in_db):
+    def test_filter_yellow_category(
+        self, client: TestClient, sample_turmeric_in_db, sample_annatto_in_db
+    ):
         """
         GIVEN: Colorants with different categories
         WHEN: GET /api/v1/colorants?category=yellow
@@ -170,13 +179,15 @@ class TestColorantCategoryFiltering:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('colorants') or data.get('items')
+        items = data.get("colorants") or data.get("items")
         assert len(items) >= 1
         # All returned items should be yellow category
-        assert all(item['category'] == 'yellow' for item in items)
+        assert all(item["category"] == "yellow" for item in items)
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
-    def test_filter_orange_category(self, client: TestClient, sample_turmeric_in_db, sample_annatto_in_db):
+    def test_filter_orange_category(
+        self, client: TestClient, sample_turmeric_in_db, sample_annatto_in_db
+    ):
         """
         GIVEN: Colorants with different categories
         WHEN: GET /api/v1/colorants?category=orange
@@ -187,9 +198,9 @@ class TestColorantCategoryFiltering:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('colorants') or data.get('items')
+        items = data.get("colorants") or data.get("items")
         assert len(items) >= 1
-        assert all(item['category'] == 'orange' for item in items)
+        assert all(item["category"] == "orange" for item in items)
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_filter_green_category(self, client: TestClient, sample_spirulina_in_db):
@@ -203,9 +214,9 @@ class TestColorantCategoryFiltering:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('colorants') or data.get('items')
+        items = data.get("colorants") or data.get("items")
         assert len(items) >= 1
-        assert all(item['category'] == 'green' for item in items)
+        assert all(item["category"] == "green" for item in items)
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_filter_black_category(self, client: TestClient, sample_charcoal_in_db):
@@ -219,9 +230,9 @@ class TestColorantCategoryFiltering:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('colorants') or data.get('items')
+        items = data.get("colorants") or data.get("items")
         assert len(items) >= 1
-        assert all(item['category'] == 'black' for item in items)
+        assert all(item["category"] == "black" for item in items)
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_filter_all_nine_categories(self, client: TestClient, db_session):
@@ -233,17 +244,27 @@ class TestColorantCategoryFiltering:
         from app.models.colorant import Colorant
 
         # Create one colorant for each color family
-        categories = ['yellow', 'orange', 'pink', 'red', 'green', 'blue', 'purple', 'brown', 'black']
+        categories = [
+            "yellow",
+            "orange",
+            "pink",
+            "red",
+            "green",
+            "blue",
+            "purple",
+            "brown",
+            "black",
+        ]
 
         for idx, category in enumerate(categories):
             colorant = Colorant(
-                id=f'test_{category}',
-                name=f'Test {category.title()}',
-                botanical=f'Testus {category}',
+                id=f"test_{category}",
+                name=f"Test {category.title()}",
+                botanical=f"Testus {category}",
                 category=category,
-                method='Test method',
-                color_range=f'{category.title()} range',
-                confidence_level='medium',
+                method="Test method",
+                color_range=f"{category.title()} range",
+                confidence_level="medium",
                 verified_by_mga=False,
             )
             db_session.add(colorant)
@@ -255,9 +276,9 @@ class TestColorantCategoryFiltering:
             assert response.status_code == 200
 
             data = response.json()
-            items = data.get('colorants') or data.get('items')
+            items = data.get("colorants") or data.get("items")
             assert len(items) >= 1
-            assert all(item['category'] == category for item in items)
+            assert all(item["category"] == category for item in items)
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_filter_invalid_category(self, client: TestClient, sample_turmeric_in_db):
@@ -273,7 +294,7 @@ class TestColorantCategoryFiltering:
 
         if response.status_code == 200:
             data = response.json()
-            items = data.get('colorants') or data.get('items')
+            items = data.get("colorants") or data.get("items")
             assert len(items) == 0
 
 
@@ -292,11 +313,11 @@ class TestColorantResponseSchema:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('colorants') or data.get('items')
-        turmeric = next(item for item in items if item['id'] == 'turmeric')
+        items = data.get("colorants") or data.get("items")
+        turmeric = next(item for item in items if item["id"] == "turmeric")
 
-        assert 'usage' in turmeric
-        assert '1 tsp PPO' in turmeric['usage']
+        assert "usage" in turmeric
+        assert "1 tsp PPO" in turmeric["usage"]
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_response_includes_method(self, client: TestClient, sample_turmeric_in_db):
@@ -310,11 +331,11 @@ class TestColorantResponseSchema:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('colorants') or data.get('items')
-        turmeric = next(item for item in items if item['id'] == 'turmeric')
+        items = data.get("colorants") or data.get("items")
+        turmeric = next(item for item in items if item["id"] == "turmeric")
 
-        assert 'method' in turmeric
-        assert 'infuse' in turmeric['method'].lower()
+        assert "method" in turmeric
+        assert "infuse" in turmeric["method"].lower()
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_response_includes_color_range(self, client: TestClient, sample_turmeric_in_db):
@@ -328,14 +349,16 @@ class TestColorantResponseSchema:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('colorants') or data.get('items')
-        turmeric = next(item for item in items if item['id'] == 'turmeric')
+        items = data.get("colorants") or data.get("items")
+        turmeric = next(item for item in items if item["id"] == "turmeric")
 
-        assert 'color_range' in turmeric
-        assert 'yellow' in turmeric['color_range'].lower()
+        assert "color_range" in turmeric
+        assert "yellow" in turmeric["color_range"].lower()
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
-    def test_response_includes_warnings_when_present(self, client: TestClient, sample_turmeric_in_db):
+    def test_response_includes_warnings_when_present(
+        self, client: TestClient, sample_turmeric_in_db
+    ):
         """
         GIVEN: Colorant with warnings
         WHEN: GET /api/v1/colorants
@@ -346,11 +369,11 @@ class TestColorantResponseSchema:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('colorants') or data.get('items')
-        turmeric = next(item for item in items if item['id'] == 'turmeric')
+        items = data.get("colorants") or data.get("items")
+        turmeric = next(item for item in items if item["id"] == "turmeric")
 
-        assert 'warnings' in turmeric
-        assert 'stain' in turmeric['warnings'].lower()
+        assert "warnings" in turmeric
+        assert "stain" in turmeric["warnings"].lower()
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_response_warnings_null_when_absent(self, client: TestClient, sample_annatto_in_db):
@@ -364,11 +387,11 @@ class TestColorantResponseSchema:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('colorants') or data.get('items')
-        annatto = next(item for item in items if item['id'] == 'annatto_seeds')
+        items = data.get("colorants") or data.get("items")
+        annatto = next(item for item in items if item["id"] == "annatto_seeds")
 
         # Warnings should be null or not present
-        assert annatto.get('warnings') is None or 'warnings' not in annatto
+        assert annatto.get("warnings") is None or "warnings" not in annatto
 
 
 class TestColorantPagination:
@@ -386,13 +409,13 @@ class TestColorantPagination:
         # Create 10 yellow colorants
         for i in range(10):
             colorant = Colorant(
-                id=f'yellow_test_{i}',
-                name=f'Yellow Test {i}',
-                botanical=f'Testus yellow {i}',
-                category='yellow',
-                method='Test',
-                color_range='Yellow',
-                confidence_level='medium',
+                id=f"yellow_test_{i}",
+                name=f"Yellow Test {i}",
+                botanical=f"Testus yellow {i}",
+                category="yellow",
+                method="Test",
+                color_range="Yellow",
+                confidence_level="medium",
                 verified_by_mga=False,
             )
             db_session.add(colorant)
@@ -404,9 +427,9 @@ class TestColorantPagination:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('colorants') or data.get('items')
+        items = data.get("colorants") or data.get("items")
         assert len(items) == 5
-        assert all(item['category'] == 'yellow' for item in items)
+        assert all(item["category"] == "yellow" for item in items)
 
     @pytest.skip("TDD: RED phase - endpoint doesn't exist yet")
     def test_pagination_has_more_indicator(self, client: TestClient, db_session):
@@ -420,13 +443,13 @@ class TestColorantPagination:
         # Create 15 colorants
         for i in range(15):
             colorant = Colorant(
-                id=f'test_{i}',
-                name=f'Test {i}',
-                botanical=f'Testus {i}',
-                category='yellow',
-                method='Test',
-                color_range='Yellow',
-                confidence_level='medium',
+                id=f"test_{i}",
+                name=f"Test {i}",
+                botanical=f"Testus {i}",
+                category="yellow",
+                method="Test",
+                color_range="Yellow",
+                confidence_level="medium",
                 verified_by_mga=False,
             )
             db_session.add(colorant)
@@ -438,7 +461,7 @@ class TestColorantPagination:
         data = response.json()
 
         # Should indicate more results available
-        assert data.get('has_more') is True or data['total_count'] > 10
+        assert data.get("has_more") is True or data["total_count"] > 10
 
 
 class TestColorantSorting:
@@ -454,16 +477,16 @@ class TestColorantSorting:
         from app.models.colorant import Colorant
 
         # Create colorants with different names
-        names = ['Turmeric', 'Annatto', 'Spirulina', 'Charcoal']
+        names = ["Turmeric", "Annatto", "Spirulina", "Charcoal"]
         for name in names:
             colorant = Colorant(
                 id=name.lower(),
                 name=name,
-                botanical=f'{name} botanical',
-                category='yellow',
-                method='Test',
-                color_range='Test',
-                confidence_level='medium',
+                botanical=f"{name} botanical",
+                category="yellow",
+                method="Test",
+                color_range="Test",
+                confidence_level="medium",
                 verified_by_mga=False,
             )
             db_session.add(colorant)
@@ -474,8 +497,8 @@ class TestColorantSorting:
         assert response.status_code == 200
         data = response.json()
 
-        items = data.get('colorants') or data.get('items')
-        names_returned = [item['name'] for item in items]
+        items = data.get("colorants") or data.get("items")
+        names_returned = [item["name"] for item in items]
 
         # Should be sorted alphabetically
         assert names_returned == sorted(names_returned)

@@ -40,9 +40,7 @@ except ImportError:
     raise
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 # Source data file
@@ -112,7 +110,7 @@ async def import_colorants(dry_run: bool = False, verbose: bool = False) -> None
     """
     # Load source data
     logger.info(f"Loading data from {DATA_FILE}")
-    with open(DATA_FILE, "r") as f:
+    with open(DATA_FILE) as f:
         data = json.load(f)
 
     # Process nested structure (color families as keys)
@@ -153,9 +151,7 @@ async def import_colorants(dry_run: bool = False, verbose: bool = False) -> None
         logger.info(f"Found {len(existing_ids)} existing colorants")
 
         # Filter new colorants
-        new_colorants = [
-            col for col in colorants_mapped if col["id"] not in existing_ids
-        ]
+        new_colorants = [col for col in colorants_mapped if col["id"] not in existing_ids]
 
         if not new_colorants:
             logger.info("No new colorants to import")
@@ -187,9 +183,7 @@ def main():
         action="store_true",
         help="Validate data without inserting to database",
     )
-    parser.add_argument(
-        "--verbose", "-v", action="store_true", help="Show detailed progress"
-    )
+    parser.add_argument("--verbose", "-v", action="store_true", help="Show detailed progress")
 
     args = parser.parse_args()
 

@@ -7,8 +7,10 @@ total_oil_weight_g and always using hardcoded 1000g default.
 Bug Report: User requests 700g batch, API returns 1000g batch
 Fix: Added total_oil_weight_g parameter to schema with proper default and wiring
 """
+
 import pytest
-from app.schemas.requests import CalculationRequest, OilInput, LyeConfig, WaterConfig
+
+from app.schemas.requests import CalculationRequest, LyeConfig, OilInput, WaterConfig
 
 
 class TestBatchSizeParameter:
@@ -21,7 +23,7 @@ class TestBatchSizeParameter:
             lye=LyeConfig(naoh_percent=0, koh_percent=100, koh_purity=90),
             water=WaterConfig(method="water_percent_of_oils", value=38.0),
             superfat_percent=5.0,
-            total_oil_weight_g=700.0
+            total_oil_weight_g=700.0,
         )
 
         assert request.total_oil_weight_g == 700.0
@@ -33,7 +35,7 @@ class TestBatchSizeParameter:
             lye=LyeConfig(naoh_percent=0, koh_percent=100, koh_purity=90),
             water=WaterConfig(method="water_percent_of_oils", value=38.0),
             superfat_percent=5.0,
-            total_oil_weight_g=1500.0
+            total_oil_weight_g=1500.0,
         )
 
         assert request.total_oil_weight_g == 1500.0
@@ -44,7 +46,7 @@ class TestBatchSizeParameter:
             oils=[OilInput(id="olive_oil", percentage=100.0)],
             lye=LyeConfig(naoh_percent=0, koh_percent=100, koh_purity=90),
             water=WaterConfig(method="water_percent_of_oils", value=38.0),
-            superfat_percent=5.0
+            superfat_percent=5.0,
             # total_oil_weight_g omitted - should default to 1000.0
         )
 
@@ -57,7 +59,7 @@ class TestBatchSizeParameter:
             lye=LyeConfig(naoh_percent=0, koh_percent=100, koh_purity=90),
             water=WaterConfig(method="water_percent_of_oils", value=38.0),
             superfat_percent=5.0,
-            total_oil_weight_g=50.0
+            total_oil_weight_g=50.0,
         )
 
         assert request.total_oil_weight_g == 50.0
@@ -69,7 +71,7 @@ class TestBatchSizeParameter:
             lye=LyeConfig(naoh_percent=0, koh_percent=100, koh_purity=90),
             water=WaterConfig(method="water_percent_of_oils", value=38.0),
             superfat_percent=5.0,
-            total_oil_weight_g=5000.0
+            total_oil_weight_g=5000.0,
         )
 
         assert request.total_oil_weight_g == 5000.0
@@ -82,7 +84,7 @@ class TestBatchSizeParameter:
                 lye=LyeConfig(naoh_percent=0, koh_percent=100, koh_purity=90),
                 water=WaterConfig(method="water_percent_of_oils", value=38.0),
                 superfat_percent=5.0,
-                total_oil_weight_g=0.0  # Invalid
+                total_oil_weight_g=0.0,  # Invalid
             )
 
     def test_negative_batch_size_invalid(self):
@@ -93,7 +95,7 @@ class TestBatchSizeParameter:
                 lye=LyeConfig(naoh_percent=0, koh_percent=100, koh_purity=90),
                 water=WaterConfig(method="water_percent_of_oils", value=38.0),
                 superfat_percent=5.0,
-                total_oil_weight_g=-100.0  # Invalid
+                total_oil_weight_g=-100.0,  # Invalid
             )
 
 
@@ -123,7 +125,7 @@ class TestBatchSizeCalculationFlow:
 
         oils = [
             OilInput(id="olive_oil", percentage=70.0),
-            OilInput(id="coconut_oil", percentage=30.0)
+            OilInput(id="coconut_oil", percentage=30.0),
         ]
         normalized = normalize_oil_inputs(oils, total_weight_g=700.0)
 
@@ -160,11 +162,11 @@ class TestBatchSizeRegressionPrevention:
             lye=LyeConfig(
                 naoh_percent=0,
                 koh_percent=100,
-                koh_purity=85.0  # Non-standard purity
+                koh_purity=85.0,  # Non-standard purity
             ),
             water=WaterConfig(method="water_percent_of_oils", value=38.0),
             superfat_percent=5.0,
-            total_oil_weight_g=700.0
+            total_oil_weight_g=700.0,
         )
 
         # Purity feature still accessible
@@ -187,7 +189,7 @@ class TestBatchSizeRegressionPrevention:
             oils=[OilInput(id="olive_oil", percentage=100.0)],
             lye=LyeConfig(naoh_percent=0, koh_percent=100, koh_purity=90),
             water=WaterConfig(method="water_percent_of_oils", value=38.0),
-            superfat_percent=5.0
+            superfat_percent=5.0,
             # No total_oil_weight_g - backward compatible default
         )
 
@@ -196,5 +198,6 @@ class TestBatchSizeRegressionPrevention:
 
         # Normalizing with default produces 1000g oil
         from app.services.validation import normalize_oil_inputs
+
         normalized = normalize_oil_inputs(request.oils, total_weight_g=request.total_oil_weight_g)
         assert normalized[0].weight_g == 1000.0

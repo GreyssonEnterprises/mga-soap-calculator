@@ -1,9 +1,9 @@
 """Colorant model with natural soap colorants and usage guidance"""
+
 from datetime import datetime
-from typing import Optional
 
 import sqlalchemy as sa
-from sqlalchemy import String, DateTime
+from sqlalchemy import DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -27,7 +27,7 @@ class Colorant(Base):
         String(100),
         nullable=False,
     )
-    botanical_name: Mapped[Optional[str]] = mapped_column(
+    botanical_name: Mapped[str | None] = mapped_column(
         String(200),
         nullable=True,
         comment="Scientific botanical name if plant-derived",
@@ -37,27 +37,27 @@ class Colorant(Base):
         nullable=False,
         comment="Color family: yellow, orange, pink, red, purple, blue, brown, green, white, black",
     )
-    usage_rate: Mapped[Optional[str]] = mapped_column(
+    usage_rate: Mapped[str | None] = mapped_column(
         String(200),
         nullable=True,
         comment="Usage rate guidance: 1-3 tsp per pound, 1 tablespoon per batch, infuse at 1:10 ratio",
     )
-    method: Mapped[Optional[str]] = mapped_column(
+    method: Mapped[str | None] = mapped_column(
         String(200),
         nullable=True,
         comment="Application method: infuse in oil, add to lye water, disperse at trace, powder form",
     )
-    color_range_description: Mapped[Optional[str]] = mapped_column(
+    color_range_description: Mapped[str | None] = mapped_column(
         String(500),
         nullable=True,
         comment="Color range achievable: pale yellow to burnt orange, soft pink to deep rose",
     )
-    warnings: Mapped[Optional[str]] = mapped_column(
+    warnings: Mapped[str | None] = mapped_column(
         String(500),
         nullable=True,
         comment="Usage warnings: fades with time, can be scratchy, stains, turns brown, reacts with fragrance",
     )
-    notes: Mapped[Optional[str]] = mapped_column(
+    notes: Mapped[str | None] = mapped_column(
         String(500),
         nullable=True,
         comment="Additional notes: best for melt and pour, CP soap safe, works well with white base",

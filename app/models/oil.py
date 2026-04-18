@@ -1,9 +1,9 @@
 """Oil model with SAP values and fatty acid profiles"""
+
 from datetime import datetime
-from typing import Optional
 
 import sqlalchemy as sa
-from sqlalchemy import String, Float, DateTime
+from sqlalchemy import DateTime, Float, String
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -33,10 +33,10 @@ class Oil(Base):
         String(200),
         nullable=False,
     )
-    saponified_inci_name: Mapped[Optional[str]] = mapped_column(
+    saponified_inci_name: Mapped[str | None] = mapped_column(
         String(200),
         nullable=True,
-        comment="Post-saponification INCI name (e.g., 'Sodium Cocoate' or 'Potassium Cocoate')"
+        comment="Post-saponification INCI name (e.g., 'Sodium Cocoate' or 'Potassium Cocoate')",
     )
     sap_value_naoh: Mapped[float] = mapped_column(
         Float,

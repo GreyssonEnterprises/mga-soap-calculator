@@ -6,10 +6,10 @@ and pattern-based generation as fallback.
 
 Reference: docs/research.md - 37 researched oils with saponified INCI names
 """
+
 import json
 import re
 from pathlib import Path
-from typing import Tuple
 
 from app.models.oil import Oil
 
@@ -30,7 +30,7 @@ def load_reference_data() -> dict:
     if not reference_file.exists():
         raise FileNotFoundError(f"Reference data not found: {reference_file}")
 
-    with open(reference_file, 'r', encoding='utf-8') as f:
+    with open(reference_file, encoding="utf-8") as f:
         data = json.load(f)
 
     return data
@@ -78,14 +78,14 @@ def generate_saponified_name(common_name: str, lye_type: str) -> str:
     base_name = common_name.strip()
 
     # Remove common suffixes
-    base_name = re.sub(r'\s+(Oil|Butter)$', '', base_name, flags=re.IGNORECASE)
+    base_name = re.sub(r"\s+(Oil|Butter)$", "", base_name, flags=re.IGNORECASE)
 
     # INCI nomenclature patterns for saponification
     # Special case: "nut" ending (Coconut -> Coco)
-    if base_name.lower().endswith('nut'):
+    if base_name.lower().endswith("nut"):
         base_name = base_name[:-3]
     # Standard pattern: remove trailing 'e' (Olive -> Oliv)
-    elif base_name.endswith('e') and len(base_name) > 1:
+    elif base_name.endswith("e") and len(base_name) > 1:
         base_name = base_name[:-1]
     # Other vowel endings: keep as-is (Shea -> Shea)
 
@@ -98,7 +98,7 @@ def generate_saponified_name(common_name: str, lye_type: str) -> str:
     return result
 
 
-def get_saponified_inci_name(oil: Oil, lye_type: str) -> Tuple[str, bool]:
+def get_saponified_inci_name(oil: Oil, lye_type: str) -> tuple[str, bool]:
     """
     Get saponified INCI name for an oil with fallback logic.
 

@@ -1,21 +1,19 @@
 """Pydantic schemas for authentication requests and responses"""
-import uuid
-from typing import Optional
-from datetime import datetime
 
-from pydantic import BaseModel, EmailStr, Field, field_validator, ConfigDict
+import uuid
+
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 
 class UserRegisterRequest(BaseModel):
     """Request schema for user registration"""
+
     email: EmailStr
     password: str = Field(
-        ...,
-        min_length=8,
-        description="Password must be at least 8 characters long"
+        ..., min_length=8, description="Password must be at least 8 characters long"
     )
 
-    @field_validator('password')
+    @field_validator("password")
     @classmethod
     def validate_password_strength(cls, v: str) -> str:
         """Validate password strength
@@ -37,6 +35,7 @@ class UserRegisterRequest(BaseModel):
 
 class UserRegisterResponse(BaseModel):
     """Response schema for user registration"""
+
     id: uuid.UUID
     email: str
     message: str = "User registered successfully"
@@ -44,18 +43,21 @@ class UserRegisterResponse(BaseModel):
 
 class UserLoginRequest(BaseModel):
     """Request schema for user login"""
+
     email: EmailStr
     password: str
 
 
 class UserInfo(BaseModel):
     """User information in login response"""
+
     id: uuid.UUID
     email: str
 
 
 class UserLoginResponse(BaseModel):
     """Response schema for user login"""
+
     access_token: str
     token_type: str = "bearer"
     user: UserInfo
@@ -63,6 +65,7 @@ class UserLoginResponse(BaseModel):
 
 class TokenPayload(BaseModel):
     """JWT token payload structure"""
+
     sub: str  # User ID as string
     email: str
     exp: int  # Expiration timestamp

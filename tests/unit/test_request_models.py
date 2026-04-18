@@ -6,6 +6,7 @@ TDD Evidence:
 - Tests validate request schema against spec Section 3.1
 - Covers validation rules for oil inputs, lye config, water config, additives
 """
+
 import pytest
 from pydantic import ValidationError
 
@@ -123,7 +124,7 @@ def test_additive_input_with_percentage():
 
 def test_calculation_request_valid():
     """Test complete CalculationRequest with all required fields"""
-    from app.schemas.requests import CalculationRequest, OilInput, LyeConfig, WaterConfig
+    from app.schemas.requests import CalculationRequest, LyeConfig, OilInput, WaterConfig
 
     request = CalculationRequest(
         oils=[
@@ -133,7 +134,7 @@ def test_calculation_request_valid():
         lye=LyeConfig(naoh_percent=100.0, koh_percent=0.0),
         water=WaterConfig(method="lye_concentration", value=33.0),
         superfat_percent=5.0,
-        additives=[]
+        additives=[],
     )
 
     assert len(request.oils) == 2
@@ -145,7 +146,13 @@ def test_calculation_request_valid():
 
 def test_calculation_request_with_additives():
     """Test CalculationRequest with additives"""
-    from app.schemas.requests import CalculationRequest, OilInput, LyeConfig, WaterConfig, AdditiveInput
+    from app.schemas.requests import (
+        AdditiveInput,
+        CalculationRequest,
+        LyeConfig,
+        OilInput,
+        WaterConfig,
+    )
 
     request = CalculationRequest(
         oils=[OilInput(id="olive_oil", weight_g=500.0, percentage=None)],
@@ -154,8 +161,8 @@ def test_calculation_request_with_additives():
         superfat_percent=5.0,
         additives=[
             AdditiveInput(id="kaolin_clay", weight_g=20.0, percentage=None),
-            AdditiveInput(id="sodium_lactate", weight_g=None, percentage=2.0)
-        ]
+            AdditiveInput(id="sodium_lactate", weight_g=None, percentage=2.0),
+        ],
     )
 
     assert len(request.additives) == 2
@@ -172,5 +179,5 @@ def test_calculation_request_missing_required_fields():
         CalculationRequest(
             lye={"naoh_percent": 100.0, "koh_percent": 0.0},
             water={"method": "lye_concentration", "value": 33.0},
-            superfat_percent=5.0
+            superfat_percent=5.0,
         )

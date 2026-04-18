@@ -4,9 +4,12 @@ Unit tests for oils import logic.
 Tests data loading, parsing, and import process mechanics.
 All tests should FAIL initially (RED phase).
 """
-import pytest
+
 import json
 from pathlib import Path
+
+import pytest
+
 from scripts.import_oils_database import (
     load_oils_from_json,
     validate_all_oils,
@@ -18,7 +21,10 @@ class TestJSONLoading:
 
     def test_load_oils_from_json_file_exists(self):
         """Load 147 oils from JSON file"""
-        json_path = Path(__file__).parent.parent.parent / "working/user-feedback/oils-db-additions/complete-oils-database.json"
+        json_path = (
+            Path(__file__).parent.parent.parent
+            / "working/user-feedback/oils-db-additions/complete-oils-database.json"
+        )
 
         oils_data = load_oils_from_json(str(json_path))
 
@@ -28,7 +34,10 @@ class TestJSONLoading:
 
     def test_load_oils_from_json_structure(self):
         """Verify loaded oils have correct structure"""
-        json_path = Path(__file__).parent.parent.parent / "working/user-feedback/oils-db-additions/complete-oils-database.json"
+        json_path = (
+            Path(__file__).parent.parent.parent
+            / "working/user-feedback/oils-db-additions/complete-oils-database.json"
+        )
 
         oils_data = load_oils_from_json(str(json_path))
 
@@ -37,10 +46,15 @@ class TestJSONLoading:
         first_oil = oils_data[first_oil_id]
 
         required_fields = [
-            "id", "common_name", "inci_name",
-            "sap_value_naoh", "sap_value_koh",
-            "iodine_value", "ins_value",
-            "fatty_acids", "quality_contributions"
+            "id",
+            "common_name",
+            "inci_name",
+            "sap_value_naoh",
+            "sap_value_koh",
+            "iodine_value",
+            "ins_value",
+            "fatty_acids",
+            "quality_contributions",
         ]
 
         for field in required_fields:
@@ -65,7 +79,10 @@ class TestValidationBatch:
 
     def test_validate_all_oils_from_file(self):
         """All 147 oils should pass validation"""
-        json_path = Path(__file__).parent.parent.parent / "working/user-feedback/oils-db-additions/complete-oils-database.json"
+        json_path = (
+            Path(__file__).parent.parent.parent
+            / "working/user-feedback/oils-db-additions/complete-oils-database.json"
+        )
 
         oils_data = load_oils_from_json(str(json_path))
         is_valid, errors = validate_all_oils(oils_data)
@@ -85,14 +102,24 @@ class TestValidationBatch:
                 "iodine_value": 81.0,
                 "ins_value": 109.0,
                 "fatty_acids": {
-                    "lauric": 0, "myristic": 0, "palmitic": 13, "stearic": 4,
-                    "oleic": 71, "linoleic": 10, "linolenic": 1, "ricinoleic": 0
+                    "lauric": 0,
+                    "myristic": 0,
+                    "palmitic": 13,
+                    "stearic": 4,
+                    "oleic": 71,
+                    "linoleic": 10,
+                    "linolenic": 1,
+                    "ricinoleic": 0,
                 },
                 "quality_contributions": {
-                    "hardness": 17.0, "cleansing": 0.0, "conditioning": 82.0,
-                    "bubbly_lather": 0.0, "creamy_lather": 17.0,
-                    "longevity": 17.0, "stability": 82.0
-                }
+                    "hardness": 17.0,
+                    "cleansing": 0.0,
+                    "conditioning": 82.0,
+                    "bubbly_lather": 0.0,
+                    "creamy_lather": 17.0,
+                    "longevity": 17.0,
+                    "stability": 82.0,
+                },
             },
             "bad_oil": {
                 "id": "bad_oil",
@@ -103,15 +130,25 @@ class TestValidationBatch:
                 "iodine_value": 81.0,
                 "ins_value": 109.0,
                 "fatty_acids": {
-                    "lauric": 10, "myristic": 10, "palmitic": 10, "stearic": 10,
-                    "oleic": 10, "linoleic": 10, "linolenic": 10, "ricinoleic": 0
+                    "lauric": 10,
+                    "myristic": 10,
+                    "palmitic": 10,
+                    "stearic": 10,
+                    "oleic": 10,
+                    "linoleic": 10,
+                    "linolenic": 10,
+                    "ricinoleic": 0,
                 },  # Sum = 70% (invalid)
                 "quality_contributions": {
-                    "hardness": 17.0, "cleansing": 0.0, "conditioning": 82.0,
-                    "bubbly_lather": 0.0, "creamy_lather": 17.0,
-                    "longevity": 17.0, "stability": 82.0
-                }
-            }
+                    "hardness": 17.0,
+                    "cleansing": 0.0,
+                    "conditioning": 82.0,
+                    "bubbly_lather": 0.0,
+                    "creamy_lather": 17.0,
+                    "longevity": 17.0,
+                    "stability": 82.0,
+                },
+            },
         }
 
         is_valid, errors = validate_all_oils(oils_data)

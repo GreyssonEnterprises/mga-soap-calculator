@@ -9,8 +9,10 @@ Tests validate:
 - Database insertion with SQLAlchemy
 - Idempotency (re-import doesn't duplicate data)
 """
-import pytest
+
 from unittest.mock import MagicMock
+
+import pytest
 from sqlalchemy.orm import Session
 
 
@@ -23,7 +25,7 @@ def sample_yellow_colorant_json():
         "usage": "1 tsp PPO",
         "method": "Infuse in oil or add at trace",
         "range": "Bright yellow to deep golden",
-        "warnings": "Can stain; may fade over time"
+        "warnings": "Can stain; may fade over time",
     }
 
 
@@ -35,7 +37,7 @@ def sample_blue_colorant_json():
         "botanical": "Indigofera tinctoria",
         "usage": "1/4-1 tsp PPO",
         "method": "Infuse in oil or add to lye",
-        "range": "Light blue to deep indigo"
+        "range": "Light blue to deep indigo",
         # No warnings - optional field
     }
 
@@ -59,7 +61,7 @@ class TestJSONParsing:
         """
         from scripts.import_colorants import load_colorants_json
 
-        data = load_colorants_json('working/user-feedback/natural-colorants-reference.json')
+        data = load_colorants_json("working/user-feedback/natural-colorants-reference.json")
 
         assert isinstance(data, dict)
         # Should have 9 color family keys
@@ -74,11 +76,11 @@ class TestJSONParsing:
         """
         from scripts.import_colorants import load_colorants_json
 
-        data = load_colorants_json('working/user-feedback/natural-colorants-reference.json')
+        data = load_colorants_json("working/user-feedback/natural-colorants-reference.json")
 
-        assert 'yellow' in data
+        assert "yellow" in data
         # Per spec: 14 yellow colorants
-        assert len(data['yellow']) >= 10  # At least 10 yellow options
+        assert len(data["yellow"]) >= 10  # At least 10 yellow options
 
     @pytest.skip("TDD: RED phase - import script doesn't exist yet")
     def test_parse_colorant_entry(self, sample_yellow_colorant_json):
@@ -89,15 +91,15 @@ class TestJSONParsing:
         """
         from scripts.import_colorants import parse_colorant_entry
 
-        result = parse_colorant_entry(sample_yellow_colorant_json, category='yellow')
+        result = parse_colorant_entry(sample_yellow_colorant_json, category="yellow")
 
-        assert result['name'] == 'Turmeric'
-        assert result['botanical'] == 'Curcuma longa'
-        assert result['category'] == 'yellow'
-        assert result['usage'] == '1 tsp PPO'
-        assert result['method'] == 'Infuse in oil or add at trace'
-        assert result['color_range'] == 'Bright yellow to deep golden'
-        assert 'stain' in result['warnings'].lower()
+        assert result["name"] == "Turmeric"
+        assert result["botanical"] == "Curcuma longa"
+        assert result["category"] == "yellow"
+        assert result["usage"] == "1 tsp PPO"
+        assert result["method"] == "Infuse in oil or add at trace"
+        assert result["color_range"] == "Bright yellow to deep golden"
+        assert "stain" in result["warnings"].lower()
 
 
 class TestCategoryDistribution:
@@ -112,11 +114,18 @@ class TestCategoryDistribution:
         """
         from scripts.import_colorants import load_colorants_json
 
-        data = load_colorants_json('working/user-feedback/natural-colorants-reference.json')
+        data = load_colorants_json("working/user-feedback/natural-colorants-reference.json")
 
         expected_categories = [
-            'yellow', 'orange', 'pink', 'red', 'green',
-            'blue', 'purple', 'brown', 'black'
+            "yellow",
+            "orange",
+            "pink",
+            "red",
+            "green",
+            "blue",
+            "purple",
+            "brown",
+            "black",
         ]
 
         for category in expected_categories:
@@ -131,7 +140,7 @@ class TestCategoryDistribution:
         """
         from scripts.import_colorants import load_colorants_json
 
-        data = load_colorants_json('working/user-feedback/natural-colorants-reference.json')
+        data = load_colorants_json("working/user-feedback/natural-colorants-reference.json")
 
         total_count = sum(len(colorants) for colorants in data.values())
 
@@ -151,7 +160,7 @@ class TestDatabaseInsertion:
         """
         from scripts.import_colorants import create_or_update_colorant
 
-        create_or_update_colorant(mock_db_session, sample_yellow_colorant_json, category='yellow')
+        create_or_update_colorant(mock_db_session, sample_yellow_colorant_json, category="yellow")
 
         # Should call session.add() with Colorant instance
         assert mock_db_session.add.called
@@ -164,21 +173,21 @@ class TestDatabaseInsertion:
         WHEN: Re-importing same colorant
         THEN: Should update existing record, not create duplicate
         """
-        from scripts.import_colorants import create_or_update_colorant
         from app.models.colorant import Colorant
+        from scripts.import_colorants import create_or_update_colorant
 
         # Mock existing colorant query
         existing = Colorant(
-            id='turmeric',
-            name='Old Turmeric',
-            botanical='Old',
-            category='yellow',
-            method='Old method',
-            color_range='Old range'
+            id="turmeric",
+            name="Old Turmeric",
+            botanical="Old",
+            category="yellow",
+            method="Old method",
+            color_range="Old range",
         )
         mock_db_session.query.return_value.filter.return_value.first.return_value = existing
 
-        create_or_update_colorant(mock_db_session, sample_yellow_colorant_json, category='yellow')
+        create_or_update_colorant(mock_db_session, sample_yellow_colorant_json, category="yellow")
 
         # Should update existing, not add new
         assert mock_db_session.add.call_count <= 1
@@ -197,7 +206,9 @@ class TestDatabaseInsertion:
         mock_db_session.commit.side_effect = Exception("Database error")
 
         with pytest.raises(Exception):
-            create_or_update_colorant(mock_db_session, sample_yellow_colorant_json, category='yellow')
+            create_or_update_colorant(
+                mock_db_session, sample_yellow_colorant_json, category="yellow"
+            )
 
         # Should rollback on error
         assert mock_db_session.rollback.called
@@ -216,8 +227,7 @@ class TestBatchImport:
         from scripts.import_colorants import import_all_colorants
 
         count = import_all_colorants(
-            mock_db_session,
-            'working/user-feedback/natural-colorants-reference.json'
+            mock_db_session, "working/user-feedback/natural-colorants-reference.json"
         )
 
         # Should import 79 colorants per spec
@@ -233,8 +243,7 @@ class TestBatchImport:
         from scripts.import_colorants import import_all_colorants
 
         import_all_colorants(
-            mock_db_session,
-            'working/user-feedback/natural-colorants-reference.json'
+            mock_db_session, "working/user-feedback/natural-colorants-reference.json"
         )
 
         # Should commit after processing all categories
@@ -282,8 +291,8 @@ class TestIDGeneration:
         result = generate_colorant_id("Clay (Red)")
 
         # Should remove or replace special characters
-        assert '(' not in result
-        assert ')' not in result
+        assert "(" not in result
+        assert ")" not in result
 
 
 class TestWarningsHandling:
@@ -298,10 +307,10 @@ class TestWarningsHandling:
         """
         from scripts.import_colorants import parse_colorant_entry
 
-        result = parse_colorant_entry(sample_yellow_colorant_json, category='yellow')
+        result = parse_colorant_entry(sample_yellow_colorant_json, category="yellow")
 
-        assert result['warnings'] is not None
-        assert 'stain' in result['warnings'].lower()
+        assert result["warnings"] is not None
+        assert "stain" in result["warnings"].lower()
 
     @pytest.skip("TDD: RED phase - import script doesn't exist yet")
     def test_parse_colorant_without_warnings(self, sample_blue_colorant_json):
@@ -312,10 +321,10 @@ class TestWarningsHandling:
         """
         from scripts.import_colorants import parse_colorant_entry
 
-        result = parse_colorant_entry(sample_blue_colorant_json, category='blue')
+        result = parse_colorant_entry(sample_blue_colorant_json, category="blue")
 
         # Warnings is optional - should be None if not present
-        assert result.get('warnings') is None
+        assert result.get("warnings") is None
 
 
 class TestConfidenceLevelAssignment:
@@ -330,10 +339,10 @@ class TestConfidenceLevelAssignment:
         """
         from scripts.import_colorants import parse_colorant_entry
 
-        result = parse_colorant_entry(sample_yellow_colorant_json, category='yellow')
+        result = parse_colorant_entry(sample_yellow_colorant_json, category="yellow")
 
         # Natural colorants data is community-sourced → medium confidence
-        assert result.get('confidence_level') == 'medium'
+        assert result.get("confidence_level") == "medium"
 
     @pytest.skip("TDD: RED phase - import script doesn't exist yet")
     def test_mga_verified_false_by_default(self, sample_yellow_colorant_json):
@@ -344,9 +353,9 @@ class TestConfidenceLevelAssignment:
         """
         from scripts.import_colorants import parse_colorant_entry
 
-        result = parse_colorant_entry(sample_yellow_colorant_json, category='yellow')
+        result = parse_colorant_entry(sample_yellow_colorant_json, category="yellow")
 
-        assert result.get('verified_by_mga') is False
+        assert result.get("verified_by_mga") is False
 
 
 class TestMethodValidation:
@@ -401,7 +410,7 @@ class TestDataQuality:
         """
         from scripts.import_colorants import validate_colorant_data
 
-        is_valid, errors = validate_colorant_data(sample_yellow_colorant_json, category='yellow')
+        is_valid, errors = validate_colorant_data(sample_yellow_colorant_json, category="yellow")
 
         assert is_valid is True
         assert len(errors) == 0
@@ -420,7 +429,7 @@ class TestDataQuality:
             # Missing botanical, method, range
         }
 
-        is_valid, errors = validate_colorant_data(incomplete_data, category='yellow')
+        is_valid, errors = validate_colorant_data(incomplete_data, category="yellow")
 
         assert is_valid is False
         assert len(errors) > 0

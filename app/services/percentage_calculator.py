@@ -3,14 +3,14 @@ Percentage calculation service for soap formulations
 
 Converts ingredient weights to percentages with high precision using Decimal arithmetic
 """
-from decimal import Decimal, ROUND_HALF_UP, getcontext
-from typing import Dict
+
+from decimal import ROUND_HALF_UP, Decimal, getcontext
 
 # Set high precision for Decimal calculations
 getcontext().prec = 28
 
 
-def calculate_ingredient_percentages(weights: Dict[str, Decimal]) -> Dict[str, Decimal]:
+def calculate_ingredient_percentages(weights: dict[str, Decimal]) -> dict[str, Decimal]:
     """
     Calculate percentage of each ingredient in the total formulation.
 
@@ -54,7 +54,7 @@ def calculate_ingredient_percentages(weights: Dict[str, Decimal]) -> Dict[str, D
     return percentages
 
 
-def normalize_percentages(percentages: Dict[str, Decimal]) -> Dict[str, Decimal]:
+def normalize_percentages(percentages: dict[str, Decimal]) -> dict[str, Decimal]:
     """
     Normalize percentages to sum exactly to 100.0
 
@@ -78,26 +78,22 @@ def normalize_percentages(percentages: Dict[str, Decimal]) -> Dict[str, Decimal]
 
     # Round all percentages to 1 decimal place first
     rounded = {
-        k: v.quantize(Decimal('0.1'), rounding=ROUND_HALF_UP)
-        for k, v in percentages.items()
+        k: v.quantize(Decimal("0.1"), rounding=ROUND_HALF_UP) for k, v in percentages.items()
     }
 
     # Calculate difference from 100
     total = sum(rounded.values())
-    diff = Decimal('100.0') - total
+    diff = Decimal("100.0") - total
 
     if diff == 0:
         return rounded
 
     # Distribute difference to largest percentages
     # Sort by percentage (largest first), then by key for determinism
-    sorted_items = sorted(
-        rounded.items(),
-        key=lambda x: (-x[1], x[0])
-    )
+    sorted_items = sorted(rounded.items(), key=lambda x: (-x[1], x[0]))
 
     # Adjustment increment (0.1 for single decimal precision)
-    increment = Decimal('0.1') if diff > 0 else Decimal('-0.1')
+    increment = Decimal("0.1") if diff > 0 else Decimal("-0.1")
     adjustments_needed = abs(int(diff / increment))
 
     # Apply adjustments
@@ -110,9 +106,8 @@ def normalize_percentages(percentages: Dict[str, Decimal]) -> Dict[str, Decimal]
 
 
 def round_percentages_to_precision(
-    percentages: Dict[str, Decimal],
-    precision: int = 1
-) -> Dict[str, Decimal]:
+    percentages: dict[str, Decimal], precision: int = 1
+) -> dict[str, Decimal]:
     """
     Round percentages to specified decimal precision.
 
@@ -139,19 +134,16 @@ def round_percentages_to_precision(
 
     # Create quantizer for desired precision
     if precision == 0:
-        quantizer = Decimal('1')
+        quantizer = Decimal("1")
     else:
-        quantizer = Decimal('0.1') ** precision
+        quantizer = Decimal("0.1") ** precision
 
     # Round each percentage
-    rounded = {
-        k: v.quantize(quantizer, rounding=ROUND_HALF_UP)
-        for k, v in percentages.items()
-    }
+    rounded = {k: v.quantize(quantizer, rounding=ROUND_HALF_UP) for k, v in percentages.items()}
 
     # Check if rounding caused sum deviation
     total = sum(rounded.values())
-    target = Decimal('100.0')
+    target = Decimal("100.0")
 
     if total == target:
         return rounded
@@ -161,10 +153,7 @@ def round_percentages_to_precision(
 
     # Find largest percentage to adjust
     # Sort by value (descending), then by key for determinism
-    sorted_items = sorted(
-        rounded.items(),
-        key=lambda x: (-x[1], x[0])
-    )
+    sorted_items = sorted(rounded.items(), key=lambda x: (-x[1], x[0]))
 
     # Adjust the largest percentage
     adjusted = dict(rounded)
@@ -173,7 +162,7 @@ def round_percentages_to_precision(
     return adjusted
 
 
-def calculate_batch_percentages(batch_weights: Dict[str, any]) -> Dict[str, Decimal]:
+def calculate_batch_percentages(batch_weights: dict[str, any]) -> dict[str, Decimal]:
     """
     Calculate percentage of each ingredient in complete batch.
 
@@ -217,29 +206,29 @@ def calculate_batch_percentages(batch_weights: Dict[str, any]) -> Dict[str, Deci
     all_weights = {}
 
     # Add oils
-    if 'oils' in batch_weights:
-        for oil_id, weight in batch_weights['oils'].items():
+    if "oils" in batch_weights:
+        for oil_id, weight in batch_weights["oils"].items():
             if weight < 0:
                 raise ValueError(f"Negative weight not allowed: {oil_id} = {weight}")
             all_weights[oil_id] = weight
 
     # Add water
-    if 'water' in batch_weights:
-        water_weight = batch_weights['water']
+    if "water" in batch_weights:
+        water_weight = batch_weights["water"]
         if water_weight < 0:
             raise ValueError(f"Negative weight not allowed: water = {water_weight}")
-        all_weights['water'] = water_weight
+        all_weights["water"] = water_weight
 
     # Add lye (can be NaOH, KOH, or both)
-    if 'lye' in batch_weights:
-        for lye_type, weight in batch_weights['lye'].items():
+    if "lye" in batch_weights:
+        for lye_type, weight in batch_weights["lye"].items():
             if weight < 0:
                 raise ValueError(f"Negative weight not allowed: {lye_type} = {weight}")
             all_weights[lye_type] = weight
 
     # Add additives
-    if 'additives' in batch_weights:
-        for additive_id, weight in batch_weights['additives'].items():
+    if "additives" in batch_weights:
+        for additive_id, weight in batch_weights["additives"].items():
             if weight < 0:
                 raise ValueError(f"Negative weight not allowed: {additive_id} = {weight}")
             all_weights[additive_id] = weight

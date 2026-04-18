@@ -19,12 +19,11 @@ Test Coverage:
 
 import pytest
 from httpx import AsyncClient
-from decimal import Decimal
-
 
 # ============================================================================
 # FIXTURES
 # ============================================================================
+
 
 @pytest.fixture
 def recipe_with_90_koh_purity():
@@ -39,15 +38,11 @@ def recipe_with_90_koh_purity():
         "oils": [
             {"name": "Olive Oil", "percentage": 70},
             {"name": "Castor Oil", "percentage": 20},
-            {"name": "Coconut Oil", "percentage": 10}
+            {"name": "Coconut Oil", "percentage": 10},
         ],
-        "lye": {
-            "naoh_percent": 10,
-            "koh_percent": 90,
-            "koh_purity": 90
-        },
+        "lye": {"naoh_percent": 10, "koh_percent": 90, "koh_purity": 90},
         "superfat_percent": 1,
-        "batch_size_g": 700
+        "batch_size_g": 700,
     }
 
 
@@ -58,16 +53,11 @@ def recipe_mixed_purity():
         "oils": [
             {"name": "Olive Oil", "percentage": 70},
             {"name": "Castor Oil", "percentage": 20},
-            {"name": "Coconut Oil", "percentage": 10}
+            {"name": "Coconut Oil", "percentage": 10},
         ],
-        "lye": {
-            "naoh_percent": 10,
-            "koh_percent": 90,
-            "koh_purity": 90,
-            "naoh_purity": 98
-        },
+        "lye": {"naoh_percent": 10, "koh_percent": 90, "koh_purity": 90, "naoh_purity": 98},
         "superfat_percent": 1,
-        "batch_size_g": 700
+        "batch_size_g": 700,
     }
 
 
@@ -78,14 +68,14 @@ def recipe_without_purity():
         "oils": [
             {"name": "Olive Oil", "percentage": 70},
             {"name": "Castor Oil", "percentage": 20},
-            {"name": "Coconut Oil", "percentage": 10}
+            {"name": "Coconut Oil", "percentage": 10},
         ],
         "lye": {
             "naoh_percent": 10,
             "koh_percent": 90,
         },
         "superfat_percent": 1,
-        "batch_size_g": 700
+        "batch_size_g": 700,
     }
 
 
@@ -93,14 +83,13 @@ def recipe_without_purity():
 # SUCCESSFUL CALCULATION TESTS
 # ============================================================================
 
+
 @pytest.mark.asyncio
 class TestPurityAPISuccess:
     """Test successful API responses with purity parameters."""
 
     async def test_90_percent_koh_purity_calculation(
-        self,
-        async_client: AsyncClient,
-        recipe_with_90_koh_purity
+        self, async_client: AsyncClient, recipe_with_90_koh_purity
     ):
         """
         Test API returns correct weights for 90% KOH purity.
@@ -115,9 +104,7 @@ class TestPurityAPISuccess:
         # Expected: response.json()["pure_koh_equivalent_g"] ≈ 117.1 (±0.5)
 
     async def test_mixed_purity_independent_adjustments(
-        self,
-        async_client: AsyncClient,
-        recipe_mixed_purity
+        self, async_client: AsyncClient, recipe_mixed_purity
     ):
         """
         Test API handles different purity values for KOH and NaOH.
@@ -131,10 +118,7 @@ class TestPurityAPISuccess:
         # Expected: koh_weight adjusted by 0.90
         # Expected: naoh_weight adjusted by 0.98
 
-    async def test_100_percent_purity_no_adjustment(
-        self,
-        async_client: AsyncClient
-    ):
+    async def test_100_percent_purity_no_adjustment(self, async_client: AsyncClient):
         """
         Test 100% purity returns unadjusted weights.
 
@@ -146,9 +130,7 @@ class TestPurityAPISuccess:
         # Expected: koh_weight_g == pure_koh_equivalent_g
 
     async def test_response_includes_purity_fields(
-        self,
-        async_client: AsyncClient,
-        recipe_with_90_koh_purity
+        self, async_client: AsyncClient, recipe_with_90_koh_purity
     ):
         """
         Test response includes purity values and pure equivalents.
@@ -168,14 +150,13 @@ class TestPurityAPISuccess:
 # DEFAULT BEHAVIOR TESTS
 # ============================================================================
 
+
 @pytest.mark.asyncio
 class TestPurityAPIDefaults:
     """Test default purity values when fields are omitted."""
 
     async def test_omitted_koh_purity_defaults_to_90(
-        self,
-        async_client: AsyncClient,
-        recipe_without_purity
+        self, async_client: AsyncClient, recipe_without_purity
     ):
         """
         Test API defaults to 90% KOH when field is omitted.
@@ -189,9 +170,7 @@ class TestPurityAPIDefaults:
         # Expected: koh_weight_g reflects 90% adjustment
 
     async def test_omitted_naoh_purity_defaults_to_100(
-        self,
-        async_client: AsyncClient,
-        recipe_without_purity
+        self, async_client: AsyncClient, recipe_without_purity
     ):
         """
         Test API defaults to 100% NaOH when field is omitted (backward compatible).
@@ -209,14 +188,13 @@ class TestPurityAPIDefaults:
 # VALIDATION ERROR TESTS
 # ============================================================================
 
+
 @pytest.mark.asyncio
 class TestPurityAPIValidationErrors:
     """Test API validation errors for invalid purity values."""
 
     async def test_koh_purity_below_50_returns_400(
-        self,
-        async_client: AsyncClient,
-        recipe_with_90_koh_purity
+        self, async_client: AsyncClient, recipe_with_90_koh_purity
     ):
         """
         Test API rejects KOH purity below 50%.
@@ -230,9 +208,7 @@ class TestPurityAPIValidationErrors:
         # Expected: error message includes "must be between 50% and 100%"
 
     async def test_koh_purity_above_100_returns_400(
-        self,
-        async_client: AsyncClient,
-        recipe_with_90_koh_purity
+        self, async_client: AsyncClient, recipe_with_90_koh_purity
     ):
         """
         Test API rejects KOH purity above 100%.
@@ -246,9 +222,7 @@ class TestPurityAPIValidationErrors:
         # Expected: error message includes "cannot exceed 100%"
 
     async def test_naoh_purity_negative_returns_400(
-        self,
-        async_client: AsyncClient,
-        recipe_with_90_koh_purity
+        self, async_client: AsyncClient, recipe_with_90_koh_purity
     ):
         """
         Test API rejects negative purity values.
@@ -261,9 +235,7 @@ class TestPurityAPIValidationErrors:
         # Expected: response.status_code == 400
 
     async def test_zero_purity_returns_400(
-        self,
-        async_client: AsyncClient,
-        recipe_with_90_koh_purity
+        self, async_client: AsyncClient, recipe_with_90_koh_purity
     ):
         """
         Test API rejects zero purity (would cause divide-by-zero).
@@ -280,14 +252,12 @@ class TestPurityAPIValidationErrors:
 # WARNING TESTS
 # ============================================================================
 
+
 @pytest.mark.asyncio
 class TestPurityAPIWarnings:
     """Test warning generation in API responses."""
 
-    async def test_unusual_purity_generates_warning(
-        self,
-        async_client: AsyncClient
-    ):
+    async def test_unusual_purity_generates_warning(self, async_client: AsyncClient):
         """
         Test API includes warning for unusual purity values.
 
@@ -300,9 +270,7 @@ class TestPurityAPIWarnings:
         # Expected: response.json()["metadata"]["warnings"] contains warning
 
     async def test_typical_purity_no_warnings(
-        self,
-        async_client: AsyncClient,
-        recipe_with_90_koh_purity
+        self, async_client: AsyncClient, recipe_with_90_koh_purity
     ):
         """
         Test no warnings for typical commercial purity values.
@@ -320,14 +288,13 @@ class TestPurityAPIWarnings:
 # PRECISION TESTS
 # ============================================================================
 
+
 @pytest.mark.asyncio
 class TestPurityAPIPrecision:
     """Test calculation precision meets ±0.5g accuracy requirement."""
 
     async def test_calculation_within_tolerance(
-        self,
-        async_client: AsyncClient,
-        recipe_with_90_koh_purity
+        self, async_client: AsyncClient, recipe_with_90_koh_purity
     ):
         """
         Test API calculations are within ±0.5g tolerance.

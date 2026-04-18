@@ -16,12 +16,11 @@ Test Coverage:
 """
 
 import pytest
-from decimal import Decimal
-
 
 # ============================================================================
 # FIXTURES
 # ============================================================================
+
 
 @pytest.fixture
 def sample_recipe_90_koh():
@@ -35,15 +34,11 @@ def sample_recipe_90_koh():
         "oils": [
             {"name": "Olive Oil", "percentage": 70},
             {"name": "Castor Oil", "percentage": 20},
-            {"name": "Coconut Oil", "percentage": 10}
+            {"name": "Coconut Oil", "percentage": 10},
         ],
-        "lye": {
-            "naoh_percent": 10,
-            "koh_percent": 90,
-            "koh_purity": 90
-        },
+        "lye": {"naoh_percent": 10, "koh_percent": 90, "koh_purity": 90},
         "superfat_percent": 1,
-        "batch_size_g": 700
+        "batch_size_g": 700,
     }
 
 
@@ -59,16 +54,11 @@ def sample_recipe_mixed_purity():
         "oils": [
             {"name": "Olive Oil", "percentage": 70},
             {"name": "Castor Oil", "percentage": 20},
-            {"name": "Coconut Oil", "percentage": 10}
+            {"name": "Coconut Oil", "percentage": 10},
         ],
-        "lye": {
-            "naoh_percent": 10,
-            "koh_percent": 90,
-            "koh_purity": 90,
-            "naoh_purity": 98
-        },
+        "lye": {"naoh_percent": 10, "koh_percent": 90, "koh_purity": 90, "naoh_purity": 98},
         "superfat_percent": 1,
-        "batch_size_g": 700
+        "batch_size_g": 700,
     }
 
 
@@ -76,17 +66,18 @@ def sample_recipe_mixed_purity():
 def edge_case_purity_values():
     """Edge case purity values for boundary testing."""
     return {
-        "minimum": 50.0,      # Minimum allowed purity
-        "low": 75.0,          # Low but valid
-        "commercial": 90.0,   # Standard commercial KOH
-        "high": 98.0,         # High purity (NaOH typical)
-        "maximum": 100.0,     # Pure (no adjustment)
+        "minimum": 50.0,  # Minimum allowed purity
+        "low": 75.0,  # Low but valid
+        "commercial": 90.0,  # Standard commercial KOH
+        "high": 98.0,  # High purity (NaOH typical)
+        "maximum": 100.0,  # Pure (no adjustment)
     }
 
 
 # ============================================================================
 # PURITY FORMULA TESTS
 # ============================================================================
+
 
 class TestPurityCalculationFormula:
     """Test core purity adjustment formula accuracy."""
@@ -142,6 +133,7 @@ class TestPurityCalculationFormula:
 # PRECISION TESTS
 # ============================================================================
 
+
 class TestPurityCalculationPrecision:
     """Test calculation precision meets ±0.5g accuracy requirement."""
 
@@ -171,6 +163,7 @@ class TestPurityCalculationPrecision:
 # ============================================================================
 # EDGE CASE TESTS
 # ============================================================================
+
 
 class TestPurityCalculationEdgeCases:
     """Test boundary and edge case purity values."""

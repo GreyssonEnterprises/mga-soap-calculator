@@ -10,16 +10,16 @@ This migration addresses Phase 1 code review findings:
 3. Adds comment to hashed_password field documenting bcrypt requirement
 
 """
-from typing import Sequence, Union
+
+from collections.abc import Sequence
 
 from alembic import op
-import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
-revision: str = '002'
-down_revision: Union[str, None] = '001'
-branch_labels: Union[str, Sequence[str], None] = None
-depends_on: Union[str, Sequence[str], None] = None
+revision: str = "002"
+down_revision: str | None = "001"
+branch_labels: str | Sequence[str] | None = None
+depends_on: str | Sequence[str] | None = None
 
 
 def upgrade() -> None:

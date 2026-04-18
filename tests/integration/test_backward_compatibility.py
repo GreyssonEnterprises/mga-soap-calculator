@@ -18,12 +18,11 @@ Test Coverage:
 
 import pytest
 from httpx import AsyncClient
-from decimal import Decimal
-
 
 # ============================================================================
 # FIXTURES
 # ============================================================================
+
 
 @pytest.fixture
 def legacy_koh_recipe_no_purity():
@@ -37,7 +36,7 @@ def legacy_koh_recipe_no_purity():
         "oils": [
             {"name": "Olive Oil", "percentage": 70},
             {"name": "Castor Oil", "percentage": 20},
-            {"name": "Coconut Oil", "percentage": 10}
+            {"name": "Coconut Oil", "percentage": 10},
         ],
         "lye": {
             "naoh_percent": 10,
@@ -45,7 +44,7 @@ def legacy_koh_recipe_no_purity():
             # NO koh_purity field (legacy behavior)
         },
         "superfat_percent": 1,
-        "batch_size_g": 700
+        "batch_size_g": 700,
     }
 
 
@@ -60,15 +59,15 @@ def legacy_koh_recipe_explicit_100():
         "oils": [
             {"name": "Olive Oil", "percentage": 70},
             {"name": "Castor Oil", "percentage": 20},
-            {"name": "Coconut Oil", "percentage": 10}
+            {"name": "Coconut Oil", "percentage": 10},
         ],
         "lye": {
             "naoh_percent": 10,
             "koh_percent": 90,
-            "koh_purity": 100  # Explicit to maintain legacy behavior
+            "koh_purity": 100,  # Explicit to maintain legacy behavior
         },
         "superfat_percent": 1,
-        "batch_size_g": 700
+        "batch_size_g": 700,
     }
 
 
@@ -79,14 +78,14 @@ def pure_naoh_recipe():
         "oils": [
             {"name": "Olive Oil", "percentage": 70},
             {"name": "Castor Oil", "percentage": 20},
-            {"name": "Coconut Oil", "percentage": 10}
+            {"name": "Coconut Oil", "percentage": 10},
         ],
         "lye": {
             "naoh_percent": 100,
             "koh_percent": 0,
         },
         "superfat_percent": 5,
-        "batch_size_g": 500
+        "batch_size_g": 500,
     }
 
 
@@ -94,14 +93,13 @@ def pure_naoh_recipe():
 # BREAKING CHANGE TESTS
 # ============================================================================
 
+
 @pytest.mark.asyncio
 class TestBackwardCompatibilityBreakingChange:
     """Test breaking change behavior: default KOH purity 100% → 90%."""
 
     async def test_legacy_request_receives_90_percent_calculation(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_no_purity
+        self, async_client: AsyncClient, legacy_koh_recipe_no_purity
     ):
         """
         Test legacy requests (no koh_purity) now use 90% default.
@@ -116,9 +114,7 @@ class TestBackwardCompatibilityBreakingChange:
         # Expected: koh_weight > legacy_100_percent_weight
 
     async def test_explicit_100_percent_maintains_legacy_behavior(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_explicit_100
+        self, async_client: AsyncClient, legacy_koh_recipe_explicit_100
     ):
         """
         Test explicit koh_purity=100 maintains legacy calculations.
@@ -132,10 +128,7 @@ class TestBackwardCompatibilityBreakingChange:
         # Expected: koh_weight_g == pure_koh_equivalent_g
 
     async def test_breaking_change_weight_difference(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_no_purity,
-        legacy_koh_recipe_explicit_100
+        self, async_client: AsyncClient, legacy_koh_recipe_no_purity, legacy_koh_recipe_explicit_100
     ):
         """
         Test weight difference between old and new default behavior.
@@ -152,15 +145,12 @@ class TestBackwardCompatibilityBreakingChange:
 # NaOH BACKWARD COMPATIBILITY TESTS
 # ============================================================================
 
+
 @pytest.mark.asyncio
 class TestBackwardCompatibilityNaOH:
     """Test NaOH backward compatibility (no breaking change)."""
 
-    async def test_pure_naoh_recipe_unchanged(
-        self,
-        async_client: AsyncClient,
-        pure_naoh_recipe
-    ):
+    async def test_pure_naoh_recipe_unchanged(self, async_client: AsyncClient, pure_naoh_recipe):
         """
         Test pure NaOH recipes are unaffected by KOH default change.
 
@@ -172,10 +162,7 @@ class TestBackwardCompatibilityNaOH:
         # Expected: naoh_purity defaults to 100.0
         # Expected: No purity adjustment for NaOH
 
-    async def test_naoh_default_remains_100_percent(
-        self,
-        async_client: AsyncClient
-    ):
+    async def test_naoh_default_remains_100_percent(self, async_client: AsyncClient):
         """
         Test NaOH purity still defaults to 100% (backward compatible).
 
@@ -191,14 +178,13 @@ class TestBackwardCompatibilityNaOH:
 # MIGRATION PATH TESTS
 # ============================================================================
 
+
 @pytest.mark.asyncio
 class TestBackwardCompatibilityMigrationPath:
     """Test migration paths for existing API clients."""
 
     async def test_migration_step_1_add_explicit_koh_purity(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_explicit_100
+        self, async_client: AsyncClient, legacy_koh_recipe_explicit_100
     ):
         """
         Test migration step 1: Add explicit koh_purity=100 to maintain behavior.
@@ -211,9 +197,7 @@ class TestBackwardCompatibilityMigrationPath:
         # Expected: Matches legacy calculations exactly
 
     async def test_migration_step_2_adjust_to_90_percent(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_no_purity
+        self, async_client: AsyncClient, legacy_koh_recipe_no_purity
     ):
         """
         Test migration step 2: User adopts 90% default for commercial KOH.
@@ -226,9 +210,7 @@ class TestBackwardCompatibilityMigrationPath:
         # Expected: koh_purity=90.0, adjusted weight
 
     async def test_migration_no_code_change_scenario(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_no_purity
+        self, async_client: AsyncClient, legacy_koh_recipe_no_purity
     ):
         """
         Test scenario: User makes no code changes after deployment.
@@ -246,14 +228,13 @@ class TestBackwardCompatibilityMigrationPath:
 # RESPONSE STRUCTURE COMPATIBILITY TESTS
 # ============================================================================
 
+
 @pytest.mark.asyncio
 class TestBackwardCompatibilityResponseStructure:
     """Test new response fields don't break existing parsers."""
 
     async def test_new_fields_addition_backward_compatible(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_no_purity
+        self, async_client: AsyncClient, legacy_koh_recipe_no_purity
     ):
         """
         Test new response fields don't break parsers expecting old structure.
@@ -267,9 +248,7 @@ class TestBackwardCompatibilityResponseStructure:
         # Expected: Parsers ignoring unknown fields still work
 
     async def test_response_includes_legacy_fields(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_no_purity
+        self, async_client: AsyncClient, legacy_koh_recipe_no_purity
     ):
         """
         Test all legacy response fields are still present.
@@ -282,9 +261,7 @@ class TestBackwardCompatibilityResponseStructure:
         # Expected: koh_weight_g, naoh_weight_g, water_weight_g, etc. present
 
     async def test_pure_equivalents_are_additive_fields(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_no_purity
+        self, async_client: AsyncClient, legacy_koh_recipe_no_purity
     ):
         """
         Test pure_koh_equivalent_g and pure_naoh_equivalent_g are additive.
@@ -301,14 +278,13 @@ class TestBackwardCompatibilityResponseStructure:
 # LEGACY CALCULATION VERIFICATION TESTS
 # ============================================================================
 
+
 @pytest.mark.asyncio
 class TestBackwardCompatibilityLegacyCalculations:
     """Test explicit purity=100 matches legacy calculations exactly."""
 
     async def test_legacy_calculation_reference_case(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_explicit_100
+        self, async_client: AsyncClient, legacy_koh_recipe_explicit_100
     ):
         """
         Test reference case: explicit 100% purity matches documented legacy results.
@@ -321,9 +297,7 @@ class TestBackwardCompatibilityLegacyCalculations:
         # Expected: Exact match to pre-feature calculations
 
     async def test_legacy_precision_maintained(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_explicit_100
+        self, async_client: AsyncClient, legacy_koh_recipe_explicit_100
     ):
         """
         Test calculation precision unchanged for legacy behavior.
@@ -340,14 +314,13 @@ class TestBackwardCompatibilityLegacyCalculations:
 # SAFETY VALIDATION TESTS
 # ============================================================================
 
+
 @pytest.mark.asyncio
 class TestBackwardCompatibilitySafety:
     """Test safety implications of breaking change."""
 
     async def test_over_lye_risk_without_migration(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_no_purity
+        self, async_client: AsyncClient, legacy_koh_recipe_no_purity
     ):
         """
         Test breaking change results in HIGHER lye calculation (safer).
@@ -364,9 +337,7 @@ class TestBackwardCompatibilitySafety:
         # Expected: new_weight > legacy_weight (over-lye scenario)
 
     async def test_deprecation_warning_for_omitted_koh_purity(
-        self,
-        async_client: AsyncClient,
-        legacy_koh_recipe_no_purity
+        self, async_client: AsyncClient, legacy_koh_recipe_no_purity
     ):
         """
         Test API includes deprecation warning when koh_purity is omitted.

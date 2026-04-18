@@ -1,20 +1,20 @@
 """Tests for JWT authentication and authorization"""
+
 import uuid
-from datetime import datetime, timedelta, timezone
-from unittest.mock import Mock, patch
+from datetime import UTC, datetime, timedelta
 
 import pytest
 from fastapi import HTTPException, status
-from jose import JWTError, jwt
+from jose import jwt
 from passlib.hash import bcrypt
 
 from app.core.config import settings
 from app.core.security import (
     create_access_token,
-    verify_password,
-    get_password_hash,
     decode_access_token,
     get_current_user,
+    get_password_hash,
+    verify_password,
 )
 from app.models.user import User
 
@@ -65,16 +65,10 @@ class TestJWTTokens:
         user_id = str(uuid.uuid4())
         email = "test@example.com"
 
-        token = create_access_token(
-            data={"sub": user_id, "email": email}
-        )
+        token = create_access_token(data={"sub": user_id, "email": email})
 
         # Decode token to verify structure
-        payload = jwt.decode(
-            token,
-            settings.SECRET_KEY,
-            algorithms=[settings.ALGORITHM]
-        )
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
 
         # Verify required claims
         assert payload["sub"] == user_id
@@ -88,19 +82,13 @@ class TestJWTTokens:
         email = "test@example.com"
 
         # Create token with default expiry
-        token = create_access_token(
-            data={"sub": user_id, "email": email}
-        )
+        token = create_access_token(data={"sub": user_id, "email": email})
 
-        payload = jwt.decode(
-            token,
-            settings.SECRET_KEY,
-            algorithms=[settings.ALGORITHM]
-        )
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
 
         # Check expiration is approximately 24 hours from now
-        exp_datetime = datetime.fromtimestamp(payload["exp"], tz=timezone.utc)
-        iat_datetime = datetime.fromtimestamp(payload["iat"], tz=timezone.utc)
+        exp_datetime = datetime.fromtimestamp(payload["exp"], tz=UTC)
+        iat_datetime = datetime.fromtimestamp(payload["iat"], tz=UTC)
 
         # Should be exactly 24 hours
         time_diff = exp_datetime - iat_datetime
@@ -113,19 +101,14 @@ class TestJWTTokens:
         expires_delta = timedelta(hours=1)
 
         token = create_access_token(
-            data={"sub": user_id, "email": email},
-            expires_delta=expires_delta
+            data={"sub": user_id, "email": email}, expires_delta=expires_delta
         )
 
-        payload = jwt.decode(
-            token,
-            settings.SECRET_KEY,
-            algorithms=[settings.ALGORITHM]
-        )
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
 
         # Check expiration is approximately 1 hour from now
-        exp_datetime = datetime.fromtimestamp(payload["exp"], tz=timezone.utc)
-        iat_datetime = datetime.fromtimestamp(payload["iat"], tz=timezone.utc)
+        exp_datetime = datetime.fromtimestamp(payload["exp"], tz=UTC)
+        iat_datetime = datetime.fromtimestamp(payload["iat"], tz=UTC)
 
         time_diff = exp_datetime - iat_datetime
         assert 0.9 <= time_diff.total_seconds() / 3600 <= 1.1
@@ -135,9 +118,7 @@ class TestJWTTokens:
         user_id = str(uuid.uuid4())
         email = "test@example.com"
 
-        token = create_access_token(
-            data={"sub": user_id, "email": email}
-        )
+        token = create_access_token(data={"sub": user_id, "email": email})
 
         payload = decode_access_token(token)
 
@@ -151,8 +132,7 @@ class TestJWTTokens:
 
         # Create token that expires immediately
         token = create_access_token(
-            data={"sub": user_id, "email": email},
-            expires_delta=timedelta(seconds=-1)
+            data={"sub": user_id, "email": email}, expires_delta=timedelta(seconds=-1)
         )
 
         with pytest.raises(HTTPException) as exc_info:
@@ -168,9 +148,9 @@ class TestJWTTokens:
 
         # Create token with different secret
         token = jwt.encode(
-            {"sub": user_id, "email": email, "exp": datetime.now(timezone.utc) + timedelta(hours=1)},
+            {"sub": user_id, "email": email, "exp": datetime.now(UTC) + timedelta(hours=1)},
             "wrong_secret_key",
-            algorithm=settings.ALGORITHM
+            algorithm=settings.ALGORITHM,
         )
 
         with pytest.raises(HTTPException) as exc_info:
@@ -197,21 +177,17 @@ class TestGetCurrentUser:
     async def test_get_current_user_valid(self, async_session):
         """Test extracting current user from valid token"""
         # Create a test user
-        user = User(
-            email="test@example.com",
-            hashed_password=bcrypt.hash("TestPassword123!")
-        )
+        user = User(email="test@example.com", hashed_password=bcrypt.hash("TestPassword123!"))
         async_session.add(user)
         await async_session.commit()
         await async_session.refresh(user)
 
         # Create token for user
-        token = create_access_token(
-            data={"sub": str(user.id), "email": user.email}
-        )
+        token = create_access_token(data={"sub": str(user.id), "email": user.email})
 
         # Mock the HTTPBearer to return our token
         from fastapi.security import HTTPAuthorizationCredentials
+
         credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials=token)
 
         # Get current user
@@ -224,7 +200,10 @@ class TestGetCurrentUser:
     async def test_get_current_user_invalid_token(self, async_session):
         """Test get current user with invalid token"""
         from fastapi.security import HTTPAuthorizationCredentials
-        credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials="invalid.token.here")
+
+        credentials = HTTPAuthorizationCredentials(
+            scheme="Bearer", credentials="invalid.token.here"
+        )
 
         with pytest.raises(HTTPException) as exc_info:
             await get_current_user(credentials, async_session)
@@ -237,12 +216,13 @@ class TestGetCurrentUser:
         """Test get current user when token missing user_id"""
         # Create token without sub claim
         token = jwt.encode(
-            {"email": "test@example.com", "exp": datetime.now(timezone.utc) + timedelta(hours=1)},
+            {"email": "test@example.com", "exp": datetime.now(UTC) + timedelta(hours=1)},
             settings.SECRET_KEY,
-            algorithm=settings.ALGORITHM
+            algorithm=settings.ALGORITHM,
         )
 
         from fastapi.security import HTTPAuthorizationCredentials
+
         credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials=token)
 
         with pytest.raises(HTTPException) as exc_info:
@@ -256,11 +236,10 @@ class TestGetCurrentUser:
         """Test get current user when user doesn't exist in database"""
         fake_user_id = str(uuid.uuid4())
 
-        token = create_access_token(
-            data={"sub": fake_user_id, "email": "nonexistent@example.com"}
-        )
+        token = create_access_token(data={"sub": fake_user_id, "email": "nonexistent@example.com"})
 
         from fastapi.security import HTTPAuthorizationCredentials
+
         credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials=token)
 
         with pytest.raises(HTTPException) as exc_info:

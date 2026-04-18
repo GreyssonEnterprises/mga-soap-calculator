@@ -2,12 +2,13 @@
 
 Ensures test database has seeded reference data
 """
+
 import pytest_asyncio
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
-from scripts.seed_data import OIL_SEED_DATA, ADDITIVE_SEED_DATA
-from app.models.oil import Oil
 from app.models.additive import Additive
+from app.models.oil import Oil
+from scripts.seed_data import ADDITIVE_SEED_DATA, OIL_SEED_DATA
 
 
 @pytest_asyncio.fixture(scope="function", autouse=True)
