@@ -1,6 +1,6 @@
 [project]
 name = "mga-soap-calculator-api"
-version = "1.0.0"
+version = "1.4.2"
 description = "Core Soap Calculation API with additive effect modeling"
 authors = [{ name = "MGA Automotive", email = "info@mga-automotive.com" }]
 readme = "README.md"
