@@ -14,10 +14,10 @@ class Settings(BaseSettings):
     @model_validator(mode="after")
     def derive_sync_url(self) -> "Settings":
         if not self.DATABASE_URL_SYNC:
-            # Convert asyncpg URL to psycopg2 for Alembic sync usage
-            self.DATABASE_URL_SYNC = self.DATABASE_URL.replace(
-                "postgresql+asyncpg://", "postgresql+psycopg2://"
-            ).replace("postgresql://", "postgresql+psycopg2://")
+            url = self.DATABASE_URL
+            url = url.replace("postgresql+asyncpg://", "postgresql+psycopg2://")
+            url = url.replace("postgresql://", "postgresql+psycopg2://")
+            self.DATABASE_URL_SYNC = url
         return self
 
     # JWT
