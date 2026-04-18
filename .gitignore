@@ -100,4 +100,3 @@ secrets/
 ._*
 
 # Claude Code Instructions (project-specific, may contain sensitive paths)
-CLAUDE.md
