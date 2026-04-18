@@ -161,6 +161,35 @@ class CalculationResponse(BaseModel):
     warnings: list[Warning]
 
 
+class CalculationSummary(BaseModel):
+    """Lightweight per-calculation item returned by the list endpoint.
+
+    The full ``CalculationResponse`` is ~2 KB per record; returning it for 100
+    rows would push a 200 KB response for a view that only needs enough data
+    to render a recipe-picker row. This summary carries just the surface a
+    client list view needs: identity, timestamp, primary oils (top three by
+    weight), size, superfat, and the final quality metric line.
+    """
+
+    calculation_id: UUID
+    created_at: datetime
+    total_oil_weight_g: float
+    superfat_percent: float
+    oil_count: int
+    top_oils: list[str]
+    quality_metrics: QualityMetrics
+
+
+class CalculationListResponse(BaseModel):
+    """Paginated response for ``GET /api/v1/calculations``."""
+
+    calculations: list[CalculationSummary]
+    total_count: int
+    limit: int
+    offset: int
+    has_more: bool
+
+
 class ErrorDetail(BaseModel):
     """Error information"""
 
