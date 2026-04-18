@@ -18,6 +18,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app import __version__
 from app.api.v1._calculation_pipeline import (
     build_response,
     compute_recipe,
@@ -190,7 +191,7 @@ async def health_check(db: AsyncSession = Depends(get_db)):
     try:
         # Test database connection
         await db.execute(select(1))
-        return {"status": "healthy", "database": "connected", "version": "1.0.0"}
+        return {"status": "healthy", "database": "connected", "version": __version__}
     except SQLAlchemyError as e:
         # SQLAlchemyError is the root of all SQLAlchemy-raised exceptions and
         # covers connection loss, DBAPI errors (asyncpg), operational errors,
