@@ -1,0 +1,4123 @@
+{
+  "oils": [
+    {
+      "id": "abyssinian_oil",
+      "common_name": "Abyssinian Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.12,
+      "sap_value_koh": 0.168,
+      "iodine_value": 98,
+      "ins_value": 70,
+      "fatty_acids": {
+        "oleic": 18,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 11,
+        "myristic": 0,
+        "palmitic": 3,
+        "linolenic": 4,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 5,
+        "cleansing": 0,
+        "longevity": 5,
+        "stability": 5,
+        "conditioning": 33,
+        "bubbly_lather": 0,
+        "creamy_lather": 5
+      }
+    },
+    {
+      "id": "almond_butter",
+      "common_name": "Almond Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.134,
+      "sap_value_koh": 0.188,
+      "iodine_value": 70,
+      "ins_value": 118,
+      "fatty_acids": {
+        "oleic": 58,
+        "lauric": 0,
+        "stearic": 15,
+        "linoleic": 16,
+        "myristic": 1,
+        "palmitic": 9,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 25,
+        "cleansing": 1,
+        "longevity": 24,
+        "stability": 24,
+        "conditioning": 74,
+        "bubbly_lather": 1,
+        "creamy_lather": 24
+      }
+    },
+    {
+      "id": "almond_oil_sweet",
+      "common_name": "Almond Oil, sweet",
+      "inci_name": "",
+      "sap_value_naoh": 0.139,
+      "sap_value_koh": 0.195,
+      "iodine_value": 99,
+      "ins_value": 97,
+      "fatty_acids": {
+        "oleic": 71,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 18,
+        "myristic": 0,
+        "palmitic": 7,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 7,
+        "cleansing": 0,
+        "longevity": 7,
+        "stability": 7,
+        "conditioning": 89,
+        "bubbly_lather": 0,
+        "creamy_lather": 7
+      }
+    },
+    {
+      "id": "aloe_butter",
+      "common_name": "Aloe Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.179,
+      "sap_value_koh": 0.251,
+      "iodine_value": 2,
+      "ins_value": 240,
+      "fatty_acids": {
+        "oleic": 7,
+        "lauric": 45,
+        "stearic": 3,
+        "linoleic": 2,
+        "myristic": 18,
+        "palmitic": 8,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 74,
+        "cleansing": 63,
+        "longevity": 11,
+        "stability": 11,
+        "conditioning": 9,
+        "bubbly_lather": 63,
+        "creamy_lather": 11
+      }
+    },
+    {
+      "id": "andiroba_oilkarabacrabwood",
+      "common_name": "Andiroba Oil,karaba,crabwood",
+      "inci_name": "",
+      "sap_value_naoh": 0.134,
+      "sap_value_koh": 0.188,
+      "iodine_value": 68,
+      "ins_value": 120,
+      "fatty_acids": {
+        "oleic": 51,
+        "lauric": 0,
+        "stearic": 8,
+        "linoleic": 9,
+        "myristic": 0,
+        "palmitic": 28,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 36,
+        "cleansing": 0,
+        "longevity": 36,
+        "stability": 36,
+        "conditioning": 60,
+        "bubbly_lather": 0,
+        "creamy_lather": 36
+      }
+    },
+    {
+      "id": "apricot_kernel_oil",
+      "common_name": "Apricot Kernel Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.139,
+      "sap_value_koh": 0.195,
+      "iodine_value": 100,
+      "ins_value": 91,
+      "fatty_acids": {
+        "oleic": 66,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 27,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 6,
+        "cleansing": 0,
+        "longevity": 6,
+        "stability": 6,
+        "conditioning": 93,
+        "bubbly_lather": 0,
+        "creamy_lather": 6
+      }
+    },
+    {
+      "id": "argan_oil",
+      "common_name": "Argan Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.136,
+      "sap_value_koh": 0.191,
+      "iodine_value": 95,
+      "ins_value": 95,
+      "fatty_acids": {
+        "oleic": 46,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 34,
+        "myristic": 1,
+        "palmitic": 14,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 15,
+        "cleansing": 1,
+        "longevity": 14,
+        "stability": 14,
+        "conditioning": 81,
+        "bubbly_lather": 1,
+        "creamy_lather": 14
+      }
+    },
+    {
+      "id": "avocado_butter",
+      "common_name": "Avocado butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.133,
+      "sap_value_koh": 0.187,
+      "iodine_value": 67,
+      "ins_value": 120,
+      "fatty_acids": {
+        "oleic": 53,
+        "lauric": 0,
+        "stearic": 10,
+        "linoleic": 6,
+        "myristic": 0,
+        "palmitic": 21,
+        "linolenic": 2,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 31,
+        "cleansing": 0,
+        "longevity": 31,
+        "stability": 31,
+        "conditioning": 61,
+        "bubbly_lather": 0,
+        "creamy_lather": 31
+      }
+    },
+    {
+      "id": "avocado_oil",
+      "common_name": "Avocado Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.133,
+      "sap_value_koh": 0.186,
+      "iodine_value": 86,
+      "ins_value": 99,
+      "fatty_acids": {
+        "oleic": 58,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 12,
+        "myristic": 0,
+        "palmitic": 20,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 22,
+        "cleansing": 0,
+        "longevity": 22,
+        "stability": 22,
+        "conditioning": 70,
+        "bubbly_lather": 0,
+        "creamy_lather": 22
+      }
+    },
+    {
+      "id": "babassu_oil",
+      "common_name": "Babassu Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.175,
+      "sap_value_koh": 0.245,
+      "iodine_value": 15,
+      "ins_value": 230,
+      "fatty_acids": {
+        "oleic": 10,
+        "lauric": 50,
+        "stearic": 4,
+        "linoleic": 0,
+        "myristic": 20,
+        "palmitic": 11,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 85,
+        "cleansing": 70,
+        "longevity": 15,
+        "stability": 15,
+        "conditioning": 10,
+        "bubbly_lather": 70,
+        "creamy_lather": 15
+      }
+    },
+    {
+      "id": "baobab_oil",
+      "common_name": "Baobab Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.143,
+      "sap_value_koh": 0.2,
+      "iodine_value": 75,
+      "ins_value": 125,
+      "fatty_acids": {
+        "oleic": 37,
+        "lauric": 0,
+        "stearic": 4,
+        "linoleic": 28,
+        "myristic": 1,
+        "palmitic": 24,
+        "linolenic": 2,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 29,
+        "cleansing": 1,
+        "longevity": 28,
+        "stability": 28,
+        "conditioning": 67,
+        "bubbly_lather": 1,
+        "creamy_lather": 28
+      }
+    },
+    {
+      "id": "beeswax",
+      "common_name": "Beeswax",
+      "inci_name": "",
+      "sap_value_naoh": 0.067,
+      "sap_value_koh": 0.094,
+      "iodine_value": 10,
+      "ins_value": 84,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 0,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 0,
+        "cleansing": 0,
+        "longevity": 0,
+        "stability": 0,
+        "conditioning": 0,
+        "bubbly_lather": 0,
+        "creamy_lather": 0
+      }
+    },
+    {
+      "id": "black_cumin_seed_oil_nigella_sativa",
+      "common_name": "Black Cumin Seed Oil, nigella sativa",
+      "inci_name": "",
+      "sap_value_naoh": 0.139,
+      "sap_value_koh": 0.195,
+      "iodine_value": 133,
+      "ins_value": 62,
+      "fatty_acids": {
+        "oleic": 22,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 60,
+        "myristic": 0,
+        "palmitic": 13,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 16,
+        "cleansing": 0,
+        "longevity": 16,
+        "stability": 16,
+        "conditioning": 83,
+        "bubbly_lather": 0,
+        "creamy_lather": 16
+      }
+    },
+    {
+      "id": "black_currant_seed_oil",
+      "common_name": "Black Currant Seed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 178,
+      "ins_value": 12,
+      "fatty_acids": {
+        "oleic": 13,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 46,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 29,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 8,
+        "cleansing": 0,
+        "longevity": 8,
+        "stability": 8,
+        "conditioning": 88,
+        "bubbly_lather": 0,
+        "creamy_lather": 8
+      }
+    },
+    {
+      "id": "borage_oil",
+      "common_name": "Borage Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 135,
+      "ins_value": 55,
+      "fatty_acids": {
+        "oleic": 20,
+        "lauric": 0,
+        "stearic": 4,
+        "linoleic": 43,
+        "myristic": 0,
+        "palmitic": 10,
+        "linolenic": 5,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 14,
+        "cleansing": 0,
+        "longevity": 14,
+        "stability": 14,
+        "conditioning": 68,
+        "bubbly_lather": 0,
+        "creamy_lather": 14
+      }
+    },
+    {
+      "id": "brazil_nut_oil",
+      "common_name": "Brazil Nut Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 100,
+      "ins_value": 90,
+      "fatty_acids": {
+        "oleic": 39,
+        "lauric": 0,
+        "stearic": 11,
+        "linoleic": 36,
+        "myristic": 0,
+        "palmitic": 13,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 24,
+        "cleansing": 0,
+        "longevity": 24,
+        "stability": 24,
+        "conditioning": 75,
+        "bubbly_lather": 0,
+        "creamy_lather": 24
+      }
+    },
+    {
+      "id": "broccoli_seed_oil_brassica_oleracea",
+      "common_name": "Broccoli Seed Oil, Brassica Oleracea",
+      "inci_name": "",
+      "sap_value_naoh": 0.123,
+      "sap_value_koh": 0.172,
+      "iodine_value": 105,
+      "ins_value": 67,
+      "fatty_acids": {
+        "oleic": 14,
+        "lauric": 0,
+        "stearic": 1,
+        "linoleic": 11,
+        "myristic": 0,
+        "palmitic": 3,
+        "linolenic": 9,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 4,
+        "cleansing": 0,
+        "longevity": 4,
+        "stability": 4,
+        "conditioning": 34,
+        "bubbly_lather": 0,
+        "creamy_lather": 4
+      }
+    },
+    {
+      "id": "buriti_oil",
+      "common_name": "Buriti Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.159,
+      "sap_value_koh": 0.223,
+      "iodine_value": 70,
+      "ins_value": 153,
+      "fatty_acids": {
+        "oleic": 71,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 7,
+        "myristic": 0,
+        "palmitic": 17,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 19,
+        "cleansing": 0,
+        "longevity": 19,
+        "stability": 19,
+        "conditioning": 79,
+        "bubbly_lather": 0,
+        "creamy_lather": 19
+      }
+    },
+    {
+      "id": "camelina_seed_oil",
+      "common_name": "Camelina Seed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.134,
+      "sap_value_koh": 0.188,
+      "iodine_value": 144,
+      "ins_value": 44,
+      "fatty_acids": {
+        "oleic": 24,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 19,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 45,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 8,
+        "cleansing": 0,
+        "longevity": 8,
+        "stability": 8,
+        "conditioning": 88,
+        "bubbly_lather": 0,
+        "creamy_lather": 8
+      }
+    },
+    {
+      "id": "camellia_oil_tea_seed",
+      "common_name": "Camellia Oil, Tea Seed",
+      "inci_name": "",
+      "sap_value_naoh": 0.139,
+      "sap_value_koh": 0.195,
+      "iodine_value": 85,
+      "ins_value": 110,
+      "fatty_acids": {
+        "oleic": 77,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 8,
+        "myristic": 0,
+        "palmitic": 9,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 11,
+        "cleansing": 0,
+        "longevity": 11,
+        "stability": 11,
+        "conditioning": 85,
+        "bubbly_lather": 0,
+        "creamy_lather": 11
+      }
+    },
+    {
+      "id": "candelilla_wax",
+      "common_name": "Candelilla Wax",
+      "inci_name": "",
+      "sap_value_naoh": 0.039,
+      "sap_value_koh": 0.054,
+      "iodine_value": 32,
+      "ins_value": 12,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 0,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 0,
+        "cleansing": 0,
+        "longevity": 0,
+        "stability": 0,
+        "conditioning": 0,
+        "bubbly_lather": 0,
+        "creamy_lather": 0
+      }
+    },
+    {
+      "id": "canola_oil",
+      "common_name": "Canola Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.133,
+      "sap_value_koh": 0.186,
+      "iodine_value": 110,
+      "ins_value": 56,
+      "fatty_acids": {
+        "oleic": 61,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 21,
+        "myristic": 0,
+        "palmitic": 4,
+        "linolenic": 9,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 6,
+        "cleansing": 0,
+        "longevity": 6,
+        "stability": 6,
+        "conditioning": 91,
+        "bubbly_lather": 0,
+        "creamy_lather": 6
+      }
+    },
+    {
+      "id": "canola_oil_high_oleic",
+      "common_name": "Canola Oil, high oleic",
+      "inci_name": "",
+      "sap_value_naoh": 0.133,
+      "sap_value_koh": 0.186,
+      "iodine_value": 96,
+      "ins_value": 90,
+      "fatty_acids": {
+        "oleic": 74,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 12,
+        "myristic": 0,
+        "palmitic": 4,
+        "linolenic": 4,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 6,
+        "cleansing": 0,
+        "longevity": 6,
+        "stability": 6,
+        "conditioning": 90,
+        "bubbly_lather": 0,
+        "creamy_lather": 6
+      }
+    },
+    {
+      "id": "carnauba_copernicia_cerifera_wax",
+      "common_name": "Carnauba (Copernicia cerifera) wax",
+      "inci_name": "",
+      "sap_value_naoh": 0.062,
+      "sap_value_koh": 0.087,
+      "iodine_value": 10,
+      "ins_value": 83,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 0,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 0,
+        "cleansing": 0,
+        "longevity": 0,
+        "stability": 0,
+        "conditioning": 0,
+        "bubbly_lather": 0,
+        "creamy_lather": 0
+      }
+    },
+    {
+      "id": "carrot_seed_oil_cold_pressed",
+      "common_name": "Carrot Seed Oil, cold pressed",
+      "inci_name": "",
+      "sap_value_naoh": 0.103,
+      "sap_value_koh": 0.144,
+      "iodine_value": 56,
+      "ins_value": 0,
+      "fatty_acids": {
+        "oleic": 80,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 13,
+        "myristic": 0,
+        "palmitic": 4,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 4,
+        "cleansing": 0,
+        "longevity": 4,
+        "stability": 4,
+        "conditioning": 93,
+        "bubbly_lather": 0,
+        "creamy_lather": 4
+      }
+    },
+    {
+      "id": "castor_oil",
+      "common_name": "Castor Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.128,
+      "sap_value_koh": 0.18,
+      "iodine_value": 86,
+      "ins_value": 95,
+      "fatty_acids": {
+        "oleic": 4,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 4,
+        "myristic": 0,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 90
+      },
+      "quality_contributions": {
+        "hardness": 0,
+        "cleansing": 0,
+        "longevity": 0,
+        "stability": 0,
+        "conditioning": 98,
+        "bubbly_lather": 90,
+        "creamy_lather": 90
+      }
+    },
+    {
+      "id": "cherry_kernel_oil_p._avium",
+      "common_name": "Cherry kernel Oil, p. avium",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 128,
+      "ins_value": 62,
+      "fatty_acids": {
+        "oleic": 31,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 45,
+        "myristic": 0,
+        "palmitic": 8,
+        "linolenic": 11,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 11,
+        "cleansing": 0,
+        "longevity": 11,
+        "stability": 11,
+        "conditioning": 87,
+        "bubbly_lather": 0,
+        "creamy_lather": 11
+      }
+    },
+    {
+      "id": "cherry_kernel_oil_p._cerasus",
+      "common_name": "Cherry kernel Oil, p. cerasus",
+      "inci_name": "",
+      "sap_value_naoh": 0.137,
+      "sap_value_koh": 0.192,
+      "iodine_value": 118,
+      "ins_value": 74,
+      "fatty_acids": {
+        "oleic": 50,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 40,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 9,
+        "cleansing": 0,
+        "longevity": 9,
+        "stability": 9,
+        "conditioning": 90,
+        "bubbly_lather": 0,
+        "creamy_lather": 9
+      }
+    },
+    {
+      "id": "chicken_fat",
+      "common_name": "Chicken Fat",
+      "inci_name": "",
+      "sap_value_naoh": 0.139,
+      "sap_value_koh": 0.195,
+      "iodine_value": 69,
+      "ins_value": 130,
+      "fatty_acids": {
+        "oleic": 38,
+        "lauric": 0,
+        "stearic": 7,
+        "linoleic": 21,
+        "myristic": 1,
+        "palmitic": 25,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 33,
+        "cleansing": 1,
+        "longevity": 32,
+        "stability": 32,
+        "conditioning": 59,
+        "bubbly_lather": 1,
+        "creamy_lather": 32
+      }
+    },
+    {
+      "id": "cocoa_butter",
+      "common_name": "Cocoa Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.138,
+      "sap_value_koh": 0.194,
+      "iodine_value": 37,
+      "ins_value": 157,
+      "fatty_acids": {
+        "oleic": 35,
+        "lauric": 0,
+        "stearic": 33,
+        "linoleic": 3,
+        "myristic": 0,
+        "palmitic": 28,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 61,
+        "cleansing": 0,
+        "longevity": 61,
+        "stability": 61,
+        "conditioning": 38,
+        "bubbly_lather": 0,
+        "creamy_lather": 61
+      }
+    },
+    {
+      "id": "coconut_oil_76_deg",
+      "common_name": "Coconut Oil, 76 deg",
+      "inci_name": "",
+      "sap_value_naoh": 0.183,
+      "sap_value_koh": 0.257,
+      "iodine_value": 10,
+      "ins_value": 258,
+      "fatty_acids": {
+        "oleic": 8,
+        "lauric": 48,
+        "stearic": 3,
+        "linoleic": 2,
+        "myristic": 19,
+        "palmitic": 9,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 79,
+        "cleansing": 67,
+        "longevity": 12,
+        "stability": 12,
+        "conditioning": 10,
+        "bubbly_lather": 67,
+        "creamy_lather": 12
+      }
+    },
+    {
+      "id": "coconut_oil_92_deg",
+      "common_name": "Coconut Oil, 92 deg",
+      "inci_name": "",
+      "sap_value_naoh": 0.183,
+      "sap_value_koh": 0.257,
+      "iodine_value": 3,
+      "ins_value": 258,
+      "fatty_acids": {
+        "oleic": 8,
+        "lauric": 48,
+        "stearic": 3,
+        "linoleic": 2,
+        "myristic": 19,
+        "palmitic": 9,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 79,
+        "cleansing": 67,
+        "longevity": 12,
+        "stability": 12,
+        "conditioning": 10,
+        "bubbly_lather": 67,
+        "creamy_lather": 12
+      }
+    },
+    {
+      "id": "coconut_oil_fractionated",
+      "common_name": "Coconut Oil, fractionated",
+      "inci_name": "",
+      "sap_value_naoh": 0.232,
+      "sap_value_koh": 0.325,
+      "iodine_value": 1,
+      "ins_value": 324,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 2,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 1,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 100,
+        "cleansing": 100,
+        "longevity": 0,
+        "stability": 0,
+        "conditioning": 0,
+        "bubbly_lather": 100,
+        "creamy_lather": 0
+      }
+    },
+    {
+      "id": "coffee_bean_oil_green",
+      "common_name": "Coffee Bean Oil, green",
+      "inci_name": "",
+      "sap_value_naoh": 0.132,
+      "sap_value_koh": 0.185,
+      "iodine_value": 85,
+      "ins_value": 100,
+      "fatty_acids": {
+        "oleic": 9,
+        "lauric": 0,
+        "stearic": 8,
+        "linoleic": 39,
+        "myristic": 0,
+        "palmitic": 38,
+        "linolenic": 2,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 46,
+        "cleansing": 0,
+        "longevity": 46,
+        "stability": 46,
+        "conditioning": 50,
+        "bubbly_lather": 0,
+        "creamy_lather": 46
+      }
+    },
+    {
+      "id": "coffee_bean_oil_roasted",
+      "common_name": "Coffee Bean Oil, roasted",
+      "inci_name": "",
+      "sap_value_naoh": 0.128,
+      "sap_value_koh": 0.18,
+      "iodine_value": 87,
+      "ins_value": 93,
+      "fatty_acids": {
+        "oleic": 8,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 38,
+        "myristic": 0,
+        "palmitic": 40,
+        "linolenic": 2,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 40,
+        "cleansing": 0,
+        "longevity": 40,
+        "stability": 40,
+        "conditioning": 48,
+        "bubbly_lather": 0,
+        "creamy_lather": 40
+      }
+    },
+    {
+      "id": "cohune_oil",
+      "common_name": "Cohune Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.146,
+      "sap_value_koh": 0.205,
+      "iodine_value": 30,
+      "ins_value": 175,
+      "fatty_acids": {
+        "oleic": 18,
+        "lauric": 51,
+        "stearic": 3,
+        "linoleic": 3,
+        "myristic": 13,
+        "palmitic": 8,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 75,
+        "cleansing": 64,
+        "longevity": 11,
+        "stability": 11,
+        "conditioning": 21,
+        "bubbly_lather": 64,
+        "creamy_lather": 11
+      }
+    },
+    {
+      "id": "corn_oil",
+      "common_name": "Corn Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.137,
+      "sap_value_koh": 0.192,
+      "iodine_value": 117,
+      "ins_value": 69,
+      "fatty_acids": {
+        "oleic": 32,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 51,
+        "myristic": 0,
+        "palmitic": 12,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 14,
+        "cleansing": 0,
+        "longevity": 14,
+        "stability": 14,
+        "conditioning": 84,
+        "bubbly_lather": 0,
+        "creamy_lather": 14
+      }
+    },
+    {
+      "id": "cottonseed_oil",
+      "common_name": "Cottonseed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.138,
+      "sap_value_koh": 0.194,
+      "iodine_value": 108,
+      "ins_value": 89,
+      "fatty_acids": {
+        "oleic": 19,
+        "lauric": 0,
+        "stearic": 5,
+        "linoleic": 50,
+        "myristic": 1,
+        "palmitic": 20,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 26,
+        "cleansing": 1,
+        "longevity": 25,
+        "stability": 25,
+        "conditioning": 70,
+        "bubbly_lather": 1,
+        "creamy_lather": 25
+      }
+    },
+    {
+      "id": "cranberry_seed_oil",
+      "common_name": "Cranberry Seed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 150,
+      "ins_value": 40,
+      "fatty_acids": {
+        "oleic": 23,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 37,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 32,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 8,
+        "cleansing": 0,
+        "longevity": 8,
+        "stability": 8,
+        "conditioning": 92,
+        "bubbly_lather": 0,
+        "creamy_lather": 8
+      }
+    },
+    {
+      "id": "crisco_new_w/palm",
+      "common_name": "Crisco, new w/palm",
+      "inci_name": "",
+      "sap_value_naoh": 0.138,
+      "sap_value_koh": 0.193,
+      "iodine_value": 111,
+      "ins_value": 82,
+      "fatty_acids": {
+        "oleic": 28,
+        "lauric": 0,
+        "stearic": 5,
+        "linoleic": 40,
+        "myristic": 0,
+        "palmitic": 20,
+        "linolenic": 6,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 25,
+        "cleansing": 0,
+        "longevity": 25,
+        "stability": 25,
+        "conditioning": 74,
+        "bubbly_lather": 0,
+        "creamy_lather": 25
+      }
+    },
+    {
+      "id": "crisco_old",
+      "common_name": "Crisco, old",
+      "inci_name": "",
+      "sap_value_naoh": 0.137,
+      "sap_value_koh": 0.192,
+      "iodine_value": 93,
+      "ins_value": 115,
+      "fatty_acids": {
+        "oleic": 18,
+        "lauric": 0,
+        "stearic": 13,
+        "linoleic": 52,
+        "myristic": 0,
+        "palmitic": 13,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 26,
+        "cleansing": 0,
+        "longevity": 26,
+        "stability": 26,
+        "conditioning": 70,
+        "bubbly_lather": 0,
+        "creamy_lather": 26
+      }
+    },
+    {
+      "id": "cupuacu_butter",
+      "common_name": "Cupuacu Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.138,
+      "sap_value_koh": 0.193,
+      "iodine_value": 38,
+      "ins_value": 155,
+      "fatty_acids": {
+        "oleic": 41,
+        "lauric": 0,
+        "stearic": 34,
+        "linoleic": 3,
+        "myristic": 0,
+        "palmitic": 8,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 42,
+        "cleansing": 0,
+        "longevity": 42,
+        "stability": 42,
+        "conditioning": 44,
+        "bubbly_lather": 0,
+        "creamy_lather": 42
+      }
+    },
+    {
+      "id": "duck_fat_flesh_&_skin",
+      "common_name": "Duck Fat, flesh & skin",
+      "inci_name": "",
+      "sap_value_naoh": 0.138,
+      "sap_value_koh": 0.194,
+      "iodine_value": 72,
+      "ins_value": 122,
+      "fatty_acids": {
+        "oleic": 44,
+        "lauric": 0,
+        "stearic": 9,
+        "linoleic": 13,
+        "myristic": 1,
+        "palmitic": 26,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 36,
+        "cleansing": 1,
+        "longevity": 35,
+        "stability": 35,
+        "conditioning": 58,
+        "bubbly_lather": 1,
+        "creamy_lather": 35
+      }
+    },
+    {
+      "id": "emu_oil",
+      "common_name": "Emu Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 60,
+      "ins_value": 128,
+      "fatty_acids": {
+        "oleic": 47,
+        "lauric": 0,
+        "stearic": 9,
+        "linoleic": 8,
+        "myristic": 0,
+        "palmitic": 23,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 32,
+        "cleansing": 0,
+        "longevity": 32,
+        "stability": 32,
+        "conditioning": 55,
+        "bubbly_lather": 0,
+        "creamy_lather": 32
+      }
+    },
+    {
+      "id": "evening_primrose_oil",
+      "common_name": "Evening Primrose Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 160,
+      "ins_value": 30,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 80,
+        "myristic": 0,
+        "palmitic": 0,
+        "linolenic": 9,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 0,
+        "cleansing": 0,
+        "longevity": 0,
+        "stability": 0,
+        "conditioning": 89,
+        "bubbly_lather": 0,
+        "creamy_lather": 0
+      }
+    },
+    {
+      "id": "ghee_any_bovine",
+      "common_name": "Ghee, any bovine",
+      "inci_name": "",
+      "sap_value_naoh": 0.162,
+      "sap_value_koh": 0.227,
+      "iodine_value": 30,
+      "ins_value": 191,
+      "fatty_acids": {
+        "oleic": 19,
+        "lauric": 4,
+        "stearic": 12,
+        "linoleic": 2,
+        "myristic": 11,
+        "palmitic": 28,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 55,
+        "cleansing": 15,
+        "longevity": 40,
+        "stability": 40,
+        "conditioning": 22,
+        "bubbly_lather": 15,
+        "creamy_lather": 40
+      }
+    },
+    {
+      "id": "goose_fat",
+      "common_name": "Goose Fat",
+      "inci_name": "",
+      "sap_value_naoh": 0.137,
+      "sap_value_koh": 0.192,
+      "iodine_value": 65,
+      "ins_value": 130,
+      "fatty_acids": {
+        "oleic": 54,
+        "lauric": 0,
+        "stearic": 6,
+        "linoleic": 10,
+        "myristic": 0,
+        "palmitic": 21,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 27,
+        "cleansing": 0,
+        "longevity": 27,
+        "stability": 27,
+        "conditioning": 64,
+        "bubbly_lather": 0,
+        "creamy_lather": 27
+      }
+    },
+    {
+      "id": "grapeseed_oil",
+      "common_name": "Grapeseed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.129,
+      "sap_value_koh": 0.181,
+      "iodine_value": 131,
+      "ins_value": 66,
+      "fatty_acids": {
+        "oleic": 20,
+        "lauric": 0,
+        "stearic": 4,
+        "linoleic": 68,
+        "myristic": 0,
+        "palmitic": 8,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 12,
+        "cleansing": 0,
+        "longevity": 12,
+        "stability": 12,
+        "conditioning": 88,
+        "bubbly_lather": 0,
+        "creamy_lather": 12
+      }
+    },
+    {
+      "id": "hazelnut_oil",
+      "common_name": "Hazelnut Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.139,
+      "sap_value_koh": 0.195,
+      "iodine_value": 97,
+      "ins_value": 94,
+      "fatty_acids": {
+        "oleic": 75,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 10,
+        "myristic": 0,
+        "palmitic": 5,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 8,
+        "cleansing": 0,
+        "longevity": 8,
+        "stability": 8,
+        "conditioning": 85,
+        "bubbly_lather": 0,
+        "creamy_lather": 8
+      }
+    },
+    {
+      "id": "hemp_oil",
+      "common_name": "Hemp Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.138,
+      "sap_value_koh": 0.193,
+      "iodine_value": 165,
+      "ins_value": 39,
+      "fatty_acids": {
+        "oleic": 12,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 57,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 21,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 8,
+        "cleansing": 0,
+        "longevity": 8,
+        "stability": 8,
+        "conditioning": 90,
+        "bubbly_lather": 0,
+        "creamy_lather": 8
+      }
+    },
+    {
+      "id": "horse_oil",
+      "common_name": "Horse Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.14,
+      "sap_value_koh": 0.196,
+      "iodine_value": 79,
+      "ins_value": 117,
+      "fatty_acids": {
+        "oleic": 10,
+        "lauric": 0,
+        "stearic": 5,
+        "linoleic": 20,
+        "myristic": 3,
+        "palmitic": 26,
+        "linolenic": 19,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 34,
+        "cleansing": 3,
+        "longevity": 31,
+        "stability": 31,
+        "conditioning": 49,
+        "bubbly_lather": 3,
+        "creamy_lather": 31
+      }
+    },
+    {
+      "id": "illipe_butter",
+      "common_name": "Illipe Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.132,
+      "sap_value_koh": 0.185,
+      "iodine_value": 33,
+      "ins_value": 155,
+      "fatty_acids": {
+        "oleic": 35,
+        "lauric": 0,
+        "stearic": 45,
+        "linoleic": 0,
+        "myristic": 0,
+        "palmitic": 17,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 62,
+        "cleansing": 0,
+        "longevity": 62,
+        "stability": 62,
+        "conditioning": 35,
+        "bubbly_lather": 0,
+        "creamy_lather": 62
+      }
+    },
+    {
+      "id": "japan_wax",
+      "common_name": "Japan Wax",
+      "inci_name": "",
+      "sap_value_naoh": 0.153,
+      "sap_value_koh": 0.215,
+      "iodine_value": 11,
+      "ins_value": 204,
+      "fatty_acids": {
+        "oleic": 4,
+        "lauric": 0,
+        "stearic": 7,
+        "linoleic": 0,
+        "myristic": 1,
+        "palmitic": 80,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 88,
+        "cleansing": 1,
+        "longevity": 87,
+        "stability": 87,
+        "conditioning": 4,
+        "bubbly_lather": 1,
+        "creamy_lather": 87
+      }
+    },
+    {
+      "id": "jatropha_oil_soapnut_seed_oil",
+      "common_name": "Jatropha Oil, soapnut seed oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.138,
+      "sap_value_koh": 0.193,
+      "iodine_value": 102,
+      "ins_value": 91,
+      "fatty_acids": {
+        "oleic": 44,
+        "lauric": 0,
+        "stearic": 7,
+        "linoleic": 34,
+        "myristic": 0,
+        "palmitic": 9,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 16,
+        "cleansing": 0,
+        "longevity": 16,
+        "stability": 16,
+        "conditioning": 78,
+        "bubbly_lather": 0,
+        "creamy_lather": 16
+      }
+    },
+    {
+      "id": "jojoba_oil_jojoba_wax_ester",
+      "common_name": "Jojoba Oil (jojoba wax ester)",
+      "inci_name": "",
+      "sap_value_naoh": 0.066,
+      "sap_value_koh": 0.092,
+      "iodine_value": 83,
+      "ins_value": 11,
+      "fatty_acids": {
+        "oleic": 12,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 0,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 0,
+        "cleansing": 0,
+        "longevity": 0,
+        "stability": 0,
+        "conditioning": 12,
+        "bubbly_lather": 0,
+        "creamy_lather": 0
+      }
+    },
+    {
+      "id": "karanja_oil",
+      "common_name": "Karanja Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.13,
+      "sap_value_koh": 0.183,
+      "iodine_value": 85,
+      "ins_value": 98,
+      "fatty_acids": {
+        "oleic": 58,
+        "lauric": 0,
+        "stearic": 6,
+        "linoleic": 15,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 12,
+        "cleansing": 0,
+        "longevity": 12,
+        "stability": 12,
+        "conditioning": 73,
+        "bubbly_lather": 0,
+        "creamy_lather": 12
+      }
+    },
+    {
+      "id": "kokum_butter",
+      "common_name": "Kokum Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 35,
+      "ins_value": 155,
+      "fatty_acids": {
+        "oleic": 36,
+        "lauric": 0,
+        "stearic": 56,
+        "linoleic": 1,
+        "myristic": 0,
+        "palmitic": 4,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 60,
+        "cleansing": 0,
+        "longevity": 60,
+        "stability": 60,
+        "conditioning": 37,
+        "bubbly_lather": 0,
+        "creamy_lather": 60
+      }
+    },
+    {
+      "id": "kpangnan_butter",
+      "common_name": "Kpangnan Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.136,
+      "sap_value_koh": 0.191,
+      "iodine_value": 42,
+      "ins_value": 149,
+      "fatty_acids": {
+        "oleic": 49,
+        "lauric": 0,
+        "stearic": 44,
+        "linoleic": 1,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 50,
+        "cleansing": 0,
+        "longevity": 50,
+        "stability": 50,
+        "conditioning": 50,
+        "bubbly_lather": 0,
+        "creamy_lather": 50
+      }
+    },
+    {
+      "id": "kukui_nut_oil",
+      "common_name": "Kukui nut Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.189,
+      "iodine_value": 168,
+      "ins_value": 24,
+      "fatty_acids": {
+        "oleic": 20,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 42,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 29,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 8,
+        "cleansing": 0,
+        "longevity": 8,
+        "stability": 8,
+        "conditioning": 91,
+        "bubbly_lather": 0,
+        "creamy_lather": 8
+      }
+    },
+    {
+      "id": "lanolin_liquid_wax",
+      "common_name": "Lanolin liquid Wax",
+      "inci_name": "",
+      "sap_value_naoh": 0.076,
+      "sap_value_koh": 0.106,
+      "iodine_value": 27,
+      "ins_value": 83,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 0,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 0,
+        "cleansing": 0,
+        "longevity": 0,
+        "stability": 0,
+        "conditioning": 0,
+        "bubbly_lather": 0,
+        "creamy_lather": 0
+      }
+    },
+    {
+      "id": "lard_pig_tallow_manteca",
+      "common_name": "Lard, Pig Tallow (Manteca)",
+      "inci_name": "",
+      "sap_value_naoh": 0.141,
+      "sap_value_koh": 0.198,
+      "iodine_value": 57,
+      "ins_value": 139,
+      "fatty_acids": {
+        "oleic": 46,
+        "lauric": 0,
+        "stearic": 13,
+        "linoleic": 6,
+        "myristic": 1,
+        "palmitic": 28,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 42,
+        "cleansing": 1,
+        "longevity": 41,
+        "stability": 41,
+        "conditioning": 52,
+        "bubbly_lather": 1,
+        "creamy_lather": 41
+      }
+    },
+    {
+      "id": "laurel_fruit_oil",
+      "common_name": "Laurel Fruit Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.141,
+      "sap_value_koh": 0.198,
+      "iodine_value": 74,
+      "ins_value": 124,
+      "fatty_acids": {
+        "oleic": 31,
+        "lauric": 25,
+        "stearic": 1,
+        "linoleic": 26,
+        "myristic": 1,
+        "palmitic": 15,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 42,
+        "cleansing": 26,
+        "longevity": 16,
+        "stability": 16,
+        "conditioning": 58,
+        "bubbly_lather": 26,
+        "creamy_lather": 16
+      }
+    },
+    {
+      "id": "lauric_acid",
+      "common_name": "Lauric Acid",
+      "inci_name": "",
+      "sap_value_naoh": 0.2,
+      "sap_value_koh": 0.28,
+      "iodine_value": 0,
+      "ins_value": 280,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 99,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 1,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 100,
+        "cleansing": 100,
+        "longevity": 0,
+        "stability": 0,
+        "conditioning": 0,
+        "bubbly_lather": 100,
+        "creamy_lather": 0
+      }
+    },
+    {
+      "id": "linseed_oil_flax",
+      "common_name": "Linseed Oil, flax",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 180,
+      "ins_value": 0,
+      "fatty_acids": {
+        "oleic": 27,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 13,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 50,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 9,
+        "cleansing": 0,
+        "longevity": 9,
+        "stability": 9,
+        "conditioning": 90,
+        "bubbly_lather": 0,
+        "creamy_lather": 9
+      }
+    },
+    {
+      "id": "loofa_seed_oil_luffa_cylinderica",
+      "common_name": "Loofa Seed Oil, Luffa cylinderica",
+      "inci_name": "",
+      "sap_value_naoh": 0.133,
+      "sap_value_koh": 0.187,
+      "iodine_value": 108,
+      "ins_value": 79,
+      "fatty_acids": {
+        "oleic": 30,
+        "lauric": 0,
+        "stearic": 18,
+        "linoleic": 47,
+        "myristic": 0,
+        "palmitic": 9,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 27,
+        "cleansing": 0,
+        "longevity": 27,
+        "stability": 27,
+        "conditioning": 77,
+        "bubbly_lather": 0,
+        "creamy_lather": 27
+      }
+    },
+    {
+      "id": "macadamia_nut_butter",
+      "common_name": "Macadamia Nut Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.134,
+      "sap_value_koh": 0.188,
+      "iodine_value": 70,
+      "ins_value": 118,
+      "fatty_acids": {
+        "oleic": 56,
+        "lauric": 0,
+        "stearic": 12,
+        "linoleic": 3,
+        "myristic": 1,
+        "palmitic": 6,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 19,
+        "cleansing": 1,
+        "longevity": 18,
+        "stability": 18,
+        "conditioning": 60,
+        "bubbly_lather": 1,
+        "creamy_lather": 18
+      }
+    },
+    {
+      "id": "macadamia_nut_oil",
+      "common_name": "Macadamia Nut Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.139,
+      "sap_value_koh": 0.195,
+      "iodine_value": 76,
+      "ins_value": 119,
+      "fatty_acids": {
+        "oleic": 59,
+        "lauric": 0,
+        "stearic": 5,
+        "linoleic": 2,
+        "myristic": 0,
+        "palmitic": 9,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 14,
+        "cleansing": 0,
+        "longevity": 14,
+        "stability": 14,
+        "conditioning": 61,
+        "bubbly_lather": 0,
+        "creamy_lather": 14
+      }
+    },
+    {
+      "id": "mafura_butter_trichilia_emetica",
+      "common_name": "Mafura Butter, Trichilia emetica",
+      "inci_name": "",
+      "sap_value_naoh": 0.141,
+      "sap_value_koh": 0.198,
+      "iodine_value": 66,
+      "ins_value": 132,
+      "fatty_acids": {
+        "oleic": 49,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 11,
+        "myristic": 1,
+        "palmitic": 37,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 41,
+        "cleansing": 1,
+        "longevity": 40,
+        "stability": 40,
+        "conditioning": 61,
+        "bubbly_lather": 1,
+        "creamy_lather": 40
+      }
+    },
+    {
+      "id": "mango_seed_butter",
+      "common_name": "Mango Seed Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.136,
+      "sap_value_koh": 0.191,
+      "iodine_value": 45,
+      "ins_value": 146,
+      "fatty_acids": {
+        "oleic": 45,
+        "lauric": 0,
+        "stearic": 42,
+        "linoleic": 3,
+        "myristic": 0,
+        "palmitic": 7,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 49,
+        "cleansing": 0,
+        "longevity": 49,
+        "stability": 49,
+        "conditioning": 48,
+        "bubbly_lather": 0,
+        "creamy_lather": 49
+      }
+    },
+    {
+      "id": "mango_seed_oil",
+      "common_name": "Mango Seed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 60,
+      "ins_value": 130,
+      "fatty_acids": {
+        "oleic": 52,
+        "lauric": 0,
+        "stearic": 27,
+        "linoleic": 8,
+        "myristic": 0,
+        "palmitic": 8,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 35,
+        "cleansing": 0,
+        "longevity": 35,
+        "stability": 35,
+        "conditioning": 61,
+        "bubbly_lather": 0,
+        "creamy_lather": 35
+      }
+    },
+    {
+      "id": "marula_oil",
+      "common_name": "Marula Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.137,
+      "sap_value_koh": 0.192,
+      "iodine_value": 73,
+      "ins_value": 119,
+      "fatty_acids": {
+        "oleic": 75,
+        "lauric": 0,
+        "stearic": 7,
+        "linoleic": 4,
+        "myristic": 0,
+        "palmitic": 11,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 18,
+        "cleansing": 0,
+        "longevity": 18,
+        "stability": 18,
+        "conditioning": 79,
+        "bubbly_lather": 0,
+        "creamy_lather": 18
+      }
+    },
+    {
+      "id": "meadowfoam_oil",
+      "common_name": "Meadowfoam Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.12,
+      "sap_value_koh": 0.169,
+      "iodine_value": 92,
+      "ins_value": 77,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 0,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 0,
+        "cleansing": 0,
+        "longevity": 0,
+        "stability": 0,
+        "conditioning": 95,
+        "bubbly_lather": 0,
+        "creamy_lather": 0
+      }
+    },
+    {
+      "id": "milk_fat_any_bovine",
+      "common_name": "Milk Fat, any bovine",
+      "inci_name": "",
+      "sap_value_naoh": 0.162,
+      "sap_value_koh": 0.227,
+      "iodine_value": 30,
+      "ins_value": 191,
+      "fatty_acids": {
+        "oleic": 19,
+        "lauric": 4,
+        "stearic": 12,
+        "linoleic": 2,
+        "myristic": 11,
+        "palmitic": 28,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 55,
+        "cleansing": 15,
+        "longevity": 40,
+        "stability": 40,
+        "conditioning": 22,
+        "bubbly_lather": 15,
+        "creamy_lather": 40
+      }
+    },
+    {
+      "id": "milk_thistle_oil",
+      "common_name": "Milk Thistle Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.14,
+      "sap_value_koh": 0.196,
+      "iodine_value": 115,
+      "ins_value": 81,
+      "fatty_acids": {
+        "oleic": 26,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 64,
+        "myristic": 0,
+        "palmitic": 7,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 9,
+        "cleansing": 0,
+        "longevity": 9,
+        "stability": 9,
+        "conditioning": 90,
+        "bubbly_lather": 0,
+        "creamy_lather": 9
+      }
+    },
+    {
+      "id": "monoi_de_tahiti_oil",
+      "common_name": "Monoi de Tahiti Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.182,
+      "sap_value_koh": 0.255,
+      "iodine_value": 9,
+      "ins_value": 246,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 44,
+        "stearic": 3,
+        "linoleic": 2,
+        "myristic": 16,
+        "palmitic": 10,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 73,
+        "cleansing": 60,
+        "longevity": 13,
+        "stability": 13,
+        "conditioning": 2,
+        "bubbly_lather": 60,
+        "creamy_lather": 13
+      }
+    },
+    {
+      "id": "moringa_oil",
+      "common_name": "Moringa Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.137,
+      "sap_value_koh": 0.192,
+      "iodine_value": 68,
+      "ins_value": 124,
+      "fatty_acids": {
+        "oleic": 71,
+        "lauric": 0,
+        "stearic": 7,
+        "linoleic": 2,
+        "myristic": 0,
+        "palmitic": 7,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 14,
+        "cleansing": 0,
+        "longevity": 14,
+        "stability": 14,
+        "conditioning": 73,
+        "bubbly_lather": 0,
+        "creamy_lather": 14
+      }
+    },
+    {
+      "id": "mowrah_butter",
+      "common_name": "Mowrah Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.138,
+      "sap_value_koh": 0.194,
+      "iodine_value": 62,
+      "ins_value": 132,
+      "fatty_acids": {
+        "oleic": 36,
+        "lauric": 0,
+        "stearic": 22,
+        "linoleic": 15,
+        "myristic": 0,
+        "palmitic": 24,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 46,
+        "cleansing": 0,
+        "longevity": 46,
+        "stability": 46,
+        "conditioning": 51,
+        "bubbly_lather": 0,
+        "creamy_lather": 46
+      }
+    },
+    {
+      "id": "murumuru_butter",
+      "common_name": "Murumuru Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.196,
+      "sap_value_koh": 0.275,
+      "iodine_value": 25,
+      "ins_value": 250,
+      "fatty_acids": {
+        "oleic": 15,
+        "lauric": 47,
+        "stearic": 3,
+        "linoleic": 3,
+        "myristic": 26,
+        "palmitic": 6,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 82,
+        "cleansing": 73,
+        "longevity": 9,
+        "stability": 9,
+        "conditioning": 18,
+        "bubbly_lather": 73,
+        "creamy_lather": 9
+      }
+    },
+    {
+      "id": "mustard_oil_kachi_ghani",
+      "common_name": "Mustard Oil, kachi ghani",
+      "inci_name": "",
+      "sap_value_naoh": 0.123,
+      "sap_value_koh": 0.173,
+      "iodine_value": 101,
+      "ins_value": 72,
+      "fatty_acids": {
+        "oleic": 18,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 14,
+        "myristic": 0,
+        "palmitic": 2,
+        "linolenic": 9,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 4,
+        "cleansing": 0,
+        "longevity": 4,
+        "stability": 4,
+        "conditioning": 41,
+        "bubbly_lather": 0,
+        "creamy_lather": 4
+      }
+    },
+    {
+      "id": "myristic_acid",
+      "common_name": "Myristic Acid",
+      "inci_name": "",
+      "sap_value_naoh": 0.176,
+      "sap_value_koh": 0.247,
+      "iodine_value": 1,
+      "ins_value": 246,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 99,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 99,
+        "cleansing": 99,
+        "longevity": 0,
+        "stability": 0,
+        "conditioning": 0,
+        "bubbly_lather": 99,
+        "creamy_lather": 0
+      }
+    },
+    {
+      "id": "neatsfoot_oil",
+      "common_name": "Neatsfoot Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.141,
+      "sap_value_koh": 0.191,
+      "iodine_value": 65,
+      "ins_value": 80,
+      "fatty_acids": {
+        "oleic": 60,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 0,
+        "myristic": 0,
+        "palmitic": 15,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 18,
+        "cleansing": 0,
+        "longevity": 18,
+        "stability": 18,
+        "conditioning": 60,
+        "bubbly_lather": 0,
+        "creamy_lather": 18
+      }
+    },
+    {
+      "id": "neem_seed_oil",
+      "common_name": "Neem Seed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.191,
+      "iodine_value": 89,
+      "ins_value": 124,
+      "fatty_acids": {
+        "oleic": 45,
+        "lauric": 0,
+        "stearic": 15,
+        "linoleic": 15,
+        "myristic": 0,
+        "palmitic": 18,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 33,
+        "cleansing": 0,
+        "longevity": 33,
+        "stability": 33,
+        "conditioning": 60,
+        "bubbly_lather": 0,
+        "creamy_lather": 33
+      }
+    },
+    {
+      "id": "nutmeg_butter",
+      "common_name": "Nutmeg Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.115,
+      "sap_value_koh": 0.162,
+      "iodine_value": 46,
+      "ins_value": 116,
+      "fatty_acids": {
+        "oleic": 5,
+        "lauric": 3,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 83,
+        "palmitic": 4,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 90,
+        "cleansing": 86,
+        "longevity": 4,
+        "stability": 4,
+        "conditioning": 5,
+        "bubbly_lather": 86,
+        "creamy_lather": 4
+      }
+    },
+    {
+      "id": "oat_oil",
+      "common_name": "Oat Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 104,
+      "ins_value": 86,
+      "fatty_acids": {
+        "oleic": 40,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 39,
+        "myristic": 0,
+        "palmitic": 15,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 17,
+        "cleansing": 0,
+        "longevity": 17,
+        "stability": 17,
+        "conditioning": 79,
+        "bubbly_lather": 0,
+        "creamy_lather": 17
+      }
+    },
+    {
+      "id": "oleic_acid",
+      "common_name": "Oleic Acid",
+      "inci_name": "",
+      "sap_value_naoh": 0.144,
+      "sap_value_koh": 0.202,
+      "iodine_value": 92,
+      "ins_value": 110,
+      "fatty_acids": {
+        "oleic": 99,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 0,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 0,
+        "cleansing": 0,
+        "longevity": 0,
+        "stability": 0,
+        "conditioning": 99,
+        "bubbly_lather": 0,
+        "creamy_lather": 0
+      }
+    },
+    {
+      "id": "olive_oil",
+      "common_name": "Olive Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.134,
+      "sap_value_koh": 0.19,
+      "iodine_value": 85,
+      "ins_value": 105,
+      "fatty_acids": {
+        "oleic": 69,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 12,
+        "myristic": 0,
+        "palmitic": 14,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 17,
+        "cleansing": 0,
+        "longevity": 17,
+        "stability": 17,
+        "conditioning": 82,
+        "bubbly_lather": 0,
+        "creamy_lather": 17
+      }
+    },
+    {
+      "id": "olive_oil_pomace",
+      "common_name": "Olive Oil pomace",
+      "inci_name": "",
+      "sap_value_naoh": 0.133,
+      "sap_value_koh": 0.188,
+      "iodine_value": 84,
+      "ins_value": 104,
+      "fatty_acids": {
+        "oleic": 69,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 12,
+        "myristic": 0,
+        "palmitic": 14,
+        "linolenic": 2,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 17,
+        "cleansing": 0,
+        "longevity": 17,
+        "stability": 17,
+        "conditioning": 83,
+        "bubbly_lather": 0,
+        "creamy_lather": 17
+      }
+    },
+    {
+      "id": "ostrich_oil",
+      "common_name": "Ostrich Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.139,
+      "sap_value_koh": 0.195,
+      "iodine_value": 97,
+      "ins_value": 128,
+      "fatty_acids": {
+        "oleic": 37,
+        "lauric": 3,
+        "stearic": 6,
+        "linoleic": 17,
+        "myristic": 1,
+        "palmitic": 26,
+        "linolenic": 3,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 36,
+        "cleansing": 4,
+        "longevity": 32,
+        "stability": 32,
+        "conditioning": 57,
+        "bubbly_lather": 4,
+        "creamy_lather": 32
+      }
+    },
+    {
+      "id": "palm_kernel_oil",
+      "common_name": "Palm Kernel Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.176,
+      "sap_value_koh": 0.247,
+      "iodine_value": 20,
+      "ins_value": 227,
+      "fatty_acids": {
+        "oleic": 15,
+        "lauric": 49,
+        "stearic": 2,
+        "linoleic": 3,
+        "myristic": 16,
+        "palmitic": 8,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 75,
+        "cleansing": 65,
+        "longevity": 10,
+        "stability": 10,
+        "conditioning": 18,
+        "bubbly_lather": 65,
+        "creamy_lather": 10
+      }
+    },
+    {
+      "id": "palm_kernel_oil_flakes_hydrogenated",
+      "common_name": "Palm Kernel Oil Flakes, hydrogenated",
+      "inci_name": "",
+      "sap_value_naoh": 0.176,
+      "sap_value_koh": 0.247,
+      "iodine_value": 20,
+      "ins_value": 227,
+      "fatty_acids": {
+        "oleic": 4,
+        "lauric": 49,
+        "stearic": 16,
+        "linoleic": 0,
+        "myristic": 17,
+        "palmitic": 8,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 90,
+        "cleansing": 66,
+        "longevity": 24,
+        "stability": 24,
+        "conditioning": 4,
+        "bubbly_lather": 66,
+        "creamy_lather": 24
+      }
+    },
+    {
+      "id": "palm_oil",
+      "common_name": "Palm Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.142,
+      "sap_value_koh": 0.199,
+      "iodine_value": 53,
+      "ins_value": 145,
+      "fatty_acids": {
+        "oleic": 39,
+        "lauric": 0,
+        "stearic": 5,
+        "linoleic": 10,
+        "myristic": 1,
+        "palmitic": 44,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 50,
+        "cleansing": 1,
+        "longevity": 49,
+        "stability": 49,
+        "conditioning": 49,
+        "bubbly_lather": 1,
+        "creamy_lather": 49
+      }
+    },
+    {
+      "id": "palm_olein_palmolein",
+      "common_name": "Palm Olein (Palmolein)",
+      "inci_name": "",
+      "sap_value_naoh": 0.143,
+      "sap_value_koh": 0.2,
+      "iodine_value": 58,
+      "ins_value": 142,
+      "fatty_acids": {
+        "oleic": 43,
+        "lauric": 0,
+        "stearic": 5,
+        "linoleic": 11,
+        "myristic": 1,
+        "palmitic": 40,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 46,
+        "cleansing": 1,
+        "longevity": 45,
+        "stability": 45,
+        "conditioning": 54,
+        "bubbly_lather": 1,
+        "creamy_lather": 45
+      }
+    },
+    {
+      "id": "palm_stearin",
+      "common_name": "Palm Stearin",
+      "inci_name": "",
+      "sap_value_naoh": 0.142,
+      "sap_value_koh": 0.199,
+      "iodine_value": 48,
+      "ins_value": 151,
+      "fatty_acids": {
+        "oleic": 26,
+        "lauric": 0,
+        "stearic": 5,
+        "linoleic": 7,
+        "myristic": 2,
+        "palmitic": 60,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 67,
+        "cleansing": 2,
+        "longevity": 65,
+        "stability": 65,
+        "conditioning": 33,
+        "bubbly_lather": 2,
+        "creamy_lather": 65
+      }
+    },
+    {
+      "id": "palmitic_acid",
+      "common_name": "Palmitic Acid",
+      "inci_name": "",
+      "sap_value_naoh": 0.153,
+      "sap_value_koh": 0.215,
+      "iodine_value": 2,
+      "ins_value": 213,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 0,
+        "palmitic": 98,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 98,
+        "cleansing": 0,
+        "longevity": 98,
+        "stability": 98,
+        "conditioning": 0,
+        "bubbly_lather": 0,
+        "creamy_lather": 98
+      }
+    },
+    {
+      "id": "papaya_seed_oil_carica_papaya",
+      "common_name": "Papaya seed oil, Carica papaya",
+      "inci_name": "",
+      "sap_value_naoh": 0.113,
+      "sap_value_koh": 0.158,
+      "iodine_value": 67,
+      "ins_value": 91,
+      "fatty_acids": {
+        "oleic": 76,
+        "lauric": 0,
+        "stearic": 5,
+        "linoleic": 3,
+        "myristic": 0,
+        "palmitic": 13,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 18,
+        "cleansing": 0,
+        "longevity": 18,
+        "stability": 18,
+        "conditioning": 79,
+        "bubbly_lather": 0,
+        "creamy_lather": 18
+      }
+    },
+    {
+      "id": "passion_fruit_seed_oil",
+      "common_name": "Passion Fruit Seed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.13,
+      "sap_value_koh": 0.183,
+      "iodine_value": 136,
+      "ins_value": 47,
+      "fatty_acids": {
+        "oleic": 15,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 70,
+        "myristic": 0,
+        "palmitic": 10,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 13,
+        "cleansing": 0,
+        "longevity": 13,
+        "stability": 13,
+        "conditioning": 86,
+        "bubbly_lather": 0,
+        "creamy_lather": 13
+      }
+    },
+    {
+      "id": "pataua_patawa_oil",
+      "common_name": "Pataua (Patawa) Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.141,
+      "sap_value_koh": 0.195,
+      "iodine_value": 77,
+      "ins_value": 123,
+      "fatty_acids": {
+        "oleic": 78,
+        "lauric": 0,
+        "stearic": 4,
+        "linoleic": 3,
+        "myristic": 0,
+        "palmitic": 13,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 17,
+        "cleansing": 0,
+        "longevity": 17,
+        "stability": 17,
+        "conditioning": 82,
+        "bubbly_lather": 0,
+        "creamy_lather": 17
+      }
+    },
+    {
+      "id": "peach_kernel_oil",
+      "common_name": "Peach Kernel Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.136,
+      "sap_value_koh": 0.191,
+      "iodine_value": 108,
+      "ins_value": 87,
+      "fatty_acids": {
+        "oleic": 65,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 25,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 8,
+        "cleansing": 0,
+        "longevity": 8,
+        "stability": 8,
+        "conditioning": 91,
+        "bubbly_lather": 0,
+        "creamy_lather": 8
+      }
+    },
+    {
+      "id": "peanut_oil",
+      "common_name": "Peanut Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.137,
+      "sap_value_koh": 0.192,
+      "iodine_value": 92,
+      "ins_value": 99,
+      "fatty_acids": {
+        "oleic": 56,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 26,
+        "myristic": 0,
+        "palmitic": 8,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 11,
+        "cleansing": 0,
+        "longevity": 11,
+        "stability": 11,
+        "conditioning": 82,
+        "bubbly_lather": 0,
+        "creamy_lather": 11
+      }
+    },
+    {
+      "id": "pecan_oil",
+      "common_name": "Pecan Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 113,
+      "ins_value": 77,
+      "fatty_acids": {
+        "oleic": 50,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 39,
+        "myristic": 0,
+        "palmitic": 7,
+        "linolenic": 2,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 9,
+        "cleansing": 0,
+        "longevity": 9,
+        "stability": 9,
+        "conditioning": 91,
+        "bubbly_lather": 0,
+        "creamy_lather": 9
+      }
+    },
+    {
+      "id": "perilla_seed_oil",
+      "common_name": "Perilla Seed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 196,
+      "ins_value": 0,
+      "fatty_acids": {
+        "oleic": 15,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 16,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 56,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 8,
+        "cleansing": 0,
+        "longevity": 8,
+        "stability": 8,
+        "conditioning": 87,
+        "bubbly_lather": 0,
+        "creamy_lather": 8
+      }
+    },
+    {
+      "id": "pistachio_oil",
+      "common_name": "Pistachio Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.133,
+      "sap_value_koh": 0.186,
+      "iodine_value": 95,
+      "ins_value": 92,
+      "fatty_acids": {
+        "oleic": 63,
+        "lauric": 0,
+        "stearic": 1,
+        "linoleic": 25,
+        "myristic": 0,
+        "palmitic": 11,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 12,
+        "cleansing": 0,
+        "longevity": 12,
+        "stability": 12,
+        "conditioning": 88,
+        "bubbly_lather": 0,
+        "creamy_lather": 12
+      }
+    },
+    {
+      "id": "plum_kernel_oil",
+      "common_name": "Plum Kernel Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.138,
+      "sap_value_koh": 0.194,
+      "iodine_value": 83,
+      "ins_value": 110,
+      "fatty_acids": {
+        "oleic": 68,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 23,
+        "myristic": 0,
+        "palmitic": 3,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 3,
+        "cleansing": 0,
+        "longevity": 3,
+        "stability": 3,
+        "conditioning": 91,
+        "bubbly_lather": 0,
+        "creamy_lather": 3
+      }
+    },
+    {
+      "id": "pomegranate_seed_oil",
+      "common_name": "Pomegranate Seed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 22,
+      "ins_value": 168,
+      "fatty_acids": {
+        "oleic": 7,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 7,
+        "myristic": 0,
+        "palmitic": 3,
+        "linolenic": 78,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 6,
+        "cleansing": 0,
+        "longevity": 6,
+        "stability": 6,
+        "conditioning": 92,
+        "bubbly_lather": 0,
+        "creamy_lather": 6
+      }
+    },
+    {
+      "id": "poppy_seed_oil",
+      "common_name": "Poppy Seed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.138,
+      "sap_value_koh": 0.194,
+      "iodine_value": 140,
+      "ins_value": 54,
+      "fatty_acids": {
+        "oleic": 17,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 69,
+        "myristic": 0,
+        "palmitic": 10,
+        "linolenic": 2,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 12,
+        "cleansing": 0,
+        "longevity": 12,
+        "stability": 12,
+        "conditioning": 88,
+        "bubbly_lather": 0,
+        "creamy_lather": 12
+      }
+    },
+    {
+      "id": "pracaxi_pracachy_seed_oil",
+      "common_name": "Pracaxi (Pracachy) Seed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.132,
+      "sap_value_koh": 0.185,
+      "iodine_value": 68,
+      "ins_value": 105,
+      "fatty_acids": {
+        "oleic": 44,
+        "lauric": 1,
+        "stearic": 2,
+        "linoleic": 2,
+        "myristic": 1,
+        "palmitic": 2,
+        "linolenic": 2,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 6,
+        "cleansing": 2,
+        "longevity": 4,
+        "stability": 4,
+        "conditioning": 48,
+        "bubbly_lather": 2,
+        "creamy_lather": 4
+      }
+    },
+    {
+      "id": "pumpkin_seed_oil_virgin",
+      "common_name": "Pumpkin Seed Oil virgin",
+      "inci_name": "",
+      "sap_value_naoh": 0.139,
+      "sap_value_koh": 0.195,
+      "iodine_value": 128,
+      "ins_value": 67,
+      "fatty_acids": {
+        "oleic": 33,
+        "lauric": 0,
+        "stearic": 8,
+        "linoleic": 50,
+        "myristic": 0,
+        "palmitic": 11,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 19,
+        "cleansing": 0,
+        "longevity": 19,
+        "stability": 19,
+        "conditioning": 83,
+        "bubbly_lather": 0,
+        "creamy_lather": 19
+      }
+    },
+    {
+      "id": "rabbit_fat",
+      "common_name": "Rabbit Fat",
+      "inci_name": "",
+      "sap_value_naoh": 0.143,
+      "sap_value_koh": 0.201,
+      "iodine_value": 85,
+      "ins_value": 116,
+      "fatty_acids": {
+        "oleic": 30,
+        "lauric": 0,
+        "stearic": 6,
+        "linoleic": 20,
+        "myristic": 3,
+        "palmitic": 30,
+        "linolenic": 5,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 39,
+        "cleansing": 3,
+        "longevity": 36,
+        "stability": 36,
+        "conditioning": 55,
+        "bubbly_lather": 3,
+        "creamy_lather": 36
+      }
+    },
+    {
+      "id": "rapeseed_oil_unrefined_canola_oil",
+      "common_name": "Rapeseed Oil (unrefined canola oil)",
+      "inci_name": "",
+      "sap_value_naoh": 0.124,
+      "sap_value_koh": 0.174,
+      "iodine_value": 108,
+      "ins_value": 56,
+      "fatty_acids": {
+        "oleic": 17,
+        "lauric": 0,
+        "stearic": 1,
+        "linoleic": 13,
+        "myristic": 0,
+        "palmitic": 4,
+        "linolenic": 9,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 5,
+        "cleansing": 0,
+        "longevity": 4,
+        "stability": 4,
+        "conditioning": 39,
+        "bubbly_lather": 0,
+        "creamy_lather": 5
+      }
+    },
+    {
+      "id": "raspberry_seed_oil",
+      "common_name": "Raspberry Seed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.133,
+      "sap_value_koh": 0.187,
+      "iodine_value": 163,
+      "ins_value": 24,
+      "fatty_acids": {
+        "oleic": 13,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 55,
+        "myristic": 0,
+        "palmitic": 3,
+        "linolenic": 26,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 3,
+        "cleansing": 0,
+        "longevity": 3,
+        "stability": 3,
+        "conditioning": 94,
+        "bubbly_lather": 0,
+        "creamy_lather": 3
+      }
+    },
+    {
+      "id": "red_palm_butter",
+      "common_name": "Red Palm Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.142,
+      "sap_value_koh": 0.199,
+      "iodine_value": 53,
+      "ins_value": 145,
+      "fatty_acids": {
+        "oleic": 39,
+        "lauric": 0,
+        "stearic": 5,
+        "linoleic": 10,
+        "myristic": 1,
+        "palmitic": 44,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 50,
+        "cleansing": 1,
+        "longevity": 49,
+        "stability": 49,
+        "conditioning": 49,
+        "bubbly_lather": 1,
+        "creamy_lather": 49
+      }
+    },
+    {
+      "id": "rice_bran_oil",
+      "common_name": "Rice Bran Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.128,
+      "sap_value_koh": 0.179,
+      "iodine_value": 105,
+      "ins_value": 85,
+      "fatty_acids": {
+        "oleic": 43,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 33,
+        "myristic": 1,
+        "palmitic": 22,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 26,
+        "cleansing": 1,
+        "longevity": 25,
+        "stability": 25,
+        "conditioning": 77,
+        "bubbly_lather": 1,
+        "creamy_lather": 25
+      }
+    },
+    {
+      "id": "rosehip_oil",
+      "common_name": "Rosehip Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.133,
+      "sap_value_koh": 0.187,
+      "iodine_value": 188,
+      "ins_value": 10,
+      "fatty_acids": {
+        "oleic": 12,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 46,
+        "myristic": 0,
+        "palmitic": 4,
+        "linolenic": 31,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 6,
+        "cleansing": 0,
+        "longevity": 6,
+        "stability": 6,
+        "conditioning": 89,
+        "bubbly_lather": 0,
+        "creamy_lather": 6
+      }
+    },
+    {
+      "id": "sacha_inchi_plukenetia_volubilis",
+      "common_name": "Sacha Inchi, Plukenetia volubilis",
+      "inci_name": "",
+      "sap_value_naoh": 0.134,
+      "sap_value_koh": 0.188,
+      "iodine_value": 141,
+      "ins_value": 47,
+      "fatty_acids": {
+        "oleic": 10,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 35,
+        "myristic": 0,
+        "palmitic": 4,
+        "linolenic": 48,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 7,
+        "cleansing": 0,
+        "longevity": 7,
+        "stability": 7,
+        "conditioning": 93,
+        "bubbly_lather": 0,
+        "creamy_lather": 7
+      }
+    },
+    {
+      "id": "safflower_oil",
+      "common_name": "Safflower Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.137,
+      "sap_value_koh": 0.192,
+      "iodine_value": 145,
+      "ins_value": 47,
+      "fatty_acids": {
+        "oleic": 15,
+        "lauric": 0,
+        "stearic": 0,
+        "linoleic": 75,
+        "myristic": 0,
+        "palmitic": 7,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 7,
+        "cleansing": 0,
+        "longevity": 7,
+        "stability": 7,
+        "conditioning": 90,
+        "bubbly_lather": 0,
+        "creamy_lather": 7
+      }
+    },
+    {
+      "id": "safflower_oil_high_oleic",
+      "common_name": "Safflower Oil, high oleic",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 93,
+      "ins_value": 97,
+      "fatty_acids": {
+        "oleic": 77,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 15,
+        "myristic": 0,
+        "palmitic": 5,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 7,
+        "cleansing": 0,
+        "longevity": 7,
+        "stability": 7,
+        "conditioning": 92,
+        "bubbly_lather": 0,
+        "creamy_lather": 7
+      }
+    },
+    {
+      "id": "sal_butter",
+      "common_name": "Sal Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.132,
+      "sap_value_koh": 0.185,
+      "iodine_value": 39,
+      "ins_value": 146,
+      "fatty_acids": {
+        "oleic": 40,
+        "lauric": 0,
+        "stearic": 44,
+        "linoleic": 2,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 50,
+        "cleansing": 0,
+        "longevity": 50,
+        "stability": 50,
+        "conditioning": 42,
+        "bubbly_lather": 0,
+        "creamy_lather": 50
+      }
+    },
+    {
+      "id": "salmon_oil",
+      "common_name": "Salmon Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.132,
+      "sap_value_koh": 0.185,
+      "iodine_value": 169,
+      "ins_value": 16,
+      "fatty_acids": {
+        "oleic": 32,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 17,
+        "myristic": 5,
+        "palmitic": 13,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 21,
+        "cleansing": 5,
+        "longevity": 22,
+        "stability": 22,
+        "conditioning": 60,
+        "bubbly_lather": 5,
+        "creamy_lather": 16
+      }
+    },
+    {
+      "id": "saw_palmetto_extract",
+      "common_name": "Saw Palmetto Extract",
+      "inci_name": "",
+      "sap_value_naoh": 0.164,
+      "sap_value_koh": 0.23,
+      "iodine_value": 45,
+      "ins_value": 185,
+      "fatty_acids": {
+        "oleic": 35,
+        "lauric": 29,
+        "stearic": 2,
+        "linoleic": 4,
+        "myristic": 11,
+        "palmitic": 8,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 50,
+        "cleansing": 40,
+        "longevity": 10,
+        "stability": 10,
+        "conditioning": 40,
+        "bubbly_lather": 40,
+        "creamy_lather": 10
+      }
+    },
+    {
+      "id": "saw_palmetto_oil",
+      "common_name": "Saw Palmetto Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.157,
+      "sap_value_koh": 0.22,
+      "iodine_value": 44,
+      "ins_value": 176,
+      "fatty_acids": {
+        "oleic": 31,
+        "lauric": 29,
+        "stearic": 2,
+        "linoleic": 4,
+        "myristic": 13,
+        "palmitic": 9,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 53,
+        "cleansing": 42,
+        "longevity": 11,
+        "stability": 11,
+        "conditioning": 36,
+        "bubbly_lather": 42,
+        "creamy_lather": 11
+      }
+    },
+    {
+      "id": "sea_buckthorn_oil_seed",
+      "common_name": "Sea Buckthorn Oil, seed",
+      "inci_name": "",
+      "sap_value_naoh": 0.139,
+      "sap_value_koh": 0.195,
+      "iodine_value": 165,
+      "ins_value": 30,
+      "fatty_acids": {
+        "oleic": 14,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 36,
+        "myristic": 0,
+        "palmitic": 7,
+        "linolenic": 38,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 10,
+        "cleansing": 0,
+        "longevity": 10,
+        "stability": 10,
+        "conditioning": 88,
+        "bubbly_lather": 0,
+        "creamy_lather": 10
+      }
+    },
+    {
+      "id": "sea_buckthorn_oil_seed_and_berry",
+      "common_name": "Sea Buckthorn Oil, seed and berry",
+      "inci_name": "",
+      "sap_value_naoh": 0.13,
+      "sap_value_koh": 0.183,
+      "iodine_value": 86,
+      "ins_value": 97,
+      "fatty_acids": {
+        "oleic": 28,
+        "lauric": 0,
+        "stearic": 1,
+        "linoleic": 10,
+        "myristic": 0,
+        "palmitic": 30,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 31,
+        "cleansing": 0,
+        "longevity": 31,
+        "stability": 31,
+        "conditioning": 38,
+        "bubbly_lather": 0,
+        "creamy_lather": 31
+      }
+    },
+    {
+      "id": "sesame_oil",
+      "common_name": "Sesame Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.134,
+      "sap_value_koh": 0.188,
+      "iodine_value": 110,
+      "ins_value": 81,
+      "fatty_acids": {
+        "oleic": 40,
+        "lauric": 0,
+        "stearic": 5,
+        "linoleic": 43,
+        "myristic": 0,
+        "palmitic": 10,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 15,
+        "cleansing": 0,
+        "longevity": 15,
+        "stability": 15,
+        "conditioning": 83,
+        "bubbly_lather": 0,
+        "creamy_lather": 15
+      }
+    },
+    {
+      "id": "shea_butter",
+      "common_name": "Shea Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.128,
+      "sap_value_koh": 0.179,
+      "iodine_value": 59,
+      "ins_value": 116,
+      "fatty_acids": {
+        "oleic": 48,
+        "lauric": 0,
+        "stearic": 40,
+        "linoleic": 6,
+        "myristic": 0,
+        "palmitic": 5,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 45,
+        "cleansing": 0,
+        "longevity": 45,
+        "stability": 45,
+        "conditioning": 54,
+        "bubbly_lather": 0,
+        "creamy_lather": 45
+      }
+    },
+    {
+      "id": "shea_oil_fractionated",
+      "common_name": "Shea Oil, fractionated",
+      "inci_name": "",
+      "sap_value_naoh": 0.132,
+      "sap_value_koh": 0.185,
+      "iodine_value": 83,
+      "ins_value": 102,
+      "fatty_acids": {
+        "oleic": 73,
+        "lauric": 0,
+        "stearic": 10,
+        "linoleic": 11,
+        "myristic": 0,
+        "palmitic": 6,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 16,
+        "cleansing": 0,
+        "longevity": 16,
+        "stability": 16,
+        "conditioning": 84,
+        "bubbly_lather": 0,
+        "creamy_lather": 16
+      }
+    },
+    {
+      "id": "soapquick_conventional",
+      "common_name": "SoapQuick, conventional",
+      "inci_name": "",
+      "sap_value_naoh": 0.151,
+      "sap_value_koh": 0.212,
+      "iodine_value": 59,
+      "ins_value": 153,
+      "fatty_acids": {
+        "oleic": 42,
+        "lauric": 13,
+        "stearic": 3,
+        "linoleic": 8,
+        "myristic": 6,
+        "palmitic": 17,
+        "linolenic": 1,
+        "ricinoleic": 5
+      },
+      "quality_contributions": {
+        "hardness": 39,
+        "cleansing": 19,
+        "longevity": 20,
+        "stability": 20,
+        "conditioning": 56,
+        "bubbly_lather": 24,
+        "creamy_lather": 25
+      }
+    },
+    {
+      "id": "soapquick_organic",
+      "common_name": "SoapQuick, organic",
+      "inci_name": "",
+      "sap_value_naoh": 0.152,
+      "sap_value_koh": 0.213,
+      "iodine_value": 56,
+      "ins_value": 156,
+      "fatty_acids": {
+        "oleic": 45,
+        "lauric": 13,
+        "stearic": 3,
+        "linoleic": 10,
+        "myristic": 5,
+        "palmitic": 20,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 41,
+        "cleansing": 18,
+        "longevity": 23,
+        "stability": 23,
+        "conditioning": 55,
+        "bubbly_lather": 18,
+        "creamy_lather": 23
+      }
+    },
+    {
+      "id": "soybean_oil",
+      "common_name": "Soybean Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.136,
+      "sap_value_koh": 0.191,
+      "iodine_value": 131,
+      "ins_value": 61,
+      "fatty_acids": {
+        "oleic": 24,
+        "lauric": 0,
+        "stearic": 5,
+        "linoleic": 50,
+        "myristic": 0,
+        "palmitic": 11,
+        "linolenic": 8,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 16,
+        "cleansing": 0,
+        "longevity": 16,
+        "stability": 16,
+        "conditioning": 82,
+        "bubbly_lather": 0,
+        "creamy_lather": 16
+      }
+    },
+    {
+      "id": "soybean_27.5%_hydrogenated",
+      "common_name": "Soybean, 27.5% hydrogenated",
+      "inci_name": "",
+      "sap_value_naoh": 0.136,
+      "sap_value_koh": 0.191,
+      "iodine_value": 78,
+      "ins_value": 113,
+      "fatty_acids": {
+        "oleic": 41,
+        "lauric": 0,
+        "stearic": 15,
+        "linoleic": 7,
+        "myristic": 0,
+        "palmitic": 9,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 24,
+        "cleansing": 0,
+        "longevity": 24,
+        "stability": 24,
+        "conditioning": 49,
+        "bubbly_lather": 0,
+        "creamy_lather": 24
+      }
+    },
+    {
+      "id": "soybean_fully_hydrogenated_soy_wax",
+      "common_name": "Soybean, fully hydrogenated (soy wax)",
+      "inci_name": "",
+      "sap_value_naoh": 0.137,
+      "sap_value_koh": 0.192,
+      "iodine_value": 1,
+      "ins_value": 191,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 0,
+        "stearic": 87,
+        "linoleic": 0,
+        "myristic": 0,
+        "palmitic": 11,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 98,
+        "cleansing": 0,
+        "longevity": 98,
+        "stability": 98,
+        "conditioning": 0,
+        "bubbly_lather": 0,
+        "creamy_lather": 98
+      }
+    },
+    {
+      "id": "stearic_acid",
+      "common_name": "Stearic Acid",
+      "inci_name": "",
+      "sap_value_naoh": 0.141,
+      "sap_value_koh": 0.198,
+      "iodine_value": 2,
+      "ins_value": 196,
+      "fatty_acids": {
+        "oleic": 0,
+        "lauric": 0,
+        "stearic": 99,
+        "linoleic": 0,
+        "myristic": 0,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 99,
+        "cleansing": 0,
+        "longevity": 99,
+        "stability": 99,
+        "conditioning": 0,
+        "bubbly_lather": 0,
+        "creamy_lather": 99
+      }
+    },
+    {
+      "id": "sunflower_oil",
+      "common_name": "Sunflower Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.189,
+      "iodine_value": 133,
+      "ins_value": 63,
+      "fatty_acids": {
+        "oleic": 16,
+        "lauric": 0,
+        "stearic": 4,
+        "linoleic": 70,
+        "myristic": 0,
+        "palmitic": 7,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 11,
+        "cleansing": 0,
+        "longevity": 11,
+        "stability": 11,
+        "conditioning": 87,
+        "bubbly_lather": 0,
+        "creamy_lather": 11
+      }
+    },
+    {
+      "id": "sunflower_oil_high_oleic",
+      "common_name": "Sunflower Oil, high oleic",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.189,
+      "iodine_value": 83,
+      "ins_value": 106,
+      "fatty_acids": {
+        "oleic": 83,
+        "lauric": 0,
+        "stearic": 4,
+        "linoleic": 4,
+        "myristic": 0,
+        "palmitic": 3,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 7,
+        "cleansing": 0,
+        "longevity": 7,
+        "stability": 7,
+        "conditioning": 88,
+        "bubbly_lather": 0,
+        "creamy_lather": 7
+      }
+    },
+    {
+      "id": "tallow_bear",
+      "common_name": "Tallow, Bear",
+      "inci_name": "",
+      "sap_value_naoh": 0.139,
+      "sap_value_koh": 0.195,
+      "iodine_value": 92,
+      "ins_value": 100,
+      "fatty_acids": {
+        "oleic": 70,
+        "lauric": 0,
+        "stearic": 3,
+        "linoleic": 9,
+        "myristic": 2,
+        "palmitic": 7,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 12,
+        "cleansing": 2,
+        "longevity": 10,
+        "stability": 10,
+        "conditioning": 79,
+        "bubbly_lather": 2,
+        "creamy_lather": 10
+      }
+    },
+    {
+      "id": "tallow_beef",
+      "common_name": "Tallow, Beef",
+      "inci_name": "",
+      "sap_value_naoh": 0.143,
+      "sap_value_koh": 0.2,
+      "iodine_value": 45,
+      "ins_value": 147,
+      "fatty_acids": {
+        "oleic": 36,
+        "lauric": 2,
+        "stearic": 22,
+        "linoleic": 3,
+        "myristic": 6,
+        "palmitic": 28,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 58,
+        "cleansing": 8,
+        "longevity": 50,
+        "stability": 50,
+        "conditioning": 40,
+        "bubbly_lather": 8,
+        "creamy_lather": 50
+      }
+    },
+    {
+      "id": "tallow_deer",
+      "common_name": "Tallow, Deer",
+      "inci_name": "",
+      "sap_value_naoh": 0.138,
+      "sap_value_koh": 0.193,
+      "iodine_value": 31,
+      "ins_value": 166,
+      "fatty_acids": {
+        "oleic": 30,
+        "lauric": 0,
+        "stearic": 24,
+        "linoleic": 15,
+        "myristic": 1,
+        "palmitic": 20,
+        "linolenic": 3,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 45,
+        "cleansing": 1,
+        "longevity": 44,
+        "stability": 44,
+        "conditioning": 48,
+        "bubbly_lather": 1,
+        "creamy_lather": 44
+      }
+    },
+    {
+      "id": "tallow_goat",
+      "common_name": "Tallow, Goat",
+      "inci_name": "",
+      "sap_value_naoh": 0.137,
+      "sap_value_koh": 0.192,
+      "iodine_value": 40,
+      "ins_value": 152,
+      "fatty_acids": {
+        "oleic": 29,
+        "lauric": 5,
+        "stearic": 30,
+        "linoleic": 2,
+        "myristic": 11,
+        "palmitic": 23,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 69,
+        "cleansing": 16,
+        "longevity": 53,
+        "stability": 53,
+        "conditioning": 31,
+        "bubbly_lather": 16,
+        "creamy_lather": 53
+      }
+    },
+    {
+      "id": "tallow_sheep",
+      "common_name": "Tallow, Sheep",
+      "inci_name": "",
+      "sap_value_naoh": 0.138,
+      "sap_value_koh": 0.194,
+      "iodine_value": 54,
+      "ins_value": 156,
+      "fatty_acids": {
+        "oleic": 26,
+        "lauric": 4,
+        "stearic": 13,
+        "linoleic": 5,
+        "myristic": 10,
+        "palmitic": 24,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 51,
+        "cleansing": 14,
+        "longevity": 37,
+        "stability": 37,
+        "conditioning": 31,
+        "bubbly_lather": 14,
+        "creamy_lather": 37
+      }
+    },
+    {
+      "id": "tamanu_oil_kamani",
+      "common_name": "Tamanu Oil, kamani",
+      "inci_name": "",
+      "sap_value_naoh": 0.148,
+      "sap_value_koh": 0.208,
+      "iodine_value": 111,
+      "ins_value": 82,
+      "fatty_acids": {
+        "oleic": 34,
+        "lauric": 0,
+        "stearic": 13,
+        "linoleic": 38,
+        "myristic": 0,
+        "palmitic": 12,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 25,
+        "cleansing": 0,
+        "longevity": 25,
+        "stability": 25,
+        "conditioning": 73,
+        "bubbly_lather": 0,
+        "creamy_lather": 25
+      }
+    },
+    {
+      "id": "tucuma_seed_butter",
+      "common_name": "Tucuma Seed Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.17,
+      "sap_value_koh": 0.238,
+      "iodine_value": 13,
+      "ins_value": 175,
+      "fatty_acids": {
+        "oleic": 13,
+        "lauric": 48,
+        "stearic": 0,
+        "linoleic": 0,
+        "myristic": 23,
+        "palmitic": 6,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 77,
+        "cleansing": 71,
+        "longevity": 6,
+        "stability": 6,
+        "conditioning": 13,
+        "bubbly_lather": 71,
+        "creamy_lather": 6
+      }
+    },
+    {
+      "id": "ucuuba_butter",
+      "common_name": "Ucuuba Butter",
+      "inci_name": "",
+      "sap_value_naoh": 0.146,
+      "sap_value_koh": 0.205,
+      "iodine_value": 38,
+      "ins_value": 167,
+      "fatty_acids": {
+        "oleic": 44,
+        "lauric": 0,
+        "stearic": 31,
+        "linoleic": 5,
+        "myristic": 0,
+        "palmitic": 0,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 31,
+        "cleansing": 0,
+        "longevity": 31,
+        "stability": 31,
+        "conditioning": 49,
+        "bubbly_lather": 0,
+        "creamy_lather": 31
+      }
+    },
+    {
+      "id": "walmart_gv_shortening_beef_tallow_palm",
+      "common_name": "Walmart GV Shortening, beef tallow, palm",
+      "inci_name": "",
+      "sap_value_naoh": 0.141,
+      "sap_value_koh": 0.198,
+      "iodine_value": 49,
+      "ins_value": 151,
+      "fatty_acids": {
+        "oleic": 37,
+        "lauric": 1,
+        "stearic": 14,
+        "linoleic": 6,
+        "myristic": 4,
+        "palmitic": 35,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 54,
+        "cleansing": 5,
+        "longevity": 49,
+        "stability": 49,
+        "conditioning": 44,
+        "bubbly_lather": 5,
+        "creamy_lather": 49
+      }
+    },
+    {
+      "id": "walnut_oil",
+      "common_name": "Walnut Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.189,
+      "iodine_value": 145,
+      "ins_value": 45,
+      "fatty_acids": {
+        "oleic": 18,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 60,
+        "myristic": 0,
+        "palmitic": 7,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 9,
+        "cleansing": 0,
+        "longevity": 9,
+        "stability": 9,
+        "conditioning": 78,
+        "bubbly_lather": 0,
+        "creamy_lather": 9
+      }
+    },
+    {
+      "id": "watermelon_seed_oil",
+      "common_name": "Watermelon Seed Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.135,
+      "sap_value_koh": 0.19,
+      "iodine_value": 119,
+      "ins_value": 71,
+      "fatty_acids": {
+        "oleic": 18,
+        "lauric": 0,
+        "stearic": 10,
+        "linoleic": 60,
+        "myristic": 0,
+        "palmitic": 11,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 21,
+        "cleansing": 0,
+        "longevity": 21,
+        "stability": 21,
+        "conditioning": 79,
+        "bubbly_lather": 0,
+        "creamy_lather": 21
+      }
+    },
+    {
+      "id": "wheat_germ_oil",
+      "common_name": "Wheat Germ Oil",
+      "inci_name": "",
+      "sap_value_naoh": 0.13,
+      "sap_value_koh": 0.183,
+      "iodine_value": 128,
+      "ins_value": 58,
+      "fatty_acids": {
+        "oleic": 17,
+        "lauric": 0,
+        "stearic": 2,
+        "linoleic": 58,
+        "myristic": 0,
+        "palmitic": 17,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 19,
+        "cleansing": 0,
+        "longevity": 19,
+        "stability": 19,
+        "conditioning": 75,
+        "bubbly_lather": 0,
+        "creamy_lather": 19
+      }
+    },
+    {
+      "id": "yangu_cape_chestnut",
+      "common_name": "Yangu, cape chestnut",
+      "inci_name": "",
+      "sap_value_naoh": 0.137,
+      "sap_value_koh": 0.192,
+      "iodine_value": 95,
+      "ins_value": 97,
+      "fatty_acids": {
+        "oleic": 45,
+        "lauric": 0,
+        "stearic": 5,
+        "linoleic": 30,
+        "myristic": 0,
+        "palmitic": 18,
+        "linolenic": 1,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 23,
+        "cleansing": 0,
+        "longevity": 23,
+        "stability": 23,
+        "conditioning": 76,
+        "bubbly_lather": 0,
+        "creamy_lather": 23
+      }
+    },
+    {
+      "id": "zapote_seed_oil_aceite_de_sapuyul_or_mamey",
+      "common_name": "Zapote seed oil, (Aceite de Sapuyul or Mamey)",
+      "inci_name": "",
+      "sap_value_naoh": 0.134,
+      "sap_value_koh": 0.188,
+      "iodine_value": 72,
+      "ins_value": 116,
+      "fatty_acids": {
+        "oleic": 52,
+        "lauric": 0,
+        "stearic": 21,
+        "linoleic": 13,
+        "myristic": 0,
+        "palmitic": 9,
+        "linolenic": 0,
+        "ricinoleic": 0
+      },
+      "quality_contributions": {
+        "hardness": 30,
+        "cleansing": 0,
+        "longevity": 30,
+        "stability": 30,
+        "conditioning": 65,
+        "bubbly_lather": 0,
+        "creamy_lather": 30
+      }
+    }
+  ],
+  "count": 147,
+  "source": "Converted from markdown oil database",
+  "generated_at": "2025-11-17T01:54:35.082Z"
+}
