@@ -171,7 +171,7 @@ class TestMaxUsageRateValidation:
         assert is_valid is False
 
 
-class TestBlendsWith ArrayHandling:
+class TestBlendsWithArrayHandling:
     """Test JSONB array field handling"""
 
     @pytest.skip("TDD: RED phase - import script doesn't exist yet")
