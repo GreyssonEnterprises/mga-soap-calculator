@@ -155,20 +155,19 @@ async def create_calculation(
     )
 
     # Add purity warnings if any
-    if purity_result.get("warnings"):
-        for purity_warning in purity_result["warnings"]:
-            warnings.append(
-                Warning(
-                    code=purity_warning["type"].upper(),
-                    message=purity_warning["message"],
-                    severity="warning",
-                )
+    for purity_warning in purity_result.warnings:
+        warnings.append(
+            Warning(
+                code=purity_warning.type.upper(),
+                message=purity_warning.message,
+                severity="warning",
             )
+        )
 
     # Use commercial weights (adjusted for purity) for recipe output
 
     # Step 4: Calculate water amount (using commercial lye weight with purity adjustment)
-    commercial_lye_total = purity_result["total_lye_g"]
+    commercial_lye_total = purity_result.total_lye_g
     if request.water.method == "water_percent_of_oils":
         water_g = calculate_water_from_oil_percent(total_oil_weight_g, request.water.value)
     elif request.water.method == "lye_concentration":
@@ -286,15 +285,15 @@ async def create_calculation(
             for oil in normalized_oils
         ],
         lye=LyeOutput(
-            naoh_weight_g=purity_result["commercial_naoh_g"],  # Commercial weight (purity-adjusted)
-            koh_weight_g=purity_result["commercial_koh_g"],  # Commercial weight (purity-adjusted)
-            total_lye_g=purity_result["total_lye_g"],
+            naoh_weight_g=purity_result.commercial_naoh_g,  # Commercial weight (purity-adjusted)
+            koh_weight_g=purity_result.commercial_koh_g,  # Commercial weight (purity-adjusted)
+            total_lye_g=purity_result.total_lye_g,
             naoh_percent=request.lye.naoh_percent,
             koh_percent=request.lye.koh_percent,
             koh_purity=request.lye.koh_purity,
             naoh_purity=request.lye.naoh_purity,
-            pure_koh_equivalent_g=purity_result["pure_koh_equivalent_g"],
-            pure_naoh_equivalent_g=purity_result["pure_naoh_equivalent_g"],
+            pure_koh_equivalent_g=purity_result.pure_koh_equivalent_g,
+            pure_naoh_equivalent_g=purity_result.pure_naoh_equivalent_g,
         ),
         water_weight_g=round_to_precision(water_g),
         water_method=request.water.method,  # Fixed: Added missing field
@@ -337,15 +336,15 @@ async def create_calculation(
                 for oil in normalized_oils
             ],
             "lye": {
-                "naoh_weight_g": purity_result["commercial_naoh_g"],
-                "koh_weight_g": purity_result["commercial_koh_g"],
-                "total_lye_g": purity_result["total_lye_g"],
+                "naoh_weight_g": purity_result.commercial_naoh_g,
+                "koh_weight_g": purity_result.commercial_koh_g,
+                "total_lye_g": purity_result.total_lye_g,
                 "naoh_percent": request.lye.naoh_percent,
                 "koh_percent": request.lye.koh_percent,
                 "koh_purity": request.lye.koh_purity,
                 "naoh_purity": request.lye.naoh_purity,
-                "pure_koh_equivalent_g": purity_result["pure_koh_equivalent_g"],
-                "pure_naoh_equivalent_g": purity_result["pure_naoh_equivalent_g"],
+                "pure_koh_equivalent_g": purity_result.pure_koh_equivalent_g,
+                "pure_naoh_equivalent_g": purity_result.pure_naoh_equivalent_g,
             },
             "water_weight_g": water_g,
             "water_method": request.water.method,
