@@ -10,8 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Alembic** for migrations
 - **PostgreSQL 15** (UBI 9 image in prod, `postgres:15-alpine` in dev)
 - **pytest** + `pytest-asyncio` (asyncio_mode=auto) + `pytest-cov`
-- **Podman** runtime (Quadlet systemd units) — production is rootless on Fedora
-- **Ansible** for build/deploy orchestration, secrets in vault
+- **OpenShift SNO** for production (deployment managed from the `greysson-homelab` IaC repo)
 
 ## Common Commands
 
@@ -50,24 +49,12 @@ alembic revision --autogenerate -m "description"  # new migration
 
 Migrations are applied automatically at container startup by `scripts/docker-entrypoint.sh` — do not run them manually against prod.
 
-### Deployment (production target: `grimm-lin`, Fedora 42)
+### Deployment
 
-```bash
-cd ansible
-
-# Full build + deploy (increment app_version!)
-ansible-playbook playbooks/build-and-deploy.yml \
-  -e "app_version=1.X.Y" \
-  --vault-password-file ~/.config/pai/secrets/ansible_vault_pw
-
-# Emergency rollback (restores previous image from tarball archive)
-ansible-playbook playbooks/rollback-deployment.yml
-
-# Dry run
-ansible-playbook playbooks/build-and-deploy.yml --check
-```
-
-Production URL: `http://grimm-lin:8000`. Health: `http://grimm-lin:8000/api/v1/health`.
+Deployment is managed via the `greysson-homelab` IaC repo at
+`ansible/roles/mga_soap_calculator_ocp/`. See
+`greysson-homelab/ansible/playbooks/deploy-mga-soap-calculator.yml`.
+Production target is OpenShift SNO.
 
 ## Architecture
 
@@ -117,17 +104,6 @@ When adding calculation features: put the math in `app/services/`, import into t
 4. Starts uvicorn with 4 workers
 
 This means `podman restart` is safe and won't duplicate seed data. To force a reseed, `DELETE FROM oils;` and `DELETE FROM additives;` (calculations are preserved), then restart.
-
-### Ansible Structure
-
-`ansible/roles/` splits deployment concerns:
-- `soap-calculator-database` — postgres quadlet
-- `soap-calculator-api` — api quadlet
-- `soap-calculator-network` — podman network
-- `soap-calculator-image-lifecycle` — build, tag, archive, deploy, rollback (image tarballs kept in `/data/podman-apps/mga-soap-calculator/images/` on grimm-lin for rollback)
-- `soap-calculator-monitoring` — health checks
-
-Secrets live in `ansible/group_vars/production/vault.yml` (vault-encrypted; see `vault.yml.example`). Production vault password at `~/.config/pai/secrets/ansible_vault_pw`.
 
 ## Specs & Agent-OS
 

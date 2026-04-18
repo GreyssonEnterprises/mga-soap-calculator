@@ -209,9 +209,9 @@ When adding calc features: math goes in `app/services/`, imported into the route
 Restart is safe. To force reseed: `DELETE FROM oils; DELETE FROM additives;` then restart.
 
 ### Deployment
-Ansible builds from Dockerfile (not compose), loads into remote Podman via `podman load`, writes Quadlet systemd units from `podman/systemd/*.container`, starts via user-scope systemd. Previous image tarballs kept in `/data/podman-apps/mga-soap-calculator/images/` on grimm-lin for rollback.
+Managed from the greysson-homelab IaC repo (`ansible/roles/mga_soap_calculator_ocp/`), which deploys the built image to OpenShift SNO. The old grimm-lin / Podman / Quadlet pattern (in-repo `ansible/`, `podman/systemd/*.container`, `podman/deploy.sh`) has been retired and removed.
 
-`docker-compose.yml` is dev-only. `docker-compose.prod.yml` is **dead code** (CI-10 — delete in Phase 1).
+`docker-compose.yml` is dev-only.
 
 ---
 
