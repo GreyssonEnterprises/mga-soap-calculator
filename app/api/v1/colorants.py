@@ -7,9 +7,10 @@ Provides color filtering by 9 color families.
 from typing import Literal
 
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import func, or_, select
+from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api._pagination import paginate_query
 from app.db import get_db
 from app.models.colorant import Colorant
 from app.schemas.colorant import (
@@ -49,42 +50,30 @@ async def list_colorants(
     Returns:
         Paginated list of colorants with metadata
     """
-    # Build base query
     query = select(Colorant)
 
-    # Apply search filter
     if search:
         search_pattern = f"%{search}%"
         query = query.where(
             or_(Colorant.name.ilike(search_pattern), Colorant.botanical_name.ilike(search_pattern))
         )
 
-    # Apply color category filter
     if color:
         query = query.where(Colorant.color_category == color)
 
-    # Get total count before pagination
-    count_query = select(func.count()).select_from(query.subquery())
-    total_count = (await db.execute(count_query)).scalar() or 0
+    colorants, total_count, has_more = await paginate_query(
+        db,
+        query,
+        sort_column=getattr(Colorant, sort_by),
+        sort_order=sort_order,
+        limit=limit,
+        offset=offset,
+    )
 
-    # Apply sorting
-    sort_column = getattr(Colorant, sort_by)
-    if sort_order == "desc":
-        query = query.order_by(sort_column.desc())
-    else:
-        query = query.order_by(sort_column.asc())
-
-    # Apply pagination
-    query = query.limit(limit).offset(offset)
-
-    # Execute query
-    result = await db.execute(query)
-    colorants = result.scalars().all()
-
-    # Build response with proper field mapping
-    colorant_items = []
-    for colorant in colorants:
-        item = ColorantListItem(
+    # Colorant list response uses renamed fields, so build items explicitly
+    # rather than going through model_validate.
+    colorant_items = [
+        ColorantListItem(
             id=colorant.id,
             name=colorant.name,
             botanical=colorant.botanical_name,
@@ -95,12 +84,13 @@ async def list_colorants(
             warnings=colorant.warnings,
             notes=colorant.notes,
         )
-        colorant_items.append(item)
+        for colorant in colorants
+    ]
 
     return ColorantListResponse(
         colorants=colorant_items,
         total_count=total_count,
         limit=limit,
         offset=offset,
-        has_more=(offset + limit) < total_count,
+        has_more=has_more,
     )

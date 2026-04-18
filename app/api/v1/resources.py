@@ -8,9 +8,10 @@ No authentication required - this is public reference information.
 from typing import Literal
 
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import func, or_, select
+from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api._pagination import paginate_query
 from app.db import get_db
 from app.models.oil import Oil
 from app.schemas.resource import (
@@ -48,39 +49,27 @@ async def list_oils(
     Returns:
         Paginated list of oils with metadata
     """
-    # Build base query
     query = select(Oil)
 
-    # Apply search filter
     if search:
         search_pattern = f"%{search}%"
         query = query.where(
             or_(Oil.common_name.ilike(search_pattern), Oil.inci_name.ilike(search_pattern))
         )
 
-    # Get total count before pagination
-    count_query = select(func.count()).select_from(query.subquery())
-    total_count = (await db.execute(count_query)).scalar() or 0
+    oils, total_count, has_more = await paginate_query(
+        db,
+        query,
+        sort_column=getattr(Oil, sort_by),
+        sort_order=sort_order,
+        limit=limit,
+        offset=offset,
+    )
 
-    # Apply sorting
-    sort_column = getattr(Oil, sort_by)
-    if sort_order == "desc":
-        query = query.order_by(sort_column.desc())
-    else:
-        query = query.order_by(sort_column.asc())
-
-    # Apply pagination
-    query = query.limit(limit).offset(offset)
-
-    # Execute query
-    result = await db.execute(query)
-    oils = result.scalars().all()
-
-    # Build response
     return OilListResponse(
-        oils=[OilListItem.from_orm(oil) for oil in oils],
+        oils=[OilListItem.model_validate(oil) for oil in oils],
         total_count=total_count,
         limit=limit,
         offset=offset,
-        has_more=(offset + limit) < total_count,
+        has_more=has_more,
     )
