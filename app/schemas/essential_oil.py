@@ -6,7 +6,7 @@ Handles safe usage calculations and blending guidance.
 
 from decimal import Decimal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class EssentialOilRecommendationResponse(BaseModel):
@@ -41,9 +41,7 @@ class EssentialOilListItem(BaseModel):
     note: str | None = Field(None, description="Fragrance note")
     category: str | None = Field(None, description="Scent category")
 
-    class Config:
-        from_attributes = True
-        populate_by_name = True
+    model_config = ConfigDict(from_attributes=True, populate_by_name=True)
 
 
 class EssentialOilListResponse(BaseModel):

@@ -4,7 +4,7 @@ Resource listing response schemas for oils and additives endpoints.
 These schemas support pagination, search, and filtering for resource discovery.
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class OilListItem(BaseModel):
@@ -22,8 +22,7 @@ class OilListItem(BaseModel):
         ..., description="Contribution to 7 quality metrics"
     )
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class OilListResponse(BaseModel):
@@ -57,8 +56,7 @@ class AdditiveListItem(BaseModel):
         None, description="Optional safety information and usage notes"
     )
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class AdditiveListResponse(BaseModel):

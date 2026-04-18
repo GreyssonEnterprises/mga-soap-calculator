@@ -4,7 +4,7 @@ Colorant schemas for natural soap color recommendations.
 Handles color filtering by 9 color families.
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ColorantListItem(BaseModel):
@@ -24,9 +24,7 @@ class ColorantListItem(BaseModel):
     warnings: str | None = Field(None, description="Usage warnings")
     notes: str | None = Field(None, description="Additional notes")
 
-    class Config:
-        from_attributes = True
-        populate_by_name = True
+    model_config = ConfigDict(from_attributes=True, populate_by_name=True)
 
 
 class ColorantListResponse(BaseModel):
