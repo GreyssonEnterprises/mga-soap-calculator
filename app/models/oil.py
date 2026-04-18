@@ -61,12 +61,12 @@ class Oil(Base):
     fatty_acids: Mapped[dict] = mapped_column(
         JSONB,
         nullable=False,
-        comment="Percentages of 8 fatty acids: lauric, myristic, palmitic, stearic, ricinoleic, oleic, linoleic, linolenic",
+        comment="Percentages of 8 fatty acids: lauric, myristic, palmitic, stearic, ricinoleic, oleic, linoleic, linolenic",  # noqa: E501
     )
     quality_contributions: Mapped[dict] = mapped_column(
         JSONB,
         nullable=False,
-        comment="Contribution to 7 quality metrics: hardness, cleansing, conditioning, bubbly_lather, creamy_lather, longevity, stability",
+        comment="Contribution to 7 quality metrics: hardness, cleansing, conditioning, bubbly_lather, creamy_lather, longevity, stability",  # noqa: E501
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

@@ -20,7 +20,7 @@ depends_on: str | Sequence[str] | None = None
 
 def upgrade() -> None:
     # Increase additive ID column length from 50 to 100 chars
-    # Required for long additive names like "seeds_apricot_kernel,__blueberry,__cranberry,__raspberry"
+    # Required for long additive names like "seeds_apricot_kernel,__blueberry,__cranberry,__raspberry"  # noqa: E501
     op.alter_column(
         "additives",
         "id",

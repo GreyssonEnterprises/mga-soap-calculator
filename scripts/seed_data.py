@@ -414,7 +414,7 @@ ADDITIVE_SEED_DATA = [
         "confidence_level": "high",
         "verified_by_mga": False,
         "safety_warnings": {
-            "usage": "For brine method only (1-3%). Salt bars require 50-100% usage with high coconut oil."
+            "usage": "For brine method only (1-3%). Salt bars require 50-100% usage with high coconut oil."  # noqa: E501
         },
     },
     # Medium Confidence Additives
@@ -533,7 +533,7 @@ ADDITIVE_SEED_DATA = [
         "confidence_level": "low",
         "verified_by_mga": False,
         "safety_warnings": {
-            "note": "Aesthetic colorant (blue-green). Not validated by MGA domain expert. Effect modeling based on limited sources.",
+            "note": "Aesthetic colorant (blue-green). Not validated by MGA domain expert. Effect modeling based on limited sources.",  # noqa: E501
         },
     },
     {
@@ -548,7 +548,7 @@ ADDITIVE_SEED_DATA = [
         "confidence_level": "low",
         "verified_by_mga": False,
         "safety_warnings": {
-            "note": "Aesthetic colorant (yellow/orange). Not validated by MGA domain expert. Effect modeling based on limited sources.",
+            "note": "Aesthetic colorant (yellow/orange). Not validated by MGA domain expert. Effect modeling based on limited sources.",  # noqa: E501
             "staining": "May cause temporary skin staining - test on small area first",
         },
     },

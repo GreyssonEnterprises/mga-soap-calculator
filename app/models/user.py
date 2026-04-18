@@ -35,7 +35,7 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
-        comment="MUST be Argon2id hash format ($argon2id$ prefix). Use app.core.security.get_password_hash() to hash passwords.",
+        comment="MUST be Argon2id hash format ($argon2id$ prefix). Use app.core.security.get_password_hash() to hash passwords.",  # noqa: E501
     )
 
     @validates("hashed_password")

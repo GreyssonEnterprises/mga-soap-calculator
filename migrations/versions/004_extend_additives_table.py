@@ -89,7 +89,7 @@ def upgrade() -> None:
             "category",
             sa.String(50),
             nullable=True,
-            comment="Additive category: exfoliant, colorant, lather_booster, hardener, clay, botanical",
+            comment="Additive category: exfoliant, colorant, lather_booster, hardener, clay, botanical",  # noqa: E501
         ),
     )
 
@@ -100,7 +100,7 @@ def upgrade() -> None:
             "warnings",
             JSONB,
             nullable=True,
-            comment="Specific warnings: accelerates_trace, causes_overheating, can_be_scratchy, turns_brown",
+            comment="Specific warnings: accelerates_trace, causes_overheating, can_be_scratchy, turns_brown",  # noqa: E501
         ),
     )
 
@@ -108,7 +108,7 @@ def upgrade() -> None:
     op.create_check_constraint(
         "check_additive_usage_rate_ordering",
         "additives",
-        "usage_rate_min_pct IS NULL OR usage_rate_max_pct IS NULL OR usage_rate_min_pct <= usage_rate_max_pct",
+        "usage_rate_min_pct IS NULL OR usage_rate_max_pct IS NULL OR usage_rate_min_pct <= usage_rate_max_pct",  # noqa: E501
     )
 
     op.create_check_constraint(

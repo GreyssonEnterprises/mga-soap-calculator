@@ -44,7 +44,7 @@ def upgrade() -> None:
         existing_type=postgresql.ARRAY(sa.String()),
         type_=sa.String(length=500),
         existing_nullable=True,
-        existing_comment="Safety warnings: fades quickly, accelerates trace, skin sensitivity, photosensitivity",
+        existing_comment="Safety warnings: fades quickly, accelerates trace, skin sensitivity, photosensitivity",  # noqa: E501
     )
 
 
@@ -56,7 +56,7 @@ def downgrade() -> None:
         existing_type=sa.String(length=500),
         type_=postgresql.ARRAY(sa.String()),
         existing_nullable=True,
-        existing_comment="Safety warnings: fades quickly, accelerates trace, skin sensitivity, photosensitivity",
+        existing_comment="Safety warnings: fades quickly, accelerates trace, skin sensitivity, photosensitivity",  # noqa: E501
     )
 
     op.drop_column("essential_oils", "color_effect")

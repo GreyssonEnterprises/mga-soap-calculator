@@ -41,7 +41,8 @@ async def list_colorants(
         limit: Items per page (1-100, default 50)
         offset: Pagination offset (default 0)
         search: Case-insensitive search on name or botanical_name
-        color: Filter by color category (yellow, orange, pink, red, blue, purple, brown, green, black)
+        color: Filter by color category
+            (yellow, orange, pink, red, blue, purple, brown, green, black)
         sort_by: Field to sort by (name, color_category)
         sort_order: Sort direction (asc, desc)
 

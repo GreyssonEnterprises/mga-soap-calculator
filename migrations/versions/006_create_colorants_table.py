@@ -54,19 +54,19 @@ def upgrade() -> None:
             "color_category",
             sa.String(50),
             nullable=False,
-            comment="Color family: yellow, orange, pink, red, purple, blue, brown, green, white, black",
+            comment="Color family: yellow, orange, pink, red, purple, blue, brown, green, white, black",  # noqa: E501
         ),
         sa.Column(
             "usage_rate",
             sa.String(200),
             nullable=True,
-            comment="Usage rate guidance: 1-3 tsp per pound, 1 tablespoon per batch, infuse at 1:10 ratio",
+            comment="Usage rate guidance: 1-3 tsp per pound, 1 tablespoon per batch, infuse at 1:10 ratio",  # noqa: E501
         ),
         sa.Column(
             "method",
             sa.String(200),
             nullable=True,
-            comment="Application method: infuse in oil, add to lye water, disperse at trace, powder form",
+            comment="Application method: infuse in oil, add to lye water, disperse at trace, powder form",  # noqa: E501
         ),
         sa.Column(
             "color_range_description",
@@ -78,13 +78,13 @@ def upgrade() -> None:
             "warnings",
             sa.String(500),
             nullable=True,
-            comment="Usage warnings: fades with time, can be scratchy, stains, turns brown, reacts with fragrance",
+            comment="Usage warnings: fades with time, can be scratchy, stains, turns brown, reacts with fragrance",  # noqa: E501
         ),
         sa.Column(
             "notes",
             sa.String(500),
             nullable=True,
-            comment="Additional notes: best for melt and pour, CP soap safe, works well with white base",
+            comment="Additional notes: best for melt and pour, CP soap safe, works well with white base",  # noqa: E501
         ),
         sa.Column(
             "created_at",
@@ -106,7 +106,7 @@ def upgrade() -> None:
     op.create_check_constraint(
         "check_colorant_color_category_valid",
         "colorants",
-        "color_category IN ('yellow', 'orange', 'pink', 'red', 'purple', 'blue', 'brown', 'green', 'white', 'black')",
+        "color_category IN ('yellow', 'orange', 'pink', 'red', 'purple', 'blue', 'brown', 'green', 'white', 'black')",  # noqa: E501
     )
 
     # Add index on color_category for filtering by color

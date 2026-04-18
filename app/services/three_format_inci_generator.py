@@ -79,7 +79,8 @@ def generate_three_format_labels(
     Args:
         recipe_data: Recipe JSONB data from Calculation model
         oils_dict: Dictionary of oil_id -> Oil model instances
-        format_filter: Which formats to generate ("all", "raw_inci", "saponified_inci", "common_names")
+        format_filter: Which formats to generate
+            ("all", "raw_inci", "saponified_inci", "common_names")
         include_percentages: Whether to include percentage values in label strings
         line_by_line: Whether to use newline separation instead of commas
 

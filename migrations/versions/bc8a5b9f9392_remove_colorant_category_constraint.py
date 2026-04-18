@@ -27,5 +27,5 @@ def downgrade() -> None:
     op.create_check_constraint(
         "check_colorant_color_category_valid",
         "colorants",
-        "color_category IN ('yellow', 'orange', 'pink', 'red', 'purple', 'blue', 'brown', 'green', 'white', 'black', 'black_gray')",
+        "color_category IN ('yellow', 'orange', 'pink', 'red', 'purple', 'blue', 'brown', 'green', 'white', 'black', 'black_gray')",  # noqa: E501
     )

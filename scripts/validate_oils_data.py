@@ -60,7 +60,7 @@ def main():
 
             completeness_pct = (complete_profiles / len(oils_data)) * 100
             print(
-                f"   - Complete fatty acid profiles: {complete_profiles}/{len(oils_data)} ({completeness_pct:.2f}%)"
+                f"   - Complete fatty acid profiles: {complete_profiles}/{len(oils_data)} ({completeness_pct:.2f}%)"  # noqa: E501
             )
 
             sys.exit(0)

@@ -137,7 +137,8 @@ class TestPurityAPISuccess:
 
         Given: POST with explicit purity values
         When: Response is returned
-        Then: Response contains koh_purity, naoh_purity, pure_koh_equivalent_g, pure_naoh_equivalent_g
+        Then: Response contains koh_purity, naoh_purity,
+              pure_koh_equivalent_g, pure_naoh_equivalent_g
         """
         # TODO: Implement test
         # Expected: "koh_purity" in response.json()

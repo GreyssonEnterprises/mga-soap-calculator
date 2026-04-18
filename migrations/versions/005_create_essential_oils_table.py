@@ -87,7 +87,7 @@ def upgrade() -> None:
             "warnings",
             ARRAY(sa.String),
             nullable=True,
-            comment="Safety warnings: fades quickly, accelerates trace, skin sensitivity, photosensitivity",
+            comment="Safety warnings: fades quickly, accelerates trace, skin sensitivity, photosensitivity",  # noqa: E501
         ),
         sa.Column(
             "created_at",

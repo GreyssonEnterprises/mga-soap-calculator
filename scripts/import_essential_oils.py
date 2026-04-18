@@ -148,7 +148,7 @@ async def import_essential_oils(dry_run: bool = False, verbose: bool = False) ->
 
             if verbose:
                 logger.info(
-                    f"  Added: {eo_data['common_name']} ({eo_data['category']}, {eo_data['max_usage_rate_pct']}%)"
+                    f"  Added: {eo_data['common_name']} ({eo_data['category']}, {eo_data['max_usage_rate_pct']}%)"  # noqa: E501
                 )
 
         await db.commit()

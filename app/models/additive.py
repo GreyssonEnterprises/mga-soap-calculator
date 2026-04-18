@@ -46,7 +46,7 @@ class Additive(Base):
     quality_effects: Mapped[dict] = mapped_column(
         JSONB,
         nullable=False,
-        comment="Absolute modifiers to quality metrics at 2% usage. Scale proportionally for other usage rates.",
+        comment="Absolute modifiers to quality metrics at 2% usage. Scale proportionally for other usage rates.",  # noqa: E501
     )
     confidence_level: Mapped[str] = mapped_column(
         String(20),
@@ -98,7 +98,7 @@ class Additive(Base):
     warnings: Mapped[dict | None] = mapped_column(
         JSONB,
         nullable=True,
-        comment="Specific warnings: accelerates_trace, causes_overheating, can_be_scratchy, turns_brown",
+        comment="Specific warnings: accelerates_trace, causes_overheating, can_be_scratchy, turns_brown",  # noqa: E501
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

@@ -24,7 +24,8 @@ class TestDocumentationAccuracy:
         Verify documented authentication endpoints actually exist
 
         This test would have caught the /auth/register vs /api/v1/auth/register mismatch.
-        Documentation shows POST /auth/register (line 23) but implementation is /api/v1/auth/register.
+        Documentation shows POST /auth/register (line 23) but implementation
+        is /api/v1/auth/register.
         """
         api_ref = Path("docs/API_REFERENCE.md").read_text()
 
@@ -38,7 +39,7 @@ class TestDocumentationAccuracy:
         issues = []
 
         for method, path in documented_endpoints:
-            # Normalize path - docs might show /auth/register when it should be /api/v1/auth/register
+            # Normalize path - docs might show /auth/register when it should be /api/v1/auth/register  # noqa: E501
             if not path.startswith("/api/v1"):
                 # Check if documented path is missing /api/v1 prefix
                 full_path = f"/api/v1{path}"

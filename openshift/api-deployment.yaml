@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mga-soap-calculator
+  namespace: mga-soap-calculator
+  labels:
+    app: mga-soap-calculator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mga-soap-calculator
+  template:
+    metadata:
+      labels:
+        app: mga-soap-calculator
+    spec:
+      containers:
+        - name: mga-soap-calculator
+          # Image tag updated at deploy time via: oc set image
+          image: image-registry.openshift-image-registry.svc:5000/mga-soap-calculator/mga-soap-calculator:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: mga-app-secrets
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            failureThreshold: 3
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mga-soap-calculator
+  namespace: mga-soap-calculator
+spec:
+  selector:
+    app: mga-soap-calculator
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: http

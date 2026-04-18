@@ -40,12 +40,12 @@ class Colorant(Base):
     usage_rate: Mapped[str | None] = mapped_column(
         String(200),
         nullable=True,
-        comment="Usage rate guidance: 1-3 tsp per pound, 1 tablespoon per batch, infuse at 1:10 ratio",
+        comment="Usage rate guidance: 1-3 tsp per pound, 1 tablespoon per batch, infuse at 1:10 ratio",  # noqa: E501
     )
     method: Mapped[str | None] = mapped_column(
         String(200),
         nullable=True,
-        comment="Application method: infuse in oil, add to lye water, disperse at trace, powder form",
+        comment="Application method: infuse in oil, add to lye water, disperse at trace, powder form",  # noqa: E501
     )
     color_range_description: Mapped[str | None] = mapped_column(
         String(500),
@@ -55,12 +55,12 @@ class Colorant(Base):
     warnings: Mapped[str | None] = mapped_column(
         String(500),
         nullable=True,
-        comment="Usage warnings: fades with time, can be scratchy, stains, turns brown, reacts with fragrance",
+        comment="Usage warnings: fades with time, can be scratchy, stains, turns brown, reacts with fragrance",  # noqa: E501
     )
     notes: Mapped[str | None] = mapped_column(
         String(500),
         nullable=True,
-        comment="Additional notes: best for melt and pour, CP soap safe, works well with white base",
+        comment="Additional notes: best for melt and pour, CP soap safe, works well with white base",  # noqa: E501
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

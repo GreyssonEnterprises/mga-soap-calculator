@@ -186,7 +186,7 @@ def calculate_lye_with_purity(
         warnings.append(
             {
                 "type": "unusual_purity",
-                "message": f"KOH purity of {koh_purity}% is outside typical commercial range (85-95%)",
+                "message": f"KOH purity of {koh_purity}% is outside typical commercial range (85-95%)",  # noqa: E501
             }
         )
 
@@ -195,7 +195,7 @@ def calculate_lye_with_purity(
         warnings.append(
             {
                 "type": "unusual_purity",
-                "message": f"NaOH purity of {naoh_purity}% is below typical commercial grade (98-100%)",
+                "message": f"NaOH purity of {naoh_purity}% is below typical commercial grade (98-100%)",  # noqa: E501
             }
         )
 

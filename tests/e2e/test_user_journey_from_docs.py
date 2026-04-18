@@ -348,5 +348,5 @@ class TestUserJourneyFromDocumentation:
 
         # Should return 403 Forbidden (as documented)
         assert response.status_code == 403, (
-            "Users should not be able to access other users' calculations (403 Forbidden as documented)"
+            "Users should not be able to access other users' calculations (403 Forbidden as documented)"  # noqa: E501
         )

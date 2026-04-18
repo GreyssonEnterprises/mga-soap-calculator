@@ -27,5 +27,5 @@ def downgrade() -> None:
     op.create_check_constraint(
         "check_essential_oil_note_valid",
         "essential_oils",
-        "note IN ('Top', 'Middle', 'Base', 'Top, Middle, or Base (depends on blend)', 'Middle to Top')",
+        "note IN ('Top', 'Middle', 'Base', 'Top, Middle, or Base (depends on blend)', 'Middle to Top')",  # noqa: E501
     )

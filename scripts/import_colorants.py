@@ -166,7 +166,7 @@ async def import_colorants(dry_run: bool = False, verbose: bool = False) -> None
 
             if verbose:
                 logger.info(
-                    f"  Added: {col_data['common_name']} ({col_data['category']}: {col_data['color_range']})"
+                    f"  Added: {col_data['common_name']} ({col_data['category']}: {col_data['color_range']})"  # noqa: E501
                 )
 
         await db.commit()

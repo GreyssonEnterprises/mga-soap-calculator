@@ -72,7 +72,7 @@ class EssentialOil(Base):
     warnings: Mapped[str | None] = mapped_column(
         String(500),
         nullable=True,
-        comment="Safety warnings: fades quickly, accelerates trace, skin sensitivity, photosensitivity",
+        comment="Safety warnings: fades quickly, accelerates trace, skin sensitivity, photosensitivity",  # noqa: E501
     )
     color_effect: Mapped[str | None] = mapped_column(
         String(200),
@@ -93,4 +93,4 @@ class EssentialOil(Base):
     )
 
     def __repr__(self) -> str:
-        return f"<EssentialOil(id={self.id}, name={self.common_name}, max_rate={self.max_usage_rate_pct}%)>"
+        return f"<EssentialOil(id={self.id}, name={self.common_name}, max_rate={self.max_usage_rate_pct}%)>"  # noqa: E501
