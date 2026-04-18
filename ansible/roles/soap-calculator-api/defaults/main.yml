@@ -1,8 +1,0 @@
----
-# soap-calculator-api role defaults
-
-api_image: "localhost/mga-soap-calculator:latest"
-api_workers: 2
-log_level: "INFO"
-config_dir: "/etc/mga-soap-calculator"
-quadlet_dir: "/etc/containers/systemd"
