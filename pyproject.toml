@@ -29,6 +29,7 @@ dependencies = [
     # Utilities
     "python-dotenv>=1.0.0",
     "email-validator==2.1.0",  # Pinned for UBI 9 compatibility
+    "pyyaml>=6.0",  # Seed data loader (app/data/seed-data.yaml)
 ]
 
 [project.optional-dependencies]
