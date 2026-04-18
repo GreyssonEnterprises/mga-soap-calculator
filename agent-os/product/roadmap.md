@@ -1,128 +1,70 @@
 # Product Roadmap
 
-## Phase 1: Research & API Foundation (MVP)
+## Done (as of 2026.4.18)
 
-**Goal:** Establish research foundation and build working API for MGA Automotive internal use
+Current running version: **2026.4.18** on OpenShift SNO at `https://mga-soap-calculator.apps.sno.greysson.com`.
 
-1. [ ] **Additive Research & Data Collection** — Research how non-fat additives (clays, salts, botanicals) affect soap quality metrics. Collect data from peer-reviewed sources, industry publications, and validated testing. Create structured database schema for additive properties and quality impact coefficients. `L`
-
-2. [ ] **Core Calculation Engine** — Implement saponification calculations (lye requirements, superfat, water ratios), quality metrics (Hardness, Cleansing, Conditioning, Bubbly, Creamy), and fatty acid profile analysis. Build mathematical models for base soap properties before additive effects. `M`
-
-3. [ ] **Additive Impact Modeling** — Develop algorithms that apply research-backed coefficients to model how additives modify base soap quality metrics. Integrate with core calculation engine to provide complete formulation analysis including non-fat ingredients. `L`
-
-4. [ ] **Recipe Storage System** — Design and implement PostgreSQL database schema for recipes, ingredients, additives, and batch history. Create CRUD operations for recipe management with version control and timestamp tracking. `M`
-
-5. [ ] **Cost Calculator** — Build cost analysis engine that calculates per-batch and per-unit costs based on ingredient pricing, batch size, and waste factors. Support bulk pricing tiers and supplier comparison. `S`
-
-6. [ ] **REST API Foundation** — Develop FastAPI application with endpoint routing, request validation, error handling, and response formatting. Implement core endpoints: calculate saponification, analyze quality metrics, CRUD recipes, calculate costs. `M`
-
-7. [ ] **API Authentication** — Implement JWT-based authentication for internal API access. Support API key generation for service-to-service integration. Role-based access control for future multi-user scenarios. `S`
-
-8. [ ] **API Documentation** — Generate interactive API documentation using FastAPI's automatic OpenAPI/Swagger integration. Include endpoint descriptions, request/response examples, and authentication instructions. `XS`
-
-9. [ ] **Internal Deployment** — Deploy API to internal infrastructure using Docker containers. Set up PostgreSQL database with migrations. Configure monitoring and logging for production use by MGA Automotive. `M`
-
-**Success Criteria:** MGA Automotive using API for soap recipe development, calculations accurate within 1% tolerance, additive research complete with documented sources
+- Full calculation engine: NaOH / KOH / mixed lye saponification with purity adjustment
+- Three water-calculation methods: % of oils, lye concentration, water:lye ratio
+- 7 quality metrics: hardness, cleansing, conditioning, bubbly, creamy, longevity, stability
+- Fatty acid profile + sat:unsat ratio
+- Smart additive calculator with research-backed effect modeling (the differentiator)
+- Ingredient database: 137 entries (60+ oils, 30+ additives, essential oils, colorants)
+- INCI label generation in three formats: raw oils, saponified names, common names
+- User auth: Argon2id password hashing + JWT (24h expiry)
+- Calculation persistence and retrieval, per-user, ownership-validated
+- 454 passing tests, 79% coverage, CI green
+- Refactor campaign complete: Phase 0 (ruff + CI), Phase 1 (mechanical), Phase 2 (structural), Phase 3 (pipeline split of the big handler)
+- OpenShift SNO deployment: Namespace, Secret, Postgres StatefulSet, Deployment, Service, edge-TLS Route, on-cluster BuildConfig
+- Ansible role `mga_soap_calculator_ocp` in `greysson-homelab` manages everything above
+- CalVer versioning adopted today (2026.4.18)
 
 ---
 
-## Phase 2: Enhanced API Features
+## Phase A — Make it usable by the owners
 
-**Goal:** Achieve feature parity with analysis requirements, production-grade API stability
+**Why this phase.** The API works. The owners don't. Shale and Jackie are non-technical; Swagger docs and curl commands are not a production workflow. This phase builds the interface that lets them actually reach for the tool on every batch — which is the entire point of success metric #1 in `mission.md`.
 
-10. [ ] **INCI Name Generation** — Implement automatic cosmetic ingredient nomenclature generation following international standards. Support multi-language INCI names, synonym handling, and proper alphabetical ordering for labels. `M`
-
-11. [ ] **Fragrance Calculator** — Build fragrance blending calculator for essential oils and fragrance oils. Calculate safe usage rates, blend ratios, and scent strength estimates. Support fragrance oil supplier databases. `S`
-
-12. [ ] **Advanced Batch Management** — Extend recipe system with batch production tracking, scaling calculations, yield predictions, and actual vs. expected comparisons. Track batch notes, environmental conditions, and quality observations. `M`
-
-13. [ ] **Recipe Export/Import** — Implement export to standard formats (JSON, CSV, PDF recipe cards). Support import from common soap calculator formats for migration. Backup and restore capabilities. `S`
-
-14. [ ] **API Versioning** — Introduce API versioning strategy (/v1/, /v2/ routes) to maintain backward compatibility. Deprecation warnings for old endpoints. Comprehensive migration guides. `S`
-
-15. [ ] **Performance Optimization** — Profile and optimize calculation algorithms, database queries, and API response times. Implement caching for frequently-accessed data. Target <200ms response times for standard calculations. `M`
-
-16. [ ] **Comprehensive Testing** — Achieve >90% code coverage with pytest unit tests. Implement API integration tests with httpx. Add property-based testing for calculation accuracy. Automated test suite in CI/CD pipeline. `M`
-
-17. [ ] **Production Monitoring** — Set up application performance monitoring (APM), error tracking, and usage analytics. Create dashboards for API health, calculation accuracy validation, and usage patterns. `S`
-
-**Success Criteria:** Complete feature set operational, API stable with versioning, >90% test coverage, production monitoring active
+- [ ] **Frontend UI — recipe builder** — Web UI for entering oils, water method, additives, superfat; shows live quality metrics, fatty acid profile, and INCI preview as the recipe changes. `L`
+- [ ] **Mobile-friendly layout** — Responsive design that works on a phone or tablet in the garage/kitchen, not just a laptop. `M`
+- [ ] **Save / load / list recipes** — Authenticated UI over the existing persistence endpoints: dashboard of the owner's saved calculations, rename, delete, duplicate. `S`
+- [ ] **Batch scaling** — Take a saved recipe, enter target bar count or total oil weight, regenerate weights and labels scaled proportionally. `S`
+- [ ] **Recipe sharing by URL** — Generate a link that pre-fills the builder with a recipe's ingredients (read-only view for the recipient; they can save a copy if authenticated). `S`
+- [ ] **PDF export** — Print-ready recipe sheet plus INCI labels for a batch. One PDF per batch, owner-branded. `M`
+- [ ] **Dev-loop frontend tooling** — Pick frontend stack (TypeScript + Bun + a framework TBD in Phase A planning), wire it into the Ansible deployment and the existing OCP BuildConfig pipeline. `M`
 
 ---
 
-## Phase 3: Public Web Interface
+## Phase B — Integrate with the business
 
-**Goal:** Launch public-facing web application for external soap makers
+**Why this phase.** Once Shale and Jackie use the calculator for every batch, the natural next pains are cost/pricing and inventory. This phase wires the tool into the money side of MGA and the REC storefront so a recipe isn't an island — it's connected to what's in the cabinet, what each bar costs, and how the retail label looks.
 
-18. [ ] **User Authentication & Accounts** — Build user registration, login, password reset, and email verification. Support OAuth for social login (Google, GitHub). User profile management and preferences. `M`
-
-19. [ ] **React Frontend Foundation** — Initialize React 18 + TypeScript + Tailwind CSS application with Vite build tooling. Set up component library, routing (React Router), and state management. Connect to backend API. `M`
-
-20. [ ] **Recipe Builder UI** — Create interactive recipe formulation interface with ingredient selection, quantity inputs, additive selection, and real-time calculation updates. Display quality metrics with visual indicators and explanations. `L`
-
-21. [ ] **Recipe Management Dashboard** — Build user dashboard for viewing, organizing, searching, and filtering saved recipes. Support recipe collections, favorites, and tags. Recipe sharing controls (private/public/shared-link). `M`
-
-22. [ ] **Cost Analysis Interface** — Design cost breakdown visualization showing per-ingredient costs, batch totals, and per-unit pricing. Support ingredient price entry and supplier comparison tools. `S`
-
-23. [ ] **INCI & Labeling Tools** — Create label generation interface that outputs properly formatted INCI ingredient lists, allergen warnings, and regulatory compliance information. Printable/PDF export for product labels. `M`
-
-24. [ ] **Responsive Design** — Ensure mobile-first responsive design works across desktop, tablet, and mobile devices. Touch-friendly interfaces for recipe entry on tablets. Progressive Web App (PWA) capabilities. `M`
-
-25. [ ] **Public Documentation** — Write user guides, tutorial videos, FAQ, and getting-started documentation for external users. Explain quality metrics, additive effects, and how to interpret calculation results. `S`
-
-26. [ ] **Production Web Deployment** — Deploy frontend and backend to production hosting (AWS, DigitalOcean, or similar). Set up CDN for static assets, SSL certificates, and domain configuration. Implement CI/CD pipeline for automated deployments. `M`
-
-**Success Criteria:** Public web app live and accessible, external users successfully creating and managing recipes, positive user feedback on additive modeling capability
+- [ ] **Ingredient cost tracking** — Store purchase price + unit weight per ingredient; report per-batch and per-bar cost; suggest retail markup. `M`
+- [ ] **Shopify inventory integration** — Read REC's Shopify inventory for base ingredients; flag when a recipe calls for more than what's in stock. Read-only to start; no writes to Shopify. `L`
+- [ ] **Photo attachments per recipe** — Upload trace, unmolded, cured photos against a recipe for future reference. Object storage via OCP persistent volume or S3-compatible backend (TBD). `M`
+- [ ] **Peer invited accounts** — Invite-only signup: Shale or Jackie sends an invite, recipient creates an account, can save their own recipes and receive shared URLs. No public signup. `M`
+- [ ] **Custom branding for labels** — MGA logo, product name, net weight, batch number on the PDF label output. `S`
+- [ ] **Recipe tags and search** — Tag a recipe (goat milk, holiday, test) and filter the dashboard by tag. `S`
 
 ---
 
-## Future Considerations (Beyond Phase 3)
+## Phase C — Prove demand before public launch
 
-### Mobile Applications
-- Native iOS/Android apps or React Native cross-platform application
-- Offline calculation support with local database sync
-- Camera-based ingredient barcode scanning for quick entry
-- Push notifications for batch reminders or recipe sharing
+**Why this phase.** This is aspirational and explicitly gated. It only moves forward if Shale and Jackie decide there is sustained demand from their peer network that warrants opening the tool up, and if the operating cost of doing so stays compatible with the cottage-industry posture in `mission.md`. Do not start any of these without owner sign-off.
 
-### Community Features
-- Public recipe sharing marketplace
-- User ratings, reviews, and comments on recipes
-- Soap maker profiles and following system
-- Community forums or discussion boards
-- Recipe remix/fork functionality (build on others' recipes)
-
-### Advanced Analytics
-- Historical cost trend analysis and alerts for price increases
-- Supplier recommendation engine based on cost and availability
-- Batch quality tracking with statistical process control
-- Predictive modeling for shelf life and stability
-
-### Business Features
-- Multi-user team accounts for soap businesses
-- Batch production scheduling and workflow management
-- Inventory tracking integration
-- Customer order management and recipe assignment
-- Invoicing and cost accounting integration
-
-### Supply Chain Integration
-- Direct ingredient ordering from supplier APIs
-- Real-time pricing and availability updates
-- Automated reorder suggestions based on batch schedules
-- Supplier rating and reliability tracking
-
-### Scientific Expansion
-- pH prediction modeling for finished soap
-- Shelf life and stability predictions
-- Cure time optimization recommendations
-- Water activity calculations for preservation
+- [ ] **Public signup + rate limiting** — Open registration with email verification; per-user and per-IP rate limits on calculation and label endpoints. `M`
+- [ ] **Stripe subscriptions** — Paid tier for public users (free tier stays for owners and invited peers). Webhook handling, entitlements, billing portal. `L`
+- [ ] **Multi-tenancy hardening** — Audit every query for user-scope enforcement, add row-level security, per-tenant rate limits, separate usage telemetry. `L`
+- [ ] **Admin dashboard** — Owner-facing view of users, subscriptions, usage, errors, and moderation tools. `M`
+- [ ] **Observability stack** — Structured logging, error tracking (Sentry or similar), metrics beyond OCP defaults (Prometheus), dashboards (Grafana). `M`
+- [ ] **Mobile app (iOS)** — Native or React Native client consuming the same API. Only if Phase A frontend proves demand on mobile web first. `L`
+- [ ] **Desktop companion** — Electron or Tauri wrapping the frontend for offline-capable local use. Only if owners request it. `L`
 
 ---
 
-> Notes
-> - Roadmap ordered by technical dependencies and product architecture
-> - Phase 1 focuses on research foundation and API for immediate internal value
-> - Phase 2 enhances API to production-grade with full feature set
-> - Phase 3 adds public web interface for external market expansion
-> - Future considerations are conceptual and not committed deliverables
-> - Each item represents an end-to-end functional and testable feature
-> - Additive research (item 1) is critical path for unique value proposition
+## Notes
+
+- Order reflects dependency and business value. Phase A blocks the mission: without a UI, non-technical owners cannot use the tool. Phase B only makes sense once Phase A exists. Phase C does not start without explicit owner approval.
+- Sizes: **S** = 2-3 days, **M** = 1 week, **L** = 2+ weeks. Adjust as specs are written.
+- Every item is end-to-end (backend + any needed frontend + any IaC changes in `greysson-homelab`) and independently testable.
+- Roadmap is a living document. Reorder when reality demands it; document the reason in the commit message.
