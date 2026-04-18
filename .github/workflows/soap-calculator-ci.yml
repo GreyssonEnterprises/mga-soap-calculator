@@ -84,6 +84,7 @@ jobs:
       - name: Run pytest with coverage
         env:
           DATABASE_URL: postgresql+asyncpg://testuser:testpass123@localhost:5432/mga_soap_test
+          DATABASE_URL_SYNC: postgresql://testuser:testpass123@localhost:5432/mga_soap_test
           SECRET_KEY: test-secret-key-for-ci-only
           ALGORITHM: HS256
           ACCESS_TOKEN_EXPIRE_MINUTES: 30
