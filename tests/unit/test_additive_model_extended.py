@@ -25,7 +25,7 @@ class TestAdditiveModelExtension:
         columns = {col.name: col for col in inspector.columns}
 
         assert "usage_rate_standard_percent" in columns
-        assert columns["usage_rate_standard_percent"].type.python_type == float
+        assert columns["usage_rate_standard_percent"].type.python_type is float
 
     def test_has_when_to_add_field(self):
         """New field: when_to_add (string: 'to oils', 'to lye water', 'at trace')"""
@@ -67,7 +67,7 @@ class TestAdditiveModelExtension:
         columns = {col.name: col for col in inspector.columns}
 
         assert "accelerates_trace" in columns
-        assert columns["accelerates_trace"].type.python_type == bool
+        assert columns["accelerates_trace"].type.python_type is bool
         assert columns["accelerates_trace"].default is not None  # Has default
 
     def test_has_causes_overheating_flag(self):
@@ -76,7 +76,7 @@ class TestAdditiveModelExtension:
         columns = {col.name: col for col in inspector.columns}
 
         assert "causes_overheating" in columns
-        assert columns["causes_overheating"].type.python_type == bool
+        assert columns["causes_overheating"].type.python_type is bool
 
     def test_has_can_be_scratchy_flag(self):
         """Warning flag: can_be_scratchy (boolean, default False)"""
@@ -84,7 +84,7 @@ class TestAdditiveModelExtension:
         columns = {col.name: col for col in inspector.columns}
 
         assert "can_be_scratchy" in columns
-        assert columns["can_be_scratchy"].type.python_type == bool
+        assert columns["can_be_scratchy"].type.python_type is bool
 
     def test_has_turns_brown_flag(self):
         """Warning flag: turns_brown (boolean, default False)"""
@@ -92,7 +92,7 @@ class TestAdditiveModelExtension:
         columns = {col.name: col for col in inspector.columns}
 
         assert "turns_brown" in columns
-        assert columns["turns_brown"].type.python_type == bool
+        assert columns["turns_brown"].type.python_type is bool
 
 
 class TestAdditiveInstanceCreation:

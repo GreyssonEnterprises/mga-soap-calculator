@@ -70,7 +70,7 @@ class TestEssentialOilModelStructure:
         columns = {col.name: col for col in inspector.columns}
 
         assert "max_usage_rate_pct" in columns
-        assert columns["max_usage_rate_pct"].type.python_type == float
+        assert columns["max_usage_rate_pct"].type.python_type is float
         assert columns["max_usage_rate_pct"].nullable is False
 
     @pytest.skip("TDD: RED phase - model doesn't exist yet")
@@ -176,7 +176,7 @@ class TestEssentialOilModelStructure:
         columns = {col.name: col for col in inspector.columns}
 
         assert "verified_by_mga" in columns
-        assert columns["verified_by_mga"].type.python_type == bool
+        assert columns["verified_by_mga"].type.python_type is bool
 
 
 class TestEssentialOilInstanceCreation:

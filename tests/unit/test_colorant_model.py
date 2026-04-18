@@ -147,7 +147,7 @@ class TestColorantModelStructure:
         columns = {col.name: col for col in inspector.columns}
 
         assert "verified_by_mga" in columns
-        assert columns["verified_by_mga"].type.python_type == bool
+        assert columns["verified_by_mga"].type.python_type is bool
 
 
 class TestColorantInstanceCreation:
