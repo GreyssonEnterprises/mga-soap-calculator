@@ -19,10 +19,13 @@
 3. **[ReDoc](http://localhost:8000/redoc)** - Alternative documentation format
 
 ### For DevOps / Deployment
-1. **[docs/PRODUCTION_CHECKLIST.md](docs/PRODUCTION_CHECKLIST.md)** - Pre-deployment verification (110+ items)
-2. **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** - Complete deployment procedures
-3. **[docker-compose.yml](docker-compose.yml)** - Development/staging stack
-4. **[docker-compose.prod.yml](docker-compose.prod.yml)** - Production configuration
+Deployment is managed from the `greysson-homelab` IaC repo (OpenShift
+SNO target). See `DEPLOYMENT.md` at the repo root for pointers. The
+`docs/DEPLOYMENT.md`, `docs/PRODUCTION_CHECKLIST.md`, and
+`docs/deployment/*` documents describe the retired grimm-lin /
+Podman-Quadlet pattern and are kept for historical reference only.
+
+1. **[docker-compose.yml](docker-compose.yml)** - Local development stack
 
 ### For Project Managers
 1. **[PHASE_6_SUMMARY.md](PHASE_6_SUMMARY.md)** - Phase 6 completion summary
@@ -47,8 +50,7 @@
 | File | Purpose | Configuration |
 |------|---------|----------------|
 | [Dockerfile](Dockerfile) | Production container image | Multi-stage, non-root, health checks |
-| [docker-compose.yml](docker-compose.yml) | Development/staging stack | PostgreSQL + FastAPI |
-| [docker-compose.prod.yml](docker-compose.prod.yml) | Production deployment | Resource limits, logging, monitoring |
+| [docker-compose.yml](docker-compose.yml) | Local development stack | PostgreSQL + FastAPI |
 | [scripts/init_db.sh](scripts/init_db.sh) | Database initialization | Migrations, seed data, verification |
 
 ### 🔧 Configuration Files
@@ -135,9 +137,10 @@ curl -X POST http://localhost:8000/api/v1/calculate \
 → [docs/API_REFERENCE.md](docs/API_REFERENCE.md) - Curl examples
 
 #### Deploy to production
-→ [docs/PRODUCTION_CHECKLIST.md](docs/PRODUCTION_CHECKLIST.md) - Pre-deployment checklist
-→ [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) - Production Deployment section
-→ [docker-compose.prod.yml](docker-compose.prod.yml) - Production configuration
+→ See [DEPLOYMENT.md](DEPLOYMENT.md) — production deployment is managed
+  from the `greysson-homelab` IaC repo (OpenShift SNO). The historical
+  `docs/DEPLOYMENT.md` and `docs/PRODUCTION_CHECKLIST.md` describe the
+  retired grimm-lin / Podman-Quadlet pattern.
 
 #### Troubleshoot issues
 → [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) - Troubleshooting section
@@ -175,8 +178,7 @@ mga-soap-calculator/
 │   └── seed_database.py           ← Seed data
 ├── tests/                         ← 21 tests, 80% coverage
 ├── Dockerfile                     ← Production image
-├── docker-compose.yml             ← Dev/staging stack
-├── docker-compose.prod.yml        ← Production config
+├── docker-compose.yml             ← Local development stack
 ├── pyproject.toml                 ← Dependencies
 ├── README_PHASE6.md               ← Quick start (THIS FILE)
 ├── PHASE_6_SUMMARY.md             ← Phase completion
@@ -268,16 +270,8 @@ docker-compose build
 
 ### Production
 
-```bash
-# Build image
-docker build -t mga-soap-api:1.0.0 .
-
-# Run with production config
-docker-compose -f docker-compose.prod.yml up -d
-
-# View logs
-docker logs -f mga_soap_api_prod
-```
+Production is deployed to OpenShift SNO from the `greysson-homelab` IaC
+repo. See `DEPLOYMENT.md` at the repo root for pointers.
 
 ---
 
@@ -406,8 +400,8 @@ For questions or issues:
 
 ### Deployment
 - ✅ Production-grade Dockerfile
-- ✅ docker-compose for dev/staging
-- ✅ docker-compose.prod.yml for production
+- ✅ docker-compose for local development
+- ✅ OpenShift SNO deployment via `greysson-homelab` IaC repo
 - ✅ Automated database initialization
 - ✅ Health checks and monitoring
 
