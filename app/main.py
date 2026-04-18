@@ -184,15 +184,15 @@ app = FastAPI(
     redoc_url="/redoc",
     openapi_url="/openapi.json",
     contact={
-        "name": "MGA Automotive",
-        "email": "info@mga-automotive.com",
+        "name": "Midnight Garden Apothecary",
+        "email": "info@midnightgardenapothecary.com",
     },
     license_info={
-        "name": "Proprietary - MGA Automotive",
+        "name": "Proprietary - Midnight Garden Apothecary",
     },
     servers=[
         {"url": "http://localhost:8000", "description": "Local development"},
-        {"url": "https://api.mga-automotive.local", "description": "Production (when deployed)"},
+        {"url": "http://grimm-lin:8000", "description": "Production"},
     ],
 )
 

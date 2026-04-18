@@ -2,7 +2,7 @@
 name = "mga-soap-calculator-api"
 version = "1.4.2"
 description = "Core Soap Calculation API with additive effect modeling"
-authors = [{ name = "MGA Automotive", email = "info@mga-automotive.com" }]
+authors = [{ name = "Midnight Garden Apothecary", email = "info@midnightgardenapothecary.com" }]
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -57,7 +57,7 @@ packages = ["app"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
-addopts = "-v --cov=app --cov-report=term-missing --cov-report=html"
+addopts = "-v"
 
 [tool.coverage.run]
 source = ["app"]
