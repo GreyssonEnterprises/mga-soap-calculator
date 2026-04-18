@@ -228,7 +228,9 @@ async def get_calculation_inci_label(
     recipe_data = calculation.recipe_data
 
     # Step 3: Fetch oils used in recipe
-    oil_ids = [item["oil_id"] for item in recipe_data.get("oils", [])]
+    # NOTE: The persisted JSONB uses "id" (see _calculation_pipeline._recipe_data_payload).
+    # This endpoint previously read "oil_id" and 500'd for every persisted calculation.
+    oil_ids = [item["id"] for item in recipe_data.get("oils", [])]
 
     if not oil_ids:
         raise HTTPException(

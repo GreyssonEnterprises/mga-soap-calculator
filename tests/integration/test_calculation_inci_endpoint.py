@@ -51,8 +51,8 @@ async def sample_calculation(test_db_session: AsyncSession, sample_user: User) -
         user_id=sample_user.id,
         recipe_data={
             "oils": [
-                {"oil_id": "coconut-oil", "weight_grams": 300.0},
-                {"oil_id": "olive-oil", "weight_grams": 700.0},
+                {"id": "coconut_oil", "weight_g": 300.0},
+                {"id": "olive_oil", "weight_g": 700.0},
             ],
             "lye": {"naoh_weight_g": 135.0, "koh_weight_g": 0.0, "type": "naoh"},
             "water_weight_g": 300.0,
@@ -309,8 +309,8 @@ async def test_inci_label_koh_soap_uses_potassium_salts(
         user_id=sample_user.id,
         recipe_data={
             "oils": [
-                {"oil_id": "coconut-oil", "weight_grams": 500.0},
-                {"oil_id": "olive-oil", "weight_grams": 500.0},
+                {"id": "coconut_oil", "weight_g": 500.0},
+                {"id": "olive_oil", "weight_g": 500.0},
             ],
             "lye": {"naoh_weight_g": 0.0, "koh_weight_g": 189.0, "type": "koh"},
             "water_weight_g": 400.0,
