@@ -197,37 +197,3 @@ def round_quality_metrics(metrics: dict[str, float]) -> dict[str, float]:
         Dictionary with all values rounded to 1 decimal
     """
     return {name: round_to_precision(value) for name, value in metrics.items()}
-
-
-# Database validation functions (will be implemented with async/await in endpoint)
-
-
-async def validate_oil_ids_exist(oil_ids: list[str], db) -> tuple[bool, list[str]]:
-    """
-    Validate that all oil IDs exist in database.
-
-    Args:
-        oil_ids: List of oil IDs to validate
-        db: Database session
-
-    Returns:
-        Tuple of (all_valid, unknown_ids)
-    """
-    # Placeholder - will be implemented in endpoint with database queries
-    # For now, this shows the interface
-    pass
-
-
-async def validate_additive_ids(additive_ids: list[str], db) -> list[Warning]:
-    """
-    Validate additive IDs and generate warnings for unknown ones.
-
-    Args:
-        additive_ids: List of additive IDs to validate
-        db: Database session
-
-    Returns:
-        List of warnings for unknown additives
-    """
-    # Placeholder - will be implemented in endpoint
-    pass

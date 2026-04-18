@@ -10,10 +10,12 @@ from unittest.mock import AsyncMock, Mock
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.v1.resources import list_additives, list_oils
+from app.api.v1.additives import list_additives
+from app.api.v1.resources import list_oils
 from app.models.additive import Additive
 from app.models.oil import Oil
-from app.schemas.resource import AdditiveListResponse, OilListResponse
+from app.schemas.additive import AdditiveListResponse
+from app.schemas.resource import OilListResponse
 
 
 class TestOilsEndpointLogic:
@@ -230,12 +232,13 @@ class TestAdditivesEndpointLogic:
         mock_additive.id = "kaolin_clay"
         mock_additive.common_name = "Kaolin Clay"
         mock_additive.inci_name = "Kaolin"
-        mock_additive.typical_usage_min_percent = 1.0
-        mock_additive.typical_usage_max_percent = 3.0
-        mock_additive.quality_effects = {"hardness": 2.0, "cleansing": 0.0}
+        mock_additive.category = None
+        mock_additive.usage_rate_min_pct = None
+        mock_additive.usage_rate_max_pct = None
+        mock_additive.usage_rate_standard_pct = None
+        mock_additive.when_to_add = None
         mock_additive.confidence_level = "high"
         mock_additive.verified_by_mga = True
-        mock_additive.safety_warnings = None
 
         mock_result = Mock()
         mock_result.scalars.return_value.all.return_value = [mock_additive]
@@ -274,12 +277,13 @@ class TestAdditivesEndpointLogic:
         mock_additive.id = "high_confidence"
         mock_additive.common_name = "High Confidence Additive"
         mock_additive.inci_name = "Test INCI"
-        mock_additive.typical_usage_min_percent = 1.0
-        mock_additive.typical_usage_max_percent = 3.0
-        mock_additive.quality_effects = {}
+        mock_additive.category = None
+        mock_additive.usage_rate_min_pct = None
+        mock_additive.usage_rate_max_pct = None
+        mock_additive.usage_rate_standard_pct = None
+        mock_additive.when_to_add = None
         mock_additive.confidence_level = "high"
         mock_additive.verified_by_mga = False
-        mock_additive.safety_warnings = None
 
         mock_result = Mock()
         mock_result.scalars.return_value.all.return_value = [mock_additive]
@@ -301,7 +305,7 @@ class TestAdditivesEndpointLogic:
         )
 
         assert len(response.additives) == 1
-        assert response.additives[0].confidence_level == "high"
+        assert response.additives[0].id == "high_confidence"
 
     @pytest.mark.asyncio
     async def test_list_additives_verified_only_true(self):
@@ -312,12 +316,13 @@ class TestAdditivesEndpointLogic:
         mock_additive.id = "verified"
         mock_additive.common_name = "Verified Additive"
         mock_additive.inci_name = "Test INCI"
-        mock_additive.typical_usage_min_percent = 1.0
-        mock_additive.typical_usage_max_percent = 3.0
-        mock_additive.quality_effects = {}
+        mock_additive.category = None
+        mock_additive.usage_rate_min_pct = None
+        mock_additive.usage_rate_max_pct = None
+        mock_additive.usage_rate_standard_pct = None
+        mock_additive.when_to_add = None
         mock_additive.confidence_level = "high"
         mock_additive.verified_by_mga = True
-        mock_additive.safety_warnings = None
 
         mock_result = Mock()
         mock_result.scalars.return_value.all.return_value = [mock_additive]
@@ -339,7 +344,7 @@ class TestAdditivesEndpointLogic:
         )
 
         assert len(response.additives) == 1
-        assert response.additives[0].verified_by_mga is True
+        assert response.additives[0].id == "verified"
 
     @pytest.mark.asyncio
     async def test_list_additives_combined_filters(self):
@@ -350,12 +355,13 @@ class TestAdditivesEndpointLogic:
         mock_additive.id = "filtered"
         mock_additive.common_name = "Filtered Additive"
         mock_additive.inci_name = "Test INCI"
-        mock_additive.typical_usage_min_percent = 1.0
-        mock_additive.typical_usage_max_percent = 3.0
-        mock_additive.quality_effects = {}
+        mock_additive.category = None
+        mock_additive.usage_rate_min_pct = None
+        mock_additive.usage_rate_max_pct = None
+        mock_additive.usage_rate_standard_pct = None
+        mock_additive.when_to_add = None
         mock_additive.confidence_level = "high"
         mock_additive.verified_by_mga = True
-        mock_additive.safety_warnings = None
 
         mock_result = Mock()
         mock_result.scalars.return_value.all.return_value = [mock_additive]
@@ -377,8 +383,7 @@ class TestAdditivesEndpointLogic:
         )
 
         assert len(response.additives) == 1
-        assert response.additives[0].confidence_level == "high"
-        assert response.additives[0].verified_by_mga is True
+        assert response.additives[0].id == "filtered"
 
     @pytest.mark.asyncio
     async def test_list_additives_all_confidence_levels(self):
@@ -392,12 +397,13 @@ class TestAdditivesEndpointLogic:
             mock_additive.id = f"{confidence}_additive"
             mock_additive.common_name = f"{confidence.title()} Additive"
             mock_additive.inci_name = "Test INCI"
-            mock_additive.typical_usage_min_percent = 1.0
-            mock_additive.typical_usage_max_percent = 3.0
-            mock_additive.quality_effects = {}
+            mock_additive.category = None
+            mock_additive.usage_rate_min_pct = None
+            mock_additive.usage_rate_max_pct = None
+            mock_additive.usage_rate_standard_pct = None
+            mock_additive.when_to_add = None
             mock_additive.confidence_level = confidence
             mock_additive.verified_by_mga = False
-            mock_additive.safety_warnings = None
 
             mock_result = Mock()
             mock_result.scalars.return_value.all.return_value = [mock_additive]
@@ -419,7 +425,7 @@ class TestAdditivesEndpointLogic:
             )
 
             assert len(response.additives) == 1
-            assert response.additives[0].confidence_level == confidence
+            assert response.additives[0].id == f"{confidence}_additive"
 
     @pytest.mark.asyncio
     async def test_list_additives_empty_database(self):
@@ -461,12 +467,13 @@ class TestAdditivesEndpointLogic:
             mock_additive.id = "test_additive"
             mock_additive.common_name = "Test Additive"
             mock_additive.inci_name = "Test INCI"
-            mock_additive.typical_usage_min_percent = 1.0
-            mock_additive.typical_usage_max_percent = 3.0
-            mock_additive.quality_effects = {}
+            mock_additive.category = None
+            mock_additive.usage_rate_min_pct = None
+            mock_additive.usage_rate_max_pct = None
+            mock_additive.usage_rate_standard_pct = None
+            mock_additive.when_to_add = None
             mock_additive.confidence_level = "high"
             mock_additive.verified_by_mga = False
-            mock_additive.safety_warnings = None
 
             mock_result = Mock()
             mock_result.scalars.return_value.all.return_value = [mock_additive]
