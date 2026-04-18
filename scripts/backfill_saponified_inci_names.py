@@ -14,11 +14,11 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select  # noqa: E402
+from sqlalchemy.ext.asyncio import AsyncSession  # noqa: E402
 
-from app.db.base import AsyncSessionLocal
-from app.models.oil import Oil
+from app.db.base import AsyncSessionLocal  # noqa: E402
+from app.models.oil import Oil  # noqa: E402
 
 
 async def load_reference_data() -> dict:
