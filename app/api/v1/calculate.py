@@ -10,6 +10,7 @@ from uuid import UUID, uuid4
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import get_current_user
@@ -562,7 +563,11 @@ async def health_check(db: AsyncSession = Depends(get_db)):
         # Test database connection
         await db.execute(select(1))
         return {"status": "healthy", "database": "connected", "version": "1.0.0"}
-    except Exception as e:
+    except SQLAlchemyError as e:
+        # SQLAlchemyError is the root of all SQLAlchemy-raised exceptions and
+        # covers connection loss, DBAPI errors (asyncpg), operational errors,
+        # timeouts, and pool exhaustion. Anything else (e.g. asyncio
+        # CancelledError) should propagate and let FastAPI return 500.
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail={"status": "unhealthy", "database": "disconnected", "error": str(e)},

@@ -7,9 +7,10 @@ Provides usage recommendations with light/standard/heavy options and warnings.
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import func, or_, select
+from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api._pagination import paginate_query
 from app.db import get_db
 from app.models.additive import Additive
 from app.schemas.additive import (
@@ -58,10 +59,8 @@ async def list_additives(
     Returns:
         Paginated list of additives with metadata
     """
-    # Build base query
     query = select(Additive)
 
-    # Apply search filter
     if search:
         search_pattern = f"%{search}%"
         query = query.where(
@@ -70,43 +69,30 @@ async def list_additives(
             )
         )
 
-    # Apply category filter
     if category:
         query = query.where(Additive.category == category)
 
-    # Apply confidence filter
     if confidence:
         query = query.where(Additive.confidence_level == confidence)
 
-    # Apply verified filter
     if verified_only:
         query = query.where(Additive.verified_by_mga)
 
-    # Get total count before pagination
-    count_query = select(func.count()).select_from(query.subquery())
-    total_count = (await db.execute(count_query)).scalar() or 0
+    additives, total_count, has_more = await paginate_query(
+        db,
+        query,
+        sort_column=getattr(Additive, sort_by),
+        sort_order=sort_order,
+        limit=limit,
+        offset=offset,
+    )
 
-    # Apply sorting
-    sort_column = getattr(Additive, sort_by)
-    if sort_order == "desc":
-        query = query.order_by(sort_column.desc())
-    else:
-        query = query.order_by(sort_column.asc())
-
-    # Apply pagination
-    query = query.limit(limit).offset(offset)
-
-    # Execute query
-    result = await db.execute(query)
-    additives = result.scalars().all()
-
-    # Build response
     return AdditiveListResponse(
-        additives=[AdditiveListItem.from_orm(additive) for additive in additives],
+        additives=[AdditiveListItem.model_validate(additive) for additive in additives],
         total_count=total_count,
         limit=limit,
         offset=offset,
-        has_more=(offset + limit) < total_count,
+        has_more=has_more,
     )
 
 

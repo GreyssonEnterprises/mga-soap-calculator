@@ -7,9 +7,10 @@ Provides max safe usage calculations and blending guidance.
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import func, or_, select
+from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api._pagination import paginate_query
 from app.db import get_db
 from app.models.essential_oil import EssentialOil
 from app.schemas.essential_oil import (
@@ -56,10 +57,8 @@ async def list_essential_oils(
     Returns:
         Paginated list of essential oils with metadata
     """
-    # Build base query
     query = select(EssentialOil)
 
-    # Apply search filter
     if search:
         search_pattern = f"%{search}%"
         query = query.where(
@@ -69,39 +68,27 @@ async def list_essential_oils(
             )
         )
 
-    # Apply category filter
     if category:
         query = query.where(EssentialOil.category == category)
 
-    # Apply note filter
     if note:
         query = query.where(EssentialOil.note == note)
 
-    # Get total count before pagination
-    count_query = select(func.count()).select_from(query.subquery())
-    total_count = (await db.execute(count_query)).scalar() or 0
+    essential_oils, total_count, has_more = await paginate_query(
+        db,
+        query,
+        sort_column=getattr(EssentialOil, sort_by),
+        sort_order=sort_order,
+        limit=limit,
+        offset=offset,
+    )
 
-    # Apply sorting
-    sort_column = getattr(EssentialOil, sort_by)
-    if sort_order == "desc":
-        query = query.order_by(sort_column.desc())
-    else:
-        query = query.order_by(sort_column.asc())
-
-    # Apply pagination
-    query = query.limit(limit).offset(offset)
-
-    # Execute query
-    result = await db.execute(query)
-    essential_oils = result.scalars().all()
-
-    # Build response
     return EssentialOilListResponse(
-        essential_oils=[EssentialOilListItem.from_orm(eo) for eo in essential_oils],
+        essential_oils=[EssentialOilListItem.model_validate(eo) for eo in essential_oils],
         total_count=total_count,
         limit=limit,
         offset=offset,
-        has_more=(offset + limit) < total_count,
+        has_more=has_more,
     )
 
 

@@ -4,7 +4,7 @@ Pydantic schemas for INCI label generation
 Request/response models for User Story 1 and Spec 003 three-format support
 """
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class OilFormulationItem(BaseModel):
@@ -70,8 +70,8 @@ class InciLabelResponse(BaseModel):
     total_oil_weight: float = Field(..., description="Total weight of oils in grams")
     lye_type_used: str = Field(..., description="Type of lye used: 'naoh' or 'koh'")
 
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "inci_label": "Sodium Olivate, Sodium Cocoate",
                 "ingredients": [
@@ -94,6 +94,7 @@ class InciLabelResponse(BaseModel):
                 "lye_type_used": "naoh",
             }
         }
+    )
 
 
 # ============================================================================
@@ -142,8 +143,8 @@ class ThreeFormatInciResponse(BaseModel):
         None, description="Detailed ingredient breakdown with percentages (for verification)"
     )
 
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "raw_inci": "Aqua, Olea Europaea Fruit Oil, Cocos Nucifera Oil, Sodium Hydroxide",
                 "saponified_inci": "Aqua, Sodium Olivate, Sodium Cocoate",
@@ -159,3 +160,4 @@ class ThreeFormatInciResponse(BaseModel):
                 ],
             }
         }
+    )
