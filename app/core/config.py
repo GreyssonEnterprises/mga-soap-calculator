@@ -17,9 +17,7 @@ class Settings(BaseSettings):
             # Convert asyncpg URL to psycopg2 for Alembic sync usage
             self.DATABASE_URL_SYNC = self.DATABASE_URL.replace(
                 "postgresql+asyncpg://", "postgresql+psycopg2://"
-            ).replace(
-                "postgresql://", "postgresql+psycopg2://"
-            )
+            ).replace("postgresql://", "postgresql+psycopg2://")
         return self
 
     # JWT
