@@ -1,7 +1,7 @@
 oils:
 - id: myrstic_acid
   common_name: Myrstic acid
-  inci_name: 
+  inci_name: Myristic Acid
   sap_value_naoh: 0.247
   sap_value_koh: 0.347
   iodine_value: 1.0
@@ -25,7 +25,7 @@ oils:
     stability: 0.0
 - id: stearic_acid
   common_name: Stearic acid
-  inci_name: 
+  inci_name: Stearic Acid
   sap_value_naoh: 0.198
   sap_value_koh: 0.278
   iodine_value: 2.0
@@ -49,7 +49,7 @@ oils:
     stability: 99.0
 - id: palmitic_acid
   common_name: Palmitic acid
-  inci_name: 
+  inci_name: Palmitic Acid
   sap_value_naoh: 0.215
   sap_value_koh: 0.302
   iodine_value: 2.0
@@ -169,7 +169,7 @@ oils:
     stability: 12.0
 - id: tucuma_seed_butter
   common_name: Tucuma seed butter
-  inci_name: 
+  inci_name: Astrocaryum Vulgare Seed Butter
   sap_value_naoh: 0.188
   sap_value_koh: 0.264
   iodine_value: 13.0
@@ -193,7 +193,7 @@ oils:
     stability: 6.0
 - id: cohune_oil
   common_name: Cohune oil
-  inci_name: 
+  inci_name: Attalea Cohune Seed Oil
   sap_value_naoh: 0.205
   sap_value_koh: 0.288
   iodine_value: 30.0
@@ -217,7 +217,7 @@ oils:
     stability: 11.0
 - id: monoi_de_tahiti_oil
   common_name: Monoi de Tahiti oil
-  inci_name: 
+  inci_name: Cocos Nucifera Oil (and) Gardenia Tahitensis Flower Extract
   sap_value_naoh: 0.255
   sap_value_koh: 0.358
   iodine_value: 9.0
@@ -265,7 +265,7 @@ oils:
     stability: 9.0
 - id: palm_stearin
   common_name: Palm stearin
-  inci_name: 
+  inci_name: Elaeis Guineensis (Palm) Stearin
   sap_value_naoh: 0.199
   sap_value_koh: 0.279
   iodine_value: 48.0
@@ -385,7 +385,7 @@ oils:
     stability: 50.0
 - id: ghee_any_bovine
   common_name: Ghee, any bovine
-  inci_name: 
+  inci_name: Butyrum
   sap_value_naoh: 0.221
   sap_value_koh: 0.31
   iodine_value: 30.0
@@ -409,7 +409,7 @@ oils:
     stability: 40.0
 - id: milk_fat_any_bovine
   common_name: Milk fat, any bovine
-  inci_name: 
+  inci_name: Lac Butyrum
   sap_value_naoh: 0.221
   sap_value_koh: 0.31
   iodine_value: 30.0
@@ -433,7 +433,7 @@ oils:
     stability: 40.0
 - id: walmart_gv_shortening
   common_name: Walmart GV shortening
-  inci_name: 
+  inci_name: Hydrogenated Vegetable Oil
   sap_value_naoh: 0.2
   sap_value_koh: 0.281
   iodine_value: 49.0
@@ -457,7 +457,7 @@ oils:
     stability: 49.0
 - id: sal_palmetto_oil
   common_name: Sal palmetto oil
-  inci_name: 
+  inci_name: Serenoa Serrulata Fruit Oil
   sap_value_naoh: 0.22
   sap_value_koh: 0.309
   iodine_value: 44.0
@@ -481,7 +481,7 @@ oils:
     stability: 11.0
 - id: tallow_sheep
   common_name: Tallow sheep
-  inci_name: 
+  inci_name: Adeps Ovis
   sap_value_naoh: 0.21
   sap_value_koh: 0.295
   iodine_value: 54.0
@@ -505,7 +505,7 @@ oils:
     stability: 37.0
 - id: kpangnan_butter
   common_name: Kpangnan butter
-  inci_name: 
+  inci_name: Pentadesma Butyracea Seed Butter
   sap_value_naoh: 0.191
   sap_value_koh: 0.268
   iodine_value: 42.0
@@ -553,7 +553,7 @@ oils:
     stability: 49.0
 - id: red_palm_butter
   common_name: Red palm butter
-  inci_name: 
+  inci_name: Elaeis Guineensis Butter
   sap_value_naoh: 0.198
   sap_value_koh: 0.278
   iodine_value: 53.0
@@ -601,7 +601,7 @@ oils:
     stability: 50.0
 - id: saw_palmetto_extract
   common_name: Saw palmetto extract
-  inci_name: 
+  inci_name: Serenoa Serrulata Fruit Extract
   sap_value_naoh: 0.23
   sap_value_koh: 0.323
   iodine_value: 45.0
@@ -649,7 +649,7 @@ oils:
     stability: 49.0
 - id: coffee_bean_oil_green
   common_name: Coffee bean oil, green
-  inci_name: 
+  inci_name: Coffea Arabica Seed Oil
   sap_value_naoh: 0.185
   sap_value_koh: 0.26
   iodine_value: 85.0
@@ -673,7 +673,7 @@ oils:
     stability: 46.0
 - id: mowrah_butter
   common_name: Mowrah butter
-  inci_name: 
+  inci_name: Madhuca Latifolia Seed Butter
   sap_value_naoh: 0.194
   sap_value_koh: 0.272
   iodine_value: 62.0
@@ -721,7 +721,7 @@ oils:
     stability: 45.0
 - id: tallow_deer
   common_name: Tallow deer
-  inci_name: 
+  inci_name: Cervus Elaphus Tallow
   sap_value_naoh: 0.197
   sap_value_koh: 0.276
   iodine_value: 31.0
@@ -793,7 +793,7 @@ oils:
     stability: 41.0
 - id: coffee_bean_oil_roasted
   common_name: Coffee bean oil, roasted
-  inci_name: 
+  inci_name: Coffea Arabica Seed Oil
   sap_value_naoh: 0.18
   sap_value_koh: 0.253
   iodine_value: 87.0
@@ -817,7 +817,7 @@ oils:
     stability: 40.0
 - id: ostrich_oil
   common_name: Ostrich oil
-  inci_name: 
+  inci_name: Struthio Camelus Oil
   sap_value_naoh: 0.225
   sap_value_koh: 0.316
   iodine_value: 97.0
@@ -841,7 +841,7 @@ oils:
     stability: 32.0
 - id: mango_seed_oil
   common_name: Mango seed oil
-  inci_name: 
+  inci_name: Mangifera Indica Seed Oil
   sap_value_naoh: 0.19
   sap_value_koh: 0.267
   iodine_value: 60.0
@@ -865,7 +865,7 @@ oils:
     stability: 35.0
 - id: horse_oil
   common_name: Horse oil
-  inci_name: 
+  inci_name: Equus Caballus Oil
   sap_value_naoh: 0.196
   sap_value_koh: 0.275
   iodine_value: 79.0
@@ -889,7 +889,7 @@ oils:
     stability: 31.0
 - id: chicken_fat
   common_name: Chicken fat
-  inci_name: 
+  inci_name: Gallus Domesticus Fat
   sap_value_naoh: 0.199
   sap_value_koh: 0.279
   iodine_value: 69.0
@@ -961,7 +961,7 @@ oils:
     stability: 32.0
 - id: avocado_butter
   common_name: Avocado butter
-  inci_name: 
+  inci_name: Persea Gratissima Butter
   sap_value_naoh: 0.187
   sap_value_koh: 0.262
   iodine_value: 67.0
@@ -985,7 +985,7 @@ oils:
     stability: 31.0
 - id: ucuuba_butter
   common_name: Ucuuba butter
-  inci_name: 
+  inci_name: Virola Sebifera Seed Butter
   sap_value_naoh: 0.205
   sap_value_koh: 0.288
   iodine_value: 38.0
@@ -1009,7 +1009,7 @@ oils:
     stability: 31.0
 - id: baobab_oil
   common_name: Baobab oil
-  inci_name: 
+  inci_name: Adansonia Digitata Seed Oil
   sap_value_naoh: 0.2
   sap_value_koh: 0.281
   iodine_value: 75.0
@@ -1033,7 +1033,7 @@ oils:
     stability: 28.0
 - id: cottonseed_oil
   common_name: Cottonseed oil
-  inci_name: 
+  inci_name: Gossypium Herbaceum Seed Oil
   sap_value_naoh: 0.197
   sap_value_koh: 0.276
   iodine_value: 108.0
@@ -1057,7 +1057,7 @@ oils:
     stability: 26.0
 - id: crisco_old
   common_name: Crisco, old
-  inci_name: 
+  inci_name: Hydrogenated Glycine Soja Oil
   sap_value_naoh: 0.208
   sap_value_koh: 0.292
   iodine_value: 93.0
@@ -1105,7 +1105,7 @@ oils:
     stability: 25.0
 - id: almond_butter
   common_name: Almond Butter
-  inci_name: 
+  inci_name: Prunus Amygdalus Dulcis Butter
   sap_value_naoh: 0.188
   sap_value_koh: 0.264
   iodine_value: 70.0
@@ -1129,7 +1129,7 @@ oils:
     stability: 24.0
 - id: crisco_new_with_palm
   common_name: Crisco, new with palm
-  inci_name: 
+  inci_name: Hydrogenated Vegetable Oil
   sap_value_naoh: 0.193
   sap_value_koh: 0.271
   iodine_value: 111.0
@@ -1153,7 +1153,7 @@ oils:
     stability: 25.0
 - id: tamanu_oil_kamani
   common_name: Tamanu oil, kamani
-  inci_name: 
+  inci_name: Calophyllum Inophyllum Seed Oil
   sap_value_naoh: 0.193
   sap_value_koh: 0.271
   iodine_value: 111.0
@@ -1177,7 +1177,7 @@ oils:
     stability: 25.0
 - id: soybean_275%_hydro
   common_name: Soybean, 27.5% hydro
-  inci_name: 
+  inci_name: Hydrogenated Glycine Soja Oil
   sap_value_naoh: 0.191
   sap_value_koh: 0.268
   iodine_value: 78.0
@@ -1201,7 +1201,7 @@ oils:
     stability: 24.0
 - id: yangu_cape_cheasnut
   common_name: Yangu, cape cheasnut
-  inci_name: 
+  inci_name: Calodendrum Capense Seed Oil
   sap_value_naoh: 0.192
   sap_value_koh: 0.269
   iodine_value: 95.0
@@ -1249,7 +1249,7 @@ oils:
     stability: 22.0
 - id: pumpkin_seed_oil_virgin
   common_name: Pumpkin seed oil, virgin
-  inci_name: 
+  inci_name: Cucurbita Pepo Seed Oil
   sap_value_naoh: 0.195
   sap_value_koh: 0.274
   iodine_value: 128.0
@@ -1297,7 +1297,7 @@ oils:
     stability: 19.0
 - id: marula_oil
   common_name: Marula Oil
-  inci_name: 
+  inci_name: Sclerocarya Birrea Seed Oil
   sap_value_naoh: 0.192
   sap_value_koh: 0.269
   iodine_value: 73.0
@@ -1369,7 +1369,7 @@ oils:
     stability: 17.0
 - id: black_cumin_seed_oil
   common_name: Black cumin seed oil
-  inci_name: 
+  inci_name: Nigella Sativa Seed Oil
   sap_value_naoh: 0.195
   sap_value_koh: 0.274
   iodine_value: 133.0
@@ -1393,7 +1393,7 @@ oils:
     stability: 16.0
 - id: jatropha_oil
   common_name: Jatropha oil
-  inci_name: 
+  inci_name: Jatropha Curcas Seed Oil
   sap_value_naoh: 0.193
   sap_value_koh: 0.271
   iodine_value: 102.0
@@ -1417,7 +1417,7 @@ oils:
     stability: 16.0
 - id: shea_oil_fractionated
   common_name: Shea oil, fractionated
-  inci_name: 
+  inci_name: Butyrospermum Parkii Oil
   sap_value_naoh: 0.185
   sap_value_koh: 0.26
   iodine_value: 83.0
@@ -1465,7 +1465,7 @@ oils:
     stability: 16.0
 - id: argan_oil
   common_name: Argan Oil
-  inci_name: 
+  inci_name: Argania Spinosa Kernel Oil
   sap_value_naoh: 0.19
   sap_value_koh: 0.267
   iodine_value: 95.0
@@ -1513,7 +1513,7 @@ oils:
     stability: 15.0
 - id: borage_oil
   common_name: Borage oil
-  inci_name: 
+  inci_name: Borago Officinalis Seed Oil
   sap_value_naoh: 0.19
   sap_value_koh: 0.267
   iodine_value: 135.0
@@ -1537,7 +1537,7 @@ oils:
     stability: 14.0
 - id: corn_oil
   common_name: Corn oil
-  inci_name: 
+  inci_name: Zea Mays Oil
   sap_value_naoh: 0.186
   sap_value_koh: 0.261
   iodine_value: 117.0
@@ -1585,7 +1585,7 @@ oils:
     stability: 14.0
 - id: moringa_oil
   common_name: Moringa oil
-  inci_name: 
+  inci_name: Moringa Oleifera Seed Oil
   sap_value_naoh: 0.192
   sap_value_koh: 0.269
   iodine_value: 68.0
@@ -1609,7 +1609,7 @@ oils:
     stability: 14.0
 - id: passion_fruit_seed_oil
   common_name: Passion fruit seed oil
-  inci_name: 
+  inci_name: Passiflora Edulis Seed Oil
   sap_value_naoh: 0.183
   sap_value_koh: 0.257
   iodine_value: 136.0
@@ -1657,7 +1657,7 @@ oils:
     stability: 12.0
 - id: karanja_oil
   common_name: Karanja oil
-  inci_name: 
+  inci_name: Pongamia Glabra Seed Oil
   sap_value_naoh: 0.183
   sap_value_koh: 0.257
   iodine_value: 85.0
@@ -1681,7 +1681,7 @@ oils:
     stability: 12.0
 - id: pistachio_oil
   common_name: Pistachio oil
-  inci_name: 
+  inci_name: Pistacia Vera Seed Oil
   sap_value_naoh: 0.187
   sap_value_koh: 0.262
   iodine_value: 95.0
@@ -1705,7 +1705,7 @@ oils:
     stability: 12.0
 - id: poppy_seed_oil
   common_name: Poppy seed oil
-  inci_name: 
+  inci_name: Papaver Somniferum Seed Oil
   sap_value_naoh: 0.194
   sap_value_koh: 0.272
   iodine_value: 140.0
@@ -1729,7 +1729,7 @@ oils:
     stability: 12.0
 - id: tallow_bear
   common_name: Tallow bear
-  inci_name: 
+  inci_name: Ursus Americanus Tallow
   sap_value_naoh: 0.192
   sap_value_koh: 0.269
   iodine_value: 92.0
@@ -1753,7 +1753,7 @@ oils:
     stability: 10.0
 - id: cherry_kernel_oil_avium
   common_name: Cherry kernel oil avium
-  inci_name: 
+  inci_name: Prunus Avium Seed Oil
   sap_value_naoh: 0.19
   sap_value_koh: 0.267
   iodine_value: 128.0
@@ -1777,7 +1777,7 @@ oils:
     stability: 11.0
 - id: peanut_oil
   common_name: Peanut oil
-  inci_name: 
+  inci_name: Arachis Hypogaea Oil
   sap_value_naoh: 0.191
   sap_value_koh: 0.268
   iodine_value: 92.0
@@ -1897,7 +1897,7 @@ oils:
     stability: 9.0
 - id: camellia_seed_oil
   common_name: Camellia seed oil
-  inci_name: 
+  inci_name: Camellia Oleifera Seed Oil
   sap_value_naoh: 0.188
   sap_value_koh: 0.264
   iodine_value: 144.0
@@ -1921,7 +1921,7 @@ oils:
     stability: 8.0
 - id: cranberry_seed_oil
   common_name: Cranberry seed oil
-  inci_name: 
+  inci_name: Vaccinium Macrocarpon Seed Oil
   sap_value_naoh: 0.19
   sap_value_koh: 0.267
   iodine_value: 150.0
@@ -1993,7 +1993,7 @@ oils:
     stability: 8.0
 - id: kukui_nut_oil
   common_name: Kukui nut oil
-  inci_name: 
+  inci_name: Aleurites Moluccanus Seed Oil
   sap_value_naoh: 0.192
   sap_value_koh: 0.269
   iodine_value: 168.0
@@ -2041,7 +2041,7 @@ oils:
     stability: 8.0
 - id: perilla_seed_oil
   common_name: Perilla seed oil
-  inci_name: 
+  inci_name: Perilla Ocymoides Seed Oil
   sap_value_naoh: 0.19
   sap_value_koh: 0.267
   iodine_value: 196.0
@@ -2185,7 +2185,7 @@ oils:
     stability: 6.0
 - id: canola_oil_high_oleic
   common_name: Canola oil, high oleic
-  inci_name: 
+  inci_name: Brassica Napus Seed Oil (High Oleic)
   sap_value_naoh: 0.186
   sap_value_koh: 0.261
   iodine_value: 96.0
@@ -2209,7 +2209,7 @@ oils:
     stability: 6.0
 - id: canola_oil_rapeseed
   common_name: Canola oil, rapeseed
-  inci_name: 
+  inci_name: Brassica Napus Seed Oil
   sap_value_naoh: 0.166
   sap_value_koh: 0.233
   iodine_value: 110.0
@@ -2257,7 +2257,7 @@ oils:
     stability: 6.0
 - id: mustard_oil_kachi_gha
   common_name: Mustard oil, kachi gha
-  inci_name: 
+  inci_name: Brassica Juncea Seed Oil
   sap_value_naoh: 0.173
   sap_value_koh: 0.243
   iodine_value: 101.0
@@ -2281,7 +2281,7 @@ oils:
     stability: 4.0
 - id: rapeseed_oil
   common_name: Rapeseed oil
-  inci_name: 
+  inci_name: Brassica Napus Seed Oil
   sap_value_naoh: 0.164
   sap_value_koh: 0.23
   iodine_value: 108.0
@@ -2305,7 +2305,7 @@ oils:
     stability: 4.0
 - id: plum_kernel_oil
   common_name: Plum kernel oil
-  inci_name: 
+  inci_name: Prunus Domestica Seed Oil
   sap_value_naoh: 0.194
   sap_value_koh: 0.272
   iodine_value: 98.0
@@ -2329,7 +2329,7 @@ oils:
     stability: 3.0
 - id: aloe_butter
   common_name: Aloe Butter
-  inci_name: 
+  inci_name: Aloe Barbadensis Butter
   sap_value_naoh: 0.249
   sap_value_koh: 0.349
   iodine_value: 0.0
@@ -2497,7 +2497,7 @@ oils:
     stability: 0.0
 - id: mink_oil
   common_name: Mink oil
-  inci_name: 
+  inci_name: Mink Oil
   sap_value_naoh: 0.196
   sap_value_koh: 0.275
   iodine_value: 55.0
@@ -2521,7 +2521,7 @@ oils:
     stability: 0.0
 - id: oleic_acid
   common_name: Oleic acid
-  inci_name: 
+  inci_name: Oleic Acid
   sap_value_naoh: 0.202
   sap_value_koh: 0.283
   iodine_value: 92.0
@@ -2569,7 +2569,7 @@ oils:
     stability: 0.0
 - id: abyssinian_oil
   common_name: Abyssinian Oil
-  inci_name: 
+  inci_name: Crambe Abyssinica Seed Oil
   sap_value_naoh: 0.12
   sap_value_koh: 0.168
   iodine_value: 98.0
@@ -2593,7 +2593,7 @@ oils:
     stability: 5.0
 - id: andiroba_oil
   common_name: Andiroba Oil
-  inci_name: 
+  inci_name: Carapa Guaianensis Seed Oil
   sap_value_naoh: 0.134
   sap_value_koh: 0.188
   iodine_value: 68.0
@@ -2617,7 +2617,7 @@ oils:
     stability: 36.0
 - id: brazil_nut_oil
   common_name: Brazil Nut Oil
-  inci_name: 
+  inci_name: Bertholletia Excelsa Seed Oil
   sap_value_naoh: 0.135
   sap_value_koh: 0.19
   iodine_value: 100.0
@@ -2641,7 +2641,7 @@ oils:
     stability: 24.0
 - id: broccoli_seed_oil
   common_name: Broccoli Seed Oil
-  inci_name: 
+  inci_name: Brassica Oleracea Italica Seed Oil
   sap_value_naoh: 0.123
   sap_value_koh: 0.172
   iodine_value: 105.0
@@ -2665,7 +2665,7 @@ oils:
     stability: 4.0
 - id: buriti_oil
   common_name: Buriti Oil
-  inci_name: 
+  inci_name: Mauritia Flexuosa Fruit Oil
   sap_value_naoh: 0.159
   sap_value_koh: 0.223
   iodine_value: 70.0
@@ -2689,7 +2689,7 @@ oils:
     stability: 19.0
 - id: camelina_seed_oil
   common_name: Camelina Seed Oil
-  inci_name: 
+  inci_name: Camelina Sativa Seed Oil
   sap_value_naoh: 0.134
   sap_value_koh: 0.188
   iodine_value: 144.0
@@ -2713,7 +2713,7 @@ oils:
     stability: 8.0
 - id: candelilla_wax
   common_name: Candelilla Wax
-  inci_name: 
+  inci_name: Euphorbia Cerifera Wax
   sap_value_naoh: 0.039
   sap_value_koh: 0.054
   iodine_value: 32.0
@@ -2737,7 +2737,7 @@ oils:
     stability: 0.0
 - id: carnauba_wax
   common_name: Carnauba Wax
-  inci_name: 
+  inci_name: Copernicia Cerifera Wax
   sap_value_naoh: 0.062
   sap_value_koh: 0.087
   iodine_value: 10.0
@@ -2761,7 +2761,7 @@ oils:
     stability: 0.0
 - id: carrot_seed_oil
   common_name: Carrot Seed Oil
-  inci_name: 
+  inci_name: Daucus Carota Sativa Seed Oil
   sap_value_naoh: 0.103
   sap_value_koh: 0.144
   iodine_value: 56.0
@@ -2785,7 +2785,7 @@ oils:
     stability: 4.0
 - id: duck_fat
   common_name: Duck Fat
-  inci_name: 
+  inci_name: Anas Domestica Fat
   sap_value_naoh: 0.138
   sap_value_koh: 0.194
   iodine_value: 72.0
@@ -2809,7 +2809,7 @@ oils:
     stability: 35.0
 - id: goose_fat
   common_name: Goose Fat
-  inci_name: 
+  inci_name: Anser Domesticus Fat
   sap_value_naoh: 0.137
   sap_value_koh: 0.192
   iodine_value: 65.0
@@ -2833,7 +2833,7 @@ oils:
     stability: 27.0
 - id: japan_wax
   common_name: Japan Wax
-  inci_name: 
+  inci_name: Rhus Succedanea Fruit Wax
   sap_value_naoh: 0.153
   sap_value_koh: 0.215
   iodine_value: 11.0
@@ -2857,7 +2857,7 @@ oils:
     stability: 87.0
 - id: laurel_fruit_oil
   common_name: Laurel Fruit Oil
-  inci_name: 
+  inci_name: Laurus Nobilis Fruit Oil
   sap_value_naoh: 0.141
   sap_value_koh: 0.198
   iodine_value: 74.0
@@ -2881,7 +2881,7 @@ oils:
     stability: 16.0
 - id: lauric_acid
   common_name: Lauric Acid
-  inci_name: 
+  inci_name: Lauric Acid
   sap_value_naoh: 0.2
   sap_value_koh: 0.28
   iodine_value: 0.0
@@ -2905,7 +2905,7 @@ oils:
     stability: 0.0
 - id: loofa_seed_oil
   common_name: Loofa Seed Oil
-  inci_name: 
+  inci_name: Luffa Cylindrica Seed Oil
   sap_value_naoh: 0.133
   sap_value_koh: 0.187
   iodine_value: 108.0
@@ -2929,7 +2929,7 @@ oils:
     stability: 27.0
 - id: macadamia_nut_butter
   common_name: Macadamia Nut Butter
-  inci_name: 
+  inci_name: Macadamia Ternifolia Seed Butter
   sap_value_naoh: 0.134
   sap_value_koh: 0.188
   iodine_value: 70.0
@@ -2953,7 +2953,7 @@ oils:
     stability: 18.0
 - id: mafura_butter
   common_name: Mafura Butter
-  inci_name: 
+  inci_name: Trichilia Emetica Seed Butter
   sap_value_naoh: 0.141
   sap_value_koh: 0.198
   iodine_value: 66.0
@@ -2977,7 +2977,7 @@ oils:
     stability: 40.0
 - id: milk_thistle_oil
   common_name: Milk Thistle Oil
-  inci_name: 
+  inci_name: Silybum Marianum Seed Oil
   sap_value_naoh: 0.14
   sap_value_koh: 0.196
   iodine_value: 115.0
@@ -3001,7 +3001,7 @@ oils:
     stability: 9.0
 - id: neatsfoot_oil
   common_name: Neatsfoot Oil
-  inci_name: 
+  inci_name: Bos Taurus Oil
   sap_value_naoh: 0.141
   sap_value_koh: 0.191
   iodine_value: 65.0
@@ -3025,7 +3025,7 @@ oils:
     stability: 18.0
 - id: nutmeg_butter
   common_name: Nutmeg Butter
-  inci_name: 
+  inci_name: Myristica Fragrans Seed Butter
   sap_value_naoh: 0.115
   sap_value_koh: 0.162
   iodine_value: 46.0
@@ -3049,7 +3049,7 @@ oils:
     stability: 4.0
 - id: oat_oil
   common_name: Oat Oil
-  inci_name: 
+  inci_name: Avena Sativa Kernel Oil
   sap_value_naoh: 0.135
   sap_value_koh: 0.19
   iodine_value: 104.0
@@ -3073,7 +3073,7 @@ oils:
     stability: 17.0
 - id: palm_olein
   common_name: Palm Olein
-  inci_name: 
+  inci_name: Elaeis Guineensis (Palm) Olein
   sap_value_naoh: 0.143
   sap_value_koh: 0.2
   iodine_value: 58.0
@@ -3097,7 +3097,7 @@ oils:
     stability: 45.0
 - id: papaya_seed_oil
   common_name: Papaya Seed Oil
-  inci_name: 
+  inci_name: Carica Papaya Seed Oil
   sap_value_naoh: 0.113
   sap_value_koh: 0.158
   iodine_value: 67.0
@@ -3121,7 +3121,7 @@ oils:
     stability: 18.0
 - id: pataua_oil
   common_name: Pataua Oil
-  inci_name: 
+  inci_name: Oenocarpus Bataua Fruit Oil
   sap_value_naoh: 0.141
   sap_value_koh: 0.195
   iodine_value: 77.0
@@ -3145,7 +3145,7 @@ oils:
     stability: 17.0
 - id: pecan_oil
   common_name: Pecan Oil
-  inci_name: 
+  inci_name: Carya Illinoinensis Seed Oil
   sap_value_naoh: 0.135
   sap_value_koh: 0.19
   iodine_value: 113.0
@@ -3169,7 +3169,7 @@ oils:
     stability: 9.0
 - id: pomegranate_seed_oil
   common_name: Pomegranate Seed Oil
-  inci_name: 
+  inci_name: Punica Granatum Seed Oil
   sap_value_naoh: 0.135
   sap_value_koh: 0.19
   iodine_value: 22.0
@@ -3193,7 +3193,7 @@ oils:
     stability: 6.0
 - id: pracaxi_seed_oil
   common_name: Pracaxi Seed Oil
-  inci_name: 
+  inci_name: Pentaclethra Macroloba Seed Oil
   sap_value_naoh: 0.132
   sap_value_koh: 0.185
   iodine_value: 68.0
@@ -3217,7 +3217,7 @@ oils:
     stability: 4.0
 - id: rabbit_fat
   common_name: Rabbit Fat
-  inci_name: 
+  inci_name: Oryctolagus Cuniculus Fat
   sap_value_naoh: 0.143
   sap_value_koh: 0.201
   iodine_value: 85.0
@@ -3241,7 +3241,7 @@ oils:
     stability: 36.0
 - id: raspberry_seed_oil
   common_name: Raspberry Seed Oil
-  inci_name: 
+  inci_name: Rubus Idaeus Seed Oil
   sap_value_naoh: 0.133
   sap_value_koh: 0.187
   iodine_value: 163.0
@@ -3265,7 +3265,7 @@ oils:
     stability: 3.0
 - id: sacha_inchi
   common_name: Sacha Inchi
-  inci_name: 
+  inci_name: Plukenetia Volubilis Seed Oil
   sap_value_naoh: 0.134
   sap_value_koh: 0.188
   iodine_value: 141.0
@@ -3289,7 +3289,7 @@ oils:
     stability: 7.0
 - id: salmon_oil
   common_name: Salmon Oil
-  inci_name: 
+  inci_name: Salmo Salar Oil
   sap_value_naoh: 0.132
   sap_value_koh: 0.185
   iodine_value: 169.0
@@ -3313,7 +3313,7 @@ oils:
     stability: 16.0
 - id: saw_palmetto_oil
   common_name: Saw Palmetto Oil
-  inci_name: 
+  inci_name: Serenoa Serrulata Fruit Oil
   sap_value_naoh: 0.157
   sap_value_koh: 0.22
   iodine_value: 44.0
@@ -3337,7 +3337,7 @@ oils:
     stability: 11.0
 - id: sea_buckthorn_oil_seed
   common_name: Sea Buckthorn Oil seed
-  inci_name: 
+  inci_name: Hippophae Rhamnoides Seed Oil
   sap_value_naoh: 0.139
   sap_value_koh: 0.195
   iodine_value: 165.0
@@ -3361,7 +3361,7 @@ oils:
     stability: 10.0
 - id: sea_buckthorn_oil_seed_and_berry
   common_name: Sea Buckthorn Oil seed and berry
-  inci_name: 
+  inci_name: Hippophae Rhamnoides Fruit Oil
   sap_value_naoh: 0.13
   sap_value_koh: 0.183
   iodine_value: 86.0
@@ -3385,7 +3385,7 @@ oils:
     stability: 31.0
 - id: soapquick_conventional
   common_name: SoapQuick conventional
-  inci_name: 
+  inci_name: Saponified Vegetable Oils
   sap_value_naoh: 0.151
   sap_value_koh: 0.212
   iodine_value: 59.0
@@ -3409,7 +3409,7 @@ oils:
     stability: 25.0
 - id: soapquick_organic
   common_name: SoapQuick organic
-  inci_name: 
+  inci_name: Saponified Organic Vegetable Oils
   sap_value_naoh: 0.152
   sap_value_koh: 0.213
   iodine_value: 56.0
@@ -3433,7 +3433,7 @@ oils:
     stability: 23.0
 - id: soybean_fully_hydrogenated
   common_name: Soybean fully hydrogenated
-  inci_name: 
+  inci_name: Hydrogenated Glycine Soja Oil
   sap_value_naoh: 0.137
   sap_value_koh: 0.192
   iodine_value: 1.0
@@ -3457,7 +3457,7 @@ oils:
     stability: 98.0
 - id: tallow_goat
   common_name: Tallow Goat
-  inci_name: 
+  inci_name: Adeps Caprae
   sap_value_naoh: 0.137
   sap_value_koh: 0.192
   iodine_value: 40.0
@@ -3481,7 +3481,7 @@ oils:
     stability: 53.0
 - id: watermelon_seed_oil
   common_name: Watermelon Seed Oil
-  inci_name: 
+  inci_name: Citrullus Lanatus Seed Oil
   sap_value_naoh: 0.135
   sap_value_koh: 0.19
   iodine_value: 119.0
@@ -3505,7 +3505,7 @@ oils:
     stability: 21.0
 - id: zapote_seed_oil
   common_name: Zapote Seed Oil
-  inci_name: 
+  inci_name: Pouteria Sapota Seed Oil
   sap_value_naoh: 0.134
   sap_value_koh: 0.188
   iodine_value: 72.0
